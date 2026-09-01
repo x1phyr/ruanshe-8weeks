@@ -14,7 +14,6 @@ import { QuizRun } from "@/components/learn/quiz-run";
 import { todayISO } from "@/lib/dates";
 import { dueMistakes, mistakeBucket } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
-import { useHydrated } from "@/lib/use-hydrated";
 import type { Mistake, MistakeBucket, MistakeReason } from "@/lib/types";
 
 const tabs: { id: MistakeBucket; label: string }[] = [
@@ -31,14 +30,13 @@ const reasonLabel: Record<MistakeReason, string> = {
 };
 
 export function MistakesView() {
-  const hydrated = useHydrated();
   const mistakes = useTrainerStore((s) => s.mistakes);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
   const [tab, setTab] = useState<MistakeBucket>("needs-review");
   const [drilling, setDrilling] = useState(false);
 
-  const today = hydrated ? todayISO(simulateDate) : todayISO();
+  const today = todayISO(simulateDate);
 
   const grouped = useMemo(() => {
     const map: Record<MistakeBucket, Mistake[]> = {

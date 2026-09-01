@@ -15,7 +15,6 @@ import { dayHref, getNextDay, kindLabel } from "@/lib/calendar";
 import { pad2, todayISO } from "@/lib/dates";
 import { dueMistakes, isCompleted, isUnlocked } from "@/lib/progress";
 import { getSession, resolveStep, useTrainerStore } from "@/lib/store";
-import { useHydrated } from "@/lib/use-hydrated";
 import type { LearnStep, MistakeReason, StudyDay } from "@/lib/types";
 
 const steps: { id: LearnStep; label: string }[] = [
@@ -34,7 +33,6 @@ const reasonLabel: Record<MistakeReason, string> = {
 
 export function LearnSession({ day }: { day: StudyDay }) {
   const router = useRouter();
-  const hydrated = useHydrated();
   const progress = useTrainerStore((s) => s.progress);
   const mistakes = useTrainerStore((s) => s.mistakes);
   const sessions = useTrainerStore((s) => s.sessions);
@@ -47,9 +45,9 @@ export function LearnSession({ day }: { day: StudyDay }) {
   const session = getSession(sessions, day.id);
   const derived = resolveStep(session);
   const step = forced && stepUnlocked(session, forced) ? forced : derived;
-  const today = hydrated ? todayISO(simulateDate) : todayISO();
-  const unlocked = hydrated && isUnlocked(progress, day.id);
-  const completed = hydrated && isCompleted(progress, day.id);
+  const today = todayISO(simulateDate);
+  const unlocked = isUnlocked(progress, day.id);
+  const completed = isCompleted(progress, day.id);
   const lesson = getLesson(day.id);
   const bank = questionsForDay(day.id);
   const due = useMemo(
@@ -61,14 +59,6 @@ export function LearnSession({ day }: { day: StudyDay }) {
   );
   const newMistakes = mistakes.filter((item) => item.lastWrongAt === today);
 
-  if (!hydrated) {
-    return (
-      <div className="flex min-h-dvh items-center justify-center text-sm text-muted-foreground">
-        读取进度…
-      </div>
-    );
-  }
-
   if (!unlocked) {
     return (
       <FocusFrame day={day} step={step} onStep={() => undefined}>
@@ -78,9 +68,12 @@ export function LearnSession({ day }: { day: StudyDay }) {
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
             v1 不允许跳关。完成上一学习日之后才会打开 {day.date} · {day.title}。
           </p>
-          <Button nativeButton={false} render={<Link href="/" />} className="mt-4">
+          <Link
+            href="/"
+            className="mt-4 inline-flex h-8 items-center rounded-md bg-primary px-2.5 text-sm font-medium text-primary-foreground"
+          >
             回到今日
-          </Button>
+          </Link>
         </Surface>
       </FocusFrame>
     );
@@ -254,9 +247,12 @@ export function LearnSession({ day }: { day: StudyDay }) {
                 进入下一天
               </Button>
             ) : null}
-            <Button variant="ghost" nativeButton={false} render={<Link href="/" />}>
+            <Link
+              href="/"
+              className="inline-flex h-8 items-center rounded-md px-2.5 text-sm text-muted-foreground hover:text-foreground"
+            >
               回仪表盘
-            </Button>
+            </Link>
           </div>
         </div>
       ) : null}

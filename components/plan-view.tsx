@@ -14,14 +14,12 @@ import { examConfig } from "@/lib/config";
 import { examCountdown, formatDateShort, pad2, todayISO, weekdayLabel } from "@/lib/dates";
 import { isCompleted, isUnlocked } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
-import { useHydrated } from "@/lib/use-hydrated";
 import { cn } from "@/lib/utils";
 
 export function PlanView() {
-  const hydrated = useHydrated();
   const progress = useTrainerStore((s) => s.progress);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
-  const today = hydrated ? todayISO(simulateDate) : todayISO();
+  const today = todayISO(simulateDate);
   const daysLeft = examCountdown(today);
 
   return (
@@ -59,8 +57,8 @@ export function PlanView() {
               <Surface className="overflow-hidden">
                 <ul className="divide-y divide-border">
                   {days.map((day) => {
-                    const unlocked = hydrated && isUnlocked(progress, day.id);
-                    const done = hydrated && isCompleted(progress, day.id);
+                    const unlocked = isUnlocked(progress, day.id);
+                    const done = isCompleted(progress, day.id);
                     const isToday = day.id === today;
                     const inner = (
                       <div

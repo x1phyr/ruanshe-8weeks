@@ -9,12 +9,10 @@ import { QuizRun } from "@/components/learn/quiz-run";
 import { dayHref, studyDays } from "@/lib/calendar";
 import { isUnlocked } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
-import { useHydrated } from "@/lib/use-hydrated";
 
 const modules = Array.from(new Set(studyDays.map((day) => day.module)));
 
 export function PracticeView() {
-  const hydrated = useHydrated();
   const progress = useTrainerStore((s) => s.progress);
   const [module, setModule] = useState<string>("全部");
   const [activeDayId, setActiveDayId] = useState<string | null>(null);
@@ -81,7 +79,7 @@ export function PracticeView() {
           <ul className="divide-y divide-border">
             {days.map((day) => {
               const bank = questions.filter((q) => q.dayId === day.id);
-              const unlocked = hydrated && isUnlocked(progress, day.id);
+              const unlocked = isUnlocked(progress, day.id);
               return (
                 <li
                   key={day.id}
@@ -99,14 +97,12 @@ export function PracticeView() {
                   </div>
                   <div className="flex gap-2">
                     {unlocked ? (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        nativeButton={false}
-                        render={<Link href={dayHref(day)} />}
+                      <Link
+                        href={dayHref(day)}
+                        className="inline-flex h-7 items-center rounded-md border border-border px-2.5 text-[0.8rem] hover:bg-muted"
                       >
                         进入日训
-                      </Button>
+                      </Link>
                     ) : (
                       <KindPill>未解锁</KindPill>
                     )}

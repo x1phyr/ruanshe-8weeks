@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { KindPill, Metric, PageFrame, Surface } from "@/components/ui-bits";
-import { Button } from "@/components/ui/button";
 import { examConfig } from "@/lib/config";
 import {
   dayHref,
@@ -16,7 +15,6 @@ import { examCountdown, formatDateCn, pad2, todayISO, weekdayLabel } from "@/lib
 import { accuracyPercent, dueMistakes, isCompleted } from "@/lib/progress";
 import { resolveFocusDay } from "@/lib/progress";
 import { getSession, useTrainerStore } from "@/lib/store";
-import { useHydrated } from "@/lib/use-hydrated";
 
 const taskDefs = [
   { key: "review", label: "复习错题" },
@@ -26,20 +24,10 @@ const taskDefs = [
 ] as const;
 
 export function DashboardView() {
-  const hydrated = useHydrated();
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const progress = useTrainerStore((s) => s.progress);
   const mistakes = useTrainerStore((s) => s.mistakes);
   const sessions = useTrainerStore((s) => s.sessions);
-
-  if (!hydrated) {
-    return (
-      <PageFrame>
-        <div className="label-caps">加载进度</div>
-        <div className="mt-3 h-24 rounded-md border border-border bg-surface" />
-      </PageFrame>
-    );
-  }
 
   const today = todayISO(simulateDate);
   const focus = resolveFocusDay(progress, simulateDate);
@@ -158,14 +146,13 @@ export function DashboardView() {
               </li>
             ))}
           </ol>
-          <Button
-            nativeButton={false}
-            render={<Link href={dayHref(focus)} />}
-            className="mt-5 h-9 w-full sm:w-auto"
+          <Link
+            href={dayHref(focus)}
+            className="mt-5 inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
           >
             {isCompleted(progress, focus.id) ? "查看学习日" : "继续学习"}
-            <ArrowRight data-icon="inline-end" />
-          </Button>
+            <ArrowRight className="size-4" />
+          </Link>
         </Surface>
 
         <Surface className="p-4">

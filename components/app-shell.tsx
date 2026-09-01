@@ -13,7 +13,6 @@ import { SimulateDialog } from "@/components/simulate-dialog";
 import { examConfig, APP_NAME } from "@/lib/config";
 import { examCountdown, pad2, todayISO } from "@/lib/dates";
 import { useTrainerStore } from "@/lib/store";
-import { useHydrated } from "@/lib/use-hydrated";
 import { cn } from "@/lib/utils";
 
 const items = [
@@ -31,8 +30,7 @@ function isActive(pathname: string, href: string) {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const simulateDate = useTrainerStore((s) => s.simulateDate);
-  const hydrated = useHydrated();
-  const today = hydrated ? todayISO(simulateDate) : todayISO();
+  const today = todayISO(simulateDate);
   const daysLeft = examCountdown(today);
 
   return (
