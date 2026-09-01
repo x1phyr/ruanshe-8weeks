@@ -16,6 +16,7 @@ import { examCountdown, formatDateCn, pad2, todayISO, weekdayLabel } from "@/lib
 import { accuracyPercent, dueMistakes, isCompleted } from "@/lib/progress";
 import { resolveFocusDay } from "@/lib/progress";
 import { getSession, useTrainerStore } from "@/lib/store";
+import { useHydrated } from "@/lib/use-hydrated";
 
 const taskDefs = [
   { key: "review", label: "复习错题" },
@@ -25,7 +26,7 @@ const taskDefs = [
 ] as const;
 
 export function DashboardView() {
-  const hydrated = useTrainerStore((s) => s.hydrated);
+  const hydrated = useHydrated();
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const progress = useTrainerStore((s) => s.progress);
   const mistakes = useTrainerStore((s) => s.mistakes);

@@ -15,6 +15,7 @@ import { dayHref, getNextDay, kindLabel } from "@/lib/calendar";
 import { pad2, todayISO } from "@/lib/dates";
 import { dueMistakes, isCompleted, isUnlocked } from "@/lib/progress";
 import { getSession, resolveStep, useTrainerStore } from "@/lib/store";
+import { useHydrated } from "@/lib/use-hydrated";
 import type { LearnStep, MistakeReason, StudyDay } from "@/lib/types";
 
 const steps: { id: LearnStep; label: string }[] = [
@@ -33,7 +34,7 @@ const reasonLabel: Record<MistakeReason, string> = {
 
 export function LearnSession({ day }: { day: StudyDay }) {
   const router = useRouter();
-  const hydrated = useTrainerStore((s) => s.hydrated);
+  const hydrated = useHydrated();
   const progress = useTrainerStore((s) => s.progress);
   const mistakes = useTrainerStore((s) => s.mistakes);
   const sessions = useTrainerStore((s) => s.sessions);

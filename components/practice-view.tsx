@@ -9,11 +9,12 @@ import { QuizRun } from "@/components/learn/quiz-run";
 import { dayHref, studyDays } from "@/lib/calendar";
 import { isUnlocked } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
+import { useHydrated } from "@/lib/use-hydrated";
 
 const modules = Array.from(new Set(studyDays.map((day) => day.module)));
 
 export function PracticeView() {
-  const hydrated = useTrainerStore((s) => s.hydrated);
+  const hydrated = useHydrated();
   const progress = useTrainerStore((s) => s.progress);
   const [module, setModule] = useState<string>("全部");
   const [activeDayId, setActiveDayId] = useState<string | null>(null);

@@ -1,8 +1,9 @@
 "use client";
 
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { STORAGE_KEY } from "@/lib/config";
+import { getPersistStorage } from "@/lib/storage";
 import { addDaysISO, todayISO } from "@/lib/dates";
 import { afterComplete, emptyProgress, reviewIntervalDays } from "@/lib/progress";
 import type {
@@ -22,8 +23,6 @@ interface TrainerState {
   answers: AnswerRecord[];
   sessions: Record<string, DaySession>;
   simulateDate: string | null;
-  hydrated: boolean;
-  setHydrated: (value: boolean) => void;
   setSimulateDate: (value: string | null) => void;
   markStep: (dayId: string, step: LearnStep) => void;
   recordAnswer: (question: Question, selected: OptionKey, today: string) => boolean;
@@ -119,8 +118,6 @@ export const useTrainerStore = create<TrainerState>()(
       answers: [],
       sessions: {},
       simulateDate: null,
-      hydrated: false,
-      setHydrated: (value) => set({ hydrated: value }),
       setSimulateDate: (value) => set({ simulateDate: value }),
       markStep: (dayId, step) => {
         const current = get().sessions[dayId] ?? emptySession();
@@ -205,6 +202,8 @@ export const useTrainerStore = create<TrainerState>()(
     }),
     {
       name: STORAGE_KEY,
+      skipHydration: true,
+      storage: createJSONStorage(getPersistStorage),
       partialize: (state) => ({
         progress: state.progress,
         mistakes: state.mistakes,
@@ -212,9 +211,6 @@ export const useTrainerStore = create<TrainerState>()(
         sessions: state.sessions,
         simulateDate: state.simulateDate,
       }),
-      onRehydrateStorage: () => (state) => {
-        state?.setHydrated(true);
-      },
     },
   ),
 );
