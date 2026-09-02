@@ -1,4 +1,10 @@
-import { firstDay, getDayById, getNextDay, studyDays } from "@/lib/calendar";
+import {
+  firstDay,
+  getDayById,
+  getDayOnDate,
+  getNextDay,
+  studyDays,
+} from "@/lib/calendar";
 import { todayISO } from "@/lib/dates";
 import type { Mistake, MistakeBucket, Progress, StudyDay } from "@/lib/types";
 
@@ -36,9 +42,10 @@ export function firstIncompleteUnlocked(progress: Progress): StudyDay {
 export function resolveFocusDay(
   progress: Progress,
   simulateDate: string | null,
+  startDate: string,
 ): StudyDay {
   const today = todayISO(simulateDate);
-  const todayDay = getDayById(today);
+  const todayDay = getDayOnDate(startDate, today);
   if (
     todayDay &&
     isUnlocked(progress, todayDay.id) &&

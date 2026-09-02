@@ -11,10 +11,15 @@ import { KindPill, Surface } from "@/components/ui-bits";
 import { LessonView } from "@/components/learn/lesson-view";
 import { PaperTimer } from "@/components/learn/paper-timer";
 import { QuizRun } from "@/components/learn/quiz-run";
-import { dayHref, getNextDay, kindLabel } from "@/lib/calendar";
+import { dayHref, getNextDay, kindLabel, scheduleDays } from "@/lib/calendar";
 import { pad2, todayISO } from "@/lib/dates";
 import { dueMistakes, isCompleted, isUnlocked } from "@/lib/progress";
-import { getSession, resolveStep, useTrainerStore } from "@/lib/store";
+import {
+  getSession,
+  resolveStep,
+  resolvedStartDate,
+  useTrainerStore,
+} from "@/lib/store";
 import type { LearnStep, MistakeReason, StudyDay } from "@/lib/types";
 
 const steps: { id: LearnStep; label: string }[] = [
@@ -37,12 +42,16 @@ export function LearnSession({ day }: { day: StudyDay }) {
   const mistakes = useTrainerStore((s) => s.mistakes);
   const sessions = useTrainerStore((s) => s.sessions);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
+  const startDate = resolvedStartDate(useTrainerStore((s) => s.startDate));
   const markStep = useTrainerStore((s) => s.markStep);
   const completeDay = useTrainerStore((s) => s.completeDay);
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
   const [forced, setForced] = useState<LearnStep | null>(null);
 
-  const session = getSession(sessions, day.id);
+  const liveDay =
+    scheduleDays(startDate).find((item) => item.id === day.id) ?? day;
+
+  const session = getSession(sessions, liveDay.id);
   const derived = resolveStep(session);
   const step = forced && stepUnlocked(session, forced) ? forced : derived;
   const today = todayISO(simulateDate);
@@ -61,12 +70,12 @@ export function LearnSession({ day }: { day: StudyDay }) {
 
   if (!unlocked) {
     return (
-      <FocusFrame day={day} step={step} onStep={() => undefined}>
+      <FocusFrame day={liveDay} step={step} onStep={() => undefined}>
         <Surface className="p-6">
           <div className="label-caps">LOCKED</div>
           <h2 className="mt-2 text-lg font-medium">本日尚未解锁</h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            v1 不允许跳关。完成上一学习日之后才会打开 {day.date} · {day.title}。
+            v1 不允许跳关。完成上一学习日之后才会打开 {liveDay.date} · {liveDay.title}。
           </p>
           <Link
             href="/"
@@ -81,7 +90,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
 
   return (
     <FocusFrame
-      day={day}
+      day={liveDay}
       step={step}
       onStep={(next) => {
         if (stepUnlocked(session, next) || completed) setForced(next);
@@ -153,7 +162,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               {day.status === "paper"
                 ? "试卷日先用计时占位。可以把本日标记完成，解锁下一天。"
-                : "路线已排好。v1 完整题库覆盖 09-01 至 09-04，其余日先用短文占位。"}
+                : "路线已排好。v1 完整题库覆盖第 1 周前四日，其余日先用短文占位。"}
             </p>
             <Button
               className="mt-5"

@@ -2,9 +2,10 @@
 
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { STORAGE_KEY } from "@/lib/config";
+import { examConfig, STORAGE_KEY } from "@/lib/config";
+import { migrateLegacyDayId } from "@/lib/calendar";
 import { getPersistStorage } from "@/lib/storage";
-import { addDaysISO, todayISO } from "@/lib/dates";
+import { addDaysISO, isISODate, todayISO } from "@/lib/dates";
 import { afterComplete, emptyProgress, reviewIntervalDays } from "@/lib/progress";
 import type {
   AnswerRecord,
@@ -22,7 +23,9 @@ interface TrainerState {
   mistakes: Mistake[];
   answers: AnswerRecord[];
   sessions: Record<string, DaySession>;
+  startDate: string;
   simulateDate: string | null;
+  setStartDate: (value: string) => void;
   setSimulateDate: (value: string | null) => void;
   markStep: (dayId: string, step: LearnStep) => void;
   recordAnswer: (question: Question, selected: OptionKey, today: string) => boolean;
@@ -117,7 +120,11 @@ export const useTrainerStore = create<TrainerState>()(
       mistakes: [],
       answers: [],
       sessions: {},
+      startDate: "",
       simulateDate: null,
+      setStartDate: (value) => {
+        if (isISODate(value)) set({ startDate: value });
+      },
       setSimulateDate: (value) => set({ simulateDate: value }),
       markStep: (dayId, step) => {
         const current = get().sessions[dayId] ?? emptySession();
@@ -203,17 +210,80 @@ export const useTrainerStore = create<TrainerState>()(
     {
       name: STORAGE_KEY,
       skipHydration: true,
+      version: 2,
       storage: createJSONStorage(getPersistStorage),
       partialize: (state) => ({
         progress: state.progress,
         mistakes: state.mistakes,
         answers: state.answers,
         sessions: state.sessions,
+        startDate: state.startDate,
         simulateDate: state.simulateDate,
       }),
+      migrate: (persisted, fromVersion) => {
+        const state = persisted as Partial<TrainerState>;
+        if (fromVersion < 2) {
+          return migratePersistedV2(state);
+        }
+        return {
+          ...state,
+          startDate: resolveStoredStartDate(state),
+        };
+      },
+      onRehydrateStorage: () => (state) => {
+        if (!state) {
+          useTrainerStore.setState({ startDate: todayISO() });
+          return;
+        }
+        if (!isISODate(state.startDate)) {
+          useTrainerStore.setState({
+            startDate: resolveStoredStartDate(state),
+          });
+        }
+      },
     },
   ),
 );
+
+function hasStoredProgress(state: Partial<TrainerState> | undefined): boolean {
+  if (!state) return false;
+  return (
+    (state.progress?.completedDays.length ?? 0) > 0 ||
+    (state.answers?.length ?? 0) > 0 ||
+    Object.keys(state.sessions ?? {}).length > 0
+  );
+}
+
+function resolveStoredStartDate(state: Partial<TrainerState> | undefined): string {
+  if (isISODate(state?.startDate)) return state.startDate;
+  if (hasStoredProgress(state)) return examConfig.templateStart;
+  return todayISO();
+}
+
+function migratePersistedV2(state: Partial<TrainerState>): Partial<TrainerState> {
+  const completedDays = (state.progress?.completedDays ?? []).map(migrateLegacyDayId);
+  const sessions = Object.fromEntries(
+    Object.entries(state.sessions ?? {}).map(([id, session]) => [
+      migrateLegacyDayId(id),
+      session,
+    ]),
+  );
+  const answers = (state.answers ?? []).map((record) => ({
+    ...record,
+    dayId: migrateLegacyDayId(record.dayId),
+  }));
+  return {
+    ...state,
+    progress: state.progress
+      ? { ...state.progress, completedDays }
+      : state.progress,
+    sessions,
+    answers,
+    startDate: resolveStoredStartDate({ ...state, progress: state.progress
+      ? { ...state.progress, completedDays }
+      : state.progress, sessions, answers }),
+  };
+}
 
 export function getSession(sessions: Record<string, DaySession>, dayId: string) {
   return sessions[dayId] ?? emptySession();
@@ -228,4 +298,8 @@ export function resolveStep(session: DaySession): LearnStep {
 
 export function currentToday(): string {
   return todayISO(useTrainerStore.getState().simulateDate);
+}
+
+export function resolvedStartDate(startDate?: string | null): string {
+  return isISODate(startDate) ? startDate : todayISO();
 }

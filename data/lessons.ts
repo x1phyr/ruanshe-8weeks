@@ -3,7 +3,7 @@ import type { Lesson } from "@/lib/types";
 
 const liveLessons: Lesson[] = [
   {
-    dayId: "2026-09-01",
+    dayId: "week-1/day-1",
     title: "内聚与耦合",
     minutes: 45,
     keyPoints: [
@@ -110,7 +110,7 @@ const liveLessons: Lesson[] = [
     ],
   },
   {
-    dayId: "2026-09-02",
+    dayId: "week-1/day-2",
     title: "生命周期 · 开发模型 · V 模型",
     minutes: 45,
     keyPoints: [
@@ -194,7 +194,7 @@ const liveLessons: Lesson[] = [
     ],
   },
   {
-    dayId: "2026-09-03",
+    dayId: "week-1/day-3",
     title: "黑盒测试",
     minutes: 45,
     keyPoints: [
@@ -267,7 +267,7 @@ const liveLessons: Lesson[] = [
     ],
   },
   {
-    dayId: "2026-09-04",
+    dayId: "week-1/day-4",
     title: "白盒测试 + McCabe",
     minutes: 45,
     keyPoints: [
@@ -350,7 +350,7 @@ const stubExtras: Record<
   string,
   { keyPoints: string[]; extra?: string }
 > = {
-  "2026-09-05": {
+  "week-1/day-5": {
     keyPoints: [
       "父子图数据流要平衡：子图边界上的流必须能在父图对应加工上找到",
       "数据字典：() 可选，{} 重复，[] 选择",
@@ -358,7 +358,7 @@ const stubExtras: Record<
     extra:
       "本日是 90 分钟案例。v1 先用两道分析型选择带你认平衡原则和字典符号，完整读图改错放在后续版本。",
   },
-  "2026-09-12": {
+  "week-2/day-5": {
     keyPoints: ["看循环不变量和边界下标", "完形题先读注释和变量名，再看挖空"],
     extra: "v1 用选择题完形代替手写填空。完整 C/Java 填空卷后续接入。",
   },
@@ -379,7 +379,7 @@ export const lessons: Lesson[] = studyDays.map((day) => {
           extra?.extra ??
           (day.status === "paper"
             ? "v1 提供 150 分钟计时与完成本日。完整真题卷不在本版本范围内。"
-            : "路线图日期已锁定。先把前四日的软件工程基础打实，再进入本日精讲。"),
+            : "路线已按学习日排好。先把前四日的软件工程基础打实，再进入本日精讲。"),
       },
     },
   ];
