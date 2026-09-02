@@ -4,6 +4,14 @@
 
 目标场次：2026 下半年软件设计师。倒计时读取 `lib/config.ts` 里的 `examDate`（当前为 `2026-10-24`）。实际开考时间以准考证为准。
 
+## 地址
+
+- GitHub（主托管）：[https://github.com/x1phyr/ruanshe-8weeks](https://github.com/x1phyr/ruanshe-8weeks)
+- GitHub Pages：[https://x1phyr.github.io/ruanshe-8weeks/](https://x1phyr.github.io/ruanshe-8weeks/)
+- Origin 副本：[https://cursor.com/codebase/okra/tmp-ba5e13b7413c92e8](https://cursor.com/codebase/okra/tmp-ba5e13b7413c92e8)
+
+Pages 是项目站点，资源前缀为 `/ruanshe-8weeks`。仓库设置里 Pages source 选 **GitHub Actions**（不要用 branch `/docs`）。推到 `main` 后由 `.github/workflows/pages.yml` 构建 `out/` 并部署。
+
 ## 本地运行
 
 ```bash
@@ -11,14 +19,15 @@ npm install
 npm run dev
 ```
 
-浏览器打开 [http://127.0.0.1:43180](http://127.0.0.1:43180)。无需登录。进度、作答和错题存在浏览器 `localStorage`（键名 `ruanshe-8weeks-v1`）。
+开发服务器带 `basePath`，打开 [http://127.0.0.1:43180/ruanshe-8weeks/](http://127.0.0.1:43180/ruanshe-8weeks/)。无需登录。进度、作答和错题存在浏览器 `localStorage`（键名 `ruanshe-8weeks-v1`）。
+
+静态导出（与 Pages 相同）：
 
 ```bash
 npm run build
-npm run start
 ```
 
-生产模式同样使用端口 `43180`。
+产物在 `out/`。这是纯静态站，没有服务端 API。
 
 ## v1 包含什么
 
@@ -56,4 +65,4 @@ studyEnd: "2026-10-23"
 
 ## 技术
 
-Next.js App Router · TypeScript · Tailwind CSS · shadcn/ui · Zustand（persist）。无账号、无云同步、无 AI 讲解。
+Next.js App Router 静态导出 · TypeScript · Tailwind CSS · shadcn/ui · Zustand（persist）。无账号、无云同步、无 AI 讲解。

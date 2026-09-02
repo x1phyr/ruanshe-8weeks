@@ -1,6 +1,15 @@
 import { notFound } from "next/navigation";
 import { LearnSession } from "@/components/learn/learn-session";
-import { getDayByWeekDay } from "@/lib/calendar";
+import { getDayByWeekDay, studyDays } from "@/lib/calendar";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return studyDays.map((day) => ({
+    week: `week-${day.week}`,
+    day: `day-${day.dayInWeek}`,
+  }));
+}
 
 export default async function LearnDayPage({
   params,
