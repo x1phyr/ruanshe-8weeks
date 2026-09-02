@@ -1,4 +1,4 @@
-import { firstDay, getDayById, getNextDay, studyDays } from "@/lib/calendar";
+import { firstDay, getDayById, getNextDay, scheduleDays, studyDays } from "@/lib/calendar";
 import { todayISO } from "@/lib/dates";
 import type { Mistake, MistakeBucket, Progress, StudyDay } from "@/lib/types";
 
@@ -36,9 +36,11 @@ export function firstIncompleteUnlocked(progress: Progress): StudyDay {
 export function resolveFocusDay(
   progress: Progress,
   simulateDate: string | null,
+  startDate: string,
 ): StudyDay {
   const today = todayISO(simulateDate);
-  const todayDay = getDayById(today);
+  const days = scheduleDays(startDate);
+  const todayDay = days.find((day) => day.date === today);
   if (
     todayDay &&
     isUnlocked(progress, todayDay.id) &&
@@ -46,7 +48,8 @@ export function resolveFocusDay(
   ) {
     return todayDay;
   }
-  return firstIncompleteUnlocked(progress);
+  const fallback = firstIncompleteUnlocked(progress);
+  return days.find((day) => day.id === fallback.id) ?? fallback;
 }
 
 export function afterComplete(progress: Progress, dayId: string): Progress {

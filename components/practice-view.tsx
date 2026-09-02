@@ -6,20 +6,21 @@ import { questions, questionsForDay } from "@/data/questions";
 import { Button } from "@/components/ui/button";
 import { KindPill, PageFrame, PageHeader, Surface, EmptyState } from "@/components/ui-bits";
 import { QuizRun } from "@/components/learn/quiz-run";
-import { dayHref, studyDays } from "@/lib/calendar";
+import { dayHref, scheduleDays } from "@/lib/calendar";
 import { isUnlocked } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
 
-const modules = Array.from(new Set(studyDays.map((day) => day.module)));
-
 export function PracticeView() {
   const progress = useTrainerStore((s) => s.progress);
+  const startDate = useTrainerStore((s) => s.startDate);
+  const studyDays = scheduleDays(startDate);
   const [module, setModule] = useState<string>("全部");
   const [activeDayId, setActiveDayId] = useState<string | null>(null);
+  const modules = Array.from(new Set(studyDays.map((day) => day.module)));
 
   const days = useMemo(() => {
     return studyDays.filter((day) => module === "全部" || day.module === module);
-  }, [module]);
+  }, [module, studyDays]);
 
   const activeQuestions = activeDayId ? questionsForDay(activeDayId) : [];
   const activeDay = studyDays.find((day) => day.id === activeDayId);

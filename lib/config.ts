@@ -2,8 +2,6 @@ export const examConfig = {
   examDate: "2026-10-24",
   examName: "2026 下半年 软件设计师",
   examLevel: "软考中级 · 软件设计师",
-  studyStart: "2026-09-01",
-  studyEnd: "2026-10-23",
   makeupDays: ["2026-09-20", "2026-10-10"] as const,
   holidays: {
     midAutumn: {

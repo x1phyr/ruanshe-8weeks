@@ -23,7 +23,9 @@ interface TrainerState {
   answers: AnswerRecord[];
   sessions: Record<string, DaySession>;
   simulateDate: string | null;
+  startDate: string;
   setSimulateDate: (value: string | null) => void;
+  setStartDate: (value: string) => void;
   markStep: (dayId: string, step: LearnStep) => void;
   recordAnswer: (question: Question, selected: OptionKey, today: string) => boolean;
   reviewMistakeAnswer: (
@@ -118,7 +120,12 @@ export const useTrainerStore = create<TrainerState>()(
       answers: [],
       sessions: {},
       simulateDate: null,
+      startDate: todayISO(),
       setSimulateDate: (value) => set({ simulateDate: value }),
+      setStartDate: (value) => {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return;
+        set({ startDate: value });
+      },
       markStep: (dayId, step) => {
         const current = get().sessions[dayId] ?? emptySession();
         const next = { ...current };
@@ -210,7 +217,21 @@ export const useTrainerStore = create<TrainerState>()(
         answers: state.answers,
         sessions: state.sessions,
         simulateDate: state.simulateDate,
+        startDate: state.startDate,
       }),
+      merge: (persistedState, currentState) => {
+        const persisted = (persistedState ?? {}) as Partial<TrainerState>;
+        const startDate =
+          typeof persisted.startDate === "string" &&
+          /^\d{4}-\d{2}-\d{2}$/.test(persisted.startDate)
+            ? persisted.startDate
+            : currentState.startDate;
+        return {
+          ...currentState,
+          ...persisted,
+          startDate,
+        };
+      },
     },
   ),
 );

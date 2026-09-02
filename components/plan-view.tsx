@@ -4,11 +4,13 @@ import Link from "next/link";
 import { Lock, Check } from "lucide-react";
 import { KindPill, PageFrame, PageHeader, Surface } from "@/components/ui-bits";
 import {
+  CURRICULUM_LENGTH,
   dayHref,
   holidayLabel,
   kindLabel,
-  studyDays,
-  weeks,
+  lastPlannedDate,
+  scheduleDays,
+  scheduleWeeks,
 } from "@/lib/calendar";
 import { examConfig } from "@/lib/config";
 import { examCountdown, formatDateShort, pad2, todayISO, weekdayLabel } from "@/lib/dates";
@@ -19,15 +21,24 @@ import { cn } from "@/lib/utils";
 export function PlanView() {
   const progress = useTrainerStore((s) => s.progress);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
+  const startDate = useTrainerStore((s) => s.startDate);
   const today = todayISO(simulateDate);
   const daysLeft = examCountdown(today);
+  const days = scheduleDays(startDate);
+  const weeks = scheduleWeeks(startDate);
+  const lastDate = lastPlannedDate(startDate);
+  const planOverrunsExam = lastDate > examConfig.examDate;
 
   return (
     <PageFrame>
       <PageHeader
         kicker="8-WEEK ROADMAP"
         title="课程日历"
-        description={`学习窗口 ${examConfig.studyStart} 至 ${examConfig.studyEnd}。考试日从 examDate 读取，不排课。`}
+        description={
+          planOverrunsExam
+            ? `开课日 ${startDate}，共 ${CURRICULUM_LENGTH} 日，排到 ${lastDate}，晚于考试日 ${examConfig.examDate}。倒计时仍按 examDate，考试前剩余 ${Math.max(daysLeft, 0)} 天。`
+            : `开课日 ${startDate}，共 ${CURRICULUM_LENGTH} 日，至 ${lastDate}。考试日从 examDate 读取，不排课。`
+        }
         action={
           <div className="text-right">
             <div className="label-caps">距考试</div>
@@ -41,7 +52,7 @@ export function PlanView() {
 
       <div className="space-y-6">
         {weeks.map((week) => {
-          const days = studyDays.filter((day) => day.week === week.week);
+          const weekDays = days.filter((day) => day.week === week.week);
           return (
             <section key={week.week}>
               <div className="mb-2 flex flex-wrap items-end justify-between gap-2">
@@ -56,10 +67,10 @@ export function PlanView() {
               </div>
               <Surface className="overflow-hidden">
                 <ul className="divide-y divide-border">
-                  {days.map((day) => {
+                  {weekDays.map((day) => {
                     const unlocked = isUnlocked(progress, day.id);
                     const done = isCompleted(progress, day.id);
-                    const isToday = day.id === today;
+                    const isToday = day.date === today;
                     const inner = (
                       <div
                         className={cn(

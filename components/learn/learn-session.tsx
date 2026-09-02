@@ -11,7 +11,7 @@ import { KindPill, Surface } from "@/components/ui-bits";
 import { LessonView } from "@/components/learn/lesson-view";
 import { PaperTimer } from "@/components/learn/paper-timer";
 import { QuizRun } from "@/components/learn/quiz-run";
-import { dayHref, getNextDay, kindLabel } from "@/lib/calendar";
+import { dayHref, getDayById, getNextDay, kindLabel } from "@/lib/calendar";
 import { pad2, todayISO } from "@/lib/dates";
 import { dueMistakes, isCompleted, isUnlocked } from "@/lib/progress";
 import { getSession, resolveStep, useTrainerStore } from "@/lib/store";
@@ -37,19 +37,21 @@ export function LearnSession({ day }: { day: StudyDay }) {
   const mistakes = useTrainerStore((s) => s.mistakes);
   const sessions = useTrainerStore((s) => s.sessions);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
+  const startDate = useTrainerStore((s) => s.startDate);
   const markStep = useTrainerStore((s) => s.markStep);
   const completeDay = useTrainerStore((s) => s.completeDay);
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
   const [forced, setForced] = useState<LearnStep | null>(null);
 
-  const session = getSession(sessions, day.id);
+  const scheduled = getDayById(day.id, startDate) ?? day;
+  const session = getSession(sessions, scheduled.id);
   const derived = resolveStep(session);
   const step = forced && stepUnlocked(session, forced) ? forced : derived;
   const today = todayISO(simulateDate);
-  const unlocked = isUnlocked(progress, day.id);
-  const completed = isCompleted(progress, day.id);
-  const lesson = getLesson(day.id);
-  const bank = questionsForDay(day.id);
+  const unlocked = isUnlocked(progress, scheduled.id);
+  const completed = isCompleted(progress, scheduled.id);
+  const lesson = getLesson(scheduled.id);
+  const bank = questionsForDay(scheduled.id);
   const due = useMemo(
     () =>
       dueMistakes(mistakes, today)
@@ -61,12 +63,12 @@ export function LearnSession({ day }: { day: StudyDay }) {
 
   if (!unlocked) {
     return (
-      <FocusFrame day={day} step={step} onStep={() => undefined}>
+      <FocusFrame day={scheduled} step={step} onStep={() => undefined}>
         <Surface className="p-6">
           <div className="label-caps">LOCKED</div>
           <h2 className="mt-2 text-lg font-medium">本日尚未解锁</h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            v1 不允许跳关。完成上一学习日之后才会打开 {day.date} · {day.title}。
+            v1 不允许跳关。完成上一学习日之后才会打开 {scheduled.date} · {scheduled.title}。
           </p>
           <Link
             href="/"
@@ -81,7 +83,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
 
   return (
     <FocusFrame
-      day={day}
+      day={scheduled}
       step={step}
       onStep={(next) => {
         if (stepUnlocked(session, next) || completed) setForced(next);
@@ -98,7 +100,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
             <Button
               className="mt-5"
               onClick={() => {
-                markStep(day.id, "review");
+                markStep(scheduled.id, "review");
                 setForced("learn");
               }}
             >
@@ -116,7 +118,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
               questions={due}
               mode="review"
               onFinished={() => {
-                markStep(day.id, "review");
+                markStep(scheduled.id, "review");
                 setForced("learn");
               }}
             />
@@ -127,16 +129,16 @@ export function LearnSession({ day }: { day: StudyDay }) {
       {step === "learn" ? (
         <div>
           <div className="label-caps">
-            LEARN · {day.durationMin} MIN · {kindLabel[day.kind]}
+            LEARN · {scheduled.durationMin} MIN · {kindLabel[scheduled.kind]}
           </div>
-          <h2 className="mt-2 text-xl font-medium">{day.title}</h2>
-          <p className="mt-2 mb-5 text-sm text-muted-foreground">{day.blurb}</p>
-          {day.status === "paper" ? <PaperTimer day={day} /> : null}
+          <h2 className="mt-2 text-xl font-medium">{scheduled.title}</h2>
+          <p className="mt-2 mb-5 text-sm text-muted-foreground">{scheduled.blurb}</p>
+          {scheduled.status === "paper" ? <PaperTimer day={scheduled} /> : null}
           {lesson ? <LessonView lesson={lesson} /> : null}
           <Button
             className="mt-6"
             onClick={() => {
-              markStep(day.id, "learn");
+              markStep(scheduled.id, "learn");
               setForced("practice");
             }}
           >
@@ -151,14 +153,14 @@ export function LearnSession({ day }: { day: StudyDay }) {
             <div className="label-caps">PRACTICE</div>
             <h2 className="mt-2 text-xl font-medium">本题暂无完整题库</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              {day.status === "paper"
+              {scheduled.status === "paper"
                 ? "试卷日先用计时占位。可以把本日标记完成，解锁下一天。"
-                : "路线已排好。v1 完整题库覆盖 09-01 至 09-04，其余日先用短文占位。"}
+                : "路线已排好。v1 完整题库覆盖第 1–4 日，其余日先用短文占位。"}
             </p>
             <Button
               className="mt-5"
               onClick={() => {
-                markStep(day.id, "practice");
+                markStep(scheduled.id, "practice");
                 setForced("wrapup");
               }}
             >
@@ -173,7 +175,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
               questions={bank}
               mode="daily"
               onFinished={() => {
-                markStep(day.id, "practice");
+                markStep(scheduled.id, "practice");
                 setForced("wrapup");
               }}
             />
@@ -227,8 +229,8 @@ export function LearnSession({ day }: { day: StudyDay }) {
             {!completed ? (
               <Button
                 onClick={() => {
-                  markStep(day.id, "wrapup");
-                  completeDay(day.id);
+                  markStep(scheduled.id, "wrapup");
+                  completeDay(scheduled.id);
                 }}
               >
                 完成本日
@@ -236,11 +238,11 @@ export function LearnSession({ day }: { day: StudyDay }) {
             ) : (
               <KindPill tone="ok">DAY COMPLETED</KindPill>
             )}
-            {completed && getNextDay(day.id) ? (
+            {completed && getNextDay(scheduled.id, startDate) ? (
               <Button
                 variant="outline"
                 onClick={() => {
-                  const next = getNextDay(day.id);
+                  const next = getNextDay(scheduled.id, startDate);
                   if (next) router.push(dayHref(next));
                 }}
               >

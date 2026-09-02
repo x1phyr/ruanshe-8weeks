@@ -3,18 +3,31 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { KindPill, Metric, PageFrame, Surface } from "@/components/ui-bits";
 import { examConfig } from "@/lib/config";
 import {
+  CURRICULUM_LENGTH,
   dayHref,
-  getDayById,
+  getDayByDate,
   kindLabel,
-  studyDays,
+  lastPlannedDate,
+  planPhase,
+  scheduleDays,
 } from "@/lib/calendar";
-import { examCountdown, formatDateCn, pad2, todayISO, weekdayLabel } from "@/lib/dates";
-import { accuracyPercent, dueMistakes, isCompleted } from "@/lib/progress";
-import { resolveFocusDay } from "@/lib/progress";
+import {
+  diffDays,
+  examCountdown,
+  formatDateCn,
+  pad2,
+  todayISO,
+  weekdayLabel,
+} from "@/lib/dates";
+import { accuracyPercent, dueMistakes, isCompleted, resolveFocusDay } from "@/lib/progress";
 import { getSession, useTrainerStore } from "@/lib/store";
+import type { DaySession, Progress as ProgressState, StudyDay } from "@/lib/types";
 
 const taskDefs = [
   { key: "review", label: "复习错题" },
@@ -25,47 +38,50 @@ const taskDefs = [
 
 export function DashboardView() {
   const simulateDate = useTrainerStore((s) => s.simulateDate);
+  const startDate = useTrainerStore((s) => s.startDate);
+  const setStartDate = useTrainerStore((s) => s.setStartDate);
   const progress = useTrainerStore((s) => s.progress);
   const mistakes = useTrainerStore((s) => s.mistakes);
   const sessions = useTrainerStore((s) => s.sessions);
 
   const today = todayISO(simulateDate);
-  const focus = resolveFocusDay(progress, simulateDate);
-  const calendarToday = getDayById(today);
-  const display = calendarToday ?? focus;
-  const session = getSession(sessions, display.id);
+  const realToday = todayISO();
+  const days = scheduleDays(startDate);
+  const lastDate = lastPlannedDate(startDate);
+  const phase = planPhase(startDate, today);
+  const calendarToday = getDayByDate(startDate, today);
+  const focus = resolveFocusDay(progress, simulateDate, startDate);
   const daysLeft = examCountdown(today);
   const acc = accuracyPercent(progress);
   const pending = dueMistakes(mistakes, today).length;
   const doneCount = progress.completedDays.length;
-  const totalDays = studyDays.length;
-  const inWindow = today >= examConfig.studyStart && today <= examConfig.studyEnd;
+  const totalDays = days.length;
   const isExamDay = today === examConfig.examDate;
   const afterExam = today > examConfig.examDate;
-
-  const tasks = taskDefs.map((task) => {
-    const done =
-      task.key === "review"
-        ? session.reviewDone
-        : task.key === "learn"
-          ? session.learnDone
-          : task.key === "practice"
-            ? session.practiceDone
-            : session.wrapupDone || isCompleted(progress, display.id);
-    return { ...task, done };
-  });
+  const remainingLessons = days.filter((day) => day.date >= today).length;
+  const incompleteCount = days.filter((day) => !isCompleted(progress, day.id)).length;
+  const planOverrunsExam = lastDate > examConfig.examDate;
+  const lessonsBeforeExam = days.filter((day) => day.date < examConfig.examDate).length;
 
   return (
     <PageFrame>
       <div className="flex flex-col gap-1">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="mono-num text-sm text-brand">
-            WEEK {pad2(display.week)} / 08
-          </span>
-          <span className="text-border">·</span>
-          <span className="mono-num text-sm text-muted-foreground">
-            DAY {pad2(display.dayInWeek)}
-          </span>
+          {phase === "active" && calendarToday ? (
+            <>
+              <span className="mono-num text-sm text-brand">
+                WEEK {pad2(calendarToday.week)} / 08
+              </span>
+              <span className="text-border">·</span>
+              <span className="mono-num text-sm text-muted-foreground">
+                DAY {pad2(calendarToday.dayInWeek)}
+              </span>
+            </>
+          ) : (
+            <span className="mono-num text-sm text-brand">
+              {phase === "not-started" ? "尚未开课" : "计划已结束"}
+            </span>
+          )}
           {simulateDate ? (
             <KindPill tone="brand">模拟 {simulateDate}</KindPill>
           ) : null}
@@ -75,17 +91,34 @@ export function DashboardView() {
             ? "今天考试"
             : afterExam
               ? "考试日已过"
-              : inWindow
-                ? `今日 ${display.topic}`
-                : `下一步 ${focus.topic}`}
+              : phase === "not-started"
+                ? "课程尚未开始"
+                : phase === "after-plan"
+                  ? "计划日历已经走完"
+                  : `今日 ${calendarToday?.topic ?? focus.topic}`}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           {formatDateCn(today)} {weekdayLabel(today)}
-          {inWindow ? ` · ${display.title}` : ` · 课程窗口 ${examConfig.studyStart} – ${examConfig.studyEnd}`}
+          {phase === "active" && calendarToday
+            ? ` · ${calendarToday.title}`
+            : phase === "not-started"
+              ? ` · 开课日 ${startDate}`
+              : ` · 最后学习日 ${lastDate}`}
         </p>
       </div>
 
-      <Surface className="mt-6">
+      <StartDateControl
+        startDate={startDate}
+        lastDate={lastDate}
+        realToday={realToday}
+        daysLeft={daysLeft}
+        remainingLessons={remainingLessons}
+        planOverrunsExam={planOverrunsExam}
+        lessonsBeforeExam={lessonsBeforeExam}
+        onChange={setStartDate}
+      />
+
+      <Surface className="mt-4">
         <div className="grid grid-cols-2 divide-x divide-border md:grid-cols-5">
           <Metric
             label="距考试"
@@ -99,8 +132,18 @@ export function DashboardView() {
           />
           <Metric
             label="今日时长"
-            value={`${display.durationMin} MIN`}
-            hint={kindLabel[display.kind]}
+            value={
+              phase === "active" && calendarToday
+                ? `${calendarToday.durationMin} MIN`
+                : "—"
+            }
+            hint={
+              phase === "active" && calendarToday
+                ? kindLabel[calendarToday.kind]
+                : phase === "not-started"
+                  ? "未开课"
+                  : "计划外"
+            }
           />
           <Metric
             label="正确率"
@@ -118,57 +161,197 @@ export function DashboardView() {
         </div>
       </Surface>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-        <Surface className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="label-caps">今日任务</div>
-            <KindPill tone="brand">{kindLabel[display.kind]}</KindPill>
+      {phase === "not-started" ? (
+        <Surface className="mt-6 p-5">
+          <div className="label-caps">NOT STARTED</div>
+          <h2 className="mt-2 text-lg font-medium">还没到开课日</h2>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            学习从 {formatDateCn(startDate)} 开始，还有 {diffDays(today, startDate)}{" "}
+            天。考试日仍是 {examConfig.examDate}，倒计时 {daysLeft > 0 ? `${daysLeft} 天` : "已过"}。
+            想今天就开始，点「用今天」。
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Button type="button" onClick={() => setStartDate(realToday)}>
+              用今天
+            </Button>
+            <Link
+              href="/plan"
+              className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-sm hover:bg-muted"
+            >
+              查看计划
+            </Link>
           </div>
-          <div className="mt-1 text-sm text-muted-foreground">{display.blurb}</div>
-          <ol className="mt-4 space-y-2">
-            {tasks.map((task, index) => (
-              <li
-                key={task.key}
-                className="flex items-center gap-3 text-sm"
-              >
-                <span
-                  className={`flex size-5 items-center justify-center rounded-sm border font-mono text-[10px] ${
-                    task.done
-                      ? "border-brand/40 bg-brand/10 text-brand"
-                      : "border-border text-muted-foreground"
-                  }`}
-                >
-                  {task.done ? "✓" : pad2(index + 1)}
-                </span>
-                <span className={task.done ? "text-muted-foreground line-through" : ""}>
-                  {task.label}
-                </span>
-              </li>
-            ))}
-          </ol>
-          <Link
-            href={dayHref(focus)}
-            className="mt-5 inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
-          >
-            {isCompleted(progress, focus.id) ? "查看学习日" : "继续学习"}
-            <ArrowRight className="size-4" />
-          </Link>
         </Surface>
+      ) : null}
 
-        <Surface className="p-4">
-          <div className="label-caps">当前焦点</div>
-          <div className="mt-2 text-base font-medium">{focus.title}</div>
-          <div className="mt-1 font-mono text-xs text-muted-foreground">
-            WEEK {pad2(focus.week)} · DAY {pad2(focus.dayInWeek)} · {focus.date}
-          </div>
-          <p className="mt-3 text-sm text-muted-foreground">{focus.blurb}</p>
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            <KindPill>{focus.module}</KindPill>
-            <KindPill>{focus.status === "live" ? "已开放题库" : "路线占位"}</KindPill>
-            {focus.makeup ? <KindPill>调休 45 MIN</KindPill> : null}
+      {phase === "after-plan" ? (
+        <Surface className="mt-6 p-5">
+          <div className="label-caps">SPRINT / REVIEW</div>
+          <h2 className="mt-2 text-lg font-medium">计划日历已经走完</h2>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            最后学习日是 {lastDate}。
+            {daysLeft > 0
+              ? ` 距考试还有 ${daysLeft} 天，未完成课程 ${incompleteCount} 课。不要改考试日；用错题本和模块练习继续收口。`
+              : " 考试日已过。进度仍按学习日保留。"}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Link
+              href="/mistakes"
+              className="inline-flex h-8 items-center rounded-md bg-primary px-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+            >
+              去错题本
+            </Link>
+            <Link
+              href="/practice"
+              className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-sm hover:bg-muted"
+            >
+              模块练习
+            </Link>
+            <Link
+              href="/plan"
+              className="inline-flex h-8 items-center rounded-md px-2.5 text-sm text-muted-foreground hover:text-foreground"
+            >
+              回看计划
+            </Link>
           </div>
         </Surface>
-      </div>
+      ) : null}
+
+      {phase === "active" && calendarToday ? (
+        <ActiveDayPanel
+          display={calendarToday}
+          focus={focus}
+          progress={progress}
+          sessions={sessions}
+        />
+      ) : null}
     </PageFrame>
+  );
+}
+
+function StartDateControl({
+  startDate,
+  lastDate,
+  realToday,
+  daysLeft,
+  remainingLessons,
+  planOverrunsExam,
+  lessonsBeforeExam,
+  onChange,
+}: {
+  startDate: string;
+  lastDate: string;
+  realToday: string;
+  daysLeft: number;
+  remainingLessons: number;
+  planOverrunsExam: boolean;
+  lessonsBeforeExam: number;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <Surface className="mt-6 p-4">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+        <div className="grid gap-1.5">
+          <Label htmlFor="start-date">开课日</Label>
+          <div className="flex flex-wrap items-center gap-2">
+            <Input
+              id="start-date"
+              type="date"
+              value={startDate}
+              onChange={(event) => {
+                if (event.target.value) onChange(event.target.value);
+              }}
+              className="w-[11.5rem] font-mono"
+            />
+            <Button type="button" variant="outline" onClick={() => onChange(realToday)}>
+              用今天
+            </Button>
+          </div>
+        </div>
+        <p className="max-w-xl text-xs leading-5 text-muted-foreground">
+          第 1 日对应 {startDate}，共 {CURRICULUM_LENGTH} 日，最后一日 {lastDate}。
+          考试日固定为 {examConfig.examDate}，不随开课日改动。
+          {planOverrunsExam
+            ? ` 计划会排到考试日之后：距考试 ${Math.max(daysLeft, 0)} 天，考试前能排上 ${lessonsBeforeExam} 课，今天起剩余课程 ${remainingLessons} 课。`
+            : null}
+        </p>
+      </div>
+    </Surface>
+  );
+}
+
+function ActiveDayPanel({
+  display,
+  focus,
+  progress,
+  sessions,
+}: {
+  display: StudyDay;
+  focus: StudyDay;
+  progress: ProgressState;
+  sessions: Record<string, DaySession>;
+}) {
+  const session = getSession(sessions, display.id);
+  const tasks = taskDefs.map((task) => {
+    const done =
+      task.key === "review"
+        ? session.reviewDone
+        : task.key === "learn"
+          ? session.learnDone
+          : task.key === "practice"
+            ? session.practiceDone
+            : session.wrapupDone || isCompleted(progress, display.id);
+    return { ...task, done };
+  });
+
+  return (
+    <div className="mt-6 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+      <Surface className="p-4">
+        <div className="flex items-center justify-between">
+          <div className="label-caps">今日任务</div>
+          <KindPill tone="brand">{kindLabel[display.kind]}</KindPill>
+        </div>
+        <div className="mt-1 text-sm text-muted-foreground">{display.blurb}</div>
+        <ol className="mt-4 space-y-2">
+          {tasks.map((task, index) => (
+            <li key={task.key} className="flex items-center gap-3 text-sm">
+              <span
+                className={`flex size-5 items-center justify-center rounded-sm border font-mono text-[10px] ${
+                  task.done
+                    ? "border-brand/40 bg-brand/10 text-brand"
+                    : "border-border text-muted-foreground"
+                }`}
+              >
+                {task.done ? "✓" : pad2(index + 1)}
+              </span>
+              <span className={task.done ? "text-muted-foreground line-through" : ""}>
+                {task.label}
+              </span>
+            </li>
+          ))}
+        </ol>
+        <Link
+          href={dayHref(focus)}
+          className="mt-5 inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+        >
+          {isCompleted(progress, focus.id) ? "查看学习日" : "继续学习"}
+          <ArrowRight className="size-4" />
+        </Link>
+      </Surface>
+
+      <Surface className="p-4">
+        <div className="label-caps">当前焦点</div>
+        <div className="mt-2 text-base font-medium">{focus.title}</div>
+        <div className="mt-1 font-mono text-xs text-muted-foreground">
+          WEEK {pad2(focus.week)} · DAY {pad2(focus.dayInWeek)} · {focus.date}
+        </div>
+        <p className="mt-3 text-sm text-muted-foreground">{focus.blurb}</p>
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          <KindPill>{focus.module}</KindPill>
+          <KindPill>{focus.status === "live" ? "已开放题库" : "路线占位"}</KindPill>
+          {focus.makeup ? <KindPill>调休 45 MIN</KindPill> : null}
+        </div>
+      </Surface>
+    </div>
   );
 }
