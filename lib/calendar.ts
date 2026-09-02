@@ -1,9 +1,8 @@
 import { examConfig } from "@/lib/config";
-import { inRange } from "@/lib/dates";
+import { addDaysISO, inRange } from "@/lib/dates";
 import type { ContentStatus, DayKind, HolidayKind, StudyDay, WeekMeta } from "@/lib/types";
 
 interface DaySeed {
-  date: string;
   week: number;
   dayInWeek: number;
   title: string;
@@ -41,7 +40,6 @@ function holidayOf(date: string): HolidayKind | undefined {
 
 const seeds: DaySeed[] = [
   {
-    date: "2026-09-01",
     week: 1,
     dayInWeek: 1,
     title: "内聚与耦合",
@@ -54,7 +52,6 @@ const seeds: DaySeed[] = [
       "模块内部职责是否集中、模块之间依赖有多紧。软考必考七种耦合，不要只背「四种」。",
   },
   {
-    date: "2026-09-02",
     week: 1,
     dayInWeek: 2,
     title: "生命周期 + 开发模型 + V 模型",
@@ -67,7 +64,6 @@ const seeds: DaySeed[] = [
       "按需求稳定度与风险选型；V 模型把每层设计与对应测试阶段一一配对。",
   },
   {
-    date: "2026-09-03",
     week: 1,
     dayInWeek: 3,
     title: "黑盒测试",
@@ -80,7 +76,6 @@ const seeds: DaySeed[] = [
       "等价类、边界值、因果图、错误推测。区间边界题几乎每年都出现。",
   },
   {
-    date: "2026-09-04",
     week: 1,
     dayInWeek: 4,
     title: "白盒测试 + McCabe",
@@ -93,7 +88,6 @@ const seeds: DaySeed[] = [
       "覆盖强度排序、判定覆盖 ≠ 条件覆盖、环形复杂度 V(G)=E−N+2=P+1。",
   },
   {
-    date: "2026-09-05",
     week: 1,
     dayInWeek: 5,
     title: "DFD / 数据字典 / 平衡原则",
@@ -106,7 +100,6 @@ const seeds: DaySeed[] = [
       "父图与子图数据流平衡、加工编号、数据字典条目。下午案例分析主阵地。",
   },
   {
-    date: "2026-09-06",
     week: 1,
     dayInWeek: 6,
     title: "UML 五图 + 类关系",
@@ -119,7 +112,6 @@ const seeds: DaySeed[] = [
       "用例、类、顺序、状态、活动；关联 / 聚合 / 组合 / 依赖 / 泛化 / 实现。",
   },
   {
-    date: "2026-09-07",
     week: 1,
     dayInWeek: 7,
     title: "面向对象基础 + 本周错题",
@@ -131,7 +123,6 @@ const seeds: DaySeed[] = [
     blurb: "封装、继承、多态、抽象；把本周软件工程错题过一遍。",
   },
   {
-    date: "2026-09-08",
     week: 2,
     dayInWeek: 1,
     title: "复杂度 + 线性结构",
@@ -144,7 +135,6 @@ const seeds: DaySeed[] = [
       "大 O 比较、栈队列数组链表的操作复杂度。软考考概念与推演，不考手写刷题。",
   },
   {
-    date: "2026-09-09",
     week: 2,
     dayInWeek: 2,
     title: "树：遍历 / 堆 / Huffman",
@@ -156,7 +146,6 @@ const seeds: DaySeed[] = [
     blurb: "先中后序、层次遍历、完全二叉树、堆调整、Huffman 带权路径长。",
   },
   {
-    date: "2026-09-10",
     week: 2,
     dayInWeek: 3,
     title: "图：BFS / DFS / 最短路 / 最小生成树",
@@ -169,7 +158,6 @@ const seeds: DaySeed[] = [
       "BFS、DFS、Dijkstra、Floyd、Prim、Kruskal。会对照适用条件与复杂度即可。",
   },
   {
-    date: "2026-09-11",
     week: 2,
     dayInWeek: 4,
     title: "排序 + 查找",
@@ -182,7 +170,6 @@ const seeds: DaySeed[] = [
       "稳定与不稳定、最好最坏平均、折半查找判定树。不把贪心 / DP 当本日专题。",
   },
   {
-    date: "2026-09-12",
     week: 2,
     dayInWeek: 5,
     title: "算法填空（C / Java 完形）",
@@ -195,7 +182,6 @@ const seeds: DaySeed[] = [
       "下午常见：给一段遍历 / 排序 / 建树代码挖空。v1 用选择题完形代替手写填空。",
   },
   {
-    date: "2026-09-13",
     week: 2,
     dayInWeek: 6,
     title: "哈希 + 字符串",
@@ -207,7 +193,6 @@ const seeds: DaySeed[] = [
     blurb: "散列函数、冲突处理、装填因子；KMP / 朴素匹配考法。",
   },
   {
-    date: "2026-09-14",
     week: 2,
     dayInWeek: 7,
     title: "本周错题复盘",
@@ -219,7 +204,6 @@ const seeds: DaySeed[] = [
     blurb: "只复盘本周图、树、排序的易混点，不新开算法范式专题。",
   },
   {
-    date: "2026-09-15",
     week: 3,
     dayInWeek: 1,
     title: "关系模型 + E-R + 完整性",
@@ -231,7 +215,6 @@ const seeds: DaySeed[] = [
     blurb: "实体联系转表、主外键、实体/参照/用户定义完整性。",
   },
   {
-    date: "2026-09-16",
     week: 3,
     dayInWeek: 2,
     title: "范式与规范化",
@@ -243,7 +226,6 @@ const seeds: DaySeed[] = [
     blurb: "1NF / 2NF / 3NF / BCNF，部分依赖与传递依赖是送分也是送命题陷阱。",
   },
   {
-    date: "2026-09-17",
     week: 3,
     dayInWeek: 3,
     title: "SQL 查询",
@@ -255,7 +237,6 @@ const seeds: DaySeed[] = [
     blurb: "连接、分组、嵌套、存在量词。上午选择 + 下午补全都会出。",
   },
   {
-    date: "2026-09-18",
     week: 3,
     dayInWeek: 4,
     title: "事务 / 并发 / 封锁",
@@ -267,7 +248,6 @@ const seeds: DaySeed[] = [
     blurb: "ACID、隔离级别、共享/排他锁、死锁、两段锁。",
   },
   {
-    date: "2026-09-19",
     week: 3,
     dayInWeek: 5,
     title: "数据库设计案例",
@@ -279,7 +259,6 @@ const seeds: DaySeed[] = [
     blurb: "读题干补 E-R、补关系模式、写约束。按下午题节奏练。",
   },
   {
-    date: "2026-09-20",
     week: 3,
     dayInWeek: 6,
     title: "调休 · 本周错题复盘",
@@ -292,7 +271,6 @@ const seeds: DaySeed[] = [
     blurb: "调休工作日按 45 分钟工作日处理，只复盘，不开长案例。",
   },
   {
-    date: "2026-09-21",
     week: 3,
     dayInWeek: 7,
     title: "视图 / 索引 / 查询优化",
@@ -304,7 +282,6 @@ const seeds: DaySeed[] = [
     blurb: "视图可更新条件、B+ 树索引、选择率与最左前缀。",
   },
   {
-    date: "2026-09-22",
     week: 4,
     dayInWeek: 1,
     title: "用例图 + 类图精讲",
@@ -316,7 +293,6 @@ const seeds: DaySeed[] = [
     blurb: "参与者、包含/扩展/泛化；类图多重度与导航是高频坑。",
   },
   {
-    date: "2026-09-23",
     week: 4,
     dayInWeek: 2,
     title: "顺序图 / 状态图 / 活动图",
@@ -328,7 +304,6 @@ const seeds: DaySeed[] = [
     blurb: "生命线与激活条、状态迁移事件、活动图分叉汇合。",
   },
   {
-    date: "2026-09-24",
     week: 4,
     dayInWeek: 3,
     title: "设计模式：创建型 + 结构型",
@@ -340,7 +315,6 @@ const seeds: DaySeed[] = [
     blurb: "单例、工厂、抽象工厂、适配器、装饰、代理、外观。看意图不看背名。",
   },
   {
-    date: "2026-09-25",
     week: 4,
     dayInWeek: 4,
     title: "中秋 · 轻量复盘",
@@ -352,7 +326,6 @@ const seeds: DaySeed[] = [
     blurb: "中秋假期，只过类关系与模式意图对照表。",
   },
   {
-    date: "2026-09-26",
     week: 4,
     dayInWeek: 5,
     title: "设计模式案例（行为型）",
@@ -364,7 +337,6 @@ const seeds: DaySeed[] = [
     blurb: "策略、观察者、模板方法、命令、状态。下午常要求「补类图选模式」。",
   },
   {
-    date: "2026-09-27",
     week: 4,
     dayInWeek: 6,
     title: "中秋 · 架构风格速记",
@@ -376,7 +348,6 @@ const seeds: DaySeed[] = [
     blurb: "管道过滤、分层、C2、MVC、微内核。假期短训即可。",
   },
   {
-    date: "2026-09-28",
     week: 4,
     dayInWeek: 7,
     title: "本周错题 + 模式对比",
@@ -388,7 +359,6 @@ const seeds: DaySeed[] = [
     blurb: "把「看起来像」的模式对放在一起：装饰 vs 代理、策略 vs 状态。",
   },
   {
-    date: "2026-09-29",
     week: 5,
     dayInWeek: 1,
     title: "进程 / 线程 / 调度",
@@ -400,7 +370,6 @@ const seeds: DaySeed[] = [
     blurb: "三态五态、抢占、时间片、FCFS / SJF / 优先级 / RR。",
   },
   {
-    date: "2026-09-30",
     week: 5,
     dayInWeek: 2,
     title: "同步互斥 / 死锁 / PV",
@@ -412,7 +381,6 @@ const seeds: DaySeed[] = [
     blurb: "临界区、信号量、死锁四条件、银行家。PV 题按模板算。",
   },
   {
-    date: "2026-10-01",
     week: 5,
     dayInWeek: 3,
     title: "国庆 · 存储管理速记",
@@ -424,7 +392,6 @@ const seeds: DaySeed[] = [
     blurb: "国庆短训：分页分段、页面置换 FIFO / LRU / Clock。",
   },
   {
-    date: "2026-10-02",
     week: 5,
     dayInWeek: 4,
     title: "国庆 · 文件与设备",
@@ -436,7 +403,6 @@ const seeds: DaySeed[] = [
     blurb: "目录结构、索引分配、SPOOLing、中断与 DMA。",
   },
   {
-    date: "2026-10-03",
     week: 5,
     dayInWeek: 5,
     title: "上午综合卷（OS + 计组）",
@@ -449,7 +415,6 @@ const seeds: DaySeed[] = [
     blurb: "按上午 150 分钟计时。v1 先用计时器占位，完整卷库后续接入。",
   },
   {
-    date: "2026-10-04",
     week: 5,
     dayInWeek: 6,
     title: "下午案例卷（OS / 计组）",
@@ -462,7 +427,6 @@ const seeds: DaySeed[] = [
     blurb: "下午案例卷占位。先走完计时与收尾，卷面稍后补上。",
   },
   {
-    date: "2026-10-05",
     week: 5,
     dayInWeek: 7,
     title: "计算机组成：CPU / 流水 / Cache",
@@ -474,7 +438,6 @@ const seeds: DaySeed[] = [
     blurb: "指令周期、流水线吞吐、Cache 映射与写策略。",
   },
   {
-    date: "2026-10-06",
     week: 6,
     dayInWeek: 1,
     title: "编译原理：词法 / 语法 / 中间代码",
@@ -486,7 +449,6 @@ const seeds: DaySeed[] = [
     blurb: "有限自动机、LL / LR 直觉、四元式。上午小题为主。",
   },
   {
-    date: "2026-10-07",
     week: 6,
     dayInWeek: 2,
     title: "国庆末 · 计算机网络体系",
@@ -498,7 +460,6 @@ const seeds: DaySeed[] = [
     blurb: "OSI / TCP-IP、可靠传输、路由与 IP 编址。",
   },
   {
-    date: "2026-10-08",
     week: 6,
     dayInWeek: 3,
     title: "网络安全 + 密码学",
@@ -510,7 +471,6 @@ const seeds: DaySeed[] = [
     blurb: "对称/非对称、摘要、数字签名、HTTPS 握手角色。",
   },
   {
-    date: "2026-10-09",
     week: 6,
     dayInWeek: 4,
     title: "专业英语阅读",
@@ -522,7 +482,6 @@ const seeds: DaySeed[] = [
     blurb: "每年 5 分左右。认术语比读长难句更划算。",
   },
   {
-    date: "2026-10-10",
     week: 6,
     dayInWeek: 5,
     title: "调休 · 知识产权与标准",
@@ -535,7 +494,6 @@ const seeds: DaySeed[] = [
     blurb: "调休工作日 45 分钟：著作权归属、侵权、国家标准编号。",
   },
   {
-    date: "2026-10-11",
     week: 6,
     dayInWeek: 6,
     title: "下午案例卷",
@@ -548,7 +506,6 @@ const seeds: DaySeed[] = [
     blurb: "第二场下午卷占位。保持 150 分钟节奏。",
   },
   {
-    date: "2026-10-12",
     week: 6,
     dayInWeek: 7,
     title: "本周错题复盘",
@@ -560,7 +517,6 @@ const seeds: DaySeed[] = [
     blurb: "编译、网络、安全、知产、英语错题过一遍。",
   },
   {
-    date: "2026-10-13",
     week: 7,
     dayInWeek: 1,
     title: "薄弱项：软件工程查漏",
@@ -572,7 +528,6 @@ const seeds: DaySeed[] = [
     blurb: "只打本周前错题里反复出现的软工点，不新开大专题。",
   },
   {
-    date: "2026-10-14",
     week: 7,
     dayInWeek: 2,
     title: "薄弱项：数据结构查漏",
@@ -584,7 +539,6 @@ const seeds: DaySeed[] = [
     blurb: "对照错题本：图算法适用条件、排序稳定性、Huffman。",
   },
   {
-    date: "2026-10-15",
     week: 7,
     dayInWeek: 3,
     title: "薄弱项：数据库 + UML",
@@ -596,7 +550,6 @@ const seeds: DaySeed[] = [
     blurb: "范式判定 + 类关系 + 模式意图，下午分数大户。",
   },
   {
-    date: "2026-10-16",
     week: 7,
     dayInWeek: 4,
     title: "薄弱项：OS + 计组 + 网络",
@@ -608,7 +561,6 @@ const seeds: DaySeed[] = [
     blurb: "调度计算、Cache 映射、子网划分，上午容易算错的三类。",
   },
   {
-    date: "2026-10-17",
     week: 7,
     dayInWeek: 5,
     title: "上午真题卷",
@@ -621,7 +573,6 @@ const seeds: DaySeed[] = [
     blurb: "完整上午节奏。v1 计时占位。",
   },
   {
-    date: "2026-10-18",
     week: 7,
     dayInWeek: 6,
     title: "下午真题卷",
@@ -634,7 +585,6 @@ const seeds: DaySeed[] = [
     blurb: "完整下午节奏。v1 计时占位。",
   },
   {
-    date: "2026-10-19",
     week: 7,
     dayInWeek: 7,
     title: "错题总复盘",
@@ -646,7 +596,6 @@ const seeds: DaySeed[] = [
     blurb: "只看「待复习」和连续错过的题，不要再铺新范围。",
   },
   {
-    date: "2026-10-20",
     week: 8,
     dayInWeek: 1,
     title: "上午选择题冲刺",
@@ -658,7 +607,6 @@ const seeds: DaySeed[] = [
     blurb: "冲刺周只收口：高频陷阱清单，不学新体系。",
   },
   {
-    date: "2026-10-21",
     week: 8,
     dayInWeek: 2,
     title: "下午案例冲刺",
@@ -670,7 +618,6 @@ const seeds: DaySeed[] = [
     blurb: "DFD 平衡、E-R 转表、UML 补图、算法填空四件套过一遍。",
   },
   {
-    date: "2026-10-22",
     week: 8,
     dayInWeek: 3,
     title: "高频陷阱速记",
@@ -682,7 +629,6 @@ const seeds: DaySeed[] = [
     blurb: "30 分钟：耦合七种、覆盖强度、V 模型配对、边界值。",
   },
   {
-    date: "2026-10-23",
     week: 8,
     dayInWeek: 4,
     title: "考前清单 + 最后过一遍",
@@ -695,117 +641,150 @@ const seeds: DaySeed[] = [
   },
 ];
 
-export const weeks: WeekMeta[] = [
+const weekSeeds: Omit<WeekMeta, 'start' | 'end'>[] = [
   {
     week: 1,
     title: "软件工程 + DFD",
     subtitle: "内聚耦合、模型、测试、数据流图",
-    start: "2026-09-01",
-    end: "2026-09-07",
   },
   {
     week: 2,
     title: "数据结构（软考向）",
     subtitle: "复杂度、树、图、排序查找、哈希；不含贪心 / DP 专题",
-    start: "2026-09-08",
-    end: "2026-09-14",
   },
   {
     week: 3,
     title: "数据库",
     subtitle: "E-R、范式、SQL、事务；09-20 调休只复盘",
-    start: "2026-09-15",
-    end: "2026-09-21",
   },
   {
     week: 4,
     title: "UML 与设计模式",
     subtitle: "五图、类关系、模式；09-26 案例",
-    start: "2026-09-22",
-    end: "2026-09-28",
   },
   {
     week: 5,
     title: "操作系统 + 计算机组成",
     subtitle: "进程存储、计组；10-03 / 10-04 卷",
-    start: "2026-09-29",
-    end: "2026-10-05",
   },
   {
     week: 6,
     title: "编译 / 网络 / 安全 / 知产 / 英语",
     subtitle: "10-10 知产与标准；10-11 下午卷",
-    start: "2026-10-06",
-    end: "2026-10-12",
   },
   {
     week: 7,
     title: "薄弱项 + 真题卷",
     subtitle: "查漏四天 + 10-17 / 10-18 卷",
-    start: "2026-10-13",
-    end: "2026-10-19",
   },
   {
     week: 8,
     title: "冲刺",
     subtitle: "仅四天，考试日不排课",
-    start: "2026-10-20",
-    end: "2026-10-23",
   },
 ];
 
-export const studyDays: StudyDay[] = seeds.map((seed) => ({
-  id: seed.date,
-  date: seed.date,
-  week: seed.week,
-  dayInWeek: seed.dayInWeek,
-  title: seed.title,
-  topic: seed.topic,
-  module: seed.module,
-  kind: seed.kind,
-  durationMin: seed.durationMin,
-  status: seed.status,
-  holiday: holidayOf(seed.date),
-  makeup: seed.makeup,
-  paperSlot: seed.paperSlot,
-  blurb: seed.blurb,
-}));
+export function dayIdOf(week: number, dayInWeek: number): string {
+  return `week-${week}/day-${dayInWeek}`;
+}
+
+export function scheduleDays(startDate: string): StudyDay[] {
+  return seeds.map((seed, index) => {
+    const date = addDaysISO(startDate, index);
+    return {
+      id: dayIdOf(seed.week, seed.dayInWeek),
+      date,
+      week: seed.week,
+      dayInWeek: seed.dayInWeek,
+      title: seed.title,
+      topic: seed.topic,
+      module: seed.module,
+      kind: seed.kind,
+      durationMin: seed.durationMin,
+      status: seed.status,
+      holiday: holidayOf(date),
+      makeup: seed.makeup,
+      paperSlot: seed.paperSlot,
+      blurb: seed.blurb,
+    };
+  });
+}
+
+export function scheduleWeeks(startDate: string): WeekMeta[] {
+  const days = scheduleDays(startDate);
+  return weekSeeds.map((week) => {
+    const inWeek = days.filter((day) => day.week === week.week);
+    return {
+      ...week,
+      start: inWeek[0]?.date ?? startDate,
+      end: inWeek[inWeek.length - 1]?.date ?? startDate,
+    };
+  });
+}
+
+export function lastPlannedDate(startDate: string): string {
+  return addDaysISO(startDate, Math.max(0, seeds.length - 1));
+}
+
+export function getDayByDate(startDate: string, iso: string): StudyDay | undefined {
+  return scheduleDays(startDate).find((day) => day.date === iso);
+}
+
+/** Identity list for static params and content keys. Dates follow a dummy start. */
+export const studyDays: StudyDay[] = scheduleDays("2000-01-01");
+export const weeks: WeekMeta[] = scheduleWeeks("2000-01-01");
+export const CURRICULUM_LENGTH = seeds.length;
 
 export const firstDay = studyDays[0];
 export const lastDay = studyDays[studyDays.length - 1];
 
-export function getDayById(id: string): StudyDay | undefined {
-  return studyDays.find((day) => day.id === id);
+export function getDayById(id: string, startDate?: string): StudyDay | undefined {
+  const days = startDate ? scheduleDays(startDate) : studyDays;
+  return days.find((day) => day.id === id);
 }
 
 export function getDayByWeekDay(
   week: number,
   dayInWeek: number,
+  startDate?: string,
 ): StudyDay | undefined {
-  return studyDays.find((day) => day.week === week && day.dayInWeek === dayInWeek);
+  const days = startDate ? scheduleDays(startDate) : studyDays;
+  return days.find((day) => day.week === week && day.dayInWeek === dayInWeek);
 }
 
-export function getDaysByWeek(week: number): StudyDay[] {
-  return studyDays.filter((day) => day.week === week);
+export function getDaysByWeek(week: number, startDate?: string): StudyDay[] {
+  const days = startDate ? scheduleDays(startDate) : studyDays;
+  return days.filter((day) => day.week === week);
 }
 
-export function getWeekMeta(week: number): WeekMeta | undefined {
-  return weeks.find((item) => item.week === week);
+export function getWeekMeta(week: number, startDate?: string): WeekMeta | undefined {
+  const list = startDate ? scheduleWeeks(startDate) : weeks;
+  return list.find((item) => item.week === week);
 }
 
-export function getNextDay(id: string): StudyDay | undefined {
-  const index = studyDays.findIndex((day) => day.id === id);
+export function getNextDay(id: string, startDate?: string): StudyDay | undefined {
+  const days = startDate ? scheduleDays(startDate) : studyDays;
+  const index = days.findIndex((day) => day.id === id);
   if (index < 0) return undefined;
-  return studyDays[index + 1];
+  return days[index + 1];
 }
 
-export function getPrevDay(id: string): StudyDay | undefined {
-  const index = studyDays.findIndex((day) => day.id === id);
+export function getPrevDay(id: string, startDate?: string): StudyDay | undefined {
+  const days = startDate ? scheduleDays(startDate) : studyDays;
+  const index = days.findIndex((day) => day.id === id);
   if (index <= 0) return undefined;
-  return studyDays[index - 1];
+  return days[index - 1];
 }
 
-export function dayHref(day: StudyDay): string {
+export type PlanPhase = "not-started" | "active" | "after-plan";
+
+export function planPhase(startDate: string, today: string): PlanPhase {
+  if (today < startDate) return "not-started";
+  if (today > lastPlannedDate(startDate)) return "after-plan";
+  return "active";
+}
+
+export function dayHref(day: Pick<StudyDay, "week" | "dayInWeek">): string {
   return `/learn/week-${day.week}/day-${day.dayInWeek}`;
 }
 
