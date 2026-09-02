@@ -2,6 +2,11 @@ import { examConfig } from "@/lib/config";
 
 const WEEKDAY_CN = ["日", "一", "二", "三", "四", "五", "六"] as const;
 
+export function isISODate(value: string | null | undefined): value is string {
+  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  return formatISODate(parseISODate(value)) === value;
+}
+
 export function parseISODate(iso: string): Date {
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(y, m - 1, d);

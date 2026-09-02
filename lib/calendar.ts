@@ -1,5 +1,5 @@
 import { examConfig } from "@/lib/config";
-import { inRange } from "@/lib/dates";
+import { addDaysISO, inRange, isISODate, todayISO } from "@/lib/dates";
 import type { ContentStatus, DayKind, HolidayKind, StudyDay, WeekMeta } from "@/lib/types";
 
 interface DaySeed {
@@ -713,35 +713,35 @@ export const weeks: WeekMeta[] = [
   {
     week: 3,
     title: "数据库",
-    subtitle: "E-R、范式、SQL、事务；09-20 调休只复盘",
+    subtitle: "E-R、范式、SQL、事务；调休日只复盘",
     start: "2026-09-15",
     end: "2026-09-21",
   },
   {
     week: 4,
     title: "UML 与设计模式",
-    subtitle: "五图、类关系、模式；09-26 案例",
+    subtitle: "五图、类关系、模式；含案例日",
     start: "2026-09-22",
     end: "2026-09-28",
   },
   {
     week: 5,
     title: "操作系统 + 计算机组成",
-    subtitle: "进程存储、计组；10-03 / 10-04 卷",
+    subtitle: "进程存储、计组；含上/下午卷",
     start: "2026-09-29",
     end: "2026-10-05",
   },
   {
     week: 6,
     title: "编译 / 网络 / 安全 / 知产 / 英语",
-    subtitle: "10-10 知产与标准；10-11 下午卷",
+    subtitle: "知产与标准；下午卷",
     start: "2026-10-06",
     end: "2026-10-12",
   },
   {
     week: 7,
     title: "薄弱项 + 真题卷",
-    subtitle: "查漏四天 + 10-17 / 10-18 卷",
+    subtitle: "查漏四天 + 上/下午卷",
     start: "2026-10-13",
     end: "2026-10-19",
   },
@@ -754,8 +754,12 @@ export const weeks: WeekMeta[] = [
   },
 ];
 
+export function curriculumDayId(week: number, dayInWeek: number): string {
+  return `week-${week}/day-${dayInWeek}`;
+}
+
 export const studyDays: StudyDay[] = seeds.map((seed) => ({
-  id: seed.date,
+  id: curriculumDayId(seed.week, seed.dayInWeek),
   date: seed.date,
   week: seed.week,
   dayInWeek: seed.dayInWeek,
@@ -771,8 +775,68 @@ export const studyDays: StudyDay[] = seeds.map((seed) => ({
   blurb: seed.blurb,
 }));
 
+export const CURRICULUM_DAY_COUNT = studyDays.length;
+
+const legacyDateToDayId = new Map(
+  seeds.map((seed) => [seed.date, curriculumDayId(seed.week, seed.dayInWeek)]),
+);
+
+export function migrateLegacyDayId(id: string): string {
+  return legacyDateToDayId.get(id) ?? id;
+}
+
 export const firstDay = studyDays[0];
 export const lastDay = studyDays[studyDays.length - 1];
+
+export function scheduleDays(startDate: string): StudyDay[] {
+  const start = isISODate(startDate) ? startDate : todayISO();
+  return studyDays.map((day, index) => ({
+    ...day,
+    date: addDaysISO(start, index),
+  }));
+}
+
+export function scheduleWeeks(startDate: string): WeekMeta[] {
+  const days = scheduleDays(startDate);
+  return weeks.map((week) => {
+    const inWeek = days.filter((day) => day.week === week.week);
+    return {
+      ...week,
+      start: inWeek[0]?.date ?? week.start,
+      end: inWeek[inWeek.length - 1]?.date ?? week.end,
+    };
+  });
+}
+
+export function studyWindow(startDate: string): { start: string; end: string } {
+  const days = scheduleDays(startDate);
+  return {
+    start: days[0]?.date ?? startDate,
+    end: days[days.length - 1]?.date ?? startDate,
+  };
+}
+
+export function getDayOnDate(
+  startDate: string,
+  iso: string,
+): StudyDay | undefined {
+  return scheduleDays(startDate).find((day) => day.date === iso);
+}
+
+export function examOverlap(startDate: string): {
+  start: string;
+  end: string;
+  overrunsExam: boolean;
+  endsOnExam: boolean;
+} {
+  const { start, end } = studyWindow(startDate);
+  return {
+    start,
+    end,
+    overrunsExam: end >= examConfig.examDate,
+    endsOnExam: end === examConfig.examDate,
+  };
+}
 
 export function getDayById(id: string): StudyDay | undefined {
   return studyDays.find((day) => day.id === id);

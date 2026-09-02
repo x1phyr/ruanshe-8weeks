@@ -44,7 +44,7 @@ export function SimulateDialog({
           <DialogHeader>
             <DialogTitle>调试 · 模拟今日</DialogTitle>
             <DialogDescription>
-              默认使用系统日期。覆盖后，仪表盘与待复习都按该日计算。考试日从配置项{" "}
+              默认使用系统日期。覆盖后，仪表盘与待复习都按该日计算。这与「学习开始日」无关：开始日只平移课表，不会改今天。考试日从配置项{" "}
               <span className="font-mono text-foreground">examDate</span>{" "}
               读取（当前{" "}
               <span className="mono-num text-foreground">{examConfig.examDate}</span>

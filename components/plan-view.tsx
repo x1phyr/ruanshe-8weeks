@@ -5,29 +5,34 @@ import { Lock, Check } from "lucide-react";
 import { KindPill, PageFrame, PageHeader, Surface } from "@/components/ui-bits";
 import {
   dayHref,
+  examOverlap,
   holidayLabel,
   kindLabel,
-  studyDays,
-  weeks,
+  scheduleDays,
+  scheduleWeeks,
 } from "@/lib/calendar";
 import { examConfig } from "@/lib/config";
 import { examCountdown, formatDateShort, pad2, todayISO, weekdayLabel } from "@/lib/dates";
 import { isCompleted, isUnlocked } from "@/lib/progress";
-import { useTrainerStore } from "@/lib/store";
+import { resolvedStartDate, useTrainerStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export function PlanView() {
   const progress = useTrainerStore((s) => s.progress);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
+  const startDate = resolvedStartDate(useTrainerStore((s) => s.startDate));
   const today = todayISO(simulateDate);
   const daysLeft = examCountdown(today);
+  const days = scheduleDays(startDate);
+  const weekMetas = scheduleWeeks(startDate);
+  const overlap = examOverlap(startDate);
 
   return (
     <PageFrame>
       <PageHeader
         kicker="8-WEEK ROADMAP"
         title="课程日历"
-        description={`学习窗口 ${examConfig.studyStart} 至 ${examConfig.studyEnd}。考试日从 examDate 读取，不排课。`}
+        description={`从 ${overlap.start} 起共 53 日，排到 ${overlap.end}。考试日 ${examConfig.examDate} 从 examDate 读取，不随开始日改期。`}
         action={
           <div className="text-right">
             <div className="label-caps">距考试</div>
@@ -39,9 +44,20 @@ export function PlanView() {
         }
       />
 
+      {overlap.overrunsExam ? (
+        <Surface className="mb-6 px-3 py-3">
+          <p className="text-sm leading-6 text-muted-foreground">
+            当前开始日让课表最后一日落在考试
+            {overlap.endsOnExam ? "当天" : "之后"}。距考试{" "}
+            {daysLeft > 0 ? `${daysLeft} 天` : "已到/已过"}，考试日仍是{" "}
+            {examConfig.examDate}，不会自动改期。
+          </p>
+        </Surface>
+      ) : null}
+
       <div className="space-y-6">
-        {weeks.map((week) => {
-          const days = studyDays.filter((day) => day.week === week.week);
+        {weekMetas.map((week) => {
+          const weekDays = days.filter((day) => day.week === week.week);
           return (
             <section key={week.week}>
               <div className="mb-2 flex flex-wrap items-end justify-between gap-2">
@@ -56,10 +72,10 @@ export function PlanView() {
               </div>
               <Surface className="overflow-hidden">
                 <ul className="divide-y divide-border">
-                  {days.map((day) => {
+                  {weekDays.map((day) => {
                     const unlocked = isUnlocked(progress, day.id);
                     const done = isCompleted(progress, day.id);
-                    const isToday = day.id === today;
+                    const isToday = day.date === today;
                     const inner = (
                       <div
                         className={cn(
