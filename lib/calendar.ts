@@ -48,7 +48,7 @@ const seeds: DaySeed[] = [
     module: "计算机组成",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb:
       "章1开场：冯·诺依曼结构、层次、数制转换、原码反码补码、校验码。上午小题为主。",
   },
@@ -60,7 +60,7 @@ const seeds: DaySeed[] = [
     module: "计算机组成",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "指令周期、寻址方式、CISC/RISC。会对照考法，不背微指令表。",
   },
   {
@@ -71,7 +71,7 @@ const seeds: DaySeed[] = [
     module: "计算机组成",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "主存编址、Cache 映射（直接/全相联/组相联）、写策略、命中率计算。",
   },
   {
@@ -82,7 +82,7 @@ const seeds: DaySeed[] = [
     module: "计算机组成",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "流水线吞吐与加速比、冒险；总线仲裁；中断 / DMA / 通道。",
   },
   {
@@ -93,7 +93,7 @@ const seeds: DaySeed[] = [
     module: "程序语言",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb:
       "章2：语言分类、编译型/解释型、绑定时机、参数传递（值/引用/名）。",
   },
@@ -105,7 +105,7 @@ const seeds: DaySeed[] = [
     module: "程序语言",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "有限自动机、正则；LL / LR 直觉、文法二义性。上午概念题为主。",
   },
   {
@@ -116,7 +116,7 @@ const seeds: DaySeed[] = [
     module: "程序语言",
     kind: "review",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "四元式、解释与编译对比；把计组计算题与编译易混点过一遍。",
   },
   // —— Week 2：章3 数据结构 ——
