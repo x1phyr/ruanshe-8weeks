@@ -128,7 +128,7 @@ const seeds: DaySeed[] = [
     module: "数据结构",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb:
       "大 O 比较、数组/链表操作复杂度。软考考概念与推演，不考手写刷题。",
   },
@@ -140,7 +140,7 @@ const seeds: DaySeed[] = [
     module: "数据结构",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "进出序、循环队列判空满、表达式求值与括号匹配考法。",
   },
   {
@@ -151,7 +151,7 @@ const seeds: DaySeed[] = [
     module: "数据结构",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "先中后序、层次遍历、完全二叉树、堆调整、Huffman 带权路径长。",
   },
   {
@@ -162,7 +162,7 @@ const seeds: DaySeed[] = [
     module: "数据结构",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb:
       "BFS、DFS、Dijkstra、Floyd、Prim、Kruskal。会对照适用条件与复杂度即可。",
   },
@@ -174,7 +174,7 @@ const seeds: DaySeed[] = [
     module: "数据结构",
     kind: "case",
     durationMin: 90,
-    status: "stub",
+    status: "live",
     blurb:
       "稳定与不稳定、最好最坏平均；下午常见遍历/排序挖空。v1 用选择题完形。",
   },
@@ -186,7 +186,7 @@ const seeds: DaySeed[] = [
     module: "数据结构",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "折半判定树、散列冲突与装填因子；KMP / 朴素匹配只记思想。",
   },
   {
@@ -197,7 +197,7 @@ const seeds: DaySeed[] = [
     module: "数据结构",
     kind: "review",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "只复盘图、树、排序易混点；不新开贪心 / DP / 回溯专题。",
   },
   // —— Week 3：章4 OS + 章5 软工开场（现有 live 内容落点）——

@@ -68,6 +68,13 @@ npm run build
 | week-1/day-5 | 程序语言基础 |
 | week-1/day-6 | 编译：词法与语法分析 |
 | week-1/day-7 | 编译：中间代码与本周复盘 |
+| week-2/day-1 | 复杂度 + 线性结构 |
+| week-2/day-2 | 栈与队列 |
+| week-2/day-3 | 树：遍历 / 堆 / Huffman |
+| week-2/day-4 | 图：BFS / DFS / 最短路 / MST |
+| week-2/day-5 | 排序 + 算法填空（完形） |
+| week-2/day-6 | 查找 + 哈希 + 串 |
+| week-2/day-7 | 本周错题复盘 |
 | week-3/day-6 | 内聚与耦合（含七种耦合） |
 | week-3/day-7 | 生命周期 + 开发模型 + V 模型 |
 | week-4/day-1 | 黑盒测试 |
