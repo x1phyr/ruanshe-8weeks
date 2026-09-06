@@ -430,7 +430,7 @@ const seeds: DaySeed[] = [
     durationMin: 150,
     status: "paper",
     paperSlot: "morning",
-    blurb: "按上午 150 分钟计时。v1 先用计时器占位，完整卷库后续接入。",
+    blurb: "150 分钟计时壳 + 用法指导；自备合法真题，站内不贴整卷原文。",
   },
   {
     week: 5,
@@ -442,7 +442,7 @@ const seeds: DaySeed[] = [
     durationMin: 150,
     status: "paper",
     paperSlot: "afternoon",
-    blurb: "下午案例卷占位。先走完计时与收尾，卷面稍后补上。",
+    blurb: "150 分钟下午节奏 + 踩点答法；案例原文请用合法材料。",
   },
   // —— Week 6：章9 数据库 + 章10 网络与安全 ——
   {
@@ -532,7 +532,7 @@ const seeds: DaySeed[] = [
     module: "法律法规",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "章11：著作权归属、保护期、侵权；国家标准编号速记。",
   },
   {
@@ -543,7 +543,7 @@ const seeds: DaySeed[] = [
     module: "系统分析与设计",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "章12：可行性、需求、概要/详细设计文档要点；与软工模型对照。",
   },
   {
@@ -554,7 +554,7 @@ const seeds: DaySeed[] = [
     module: "系统分析与设计",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "B/S、MVC、常见 Web 技术栈考点；架构风格速记。",
   },
   {
@@ -565,7 +565,7 @@ const seeds: DaySeed[] = [
     module: "综合",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "术语比长难句更划算；只打错题本里反复出现的点，不新开大专题。",
   },
   {
@@ -578,7 +578,7 @@ const seeds: DaySeed[] = [
     durationMin: 150,
     status: "paper",
     paperSlot: "morning",
-    blurb: "完整上午节奏。v1 计时占位。",
+    blurb: "第二次上午全真节奏：计时 + 真题用法；不贴受版权保护的整卷。",
   },
   {
     week: 7,
@@ -590,7 +590,7 @@ const seeds: DaySeed[] = [
     durationMin: 150,
     status: "paper",
     paperSlot: "afternoon",
-    blurb: "完整下午节奏。v1 计时占位。",
+    blurb: "第二次下午全真节奏：计时 + 案例踩点；不贴受版权保护的案例原文。",
   },
   {
     week: 7,
@@ -600,7 +600,7 @@ const seeds: DaySeed[] = [
     module: "查漏补缺",
     kind: "review",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "只看「待复习」和连续错过的题，不要再铺新范围。",
   },
   // —— Week 8：冲刺，不学新章 ——
@@ -612,7 +612,7 @@ const seeds: DaySeed[] = [
     module: "冲刺",
     kind: "sprint",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "冲刺周只收口：高频陷阱清单，不学新体系。",
   },
   {
@@ -623,7 +623,7 @@ const seeds: DaySeed[] = [
     module: "冲刺",
     kind: "sprint",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "DFD 平衡、E-R 转表、UML 补图、算法填空四件套过一遍。",
   },
   {
@@ -634,7 +634,7 @@ const seeds: DaySeed[] = [
     module: "冲刺",
     kind: "sprint",
     durationMin: 30,
-    status: "stub",
+    status: "live",
     blurb: "30 分钟：耦合七种、覆盖强度、V 模型配对、边界值、范式。",
   },
   {
@@ -645,7 +645,7 @@ const seeds: DaySeed[] = [
     module: "冲刺",
     kind: "sprint",
     durationMin: 30,
-    status: "stub",
+    status: "live",
     blurb: "证件、计算器规则、答题卡、时间分配。考试日不是学习日。",
   },
 ];
