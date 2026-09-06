@@ -155,7 +155,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               {scheduled.status === "paper"
                 ? "试卷日先用计时占位。可以把本日标记完成，解锁下一天。"
-                : "路线已排好。v1 完整题库覆盖第 1–4 日，其余日先用短文占位。"}
+                : "路线已排好。第 1–6 周学习日已有完整题库；其余日先用短文占位。"}
             </p>
             <Button
               className="mt-5"

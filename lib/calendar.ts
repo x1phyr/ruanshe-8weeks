@@ -371,7 +371,7 @@ const seeds: DaySeed[] = [
     module: "面向对象",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "章7：参与者、包含/扩展/泛化；类图多重度与导航是高频坑。",
   },
   {
@@ -382,7 +382,7 @@ const seeds: DaySeed[] = [
     module: "面向对象",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "生命线与激活条、状态迁移事件、活动图分叉汇合。",
   },
   {
@@ -393,7 +393,7 @@ const seeds: DaySeed[] = [
     module: "面向对象",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "封装继承多态；开闭、里氏、依赖倒置。开闭是设计模式总纲。",
   },
   {
@@ -404,7 +404,7 @@ const seeds: DaySeed[] = [
     module: "面向对象",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb:
       "单例工厂适配器装饰代理；策略观察者模板方法。看意图；易混对放一起记。",
   },
@@ -416,9 +416,9 @@ const seeds: DaySeed[] = [
     module: "算法",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb:
-      "章8精要：分治/贪心/动态规划只认题型与适用条件，不堆 LeetCode。",
+      "章8精要：分治/贪心等考试经典题型与适用条件；不深挖 DP/回溯，不堆 LeetCode。",
   },
   {
     week: 5,
@@ -453,7 +453,7 @@ const seeds: DaySeed[] = [
     module: "数据库",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "章9：实体联系转表、主外键、实体/参照/用户定义完整性。",
   },
   {
@@ -464,7 +464,7 @@ const seeds: DaySeed[] = [
     module: "数据库",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "1NF / 2NF / 3NF / BCNF，部分依赖与传递依赖是送分也是陷阱。",
   },
   {
@@ -475,7 +475,7 @@ const seeds: DaySeed[] = [
     module: "数据库",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "连接、分组、嵌套、存在量词。上午选择 + 下午补全都会出。",
   },
   {
@@ -486,7 +486,7 @@ const seeds: DaySeed[] = [
     module: "数据库",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "ACID、隔离级别、封锁；视图可更新、B+ 树与最左前缀。",
   },
   {
@@ -497,7 +497,7 @@ const seeds: DaySeed[] = [
     module: "网络与安全",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     makeup: true,
     blurb: "章10：OSI / TCP-IP、可靠传输、路由与 IP 编址、子网划分。",
   },
@@ -509,7 +509,7 @@ const seeds: DaySeed[] = [
     module: "网络与安全",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "对称/非对称、摘要、数字签名、HTTPS 握手角色。",
   },
   {
@@ -520,7 +520,7 @@ const seeds: DaySeed[] = [
     module: "网络与安全",
     kind: "review",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "XSS/SQL 注入/CSRF/钓鱼；把数据库范式与网络错题过一遍。",
   },
   // —— Week 7：章11 知产 + 章12 系统分析/Web + 英语/薄弱/卷 ——
