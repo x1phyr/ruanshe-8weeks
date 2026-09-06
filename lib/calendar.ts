@@ -209,7 +209,7 @@ const seeds: DaySeed[] = [
     module: "操作系统",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "三态五态、抢占、时间片、FCFS / SJF / 优先级 / RR。",
   },
   {
@@ -220,7 +220,7 @@ const seeds: DaySeed[] = [
     module: "操作系统",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "临界区、信号量、死锁四条件、银行家。PV 题按模板算。",
   },
   {
@@ -231,7 +231,7 @@ const seeds: DaySeed[] = [
     module: "操作系统",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "分页分段、页面置换 FIFO / LRU / Clock、抖动。",
   },
   {
@@ -242,7 +242,7 @@ const seeds: DaySeed[] = [
     module: "操作系统",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "目录结构、索引分配、SPOOLing、中断与 DMA。",
   },
   {
@@ -253,7 +253,7 @@ const seeds: DaySeed[] = [
     module: "操作系统",
     kind: "review",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "调度计算、PV 位置、缺页走势图三类易错过一遍。",
   },
   {
@@ -314,7 +314,7 @@ const seeds: DaySeed[] = [
     module: "软件工程",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "质量模型、评审、配置管理、估算速记。把测试与过程串成一张网。",
   },
   {
@@ -325,7 +325,7 @@ const seeds: DaySeed[] = [
     module: "结构化方法",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "章6：加工、数据流、文件、源点汇点；分层与编号规则。",
   },
   {
@@ -336,7 +336,7 @@ const seeds: DaySeed[] = [
     module: "结构化方法",
     kind: "case",
     durationMin: 90,
-    status: "stub",
+    status: "live",
     blurb:
       "父图与子图数据流平衡、加工编号、数据字典条目。下午案例分析主阵地。",
   },
@@ -348,7 +348,7 @@ const seeds: DaySeed[] = [
     module: "结构化方法",
     kind: "learn",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "从 DFD 到模块结构、事务/变换分析；与内聚耦合对照。",
   },
   {
@@ -359,7 +359,7 @@ const seeds: DaySeed[] = [
     module: "软件工程",
     kind: "review",
     durationMin: 45,
-    status: "stub",
+    status: "live",
     blurb: "测试覆盖、V 模型配对、DFD 平衡三类错题过一遍。",
   },
   // —— Week 5：章7 OO/UML/模式 + 章8 算法精要 + 上午卷 ——
