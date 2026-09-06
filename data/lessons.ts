@@ -3,7 +3,7 @@ import type { Lesson } from "@/lib/types";
 
 const liveLessons: Lesson[] = [
   {
-    dayId: "week-1/day-1",
+    dayId: "week-3/day-6",
     title: "内聚与耦合",
     minutes: 45,
     keyPoints: [
@@ -110,7 +110,7 @@ const liveLessons: Lesson[] = [
     ],
   },
   {
-    dayId: "week-1/day-2",
+    dayId: "week-3/day-7",
     title: "生命周期 · 开发模型 · V 模型",
     minutes: 45,
     keyPoints: [
@@ -194,7 +194,7 @@ const liveLessons: Lesson[] = [
     ],
   },
   {
-    dayId: "week-1/day-3",
+    dayId: "week-4/day-1",
     title: "黑盒测试",
     minutes: 45,
     keyPoints: [
@@ -267,7 +267,7 @@ const liveLessons: Lesson[] = [
     ],
   },
   {
-    dayId: "week-1/day-4",
+    dayId: "week-4/day-2",
     title: "白盒测试 + McCabe",
     minutes: 45,
     keyPoints: [
@@ -350,7 +350,7 @@ const stubExtras: Record<
   string,
   { keyPoints: string[]; extra?: string }
 > = {
-  "week-1/day-5": {
+  "week-4/day-5": {
     keyPoints: [
       "父子图数据流要平衡：子图边界上的流必须能在父图对应加工上找到",
       "数据字典：() 可选，{} 重复，[] 选择",
@@ -379,7 +379,7 @@ export const lessons: Lesson[] = studyDays.map((day) => {
           extra?.extra ??
           (day.status === "paper"
             ? "v1 提供 150 分钟计时与完成本日。完整真题卷不在本版本范围内。"
-            : "路线已排好。先把前四日的软件工程基础打实，再进入本日精讲。"),
+            : "路线已按《软件设计师教程》第5版章节序排好。本日精讲稍后补全；可先看标题与提要。"),
       },
     },
   ];

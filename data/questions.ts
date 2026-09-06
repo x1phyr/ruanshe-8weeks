@@ -3,7 +3,7 @@ import type { Question } from "@/lib/types";
 export const questions: Question[] = [
   {
     id: "q-0901-01",
-    dayId: "week-1/day-1",
+    dayId: "week-3/day-6",
     topic: "内聚与耦合",
     knowledgePath: "软件工程 / 模块化 / 内聚",
     stem: "下列模块内聚类型中，内聚程度最强的是（ ）。",
@@ -25,7 +25,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0901-02",
-    dayId: "week-1/day-1",
+    dayId: "week-3/day-6",
     topic: "内聚与耦合",
     knowledgePath: "软件工程 / 模块化 / 耦合",
     stem: "下列耦合类型中，耦合程度最高（最差、应尽量避免）的是（ ）。",
@@ -47,7 +47,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0901-03",
-    dayId: "week-1/day-1",
+    dayId: "week-3/day-6",
     topic: "内聚与耦合",
     knowledgePath: "软件工程 / 模块化 / 耦合",
     stem: "模块 A 调用模块 B 时，向 B 传递一个布尔变量 flag。B 根据 flag 为真或假走完全不同的处理分支。这种耦合属于（ ）。",
@@ -69,7 +69,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0901-04",
-    dayId: "week-1/day-1",
+    dayId: "week-3/day-6",
     topic: "内聚与耦合",
     knowledgePath: "软件工程 / 模块化 / 耦合",
     stem: "模块 PrintOrder 接收一个订单对象 order，但函数体内只用到 order.id 和 order.amount，其余十几个字段并不使用。这种耦合最准确的说法是（ ）。",
@@ -91,7 +91,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0901-05",
-    dayId: "week-1/day-1",
+    dayId: "week-3/day-6",
     topic: "内聚与耦合",
     knowledgePath: "软件工程 / 模块化 / 耦合",
     stem: "模块 M1 通过语句直接改写模块 M2 内部的局部变量，有时还跳转到 M2 中间某条语句开始执行。这属于（ ）。",
@@ -113,7 +113,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0901-06",
-    dayId: "week-1/day-1",
+    dayId: "week-3/day-6",
     topic: "内聚与耦合",
     knowledgePath: "软件工程 / 模块化 / 耦合",
     stem: "若干模块共同使用一个全局数据结构（例如全局数组 table[]），任何一个模块修改该结构都可能影响其他模块。这种耦合是（ ）。",
@@ -135,7 +135,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0901-07",
-    dayId: "week-1/day-1",
+    dayId: "week-3/day-6",
     topic: "内聚与耦合",
     knowledgePath: "软件工程 / 模块化 / 耦合",
     stem: "关于模块耦合，下列说法正确的是（ ）。",
@@ -157,7 +157,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0901-08",
-    dayId: "week-1/day-1",
+    dayId: "week-3/day-6",
     topic: "内聚与耦合",
     knowledgePath: "软件工程 / 模块化 / 内聚",
     stem: "某模块把「打印报表、发送邮件、备份文件」放在一起，由传入的命令码决定本次执行哪一件。该模块的内聚属于（ ）。",
@@ -179,7 +179,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0902-01",
-    dayId: "week-1/day-2",
+    dayId: "week-3/day-7",
     topic: "开发模型",
     knowledgePath: "软件工程 / 过程模型 / 瀑布",
     stem: "某政务系统需求已经通过评审、在合同中写死，后续变更几乎不被允许，项目周期明确。最合适的开发模型是（ ）。",
@@ -201,7 +201,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0902-02",
-    dayId: "week-1/day-2",
+    dayId: "week-3/day-7",
     topic: "开发模型",
     knowledgePath: "软件工程 / 过程模型 / 原型",
     stem: "用户说不清要什么界面和业务流程，项目组打算先做一个可操作的演示系统，用来挖掘真实需求。应优先选择（ ）。",
@@ -223,7 +223,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0902-03",
-    dayId: "week-1/day-2",
+    dayId: "week-3/day-7",
     topic: "开发模型",
     knowledgePath: "软件工程 / 过程模型 / 螺旋",
     stem: "一个大型平台项目技术路线未定，安全和性能风险高，需要在每个迭代显式做风险分析再决定是否继续。最合适的是（ ）。",
@@ -245,7 +245,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0902-04",
-    dayId: "week-1/day-2",
+    dayId: "week-3/day-7",
     topic: "开发模型",
     knowledgePath: "软件工程 / 过程模型 / 增量",
     stem: "客户要求先上线核心开票功能，三个月后再交付库存与报表，每次交付都是可运行的系统。这种策略对应（ ）。",
@@ -267,7 +267,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0902-05",
-    dayId: "week-1/day-2",
+    dayId: "week-3/day-7",
     topic: "开发模型",
     knowledgePath: "软件工程 / 过程模型 / 敏捷",
     stem: "互联网产品需求每周都在变，团队希望短迭代、可工作软件、拥抱变化。最合适的是（ ）。",
@@ -289,7 +289,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0902-06",
-    dayId: "week-1/day-2",
+    dayId: "week-3/day-7",
     topic: "开发模型",
     knowledgePath: "软件工程 / V 模型",
     stem: "在 V 模型中，与「需求分析」对应的测试级别是（ ）。",
@@ -311,7 +311,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0902-07",
-    dayId: "week-1/day-2",
+    dayId: "week-3/day-7",
     topic: "开发模型",
     knowledgePath: "软件工程 / V 模型",
     stem: "V 模型中，「详细设计」应当与哪一项测试对应？（ ）",
@@ -333,7 +333,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0902-08",
-    dayId: "week-1/day-2",
+    dayId: "week-3/day-7",
     topic: "开发模型",
     knowledgePath: "软件工程 / V 模型",
     stem: "关于软件生命周期与 V 模型，下列叙述错误的是（ ）。",
@@ -355,7 +355,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0903-01",
-    dayId: "week-1/day-3",
+    dayId: "week-4/day-1",
     topic: "黑盒测试",
     knowledgePath: "软件测试 / 黑盒 / 边界值",
     stem: "某输入项的有效范围是整数区间 [1, 100]。采用边界值分析时，下列测试数据集合最合理的是（ ）。",
@@ -377,7 +377,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0903-02",
-    dayId: "week-1/day-3",
+    dayId: "week-4/day-1",
     topic: "黑盒测试",
     knowledgePath: "软件测试 / 黑盒 / 因果图",
     stem: "输入条件之间存在组合与约束（例如：条件 A、B 同时成立才触发动作，且 A、C 互斥）。为设计测试用例，最合适的黑盒技术是（ ）。",
@@ -399,7 +399,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0903-03",
-    dayId: "week-1/day-3",
+    dayId: "week-4/day-1",
     topic: "黑盒测试",
     knowledgePath: "软件测试 / 黑盒 / 等价类",
     stem: "对「年龄为 1～120 的整数」做等价类划分，下列划分最合理的是（ ）。",
@@ -421,7 +421,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0903-04",
-    dayId: "week-1/day-3",
+    dayId: "week-4/day-1",
     topic: "黑盒测试",
     knowledgePath: "软件测试 / 黑盒 / 错误推测",
     stem: "测试人员根据经验，专门构造「空字符串、超长输入、在金额栏输入汉字」这类历史上常出错的数据。这种方法称为（ ）。",
@@ -443,7 +443,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0903-05",
-    dayId: "week-1/day-3",
+    dayId: "week-4/day-1",
     topic: "黑盒测试",
     knowledgePath: "软件测试 / 黑盒 / 概念",
     stem: "关于黑盒测试，下列说法正确的是（ ）。",
@@ -465,7 +465,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0903-06",
-    dayId: "week-1/day-3",
+    dayId: "week-4/day-1",
     topic: "黑盒测试",
     knowledgePath: "软件测试 / 黑盒 / 边界值",
     stem: "输入为整数，规格写「不少于 10 且不多于 20」。仅按边界值分析，必须包含的测试点是（ ）。",
@@ -487,7 +487,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0903-07",
-    dayId: "week-1/day-3",
+    dayId: "week-4/day-1",
     topic: "黑盒测试",
     knowledgePath: "软件测试 / 黑盒 / 方法选择",
     stem: "下列黑盒方法中，主要用于检查输入条件组合关系的是（ ）。",
@@ -509,7 +509,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0904-01",
-    dayId: "week-1/day-4",
+    dayId: "week-4/day-2",
     topic: "白盒测试",
     knowledgePath: "软件测试 / 白盒 / 覆盖强度",
     stem: "按软考常见口径，下列覆盖标准由弱到强排列正确的是（ ）。",
@@ -531,7 +531,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0904-02",
-    dayId: "week-1/day-4",
+    dayId: "week-4/day-2",
     topic: "白盒测试",
     knowledgePath: "软件测试 / 白盒 / 判定与条件",
     stem: "判定覆盖（分支覆盖）的含义是（ ）。",
@@ -553,7 +553,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0904-03",
-    dayId: "week-1/day-4",
+    dayId: "week-4/day-2",
     topic: "白盒测试",
     knowledgePath: "软件测试 / 白盒 / 判定与条件",
     stem: "语句 if (A && B) ... 中，用例使 (A,B) 取 (T,T) 与 (T,F)。关于覆盖，正确的是（ ）。",
@@ -575,7 +575,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0904-04",
-    dayId: "week-1/day-4",
+    dayId: "week-4/day-2",
     topic: "白盒测试",
     knowledgePath: "软件测试 / 白盒 / 判定与条件",
     stem: "为什么「满足条件覆盖」仍可能漏掉某个判定结果？（ ）",
@@ -597,7 +597,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0904-05",
-    dayId: "week-1/day-4",
+    dayId: "week-4/day-2",
     topic: "白盒测试",
     knowledgePath: "软件测试 / 白盒 / McCabe",
     stem: "对一个单入口单出口的连通控制流图，McCabe 环形复杂度 V(G) 的正确公式是（ ）。",
@@ -619,7 +619,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0904-06",
-    dayId: "week-1/day-4",
+    dayId: "week-4/day-2",
     topic: "白盒测试",
     knowledgePath: "软件测试 / 白盒 / McCabe",
     stem: "某程序控制流图有 9 条边、7 个节点，单入口单出口且连通。其环形复杂度 V(G) 为（ ）。",
@@ -641,7 +641,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0904-07",
-    dayId: "week-1/day-4",
+    dayId: "week-4/day-2",
     topic: "白盒测试",
     knowledgePath: "软件测试 / 白盒 / McCabe",
     stem: "控制流图中有 3 个判定节点（均为二路分支），无复合路径汇合异常，单入口单出口。按 V(G)=P+1，复杂度为（ ）。",
@@ -663,7 +663,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0904-08",
-    dayId: "week-1/day-4",
+    dayId: "week-4/day-2",
     topic: "白盒测试",
     knowledgePath: "软件测试 / 白盒 / 覆盖强度",
     stem: "关于白盒覆盖，下列叙述错误的是（ ）。",
@@ -685,7 +685,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0905-01",
-    dayId: "week-1/day-5",
+    dayId: "week-4/day-5",
     topic: "数据流图",
     knowledgePath: "软件工程 / DFD / 平衡",
     stem: "父图某加工有输入数据流 a、b 和输出数据流 c。将其分解为子图后，子图的对外输入必须是 a、b，对外输出必须是 c。这条规则称为（ ）。",
@@ -707,7 +707,7 @@ export const questions: Question[] = [
   },
   {
     id: "q-0905-02",
-    dayId: "week-1/day-5",
+    dayId: "week-4/day-5",
     topic: "数据流图",
     knowledgePath: "软件工程 / DFD / 数据字典",
     stem: "数据字典中，条目「订单 = 订单号 + 客户 + {商品明细} + (备注)」里，花括号 { } 表示（ ）。",
