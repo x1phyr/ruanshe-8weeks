@@ -66,6 +66,17 @@ export function QuizRun({ questions, mode, onFinished }: QuizRunProps) {
         </div>
         <KindPill>{question.topic}</KindPill>
       </div>
+      {total >= 20 ? (
+        <div
+          className="mt-2 h-1 overflow-hidden rounded-full bg-border"
+          aria-hidden
+        >
+          <div
+            className="h-full bg-brand transition-[width]"
+            style={{ width: `${((index + 1) / total) * 100}%` }}
+          />
+        </div>
+      ) : null}
       <p className="mt-3 text-[15px] leading-7">{question.stem}</p>
       <div className="mt-4 space-y-2">
         {question.options.map((option) => {
