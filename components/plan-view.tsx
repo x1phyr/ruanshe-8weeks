@@ -18,9 +18,20 @@ import {
 } from "@/lib/calendar";
 import { examConfig } from "@/lib/config";
 import { examCountdown, formatDateShort, pad2, todayISO, weekdayLabel } from "@/lib/dates";
+import { practiceModuleHref } from "@/lib/practice";
 import { firstIncompleteUnlocked, isCompleted, isUnlocked } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
+import type { StudyDay } from "@/lib/types";
 import { cn } from "@/lib/utils";
+
+/** Primary module for plan → practice CTA; skip paper/mock and stub/empty. */
+function dayPracticeModule(day: StudyDay): string | null {
+  if (day.kind === "paper" || day.status === "paper") return null;
+  if (day.status === "stub") return null;
+  const module = day.module?.trim();
+  if (!module || module === "真题卷") return null;
+  return module;
+}
 
 export function PlanView() {
   const progress = useTrainerStore((s) => s.progress);
@@ -197,15 +208,41 @@ export function PlanView() {
                       const done = isCompleted(progress, day.id);
                       const isToday = day.date === today;
                       const flashing = flashId === day.id;
-                      const inner = (
-                        <div
-                          className={cn(
-                            "flex items-start gap-3 px-3 py-2.5 md:items-center",
-                            !unlocked && "opacity-55",
-                            isToday && "bg-surface-hover",
-                            flashing && "ring-2 ring-inset ring-brand/60 bg-brand/10",
+                      const practiceModule = dayPracticeModule(day);
+                      const practiceCta =
+                        practiceModule != null ? (
+                          <Link
+                            href={practiceModuleHref(practiceModule)}
+                            className="print-hidden inline-flex h-7 items-center rounded-md border border-border px-2 text-xs text-muted-foreground hover:bg-muted hover:text-foreground"
+                            title={`练习模块：${practiceModule}`}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            练此模块
+                          </Link>
+                        ) : null;
+                      const meta = (
+                        <div className="flex shrink-0 flex-col items-end gap-1 md:flex-row md:items-center md:gap-2">
+                          <KindPill
+                            tone={
+                              day.kind === "paper"
+                                ? "warn"
+                                : day.kind === "case"
+                                  ? "brand"
+                                  : "default"
+                            }
+                          >
+                            {kindLabel[day.kind]} {day.durationMin}m
+                          </KindPill>
+                          {practiceCta}
+                          {done ? (
+                            <Check className="print-hidden size-3.5 text-brand" />
+                          ) : unlocked ? null : (
+                            <Lock className="print-hidden size-3.5 text-muted-foreground" />
                           )}
-                        >
+                        </div>
+                      );
+                      const body = (
+                        <>
                           <div className="w-16 shrink-0 font-mono text-xs text-muted-foreground">
                             <div>{formatDateShort(day.date)}</div>
                             <div>{weekdayLabel(day.date)}</div>
@@ -223,39 +260,15 @@ export function PlanView() {
                               {day.blurb}
                             </div>
                           </div>
-                          <div className="flex shrink-0 flex-col items-end gap-1 md:flex-row md:items-center md:gap-2">
-                            <KindPill
-                              tone={
-                                day.kind === "paper"
-                                  ? "warn"
-                                  : day.kind === "case"
-                                    ? "brand"
-                                    : "default"
-                              }
-                            >
-                              {kindLabel[day.kind]} {day.durationMin}m
-                            </KindPill>
-                            {done ? (
-                              <Check className="print-hidden size-3.5 text-brand" />
-                            ) : unlocked ? null : (
-                              <Lock className="print-hidden size-3.5 text-muted-foreground" />
-                            )}
-                          </div>
-                        </div>
+                        </>
+                      );
+                      const rowClass = cn(
+                        "flex items-start gap-3 px-3 py-2.5 md:items-center",
+                        !unlocked && "opacity-55",
+                        isToday && "bg-surface-hover",
+                        flashing && "ring-2 ring-inset ring-brand/60 bg-brand/10",
                       );
 
-                      if (!unlocked) {
-                        return (
-                          <li
-                            key={day.id}
-                            ref={(node) => {
-                              dayRefs.current.set(day.id, node);
-                            }}
-                          >
-                            {inner}
-                          </li>
-                        );
-                      }
                       return (
                         <li
                           key={day.id}
@@ -263,9 +276,22 @@ export function PlanView() {
                             dayRefs.current.set(day.id, node);
                           }}
                         >
-                          <Link href={dayHref(day)} className="block hover:bg-surface-hover">
-                            {inner}
-                          </Link>
+                          {unlocked ? (
+                            <div className={cn(rowClass, "hover:bg-surface-hover")}>
+                              <Link
+                                href={dayHref(day)}
+                                className="flex min-w-0 flex-1 items-start gap-3 md:items-center"
+                              >
+                                {body}
+                              </Link>
+                              {meta}
+                            </div>
+                          ) : (
+                            <div className={rowClass}>
+                              {body}
+                              {meta}
+                            </div>
+                          )}
                         </li>
                       );
                     })}
