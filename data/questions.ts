@@ -11589,6 +11589,272 @@ export const questions: Question[] = [
     },
   },
 
+
+  {
+    id: "q-w7d2-13",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 可行性 / 操作",
+    stem: "评估「终端用户是否愿意且能够使用新系统、组织流程能否接受」时，主要考察的是（ ）。",
+    options: [
+      { key: "A", text: "技术可行性" },
+      { key: "B", text: "操作（运行/社会）可行性" },
+      { key: "C", text: "详细设计说明书是否已写完伪代码" },
+      { key: "D", text: "仅 Cache 命中率是否达标" },
+    ],
+    correct: "B",
+    explanation:
+      "操作/运行可行性关注人与组织是否用得起来、是否接受变革；技术看实现能力，经济看投入产出。",
+    trap: "「用户肯不肯用」≠「技术能不能做」。",
+    whyWrong: {
+      A: "实现能力维度。",
+      C: "阶段产物，不是可行性维度。",
+      D: "组成性能细节。",
+    },
+  },
+  {
+    id: "q-w7d2-14",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 可行性 / 法律",
+    stem: "拟建系统需处理个人敏感信息，立项前重点核查隐私法规与强制标准符合性，这主要属于（ ）。",
+    options: [
+      { key: "A", text: "法律 / 社会可行性" },
+      { key: "B", text: "仅管道-过滤器风格选型" },
+      { key: "C", text: "仅补码溢出处理" },
+      { key: "D", text: "仅外键级联策略" },
+    ],
+    correct: "A",
+    explanation:
+      "法律/社会可行性评估合规、隐私、标准强制要求等；与架构风格或编码细节不是同一层问题。",
+    trap: "合规问题不要答成设计模式题。",
+    whyWrong: {
+      B: "架构风格。",
+      C: "组成。",
+      D: "数据库实现。",
+    },
+  },
+  {
+    id: "q-w7d2-15",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 需求 / 非功能",
+    stem: "「系统应在单点故障后 5 分钟内自动恢复对外服务」更宜归类为（ ）。",
+    options: [
+      { key: "A", text: "功能需求（具体业务操作）" },
+      { key: "B", text: "非功能需求中的可用性 / 可靠性类质量属性" },
+      { key: "C", text: "详细设计中的局部变量命名规范" },
+      { key: "D", text: "仅数据流图中的外部实体符号" },
+    ],
+    correct: "B",
+    explanation:
+      "可用性、可靠性、可维护性等是质量属性，属非功能需求；功能需求描述「做什么业务」。",
+    trap: "带数字的约束常是非功能，不一定是功能点。",
+    whyWrong: {
+      A: "未描述具体业务能力。",
+      C: "编码规范层级。",
+      D: "DFD 符号。",
+    },
+  },
+  {
+    id: "q-w7d2-16",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 模型 / 角色对照",
+    stem: "要刻画「谁用系统、完成哪些业务目标」，优先选用的模型是（ ）；要刻画「数据如何在加工间流动」，优先选用（ ）。",
+    options: [
+      { key: "A", text: "用例图；数据流图（DFD）" },
+      { key: "B", text: "E-R 图；中断向量表" },
+      { key: "C", text: "补码真值表；RAID 级别表" },
+      { key: "D", text: "仅类图泛化；仅物理层帧格式" },
+    ],
+    correct: "A",
+    explanation:
+      "用例（及参与者）表达功能边界与目标；DFD 表达加工与数据流。E-R 偏数据静态结构，不替代二者角色。",
+    trap: "三种图职责不同：用例=谁做什么；DFD=数据怎么流；ER=数据怎么存结构。",
+    whyWrong: {
+      B: "E-R 非「谁用系统」；中断表无关。",
+      C: "组成/存储。",
+      D: "过偏实现/网络。",
+    },
+  },
+  {
+    id: "q-w7d2-17",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 模型 / ER",
+    stem: "关于用例图、DFD 与 E-R 图分工，下列叙述正确的是（ ）。",
+    options: [
+      { key: "A", text: "E-R 图主要描述实体及其联系，服务于数据建模，不替代用例表达的交互目标" },
+      { key: "B", text: "DFD 的外部实体等价于关系数据库的主键约束" },
+      { key: "C", text: "用例图必须画出全部数据存储与加工编号" },
+      { key: "D", text: "三种图可以任意互换而不改变语义" },
+    ],
+    correct: "A",
+    explanation:
+      "E-R 管数据概念结构；用例管参与者与目标；DFD 管数据流与加工。考试爱考「选错图种」。",
+    trap: "看见「实体联系」先想 E-R，别答成用例。",
+    whyWrong: {
+      B: "外部实体≠主键。",
+      C: "那是 DFD 内容。",
+      D: "语义不可互换。",
+    },
+  },
+  {
+    id: "q-w7d2-18",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 模型 / 选型",
+    stem: "用户对界面与操作流程说不清，需要快速可见的可运行片段帮助确认需求时，较合适的线索是（ ）。",
+    options: [
+      { key: "A", text: "原型法（可见可试用）" },
+      { key: "B", text: "严格一次交付的瀑布且禁止任何演示" },
+      { key: "C", text: "先写完全部模块伪代码再访谈用户" },
+      { key: "D", text: "只用补码运算验证需求" },
+    ],
+    correct: "A",
+    explanation:
+      "需求不清、界面/交互难描述 → 原型帮助 elicitation；瀑布适合需求稳定且可事先冻结的场合。",
+    trap: "「说不清」≠继续死磕瀑布文档。",
+    whyWrong: {
+      B: "与题干矛盾。",
+      C: "阶段倒置。",
+      D: "无关。",
+    },
+  },
+  {
+    id: "q-w7d2-19",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 模型 / 瀑布线索",
+    stem: "合同已冻结需求、变更代价极高、阶段文档齐全可审计时，更常对应的过程线索是（ ）。",
+    options: [
+      { key: "A", text: "瀑布（计划驱动、阶段清晰）" },
+      { key: "B", text: "必须采用每日抛弃型原型且无文档" },
+      { key: "C", text: "只能用内容耦合拼装模块" },
+      { key: "D", text: "跳过需求分析直接验收" },
+    ],
+    correct: "A",
+    explanation:
+      "需求稳定、合同约束强 → 瀑布类计划驱动模型更贴合；原型解决「看不见」，不是合同冻结场景的默认答案。",
+    trap: "稳定+可审计 ≠ 原型优先。",
+    whyWrong: {
+      B: "与题干冲突。",
+      C: "坏设计。",
+      D: "阶段缺失。",
+    },
+  },
+  {
+    id: "q-w7d2-20",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 质量属性 / 对照",
+    stem: "下列哪一项通常被归为软件质量属性（非功能），而不是一条具体功能点？（ ）",
+    options: [
+      { key: "A", text: "可维护性：缺陷修复与扩展的难易程度" },
+      { key: "B", text: "用户点击「提交订单」后生成订单号" },
+      { key: "C", text: "管理员可重置某用户密码" },
+      { key: "D", text: "顾客可按订单号查询物流" },
+    ],
+    correct: "A",
+    explanation:
+      "可维护性、性能、安全性、可用性等是质量属性；B/C/D 都是可观察的功能行为。",
+    trap: "功能点描述「能做什么」；质量属性描述「做得怎样」。",
+    whyWrong: {
+      B: "功能。",
+      C: "功能。",
+      D: "功能。",
+    },
+  },
+  {
+    id: "q-w7d2-21",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 内聚耦合 / 对照",
+    stem: "章12谈模块划分质量时，与「模块内部职责是否单一集中」对应的概念是（ ）；与「模块之间依赖松紧」对应的是（ ）。",
+    options: [
+      { key: "A", text: "内聚；耦合" },
+      { key: "B", text: "吞吐量；时延" },
+      { key: "C", text: "主键；外键" },
+      { key: "D", text: "原码；补码" },
+    ],
+    correct: "A",
+    explanation:
+      "内聚看模块内，耦合看模块间；目标是高内聚、低耦合。与网络指标或编码无关。",
+    trap: "内聚/耦合方向别填反。",
+    whyWrong: {
+      B: "性能指标对。",
+      C: "数据库。",
+      D: "数制编码。",
+    },
+  },
+  {
+    id: "q-w7d2-22",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 耦合 / 陷阱",
+    stem: "概要设计评审时发现：模块甲直接改写模块乙内部局部变量并跳入乙的中间语句执行。这首先暴露的是（ ）。",
+    options: [
+      { key: "A", text: "内容耦合（最紧、应避免）" },
+      { key: "B", text: "功能内聚的理想形态" },
+      { key: "C", text: "非直接耦合的最佳实践" },
+      { key: "D", text: "经济可行性结论自动为 go" },
+    ],
+    correct: "A",
+    explanation:
+      "侵入他模块内部数据或控制流 = 内容耦合，耦合最差。与内聚「最好」或可行性结论无关。",
+    trap: "内容耦合常被误答成「高内聚」。",
+    whyWrong: {
+      B: "内聚另一条线，且此场景很差。",
+      C: "非直接耦合最松，相反。",
+      D: "可行性另一议题。",
+    },
+  },
+  {
+    id: "q-w7d2-23",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 需求 / 可验证",
+    stem: "下列需求陈述中，更利于测试验收（可验证）的是（ ）。",
+    options: [
+      { key: "A", text: "「查询接口在 100 并发下，P95 响应时间不超过 800ms」" },
+      { key: "B", text: "「系统要尽量好用、体验出色」" },
+      { key: "C", text: "「性能要足够快」" },
+      { key: "D", text: "「界面漂亮一些就行」" },
+    ],
+    correct: "A",
+    explanation:
+      "可验证需求应有明确度量与条件；模糊形容词无法客观判真假。",
+    trap: "软考爱打「不可测的正确废话」。",
+    whyWrong: {
+      B: "主观不可测。",
+      C: "无度量。",
+      D: "主观。",
+    },
+  },
+  {
+    id: "q-w7d2-24",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 文档 / 对照",
+    stem: "把「系统应当做什么」写清楚并作为设计与验收依据的文档，与「模块内部怎么做」的细化说明，较合理的对应是（ ）。",
+    options: [
+      { key: "A", text: "需求规格说明书（SRS）；详细设计说明书" },
+      { key: "B", text: "详细设计说明书；可行性研究报告" },
+      { key: "C", text: "单元测试报告；可行性研究报告" },
+      { key: "D", text: "中断服务例程清单；RAID 配置单" },
+    ],
+    correct: "A",
+    explanation:
+      "SRS 定义做什么；详细设计说明模块内怎么做。可行性在更前，回答做不做。",
+    trap: "别把详细设计与可行性对调。",
+    whyWrong: {
+      B: "顺序与职责颠倒。",
+      C: "测试/可行性错位。",
+      D: "无关底层清单。",
+    },
+  },
+
   // —— Week 7 day 3 ——
   {
     id: "q-w7d3-01",
@@ -11847,6 +12113,228 @@ export const questions: Question[] = [
       D: "无必然。",
     },
   },
+
+  {
+    id: "q-w7d3-13",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / 风格 / 事件",
+    stem: "组件之间通过发布/订阅消息解耦、按事件异步协作，常归类为（ ）。",
+    options: [
+      { key: "A", text: "事件驱动风格" },
+      { key: "B", text: "内容耦合的推荐形式" },
+      { key: "C", text: "仅原码乘法电路" },
+      { key: "D", text: "必须取消所有接口的单体" },
+    ],
+    correct: "A",
+    explanation:
+      "事件驱动以事件通知协作为特征；与「侵入内部」的内容耦合相反，目标是松耦合。",
+    trap: "事件驱动是架构风格名，不是坏耦合别名。",
+    whyWrong: {
+      B: "内容耦合应避免。",
+      C: "组成。",
+      D: "反模式。",
+    },
+  },
+  {
+    id: "q-w7d3-14",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / Web / CDN",
+    stem: "在 Web 系统中引入 CDN 缓存静态资源，主要直接改善的质量属性通常是（ ）。",
+    options: [
+      { key: "A", text: "访问时延 / 响应性能（就近命中）" },
+      { key: "B", text: "把功能需求改写成详细设计伪代码" },
+      { key: "C", text: "自动消除全部 XSS" },
+      { key: "D", text: "把 B/S 强制改回厚 C/S" },
+    ],
+    correct: "A",
+    explanation:
+      "CDN 把内容推近用户，降低时延、分担源站压力；不自动解决安全编码问题，也不改变 C/S 选型本质。",
+    trap: "CDN≠安全银弹。",
+    whyWrong: {
+      B: "文档活动。",
+      C: "需输入编码/过滤等。",
+      D: "无关且错误。",
+    },
+  },
+  {
+    id: "q-w7d3-15",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / 质量属性 / 权衡",
+    stem: "为提升安全性而引入多重认证与加密，可能导致登录路径变长、吞吐下降。这说明架构决策常需（ ）。",
+    options: [
+      { key: "A", text: "在质量属性之间做权衡（trade-off）" },
+      { key: "B", text: "只追求单一属性并忽略其余" },
+      { key: "C", text: "用内容耦合替代所有接口" },
+      { key: "D", text: "取消非功能需求" },
+    ],
+    correct: "A",
+    explanation:
+      "安全、性能、可用性等常相互制约，架构需显式权衡；不能假装只存在一个目标。",
+    trap: "质量属性很少「全满分且零代价」。",
+    whyWrong: {
+      B: "片面。",
+      C: "坏设计。",
+      D: "相反。",
+    },
+  },
+  {
+    id: "q-w7d3-16",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / Web / 前后端分离",
+    stem: "前端 SPA 通过 HTTP API 与后端交互、界面与业务服务可独立发布，这种组织更接近（ ）。",
+    options: [
+      { key: "A", text: "前后端分离（以接口契约协作为中心）" },
+      { key: "B", text: "必须把全部 SQL 写进浏览器页面" },
+      { key: "C", text: "取消状态码与资源 URL" },
+      { key: "D", text: "仅物理层 CRC 校验策略" },
+    ],
+    correct: "A",
+    explanation:
+      "前后端分离依赖清晰 API/状态码契约；业务数据访问仍在服务端，不应把 SQL 暴露给浏览器。",
+    trap: "分离≠把数据访问塞进前端。",
+    whyWrong: {
+      B: "危险且不合理。",
+      C: "破坏 REST/HTTP 约定。",
+      D: "网络底层。",
+    },
+  },
+  {
+    id: "q-w7d3-17",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / 风格 / 选型",
+    stem: "题干强调「只需更新服务器端即可让全体用户立即使用新界面与业务」，最直接支持的结构判断是（ ）。",
+    options: [
+      { key: "A", text: "偏 B/S（浏览器客户端，升级集中在服务器）" },
+      { key: "B", text: "必须为每台客户机分发厚客户端安装包" },
+      { key: "C", text: "禁止使用 HTTP" },
+      { key: "D", text: "只能采用内容耦合模块网" },
+    ],
+    correct: "A",
+    explanation:
+      "「升级集中在服务器、客户端用浏览器」是 B/S 经典考法；厚客户端分发是 C/S 痛点。",
+    trap: "抓住「只更服务器」四个字。",
+    whyWrong: {
+      B: "胖 C/S 特征。",
+      C: "B/S 常基于 Web。",
+      D: "无关劣设计。",
+    },
+  },
+  {
+    id: "q-w7d3-18",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / MVC / 反模式",
+    stem: "在所谓 MVC 实现里，View 层直接拼接复杂业务规则并访问数据库写订单。这主要违背了（ ）。",
+    options: [
+      { key: "A", text: "职责分离：业务应在 Model（及服务层），View 侧重展示" },
+      { key: "B", text: "必须使用补码表示金额" },
+      { key: "C", text: "HTTP 必须改为仅 UDP" },
+      { key: "D", text: "可行性研究必须省略" },
+    ],
+    correct: "A",
+    explanation:
+      "View 塞业务与持久化是典型反模式；题干考 MVC/分层职责，不考编码或传输层。",
+    trap: "界面能「干活」≠职责正确。",
+    whyWrong: {
+      B: "无关。",
+      C: "无关且不合理。",
+      D: "另一阶段。",
+    },
+  },
+  {
+    id: "q-w7d3-19",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / Web / 会话",
+    stem: "关于 Cookie 与 Session 在 Web 会话中的叙述，较合理的是（ ）。",
+    options: [
+      { key: "A", text: "常用 Cookie 携带会话标识，服务端 Session（或等价存储）保存会话状态，以弥补 HTTP 无状态" },
+      { key: "B", text: "Cookie 可以替代 HTTPS，故不必再加密传输" },
+      { key: "C", text: "Session 只能存放在网卡固件中" },
+      { key: "D", text: "二者都禁止用于登录态" },
+    ],
+    correct: "A",
+    explanation:
+      "经典模式：浏览器持会话 id（常经 Cookie），服务器侧保存会话内容；仍需 HTTPS 等保护传输。",
+    trap: "Cookie≠加密通道。",
+    whyWrong: {
+      B: "错误安全观。",
+      C: "胡说。",
+      D: "恰恰常用于登录态。",
+    },
+  },
+  {
+    id: "q-w7d3-20",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / 风格 / 分层陷阱",
+    stem: "分层架构中，下层模块大量反向依赖并调用上层 UI 细节，最可能造成（ ）。",
+    options: [
+      { key: "A", text: "依赖倒置被破坏，耦合上升、替换与测试变难" },
+      { key: "B", text: "自动获得功能内聚的最强形态" },
+      { key: "C", text: "可行性研究结论必然为 no-go" },
+      { key: "D", text: "HTTP 状态码全部变为 404" },
+    ],
+    correct: "A",
+    explanation:
+      "分层约束通常是上层依赖下层；下层依赖 UI 会缠死替换边界。与可行性或状态码无必然联系。",
+    trap: "分层被「向上依赖」掏空。",
+    whyWrong: {
+      B: "内聚另一概念，且此场景不利。",
+      C: "无必然。",
+      D: "无关。",
+    },
+  },
+  {
+    id: "q-w7d3-21",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / 质量属性 / 可伸缩",
+    stem: "通过增加无状态应用实例并在负载均衡后水平扩展，主要针对的质量属性是（ ）。",
+    options: [
+      { key: "A", text: "可伸缩性 / 吞吐能力" },
+      { key: "B", text: "把 E-R 图改成用例图" },
+      { key: "C", text: "消除需求分析的必要性" },
+      { key: "D", text: "强制改用内容耦合" },
+    ],
+    correct: "A",
+    explanation:
+      "水平扩展无状态服务是提升可伸缩性与吞吐的常见手段；与图种改写或取消分析无关。",
+    trap: "扩展实例 ≠ 改需求模型种类。",
+    whyWrong: {
+      B: "模型工具另一议题。",
+      C: "错误。",
+      D: "坏设计。",
+    },
+  },
+  {
+    id: "q-w7d3-22",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / Web / 安全回想",
+    stem: "设计 Web 架构时强调「敏感操作需防跨站请求伪造、输出需防脚本注入」，这主要对应（ ）。",
+    options: [
+      { key: "A", text: "安全性相关质量属性与常见 Web 威胁（如 CSRF / XSS）防护" },
+      { key: "B", text: "仅管道-过滤器编译例子" },
+      { key: "C", text: "仅可行性经济回收期公式" },
+      { key: "D", text: "仅 RAID5 校验盘计算" },
+    ],
+    correct: "A",
+    explanation:
+      "章12架构切片会带回第6周 Web 安全：XSS/CSRF/注入等；属安全质量属性，不是存储或编译例子。",
+    trap: "架构题里的安全句不要答成 RAID/编译。",
+    whyWrong: {
+      B: "架构风格举例另一题。",
+      C: "可行性。",
+      D: "存储。",
+    },
+  },
+
 
   // —— Week 7 day 4 英语+薄弱 ——
   {
