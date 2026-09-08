@@ -99,6 +99,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **错题导出** | `/mistakes` 导出 JSON / CSV |
 | **进度备份** | 调试设置内导出 / 导入完整本地进度；可重置进度 |
 | **计划跳转 / 打印** | `/plan` 跳到指定日（受解锁）；`window.print()` |
+| **计划只看未完成** | `/plan` chip 隐藏 completedDays（zustand 持久化）；整周完成显示「本周已完成」 |
 | **retry wrong** | 只练错题（到期优先） |
 | **random20** | 随机抽至多 20 题（不足则全抽） |
 | **timed20** | 限时 20 分钟卷；到时自动交卷 |
