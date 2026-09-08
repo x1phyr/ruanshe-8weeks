@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Lock, Check } from "lucide-react";
+import { Lock, Check, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { KindPill, PageFrame, PageHeader, Surface } from "@/components/ui-bits";
 import {
@@ -74,7 +74,7 @@ export function PlanView() {
   }, [phase, todayDay]);
 
   return (
-    <PageFrame>
+    <PageFrame className="plan-print-root">
       <PageHeader
         kicker="8-WEEK ROADMAP"
         title="课程日历"
@@ -94,7 +94,7 @@ export function PlanView() {
         }
       />
 
-      <Surface className="mb-6 px-3 py-2.5">
+      <Surface className="print-hidden mb-6 px-3 py-2.5">
         <div className="flex flex-wrap items-center gap-2">
           <Button type="button" size="sm" variant="outline" onClick={locateToday}>
             定位今日
@@ -111,6 +111,16 @@ export function PlanView() {
               下一个未完成
             </Button>
           )}
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={() => window.print()}
+            className="gap-1.5"
+          >
+            <Printer className="size-3.5" />
+            打印计划
+          </Button>
           {jumpTip ? (
             <span className="font-mono text-[11px] text-amber-400">{jumpTip}</span>
           ) : phase === "not-started" ? (
@@ -186,9 +196,9 @@ export function PlanView() {
                             {kindLabel[day.kind]} {day.durationMin}m
                           </KindPill>
                           {done ? (
-                            <Check className="size-3.5 text-brand" />
+                            <Check className="print-hidden size-3.5 text-brand" />
                           ) : unlocked ? null : (
-                            <Lock className="size-3.5 text-muted-foreground" />
+                            <Lock className="print-hidden size-3.5 text-muted-foreground" />
                           )}
                         </div>
                       </div>

@@ -121,3 +121,70 @@
   text-transform: uppercase;
   color: #8b949e;
 }
+
+/* —— Print: /plan clean calendar dump —— */
+@media print {
+  :root,
+  .dark {
+    --background: #ffffff;
+    --foreground: #111111;
+    --surface: #ffffff;
+    --surface-hover: #ffffff;
+    --card: #ffffff;
+    --card-foreground: #111111;
+    --muted: #f5f5f5;
+    --muted-foreground: #444444;
+    --border: #cccccc;
+    --brand: #111111;
+    --primary: #111111;
+    --primary-foreground: #ffffff;
+    --destructive: #111111;
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .print-hidden,
+  aside,
+  nav {
+    display: none !important;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  /* Full-bleed plan: weeks already expanded in DOM; force readable ink */
+  .plan-print-root {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .plan-print-root [class*="opacity-"] {
+    opacity: 1 !important;
+  }
+
+  .plan-print-root section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .plan-print-root .rounded-md {
+    border-color: #ccc !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  .label-caps {
+    color: #666 !important;
+  }
+}
