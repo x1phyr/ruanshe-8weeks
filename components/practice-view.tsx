@@ -13,8 +13,9 @@ import {
   MODULE_STATS_MIN_ATTEMPTS,
   topWeakModules,
 } from "@/lib/module-stats";
+import { questionsForModule } from "@/lib/practice";
 import { useTrainerStore } from "@/lib/store";
-import type { AnswerRecord, Progress, Question, StudyDay } from "@/lib/types";
+import type { AnswerRecord, Question } from "@/lib/types";
 
 const SEARCH_DRILL_CAP = 50;
 
@@ -23,29 +24,6 @@ type ActiveRun =
   | { kind: "module"; module: string }
   | { kind: "search"; query: string }
   | { kind: "random"; questions: Question[]; timed?: boolean };
-
-function questionsForModule(
-  moduleName: string,
-  studyDays: StudyDay[],
-  progress: Progress,
-  unlockAll: boolean,
-): Question[] {
-  const unlockedIds = new Set(
-    studyDays
-      .filter(
-        (day) =>
-          day.module === moduleName && isUnlocked(progress, day.id, unlockAll),
-      )
-      .map((day) => day.id),
-  );
-  return questions.filter((q) => {
-    if (unlockedIds.has(q.dayId)) return true;
-    const path = q.knowledgePath ?? "";
-    if (!path.startsWith(moduleName)) return false;
-    // knowledgePath match: only include if that question's day is unlocked (or unlockAll)
-    return isUnlocked(progress, q.dayId, unlockAll);
-  });
-}
 
 function matchesQuery(q: Question, query: string): boolean {
   const needle = query.trim().toLowerCase();

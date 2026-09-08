@@ -12,6 +12,11 @@ import { SimulateDialog } from "@/components/simulate-dialog";
 import { QuizRun } from "@/components/learn/quiz-run";
 import { KindPill, Metric, PageFrame, Surface } from "@/components/ui-bits";
 import { getQuestionById, sampleQuestions, unlockedQuestions } from "@/data/questions";
+import {
+  MODULE_STATS_MIN_ATTEMPTS,
+  topWeakModules,
+} from "@/lib/module-stats";
+import { questionsForModule } from "@/lib/practice";
 import { exportProgressBackup } from "@/lib/backup";
 import { coachTipForDate } from "@/lib/coach-tips";
 import { examConfig } from "@/lib/config";
@@ -229,6 +234,16 @@ export function DashboardView() {
       <WeekProgressCard stats={weekStats} />
 
       <ResumeLastCard resume={resume} />
+
+      <TodayRecommendCard
+        answers={answers}
+        mistakes={mistakes}
+        today={today}
+        progress={progress}
+        unlockAll={unlockAll}
+        startDate={startDate}
+        focus={focus}
+      />
 
       <TomorrowPreview startDate={startDate} today={today} lastDate={lastDate} />
 
@@ -502,6 +517,217 @@ function ResumeLastCard({
         </div>
       </Surface>
     </Link>
+  );
+}
+
+
+function TodayRecommendCard({
+  answers,
+  mistakes,
+  today,
+  progress,
+  unlockAll,
+  startDate,
+  focus,
+}: {
+  answers: AnswerRecord[];
+  mistakes: Mistake[];
+  today: string;
+  progress: ProgressState;
+  unlockAll: boolean;
+  startDate: string;
+  focus: StudyDay;
+}) {
+  const studyDays = useMemo(() => scheduleDays(startDate), [startDate]);
+  const pendingDue = useMemo(() => dueMistakes(mistakes, today), [mistakes, today]);
+  const weak = useMemo(
+    () =>
+      topWeakModules(answers, {
+        minAttempts: MODULE_STATS_MIN_ATTEMPTS,
+        limit: 1,
+      }),
+    [answers],
+  );
+  const weakModule = weak[0] ?? null;
+
+  const moduleBank = useMemo(() => {
+    if (!weakModule) return [] as Question[];
+    return questionsForModule(
+      weakModule.module,
+      studyDays,
+      progress,
+      unlockAll,
+    );
+  }, [weakModule, studyDays, progress, unlockAll]);
+
+  const unlockedPool = useMemo(
+    () =>
+      unlockedQuestions((dayId) => isUnlocked(progress, dayId, unlockAll)),
+    [progress, unlockAll],
+  );
+
+  const wrongOnlyQuestions = useMemo(() => {
+    const duePool = dueMistakes(mistakes, today);
+    const pool =
+      duePool.length > 0 ? duePool : mistakes.filter((m) => !m.mastered);
+    return pool
+      .map((item) => getQuestionById(item.questionId))
+      .filter((item): item is NonNullable<typeof item> => Boolean(item));
+  }, [mistakes, today]);
+
+  type RunState =
+    | { kind: "module"; module: string; questions: Question[] }
+    | { kind: "wrong"; questions: Question[] }
+    | { kind: "random"; questions: Question[] };
+
+  const [run, setRun] = useState<RunState | null>(null);
+
+  const recommendation = useMemo(() => {
+    if (weakModule && moduleBank.length > 0) {
+      const sampleCount = Math.min(20, moduleBank.length);
+      return {
+        kind: "module" as const,
+        title: `练弱项 · ${weakModule.module}`,
+        reason: `${weakModule.module} 正确率 ${weakModule.accuracy}%（${weakModule.correct}/${weakModule.attempts}），优先补这块。`,
+        cta: `抽练 ${sampleCount} 题`,
+        disabled: false,
+      };
+    }
+    if (pendingDue.length > 0) {
+      return {
+        kind: "wrong" as const,
+        title: "只练错题",
+        reason: `有 ${pendingDue.length} 道到期错题，先清掉再学新的更稳。`,
+        cta: `只练错题 ${pendingDue.length}`,
+        disabled: wrongOnlyQuestions.length === 0,
+      };
+    }
+    if (!isCompleted(progress, focus.id)) {
+      return {
+        kind: "focus" as const,
+        title: `今日焦点 · ${focus.topic}`,
+        reason: `按计划学「${focus.title}」，约 ${focus.durationMin} 分钟收口今日。`,
+        cta: "进入日训",
+        disabled: false,
+      };
+    }
+    const n = Math.min(20, unlockedPool.length) || 20;
+    return {
+      kind: "random" as const,
+      title: `随机 ${n} 题`,
+      reason:
+        unlockedPool.length === 0
+          ? "今日计划已完成；解锁更多课后可随机练手。"
+          : "今日计划已完成，随机抽题保持手感。",
+      cta: `随机 ${n} 题`,
+      disabled: unlockedPool.length === 0,
+    };
+  }, [
+    weakModule,
+    moduleBank.length,
+    pendingDue.length,
+    wrongOnlyQuestions.length,
+    progress,
+    focus,
+    unlockedPool.length,
+  ]);
+
+  if (run && run.questions.length > 0) {
+    const heading =
+      run.kind === "module"
+        ? `弱项 · ${run.module}`
+        : run.kind === "wrong"
+          ? "只练错题"
+          : `随机 ${run.questions.length} 题`;
+    return (
+      <Surface className="mt-4 p-4">
+        <button
+          type="button"
+          onClick={() => setRun(null)}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回推荐
+        </button>
+        <h2 className="mt-2 text-lg font-medium">{heading}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {run.kind === "module"
+            ? `从「${run.module}」已解锁题中抽取 ${run.questions.length} 题。对错计入正确率；错题写入错题本。`
+            : run.kind === "wrong"
+              ? `到期优先 · ${run.questions.length} 题`
+              : `从已解锁题库抽取（池 ${unlockedPool.length}）。`}
+        </p>
+        <div className="mt-4">
+          <QuizRun
+            questions={run.questions}
+            mode={run.kind === "wrong" ? "review" : "practice"}
+            navKey={
+              run.kind === "module"
+                ? `dashboard:today:module:${run.module}`
+                : run.kind === "wrong"
+                  ? "dashboard:today:wrong-only"
+                  : `dashboard:today:random:${run.questions.length}`
+            }
+            finishLabel="返回推荐"
+            onFinished={() => setRun(null)}
+          />
+        </div>
+      </Surface>
+    );
+  }
+
+  return (
+    <Surface className="mt-4 px-4 py-3">
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <div className="label-caps">今日推荐</div>
+          <div className="mt-1 truncate text-sm font-medium">
+            {recommendation.title}
+          </div>
+          <p className="mt-0.5 text-xs leading-5 text-muted-foreground">
+            {recommendation.reason}
+          </p>
+        </div>
+        {recommendation.kind === "focus" ? (
+          <Link
+            href={dayHref(focus)}
+            className="inline-flex h-7 shrink-0 items-center gap-1 rounded-md border border-border px-2.5 text-xs hover:bg-muted"
+          >
+            {recommendation.cta}
+            <ArrowRight className="size-3.5" />
+          </Link>
+        ) : (
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="h-7 shrink-0 px-2 text-xs"
+            disabled={recommendation.disabled}
+            onClick={() => {
+              if (recommendation.kind === "module" && weakModule) {
+                const picked = sampleQuestions(moduleBank, 20);
+                if (picked.length === 0) return;
+                setRun({
+                  kind: "module",
+                  module: weakModule.module,
+                  questions: picked,
+                });
+                return;
+              }
+              if (recommendation.kind === "wrong") {
+                if (wrongOnlyQuestions.length === 0) return;
+                setRun({ kind: "wrong", questions: wrongOnlyQuestions });
+                return;
+              }
+              const picked = sampleQuestions(unlockedPool, 20);
+              if (picked.length === 0) return;
+              setRun({ kind: "random", questions: picked });
+            }}
+          >
+            {recommendation.cta}
+          </Button>
+        )}
+      </div>
+    </Surface>
   );
 }
 
