@@ -142,6 +142,19 @@ body.focus-mode .app-shell-main {
   padding-bottom: 0 !important;
 }
 
+/* —— Large text: slight base + quiz stem/options bump —— */
+html[data-large-text="1"] {
+  font-size: 108%;
+}
+
+html[data-large-text="1"] .quiz-stem {
+  font-size: 112%;
+}
+
+html[data-large-text="1"] .quiz-option {
+  font-size: 106%;
+}
+
 /* —— Print: /plan clean calendar dump —— */
 @media print {
   :root,

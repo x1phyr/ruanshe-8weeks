@@ -37,6 +37,8 @@ export function SimulateDialog({
   const startDate = useTrainerStore((s) => s.startDate);
   const unlockAll = useTrainerStore((s) => s.unlockAll);
   const setUnlockAll = useTrainerStore((s) => s.setUnlockAll);
+  const largeText = useTrainerStore((s) => s.largeText);
+  const setLargeText = useTrainerStore((s) => s.setLargeText);
   const resetAll = useTrainerStore((s) => s.resetAll);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(simulateDate ?? todayISO());
@@ -174,6 +176,23 @@ export function SimulateDialog({
                 onCheckedChange={setUnlockAll}
               />
             </div>
+            <div className="flex items-start justify-between gap-3 rounded-md border border-border p-3">
+              <div className="min-w-0 space-y-1">
+                <Label id="large-text-label" htmlFor="large-text" className="text-sm font-medium">
+                  大号文字
+                </Label>
+                <p id="large-text-hint" className="text-xs leading-5 text-muted-foreground">
+                  略放大正文字号与测验题干/选项，便于长时间阅读。重置进度不会关闭本开关。
+                </p>
+              </div>
+              <Switch
+                id="large-text"
+                aria-labelledby="large-text-label"
+                aria-describedby="large-text-hint"
+                checked={largeText}
+                onCheckedChange={setLargeText}
+              />
+            </div>
             <div className="rounded-md border border-border p-3">
               <div className="text-sm font-medium">进度备份</div>
               <p className="mt-1 text-xs leading-5 text-muted-foreground">
@@ -219,7 +238,7 @@ export function SimulateDialog({
               onClick={() => {
                 if (
                   confirm(
-                    "清空本地进度、错题与作答记录？（保留全解锁与模拟日期设置）",
+                    "清空本地进度、错题与作答记录？（保留全解锁、大号文字与模拟日期设置）",
                   )
                 ) {
                   resetAll();
