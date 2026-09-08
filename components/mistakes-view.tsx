@@ -140,6 +140,7 @@ export function MistakesView() {
             questions={dueQuestions}
             mode="review"
             navKey="mistakes:due"
+            finishLabel="返回错题本"
             onFinished={() => setDrilling(false)}
           />
         </div>

@@ -9,12 +9,22 @@ import { currentToday, useTrainerStore } from "@/lib/store";
 import type { OptionKey, Question } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
+export interface QuizFinishSummary {
+  correct: number;
+  total: number;
+  percent: number;
+  wrongIndexes: number[];
+  byTopic: { topic: string; correct: number; total: number }[];
+}
+
 interface QuizRunProps {
   questions: Question[];
   mode: "daily" | "practice" | "review";
-  onFinished: (summary: { correct: number; total: number }) => void;
+  onFinished: (summary: QuizFinishSummary) => void;
   /** Persist flagged ids in sessionStorage when set (e.g. dayId or module name). */
   navKey?: string;
+  /** Label on scorecard continue button (default 继续). */
+  finishLabel?: string;
 }
 
 const NAV_THRESHOLD = 12;
@@ -45,7 +55,49 @@ function saveFlags(navKey: string | undefined, flagged: Set<string>) {
   }
 }
 
-export function QuizRun({ questions, mode, onFinished, navKey }: QuizRunProps) {
+function buildSummary(
+  questions: Question[],
+  answers: Record<string, OptionKey>,
+  lastId: string | undefined,
+  lastPick: OptionKey | null,
+): QuizFinishSummary {
+  const resolved: Record<string, OptionKey> = { ...answers };
+  if (lastId && lastPick && !(lastId in resolved)) {
+    resolved[lastId] = lastPick;
+  }
+  let correct = 0;
+  const wrongIndexes: number[] = [];
+  const topicMap = new Map<string, { correct: number; total: number }>();
+  questions.forEach((q, i) => {
+    const a = resolved[q.id];
+    const ok = a === q.correct;
+    if (ok) correct += 1;
+    else wrongIndexes.push(i);
+    const bucket = topicMap.get(q.topic) ?? { correct: 0, total: 0 };
+    bucket.total += 1;
+    if (ok) bucket.correct += 1;
+    topicMap.set(q.topic, bucket);
+  });
+  const byTopic = [...topicMap.entries()]
+    .map(([topic, stats]) => ({ topic, ...stats }))
+    .sort(
+      (a, b) =>
+        b.total - a.total ||
+        a.correct / Math.max(a.total, 1) - b.correct / Math.max(b.total, 1) ||
+        a.topic.localeCompare(b.topic, "zh"),
+    );
+  const total = questions.length;
+  const percent = total ? Math.round((correct / total) * 100) : 0;
+  return { correct, total, percent, wrongIndexes, byTopic };
+}
+
+export function QuizRun({
+  questions,
+  mode,
+  onFinished,
+  navKey,
+  finishLabel = "继续",
+}: QuizRunProps) {
   const recordAnswer = useTrainerStore((s) => s.recordAnswer);
   const reviewMistakeAnswer = useTrainerStore((s) => s.reviewMistakeAnswer);
   const [index, setIndex] = useState(0);
@@ -55,6 +107,7 @@ export function QuizRun({ questions, mode, onFinished, navKey }: QuizRunProps) {
   const [picked, setPicked] = useState<OptionKey | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [flagsReady, setFlagsReady] = useState(false);
+  const [scorecard, setScorecard] = useState<QuizFinishSummary | null>(null);
 
   const question = questions[index];
   const total = questions.length;
@@ -122,14 +175,26 @@ export function QuizRun({ questions, mode, onFinished, navKey }: QuizRunProps) {
 
   function finishedNext() {
     if (index + 1 >= total) {
-      const correct = questions.reduce((n, q) => {
-        const a = answers[q.id] ?? (q.id === question.id ? picked : null);
-        return a === q.correct ? n + 1 : n;
-      }, 0);
-      onFinished({ correct, total });
+      setScorecard(buildSummary(questions, answers, question.id, picked));
       return;
     }
     goTo(index + 1);
+  }
+
+  if (scorecard) {
+    return (
+      <QuizScorecard
+        summary={scorecard}
+        questions={questions}
+        compact={total < NAV_THRESHOLD}
+        finishLabel={finishLabel}
+        onJump={(i) => {
+          setScorecard(null);
+          goTo(i);
+        }}
+        onContinue={() => onFinished(scorecard)}
+      />
+    );
   }
 
   const isFlagged = flagged.has(question.id);
@@ -321,6 +386,116 @@ export function QuizRun({ questions, mode, onFinished, navKey }: QuizRunProps) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function QuizScorecard({
+  summary,
+  questions,
+  compact,
+  finishLabel,
+  onJump,
+  onContinue,
+}: {
+  summary: QuizFinishSummary;
+  questions: Question[];
+  compact: boolean;
+  finishLabel: string;
+  onJump: (index: number) => void;
+  onContinue: () => void;
+}) {
+  const { correct, total, percent, wrongIndexes, byTopic } = summary;
+  const topTopics = byTopic.slice(0, compact ? 3 : 6);
+  const tone = percent >= 80 ? "ok" : percent >= 60 ? "brand" : "warn";
+
+  return (
+    <div>
+      <div className="label-caps">{compact ? "QUIZ RESULT" : "MOCK DEBRIEF"}</div>
+      <h2 className="mt-2 text-xl font-medium">
+        {compact ? "本组结果" : "试卷复盘"}
+      </h2>
+      <Surface className="mt-4 p-4">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <div className="label-caps">正确率</div>
+            <div className="mt-1 font-mono text-3xl tracking-wide text-foreground">
+              {percent}%
+            </div>
+            <div className="mt-1 text-sm text-muted-foreground">
+              {pad2(correct)} / {pad2(total)} 题正确
+            </div>
+          </div>
+          <KindPill tone={tone}>
+            {percent >= 80 ? "表现不错" : percent >= 60 ? "继续巩固" : "建议复盘错题"}
+          </KindPill>
+        </div>
+      </Surface>
+
+      {topTopics.length > 0 ? (
+        <Surface className="mt-3 p-4">
+          <div className="label-caps">按主题</div>
+          <ul className="mt-2 divide-y divide-border">
+            {topTopics.map((row) => {
+              const pct = row.total
+                ? Math.round((row.correct / row.total) * 100)
+                : 0;
+              return (
+                <li
+                  key={row.topic}
+                  className="flex items-center justify-between gap-3 py-2 text-sm"
+                >
+                  <span className="min-w-0 truncate">{row.topic}</span>
+                  <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                    {row.correct}/{row.total} · {pct}%
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </Surface>
+      ) : null}
+
+      {wrongIndexes.length > 0 ? (
+        <Surface className="mt-3 p-4">
+          <div className="label-caps">
+            错题 · {pad2(wrongIndexes.length)}
+          </div>
+          {compact ? (
+            <p className="mt-2 text-sm text-muted-foreground">
+              题号：{wrongIndexes.map((i) => i + 1).join("、")}
+            </p>
+          ) : (
+            <p className="mt-2 text-sm text-muted-foreground">
+              点击题号可回到该题复查（仍在本场练习中）。
+            </p>
+          )}
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {wrongIndexes.map((i) => (
+              <button
+                key={questions[i]?.id ?? i}
+                type="button"
+                onClick={() => onJump(i)}
+                className="inline-flex h-7 min-w-7 items-center justify-center rounded-sm border border-destructive/30 bg-destructive/10 px-2 font-mono text-[11px] text-destructive hover:bg-destructive/20"
+                title={questions[i]?.stem}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+        </Surface>
+      ) : (
+        <p className="mt-3 text-sm text-muted-foreground">全部正确，没有错题。</p>
+      )}
+
+      <div className="mt-5 flex flex-wrap gap-2">
+        <Button onClick={onContinue}>{finishLabel}</Button>
+        {wrongIndexes.length > 0 ? (
+          <Button variant="outline" onClick={() => onJump(wrongIndexes[0])}>
+            复查第一道错题
+          </Button>
+        ) : null}
+      </div>
     </div>
   );
 }
