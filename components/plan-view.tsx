@@ -1,20 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Lock, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { KindPill, PageFrame, PageHeader, Surface } from "@/components/ui-bits";
 import {
   CURRICULUM_LENGTH,
   dayHref,
+  getDayByDate,
   holidayLabel,
   kindLabel,
   lastPlannedDate,
+  planPhase,
   scheduleDays,
   scheduleWeeks,
 } from "@/lib/calendar";
 import { examConfig } from "@/lib/config";
 import { examCountdown, formatDateShort, pad2, todayISO, weekdayLabel } from "@/lib/dates";
-import { isCompleted, isUnlocked } from "@/lib/progress";
+import { firstIncompleteUnlocked, isCompleted, isUnlocked } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -29,6 +33,45 @@ export function PlanView() {
   const weeks = scheduleWeeks(startDate);
   const lastDate = lastPlannedDate(startDate);
   const planOverrunsExam = lastDate > examConfig.examDate;
+  const phase = planPhase(startDate, today);
+  const todayDay = getDayByDate(startDate, today);
+  const nextIncomplete = useMemo(() => {
+    const focus = firstIncompleteUnlocked(progress, unlockAll);
+    return days.find((day) => day.id === focus.id) ?? focus;
+  }, [days, progress, unlockAll]);
+  const nextIncompleteUnlocked =
+    nextIncomplete && isUnlocked(progress, nextIncomplete.id, unlockAll)
+      ? nextIncomplete
+      : null;
+  const hasIncomplete =
+    Boolean(nextIncompleteUnlocked) &&
+    !isCompleted(progress, nextIncompleteUnlocked!.id);
+
+  const dayRefs = useRef<Map<string, HTMLLIElement | null>>(new Map());
+  const [flashId, setFlashId] = useState<string | null>(null);
+  const [jumpTip, setJumpTip] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!flashId) return;
+    const timer = window.setTimeout(() => setFlashId(null), 1800);
+    return () => window.clearTimeout(timer);
+  }, [flashId]);
+
+  const locateToday = useCallback(() => {
+    if (phase === "not-started") {
+      setJumpTip("未开课");
+      return;
+    }
+    if (phase === "after-plan") {
+      setJumpTip("计划已结束");
+      return;
+    }
+    setJumpTip(null);
+    if (!todayDay) return;
+    const el = dayRefs.current.get(todayDay.id);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setFlashId(todayDay.id);
+  }, [phase, todayDay]);
 
   return (
     <PageFrame>
@@ -51,6 +94,37 @@ export function PlanView() {
         }
       />
 
+      <Surface className="mb-6 px-3 py-2.5">
+        <div className="flex flex-wrap items-center gap-2">
+          <Button type="button" size="sm" variant="outline" onClick={locateToday}>
+            定位今日
+          </Button>
+          {hasIncomplete && nextIncompleteUnlocked ? (
+            <Link
+              href={dayHref(nextIncompleteUnlocked)}
+              className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-sm hover:bg-muted"
+            >
+              下一个未完成
+            </Link>
+          ) : (
+            <Button type="button" size="sm" variant="outline" disabled>
+              下一个未完成
+            </Button>
+          )}
+          {jumpTip ? (
+            <span className="font-mono text-[11px] text-amber-400">{jumpTip}</span>
+          ) : phase === "not-started" ? (
+            <span className="text-xs text-muted-foreground">未开课 · 开课日 {startDate}</span>
+          ) : phase === "after-plan" ? (
+            <span className="text-xs text-muted-foreground">计划已结束 · 末日 {lastDate}</span>
+          ) : todayDay ? (
+            <span className="text-xs text-muted-foreground">
+              今日 {todayDay.date} · {todayDay.title}
+            </span>
+          ) : null}
+        </div>
+      </Surface>
+
       <div className="space-y-6">
         {weeks.map((week) => {
           const weekDays = days.filter((day) => day.week === week.week);
@@ -72,12 +146,14 @@ export function PlanView() {
                     const unlocked = isUnlocked(progress, day.id, unlockAll);
                     const done = isCompleted(progress, day.id);
                     const isToday = day.date === today;
+                    const flashing = flashId === day.id;
                     const inner = (
                       <div
                         className={cn(
                           "flex items-start gap-3 px-3 py-2.5 md:items-center",
                           !unlocked && "opacity-55",
                           isToday && "bg-surface-hover",
+                          flashing && "ring-2 ring-inset ring-brand/60 bg-brand/10",
                         )}
                       >
                         <div className="w-16 shrink-0 font-mono text-xs text-muted-foreground">
@@ -119,10 +195,24 @@ export function PlanView() {
                     );
 
                     if (!unlocked) {
-                      return <li key={day.id}>{inner}</li>;
+                      return (
+                        <li
+                          key={day.id}
+                          ref={(node) => {
+                            dayRefs.current.set(day.id, node);
+                          }}
+                        >
+                          {inner}
+                        </li>
+                      );
                     }
                     return (
-                      <li key={day.id}>
+                      <li
+                        key={day.id}
+                        ref={(node) => {
+                          dayRefs.current.set(day.id, node);
+                        }}
+                      >
                         <Link href={dayHref(day)} className="block hover:bg-surface-hover">
                           {inner}
                         </Link>

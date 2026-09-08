@@ -44,6 +44,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
   const [forced, setForced] = useState<LearnStep | null>(null);
   const [lastQuiz, setLastQuiz] = useState<QuizFinishSummary | null>(null);
+  const [wrongOnlyDrill, setWrongOnlyDrill] = useState(false);
 
   const scheduled = getDayById(day.id, startDate) ?? day;
   const session = getSession(sessions, scheduled.id);
@@ -62,6 +63,14 @@ export function LearnSession({ day }: { day: StudyDay }) {
     [mistakes, today],
   );
   const newMistakes = mistakes.filter((item) => item.lastWrongAt === today);
+  const wrongOnlyQuestions = useMemo(() => {
+    const duePool = dueMistakes(mistakes, today);
+    const pool =
+      duePool.length > 0 ? duePool : mistakes.filter((item) => !item.mastered);
+    return pool
+      .map((item) => getQuestionById(item.questionId))
+      .filter((item): item is NonNullable<typeof item> => Boolean(item));
+  }, [mistakes, today]);
 
   if (!unlocked) {
     return (
@@ -192,6 +201,28 @@ export function LearnSession({ day }: { day: StudyDay }) {
       ) : null}
 
       {step === "wrapup" ? (
+        wrongOnlyDrill && wrongOnlyQuestions.length > 0 ? (
+          <div>
+            <button
+              type="button"
+              onClick={() => setWrongOnlyDrill(false)}
+              className="label-caps hover:text-foreground"
+            >
+              ← 返回收尾
+            </button>
+            <h2 className="mt-2 text-xl font-medium">只练错题</h2>
+            <p className="mt-1 mb-5 text-sm text-muted-foreground">
+              {wrongOnlyQuestions.length} 题 · 完成后显示成绩单
+            </p>
+            <QuizRun
+              questions={wrongOnlyQuestions}
+              mode="review"
+              navKey={`wrapup-wrong:${scheduled.id}`}
+              finishLabel="返回收尾"
+              onFinished={() => setWrongOnlyDrill(false)}
+            />
+          </div>
+        ) : (
         <div>
           <div className="label-caps">WRAP UP</div>
           <h2 className="mt-2 text-xl font-medium">
@@ -281,6 +312,17 @@ export function LearnSession({ day }: { day: StudyDay }) {
                 进入下一天
               </Button>
             ) : null}
+            <Button
+              variant="outline"
+              disabled={wrongOnlyQuestions.length === 0}
+              onClick={() => {
+                if (wrongOnlyQuestions.length === 0) return;
+                setWrongOnlyDrill(true);
+              }}
+            >
+              只练错题
+              {wrongOnlyQuestions.length > 0 ? ` ${wrongOnlyQuestions.length}` : ""}
+            </Button>
             <Link
               href="/"
               className="inline-flex h-8 items-center rounded-md px-2.5 text-sm text-muted-foreground hover:text-foreground"
@@ -289,6 +331,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
             </Link>
           </div>
         </div>
+        )
       ) : null}
     </FocusFrame>
   );

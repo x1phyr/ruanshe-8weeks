@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { ArrowRight, Settings2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SimulateDialog } from "@/components/simulate-dialog";
+import { QuizRun } from "@/components/learn/quiz-run";
 import { KindPill, Metric, PageFrame, Surface } from "@/components/ui-bits";
 import { getQuestionById } from "@/data/questions";
 import { examConfig } from "@/lib/config";
@@ -256,7 +258,7 @@ export function DashboardView() {
         />
       ) : null}
 
-      <WeakTopicsCard mistakes={mistakes} />
+      <WeakTopicsCard mistakes={mistakes} today={today} />
     </PageFrame>
   );
 }
@@ -461,8 +463,25 @@ function AccuracyCard({
   );
 }
 
-function WeakTopicsCard({ mistakes }: { mistakes: Mistake[] }) {
+function WeakTopicsCard({
+  mistakes,
+  today,
+}: {
+  mistakes: Mistake[];
+  today: string;
+}) {
+  const [drilling, setDrilling] = useState(false);
   const active = mistakes.filter((m) => !m.mastered);
+  const due = dueMistakes(mistakes, today);
+  const wrongOnlyQuestions = useMemo(() => {
+    const duePool = dueMistakes(mistakes, today);
+    const pool =
+      duePool.length > 0 ? duePool : mistakes.filter((m) => !m.mastered);
+    return pool
+      .map((item) => getQuestionById(item.questionId))
+      .filter((item): item is NonNullable<typeof item> => Boolean(item));
+  }, [mistakes, today]);
+
   const buckets = new Map<string, number>();
   for (const item of active) {
     const q = getQuestionById(item.questionId);
@@ -474,6 +493,35 @@ function WeakTopicsCard({ mistakes }: { mistakes: Mistake[] }) {
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh"))
     .slice(0, 5);
 
+  if (drilling && wrongOnlyQuestions.length > 0) {
+    return (
+      <Surface className="mt-6 p-4">
+        <button
+          type="button"
+          onClick={() => setDrilling(false)}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回弱项
+        </button>
+        <h2 className="mt-2 text-lg font-medium">只练错题</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {due.length > 0
+            ? `到期 ${wrongOnlyQuestions.length} 题`
+            : `未掌握 ${wrongOnlyQuestions.length} 题`}
+        </p>
+        <div className="mt-4">
+          <QuizRun
+            questions={wrongOnlyQuestions}
+            mode="review"
+            navKey="dashboard:wrong-only"
+            finishLabel="返回仪表盘"
+            onFinished={() => setDrilling(false)}
+          />
+        </div>
+      </Surface>
+    );
+  }
+
   return (
     <Surface className="mt-6 p-4">
       <div className="flex items-center justify-between gap-2">
@@ -483,7 +531,21 @@ function WeakTopicsCard({ mistakes }: { mistakes: Mistake[] }) {
             按知识点首段汇总未掌握错题
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-xs"
+            disabled={wrongOnlyQuestions.length === 0}
+            onClick={() => {
+              if (wrongOnlyQuestions.length === 0) return;
+              setDrilling(true);
+            }}
+          >
+            只练错题
+            {wrongOnlyQuestions.length > 0 ? ` ${wrongOnlyQuestions.length}` : ""}
+          </Button>
           <Link
             href="/mistakes"
             className="inline-flex h-7 items-center rounded-md border border-border px-2 text-xs text-muted-foreground hover:text-foreground"
