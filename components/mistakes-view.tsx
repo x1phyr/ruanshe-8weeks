@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { getQuestionById } from "@/data/questions";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,7 @@ import { QuizRun } from "@/components/learn/quiz-run";
 import { exportProgressBackup } from "@/lib/backup";
 import { todayISO } from "@/lib/dates";
 import { resolveMistakeModule } from "@/lib/module-stats";
+import { mistakesModuleHref, readModuleFromUrl } from "@/lib/practice";
 import { dueMistakes, mistakeBucket } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
 import type { Mistake, MistakeBucket, MistakeReason } from "@/lib/types";
@@ -115,6 +117,8 @@ export function MistakesView() {
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
   const clearMasteredMistakes = useTrainerStore((s) => s.clearMasteredMistakes);
+  const router = useRouter();
+  const pathname = usePathname();
   const [tab, setTab] = useState<MistakeBucket>("needs-review");
   const [moduleFilter, setModuleFilter] = useState<string>(ALL_MODULES);
   const [drillMode, setDrillMode] = useState<"due" | "wrong-only" | null>(null);
@@ -127,8 +131,23 @@ export function MistakesView() {
     for (const item of mistakes) {
       set.add(resolveMistakeModule(item));
     }
+    if (moduleFilter !== ALL_MODULES) set.add(moduleFilter);
     return Array.from(set).sort((a, b) => a.localeCompare(b, "zh"));
-  }, [mistakes]);
+  }, [mistakes, moduleFilter]);
+
+  useEffect(() => {
+    const fromUrl = readModuleFromUrl();
+    if (fromUrl) setModuleFilter(fromUrl);
+  }, []);
+
+  const selectModuleFilter = (name: string) => {
+    setModuleFilter(name);
+    const qs =
+      name === ALL_MODULES
+        ? ""
+        : mistakesModuleHref(name).slice("/mistakes".length);
+    router.replace(`${pathname}${qs}`, { scroll: false });
+  };
 
   const filteredMistakes = useMemo(() => {
     if (moduleFilter === ALL_MODULES) return mistakes;
@@ -304,7 +323,7 @@ export function MistakesView() {
             <button
               key={name}
               type="button"
-              onClick={() => setModuleFilter(name)}
+              onClick={() => selectModuleFilter(name)}
               className={`h-7 rounded-sm border px-2 font-mono text-[11px] ${
                 moduleFilter === name
                   ? "border-brand/50 bg-brand/10 text-brand"

@@ -20,9 +20,15 @@ import { dayHref, getDayById, scheduleDays } from "@/lib/calendar";
 import { isUnlocked } from "@/lib/progress";
 import {
   MODULE_STATS_MIN_ATTEMPTS,
+  countUnmasteredMistakesForModule,
   topWeakModules,
 } from "@/lib/module-stats";
-import { practiceModuleHref, questionsForModule } from "@/lib/practice";
+import {
+  mistakesModuleHref,
+  practiceModuleHref,
+  questionsForModule,
+  readModuleFromUrl,
+} from "@/lib/practice";
 import { useTrainerStore } from "@/lib/store";
 import type { AnswerRecord, Question } from "@/lib/types";
 
@@ -43,34 +49,12 @@ function matchesQuery(q: Question, query: string): boolean {
 }
 
 
-function readModuleFromUrl(modules: string[]): string | null {
-  if (typeof window === "undefined") return null;
-  const params = new URLSearchParams(window.location.search);
-  let raw = params.get("module");
-  if (!raw && window.location.hash) {
-    const hash = window.location.hash.replace(/^#/, "");
-    if (hash.startsWith("module=")) {
-      raw = new URLSearchParams(hash).get("module");
-    } else if (hash.includes("=")) {
-      raw = new URLSearchParams(hash).get("module");
-    } else {
-      try {
-        raw = decodeURIComponent(hash);
-      } catch {
-        raw = hash;
-      }
-    }
-  }
-  if (!raw) return null;
-  if (raw === "全部" || modules.includes(raw)) return raw;
-  return null;
-}
-
 export function PracticeView() {
   const progress = useTrainerStore((s) => s.progress);
   const startDate = useTrainerStore((s) => s.startDate);
   const unlockAll = useTrainerStore((s) => s.unlockAll);
   const answers = useTrainerStore((s) => s.answers);
+  const mistakes = useTrainerStore((s) => s.mistakes);
   const studyDays = scheduleDays(startDate);
   const router = useRouter();
   const pathname = usePathname();
@@ -107,6 +91,11 @@ export function PracticeView() {
     if (module === "全部") return [];
     return questionsForModule(module, studyDays, progress, unlockAll);
   }, [module, studyDays, progress, unlockAll]);
+
+  const moduleMistakeCount = useMemo(() => {
+    if (module === "全部") return 0;
+    return countUnmasteredMistakesForModule(mistakes, module);
+  }, [mistakes, module]);
 
   const searchMatches = useMemo(() => {
     const q = search.trim();
@@ -393,6 +382,16 @@ export function PracticeView() {
                 {module} · 已解锁 {unlockedInModule.length}/{days.length} 日 · 可刷{" "}
                 {moduleBank.length} 题
               </div>
+              <Link
+                href={mistakesModuleHref(module)}
+                className={`inline-flex h-7 items-center rounded-md border border-border px-2.5 text-[0.8rem] ${
+                  moduleMistakeCount === 0
+                    ? "text-muted-foreground/50"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                }`}
+              >
+                该模块错题 ({moduleMistakeCount})
+              </Link>
               <Button
                 size="sm"
                 disabled={moduleBank.length === 0}
