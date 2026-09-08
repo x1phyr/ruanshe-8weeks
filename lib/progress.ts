@@ -1,4 +1,4 @@
-import { firstDay, getDayById, getNextDay, scheduleDays, studyDays } from "@/lib/calendar";
+import { firstDay, getDayByDate, getDayById, getDaysByWeek, getNextDay, getWeekMeta, scheduleDays, studyDays } from "@/lib/calendar";
 import { todayISO } from "@/lib/dates";
 import type { DayKind, Mistake, MistakeBucket, Progress, StudyDay } from "@/lib/types";
 
@@ -59,6 +59,46 @@ export function resolveFocusDay(
   }
   const fallback = firstIncompleteUnlocked(progress, unlockAll);
   return days.find((day) => day.id === fallback.id) ?? fallback;
+}
+
+
+/** Short week label for compact UI (strip Chinese parentheticals). */
+export function weekShortTitle(week: number, startDate: string): string {
+  const meta = getWeekMeta(week, startDate);
+  const raw = meta?.title ?? `第 ${week} 周`;
+  return raw.replace(/（[^）]*）/g, "").trim() || raw;
+}
+
+/**
+ * Current calendar week (1–8) for today via startDate + simulateDate,
+ * falling back to the focus day week when today is outside the plan.
+ */
+export function resolveCurrentWeek(
+  progress: Progress,
+  simulateDate: string | null,
+  startDate: string,
+  unlockAll = false,
+): number {
+  const today = todayISO(simulateDate);
+  const todayDay = getDayByDate(startDate, today);
+  if (todayDay) return todayDay.week;
+  return resolveFocusDay(progress, simulateDate, startDate, unlockAll).week;
+}
+
+/** Completed vs total study days in a calendar week. */
+export function weekProgressStats(
+  progress: Progress,
+  startDate: string,
+  week: number,
+): { week: number; done: number; total: number; title: string } {
+  const days = getDaysByWeek(week, startDate);
+  const done = days.filter((day) => isCompleted(progress, day.id)).length;
+  return {
+    week,
+    done,
+    total: days.length,
+    title: weekShortTitle(week, startDate),
+  };
 }
 
 export function afterComplete(progress: Progress, dayId: string): Progress {
