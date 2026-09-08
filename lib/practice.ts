@@ -30,6 +30,15 @@ export function practiceModuleHref(module: string): string {
   return `/practice?module=${encodeURIComponent(module)}`;
 }
 
+/** Primary module for day → practice CTA; skip paper/mock and stub/empty. */
+export function dayPracticeModule(day: StudyDay): string | null {
+  if (day.kind === "paper" || day.status === "paper") return null;
+  if (day.status === "stub") return null;
+  const module = day.module?.trim();
+  if (!module || module === "真题卷") return null;
+  return module;
+}
+
 /** Deep link to mistakes book with a module chip preselected. */
 export function mistakesModuleHref(module: string): string {
   return `/mistakes?module=${encodeURIComponent(module)}`;
