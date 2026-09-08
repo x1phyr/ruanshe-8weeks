@@ -136,7 +136,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | `lib/dates.ts` / `lib/types.ts` | 日期工具与类型 |
 | `data/lessons.ts` | 53 日讲义正文 |
 | `data/questions.ts` | 日训题 + 合并模考题 |
-| `data/mock-papers.ts` | 自编模考 200 题 |
+| `data/mock-papers.ts` | 自编模考 220 题 |
 | `components/dashboard-view.tsx` | 仪表盘 |
 | `components/learn/*` | 日训会话、讲义、测验、试卷计时 |
 | `components/practice-view.tsx` | 模块 / 搜索 / 随机 / 限时 |
