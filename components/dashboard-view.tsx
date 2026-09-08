@@ -12,6 +12,8 @@ import { SimulateDialog } from "@/components/simulate-dialog";
 import { QuizRun } from "@/components/learn/quiz-run";
 import { KindPill, Metric, PageFrame, Surface } from "@/components/ui-bits";
 import { getQuestionById, sampleQuestions, unlockedQuestions } from "@/data/questions";
+import { exportProgressBackup } from "@/lib/backup";
+import { coachTipForDate } from "@/lib/coach-tips";
 import { examConfig } from "@/lib/config";
 import {
   CURRICULUM_LENGTH,
@@ -31,7 +33,14 @@ import {
   todayISO,
   weekdayLabel,
 } from "@/lib/dates";
-import { accuracyPercent, dueMistakes, isCompleted, isUnlocked, resolveFocusDay } from "@/lib/progress";
+import {
+  accuracyPercent,
+  dueMistakes,
+  isCompleted,
+  isPlanComplete,
+  isUnlocked,
+  resolveFocusDay,
+} from "@/lib/progress";
 import { getSession, useTrainerStore } from "@/lib/store";
 import type {
   AnswerRecord,
@@ -146,6 +155,19 @@ export function DashboardView() {
       />
 
       <InstallTip />
+
+      <WeekdayCoachTip today={today} />
+
+      {isPlanComplete(progress) ? (
+        <CelebrationCard
+          accuracy={acc}
+          streak={streak}
+          progress={progress}
+          mistakes={mistakes}
+          today={today}
+          unlockAll={unlockAll}
+        />
+      ) : null}
 
       <Surface className="mt-4">
         <div className="grid grid-cols-2 divide-x divide-border md:grid-cols-3 lg:grid-cols-6">
@@ -403,6 +425,176 @@ function ActiveDayPanel({
   );
 }
 
+
+function WeekdayCoachTip({ today }: { today: string }) {
+  const tip = coachTipForDate(today);
+  return (
+    <Surface className="mt-4 px-4 py-3">
+      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        <span className="label-caps shrink-0">今日提示</span>
+        <KindPill tone="brand">{tip.focus}</KindPill>
+        <span className="text-xs text-muted-foreground">{weekdayLabel(today)}</span>
+      </div>
+      <p className="mt-1.5 text-sm leading-6 text-foreground">{tip.tip}</p>
+    </Surface>
+  );
+}
+
+function CelebrationCard({
+  accuracy,
+  streak,
+  progress,
+  mistakes,
+  today,
+  unlockAll,
+}: {
+  accuracy: number | null;
+  streak: number;
+  progress: ProgressState;
+  mistakes: Mistake[];
+  today: string;
+  unlockAll: boolean;
+}) {
+  const [randomRun, setRandomRun] = useState<{
+    questions: Question[];
+  } | null>(null);
+  const [drilling, setDrilling] = useState(false);
+
+  const unlockedPool = useMemo(
+    () =>
+      unlockedQuestions((dayId) => isUnlocked(progress, dayId, unlockAll)),
+    [progress, unlockAll],
+  );
+  const wrongOnlyQuestions = useMemo(() => {
+    const duePool = dueMistakes(mistakes, today);
+    const pool =
+      duePool.length > 0 ? duePool : mistakes.filter((m) => !m.mastered);
+    return pool
+      .map((item) => getQuestionById(item.questionId))
+      .filter((item): item is NonNullable<typeof item> => Boolean(item));
+  }, [mistakes, today]);
+
+  if (randomRun && randomRun.questions.length > 0) {
+    return (
+      <Surface className="mt-4 p-4">
+        <button
+          type="button"
+          onClick={() => setRandomRun(null)}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回通关卡
+        </button>
+        <h2 className="mt-2 text-lg font-medium">
+          随机 {randomRun.questions.length} 题
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          通关后继续练手 · 池 {unlockedPool.length} 题
+        </p>
+        <div className="mt-4">
+          <QuizRun
+            questions={randomRun.questions}
+            mode="practice"
+            navKey={`dashboard:celebrate:random:${randomRun.questions.length}`}
+            finishLabel="返回通关卡"
+            onFinished={() => setRandomRun(null)}
+          />
+        </div>
+      </Surface>
+    );
+  }
+
+  if (drilling && wrongOnlyQuestions.length > 0) {
+    return (
+      <Surface className="mt-4 p-4">
+        <button
+          type="button"
+          onClick={() => setDrilling(false)}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回通关卡
+        </button>
+        <h2 className="mt-2 text-lg font-medium">只练错题</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {wrongOnlyQuestions.length} 题 · 通关后收口弱项
+        </p>
+        <div className="mt-4">
+          <QuizRun
+            questions={wrongOnlyQuestions}
+            mode="review"
+            navKey="dashboard:celebrate:wrong-only"
+            finishLabel="返回通关卡"
+            onFinished={() => setDrilling(false)}
+          />
+        </div>
+      </Surface>
+    );
+  }
+
+  return (
+    <Surface className="mt-4 p-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="label-caps">PLAN COMPLETE</div>
+          <h2 className="mt-1 text-lg font-medium tracking-tight">通关</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            53 日计划已全部完成。可继续刷题、复盘错题或备份进度。
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <KindPill tone="ok">
+              正确率 {accuracy === null ? "—" : `${accuracy}%`}
+            </KindPill>
+            <KindPill tone="brand">
+              {streak > 0 ? `连续 ${streak} 天` : "连续 —"}
+            </KindPill>
+            <KindPill>
+              {pad2(progress.completedDays.length)} / {pad2(CURRICULUM_LENGTH)}
+            </KindPill>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-xs"
+            disabled={unlockedPool.length === 0}
+            onClick={() => {
+              const picked = sampleQuestions(unlockedPool, 20);
+              if (picked.length === 0) return;
+              setRandomRun({ questions: picked });
+            }}
+          >
+            随机 {Math.min(20, unlockedPool.length) || 20} 题
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-xs"
+            disabled={wrongOnlyQuestions.length === 0}
+            onClick={() => {
+              if (wrongOnlyQuestions.length === 0) return;
+              setDrilling(true);
+            }}
+          >
+            只练错题
+            {wrongOnlyQuestions.length > 0 ? ` ${wrongOnlyQuestions.length}` : ""}
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-xs"
+            onClick={() => exportProgressBackup(today)}
+            title="导出完整本地进度备份"
+          >
+            备份进度
+          </Button>
+        </div>
+      </div>
+    </Surface>
+  );
+}
 
 function TomorrowPreview({
   startDate,
