@@ -29,6 +29,73 @@ const reasonLabel: Record<MistakeReason, string> = {
   careless: "看错题",
 };
 
+function exportDateStamp(iso: string) {
+  return iso.slice(0, 10);
+}
+
+function downloadBlob(filename: string, content: string, mime: string) {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function csvEscape(value: string | number | boolean) {
+  const s = String(value);
+  if (/[",\n\r]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+  return s;
+}
+
+function mistakesToRows(mistakes: Mistake[]) {
+  return mistakes.map((m) => ({
+    questionId: m.questionId,
+    topic: m.topic,
+    wrongCount: m.wrongCount,
+    reason: m.reason,
+    mastered: m.mastered,
+    nextReviewAt: m.nextReviewAt,
+    lastWrongAt: m.lastWrongAt,
+    selectedAnswer: m.selectedAnswer,
+    correctAnswer: m.correctAnswer,
+  }));
+}
+
+function exportMistakesJson(mistakes: Mistake[], stamp: string) {
+  const rows = mistakesToRows(mistakes);
+  downloadBlob(
+    `ruanshe-mistakes-${stamp}.json`,
+    JSON.stringify(rows, null, 2),
+    "application/json;charset=utf-8",
+  );
+}
+
+function exportMistakesCsv(mistakes: Mistake[], stamp: string) {
+  const rows = mistakesToRows(mistakes);
+  const headers = [
+    "questionId",
+    "topic",
+    "wrongCount",
+    "reason",
+    "mastered",
+    "nextReviewAt",
+    "lastWrongAt",
+    "selectedAnswer",
+    "correctAnswer",
+  ] as const;
+  const lines = [
+    headers.join(","),
+    ...rows.map((row) => headers.map((h) => csvEscape(row[h])).join(",")),
+  ];
+  downloadBlob(
+    `ruanshe-mistakes-${stamp}.csv`,
+    lines.join("\n"),
+    "text/csv;charset=utf-8",
+  );
+}
+
 export function MistakesView() {
   const mistakes = useTrainerStore((s) => s.mistakes);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
@@ -37,6 +104,7 @@ export function MistakesView() {
   const [drilling, setDrilling] = useState(false);
 
   const today = todayISO(simulateDate);
+  const stamp = exportDateStamp(today);
 
   const grouped = useMemo(() => {
     const map: Record<MistakeBucket, Mistake[]> = {
@@ -85,9 +153,29 @@ export function MistakesView() {
         title="错题本"
         description="首次错 → 明天；第 2 次 → 3 天；第 3 次 → 7 天。复习做对进入 14 天；连续做对标记已掌握。"
         action={
-          dueQuestions.length > 0 ? (
-            <Button onClick={() => setDrilling(true)}>复习 {dueQuestions.length} 题</Button>
-          ) : null
+          <div className="flex flex-wrap items-center gap-1.5">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={mistakes.length === 0}
+              onClick={() => exportMistakesJson(mistakes, stamp)}
+            >
+              导出 JSON
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={mistakes.length === 0}
+              onClick={() => exportMistakesCsv(mistakes, stamp)}
+            >
+              导出 CSV
+            </Button>
+            {dueQuestions.length > 0 ? (
+              <Button size="sm" onClick={() => setDrilling(true)}>
+                复习 {dueQuestions.length} 题
+              </Button>
+            ) : null}
+          </div>
         }
       />
       <div className="mb-4 flex gap-1">
