@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Settings2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SimulateDialog } from "@/components/simulate-dialog";
 import { KindPill, Metric, PageFrame, Surface } from "@/components/ui-bits";
+import { getQuestionById } from "@/data/questions";
 import { examConfig } from "@/lib/config";
 import {
   CURRICULUM_LENGTH,
@@ -27,7 +29,7 @@ import {
 } from "@/lib/dates";
 import { accuracyPercent, dueMistakes, isCompleted, resolveFocusDay } from "@/lib/progress";
 import { getSession, useTrainerStore } from "@/lib/store";
-import type { DaySession, Progress as ProgressState, StudyDay } from "@/lib/types";
+import type { DaySession, Mistake, Progress as ProgressState, StudyDay } from "@/lib/types";
 
 const taskDefs = [
   { key: "review", label: "复习错题" },
@@ -66,46 +68,57 @@ export function DashboardView() {
 
   return (
     <PageFrame>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-wrap items-center gap-2">
-          {phase === "active" && calendarToday ? (
-            <>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex min-w-0 flex-col gap-1">
+          <div className="flex flex-wrap items-center gap-2">
+            {phase === "active" && calendarToday ? (
+              <>
+                <span className="mono-num text-sm text-brand">
+                  WEEK {pad2(calendarToday.week)} / 08
+                </span>
+                <span className="text-border">·</span>
+                <span className="mono-num text-sm text-muted-foreground">
+                  DAY {pad2(calendarToday.dayInWeek)}
+                </span>
+              </>
+            ) : (
               <span className="mono-num text-sm text-brand">
-                WEEK {pad2(calendarToday.week)} / 08
+                {phase === "not-started" ? "尚未开课" : "计划已结束"}
               </span>
-              <span className="text-border">·</span>
-              <span className="mono-num text-sm text-muted-foreground">
-                DAY {pad2(calendarToday.dayInWeek)}
-              </span>
-            </>
-          ) : (
-            <span className="mono-num text-sm text-brand">
-              {phase === "not-started" ? "尚未开课" : "计划已结束"}
-            </span>
-          )}
-          {simulateDate ? (
-            <KindPill tone="brand">模拟 {simulateDate}</KindPill>
-          ) : null}
-        </div>
-        <h1 className="text-2xl font-medium tracking-tight md:text-3xl">
-          {isExamDay
-            ? "今天考试"
-            : afterExam
-              ? "考试日已过"
+            )}
+            {simulateDate ? (
+              <KindPill tone="brand">模拟 {simulateDate}</KindPill>
+            ) : null}
+          </div>
+          <h1 className="text-2xl font-medium tracking-tight md:text-3xl">
+            {isExamDay
+              ? "今天考试"
+              : afterExam
+                ? "考试日已过"
+                : phase === "not-started"
+                  ? "课程尚未开始"
+                  : phase === "after-plan"
+                    ? "计划日历已经走完"
+                    : `今日 ${calendarToday?.topic ?? focus.topic}`}
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {formatDateCn(today)} {weekdayLabel(today)}
+            {phase === "active" && calendarToday
+              ? ` · ${calendarToday.title}`
               : phase === "not-started"
-                ? "课程尚未开始"
-                : phase === "after-plan"
-                  ? "计划日历已经走完"
-                  : `今日 ${calendarToday?.topic ?? focus.topic}`}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {formatDateCn(today)} {weekdayLabel(today)}
-          {phase === "active" && calendarToday
-            ? ` · ${calendarToday.title}`
-            : phase === "not-started"
-              ? ` · 开课日 ${startDate}`
-              : ` · 最后学习日 ${lastDate}`}
-        </p>
+                ? ` · 开课日 ${startDate}`
+                : ` · 最后学习日 ${lastDate}`}
+          </p>
+        </div>
+        <SimulateDialog>
+          <button
+            type="button"
+            aria-label="调试设置"
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-border text-muted-foreground hover:bg-surface-hover hover:text-foreground md:hidden"
+          >
+            <Settings2 className="size-4" />
+          </button>
+        </SimulateDialog>
       </div>
 
       <StartDateControl
@@ -226,6 +239,8 @@ export function DashboardView() {
           sessions={sessions}
         />
       ) : null}
+
+      <WeakTopicsCard mistakes={mistakes} />
     </PageFrame>
   );
 }
@@ -354,5 +369,59 @@ function ActiveDayPanel({
         </div>
       </Surface>
     </div>
+  );
+}
+
+
+function WeakTopicsCard({ mistakes }: { mistakes: Mistake[] }) {
+  const active = mistakes.filter((m) => !m.mastered);
+  const buckets = new Map<string, number>();
+  for (const item of active) {
+    const q = getQuestionById(item.questionId);
+    const pathHead = q?.knowledgePath?.split("/")[0]?.trim();
+    const key = pathHead || item.topic || "未分类";
+    buckets.set(key, (buckets.get(key) ?? 0) + item.wrongCount);
+  }
+  const top = [...buckets.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh"))
+    .slice(0, 5);
+
+  return (
+    <Surface className="mt-6 p-4">
+      <div className="flex items-center justify-between gap-2">
+        <div>
+          <div className="label-caps">WEAK MODULES</div>
+          <div className="mt-1 text-sm text-muted-foreground">
+            按知识点首段汇总未掌握错题
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <Link
+            href="/mistakes"
+            className="inline-flex h-7 items-center rounded-md border border-border px-2 text-xs text-muted-foreground hover:text-foreground"
+          >
+            错题本
+          </Link>
+          <Link
+            href="/practice"
+            className="inline-flex h-7 items-center rounded-md border border-border px-2 text-xs text-muted-foreground hover:text-foreground"
+          >
+            练习
+          </Link>
+        </div>
+      </div>
+      {top.length === 0 ? (
+        <p className="mt-3 text-sm text-muted-foreground">暂无弱项 · 练几题后再看这里</p>
+      ) : (
+        <ul className="mt-3 divide-y divide-border border-t border-border">
+          {top.map(([name, count]) => (
+            <li key={name} className="flex items-center justify-between gap-3 py-2.5 text-sm">
+              <span className="min-w-0 truncate text-foreground">{name}</span>
+              <span className="mono-num shrink-0 text-muted-foreground">{pad2(count)}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Surface>
   );
 }
