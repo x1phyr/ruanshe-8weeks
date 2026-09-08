@@ -103,7 +103,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **scorecard** | 交卷后正确率与分专题汇总 |
 | **薄弱模块** | 错题 + 作答统计；仪表盘弱项卡 |
 | **streak** | 连续学习天数 |
-| **错题模块筛选** | `/mistakes` 按模块 chip 筛选待复习/学习中/已掌握；导出与只练错题作用于当前筛选 |
+| **错题模块筛选 / 清空已掌握** | `/mistakes` 按模块 chip 筛选；导出与只练错题、已掌握桶「清空已掌握」均尊重当前筛选（无筛选则清全部已掌握） |
 | **进度备份** | 调试设置内导出 / 导入完整本地进度；可重置进度 |
 | **计划跳转 / 打印** | `/plan` 跳到指定日（受解锁）；`window.print()` |
 | **计划只看未完成** | `/plan` chip 隐藏 completedDays（zustand 持久化）；整周完成显示「本周已完成」 |

@@ -114,6 +114,7 @@ export function MistakesView() {
   const mistakes = useTrainerStore((s) => s.mistakes);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
+  const clearMasteredMistakes = useTrainerStore((s) => s.clearMasteredMistakes);
   const [tab, setTab] = useState<MistakeBucket>("needs-review");
   const [moduleFilter, setModuleFilter] = useState<string>(ALL_MODULES);
   const [drillMode, setDrillMode] = useState<"due" | "wrong-only" | null>(null);
@@ -332,6 +333,28 @@ export function MistakesView() {
           </button>
         ))}
       </div>
+      {tab === "mastered" && grouped.mastered.length > 0 ? (
+        <div className="mb-3">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              const count = grouped.mastered.length;
+              const msg = filterActive
+                ? `确定清空「${moduleFilter}」下已掌握的 ${count} 题？此操作不可撤销。`
+                : `确定清空全部已掌握错题（共 ${count} 题）？此操作不可撤销。`;
+              if (!confirm(msg)) return;
+              clearMasteredMistakes(
+                filterActive
+                  ? grouped.mastered.map((m) => m.questionId)
+                  : undefined,
+              );
+            }}
+          >
+            清空已掌握
+          </Button>
+        </div>
+      ) : null}
       <Surface>
         {list.length === 0 ? (
           <EmptyState
