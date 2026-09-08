@@ -24,6 +24,7 @@ import {
   CURRICULUM_LENGTH,
   dayHref,
   getDayByDate,
+  getDayById,
   kindLabel,
   lastPlannedDate,
   planPhase,
@@ -169,6 +170,15 @@ export function DashboardView() {
       />
 
       <InstallTip />
+
+      <ExamNearModeCard
+        daysLeft={daysLeft}
+        mistakes={mistakes}
+        today={today}
+        progress={progress}
+        unlockAll={unlockAll}
+        startDate={startDate}
+      />
 
       <WeekdayCoachTip today={today} />
 
@@ -454,6 +464,213 @@ function ActiveDayPanel({
 }
 
 
+
+const PAPER_DAY_IDS = [
+  "week-5/day-6",
+  "week-5/day-7",
+  "week-7/day-5",
+  "week-7/day-6",
+] as const;
+
+function ExamNearModeCard({
+  daysLeft,
+  mistakes,
+  today,
+  progress,
+  unlockAll,
+  startDate,
+}: {
+  daysLeft: number;
+  mistakes: Mistake[];
+  today: string;
+  progress: ProgressState;
+  unlockAll: boolean;
+  startDate: string;
+}) {
+  const [drilling, setDrilling] = useState(false);
+  const [randomRun, setRandomRun] = useState<{
+    questions: Question[];
+    timeLimitSec?: number;
+  } | null>(null);
+
+  const unlockedPool = useMemo(
+    () =>
+      unlockedQuestions((dayId) => isUnlocked(progress, dayId, unlockAll)),
+    [progress, unlockAll],
+  );
+  const wrongOnlyQuestions = useMemo(() => {
+    const duePool = dueMistakes(mistakes, today);
+    const pool =
+      duePool.length > 0 ? duePool : mistakes.filter((m) => !m.mastered);
+    return pool
+      .map((item) => getQuestionById(item.questionId))
+      .filter((item): item is NonNullable<typeof item> => Boolean(item));
+  }, [mistakes, today]);
+
+  const paperDays = useMemo(() => {
+    return PAPER_DAY_IDS.map((id) => getDayById(id, startDate)).filter(
+      (day): day is StudyDay => Boolean(day),
+    );
+  }, [startDate]);
+  const unlockedPapers = paperDays.filter((day) =>
+    isUnlocked(progress, day.id, unlockAll),
+  );
+
+  if (daysLeft < 0) {
+    return (
+      <p className="mt-4 text-xs text-muted-foreground">考试已过</p>
+    );
+  }
+
+  if (daysLeft > 7) return null;
+
+  if (randomRun && randomRun.questions.length > 0) {
+    return (
+      <Surface className="mt-4 border-brand/40 bg-brand/5 p-4">
+        <button
+          type="button"
+          onClick={() => setRandomRun(null)}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回临考模式
+        </button>
+        <h2 className="mt-2 text-lg font-medium">
+          {randomRun.timeLimitSec
+            ? randomRun.timeLimitSec === 900
+              ? `15 分钟速刷 · ${randomRun.questions.length} 题`
+              : `限时随机 ${randomRun.questions.length} 题`
+            : `随机 ${randomRun.questions.length} 题`}
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {randomRun.timeLimitSec
+            ? `限时 ${Math.round(randomRun.timeLimitSec / 60)} 分钟 · 从已解锁题库抽取（池 ${unlockedPool.length}）。到时自动交卷，未答按错计；可提前交卷。`
+            : `从已解锁题库抽取（池 ${unlockedPool.length}）。`}
+        </p>
+        <div className="mt-4">
+          <QuizRun
+            questions={randomRun.questions}
+            mode="practice"
+            navKey={`dashboard:exam-near:${randomRun.timeLimitSec ? `timed${randomRun.timeLimitSec}:` : ""}${randomRun.questions.length}`}
+            timeLimitSec={randomRun.timeLimitSec}
+            finishLabel="返回临考模式"
+            onFinished={() => setRandomRun(null)}
+          />
+        </div>
+      </Surface>
+    );
+  }
+
+  if (drilling && wrongOnlyQuestions.length > 0) {
+    return (
+      <Surface className="mt-4 border-brand/40 bg-brand/5 p-4">
+        <button
+          type="button"
+          onClick={() => setDrilling(false)}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回临考模式
+        </button>
+        <h2 className="mt-2 text-lg font-medium">只练错题</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {wrongOnlyQuestions.length} 题 · 临考复盘
+        </p>
+        <div className="mt-4">
+          <QuizRun
+            questions={wrongOnlyQuestions}
+            mode="review"
+            navKey="dashboard:exam-near:wrong-only"
+            finishLabel="返回临考模式"
+            onFinished={() => setDrilling(false)}
+          />
+        </div>
+      </Surface>
+    );
+  }
+
+  const daysLabel =
+    daysLeft === 0 ? "今天考试" : `还剩 ${daysLeft} 天`;
+
+  return (
+    <Surface className="mt-4 border-brand/40 bg-brand/5 p-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="label-caps text-brand">临考模式</span>
+            <KindPill tone="warn">{daysLabel}</KindPill>
+          </div>
+          <div className="mt-2 font-mono text-2xl tracking-tight">
+            {daysLeft === 0 ? "DAY 0" : `${pad2(daysLeft)} 天`}
+          </div>
+          <p className="mt-2 text-sm leading-6 text-foreground">
+            不学新坑，复盘错题+计时卷
+          </p>
+        </div>
+      </div>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Button
+          type="button"
+          size="sm"
+          className="h-8 px-2.5 text-xs"
+          disabled={wrongOnlyQuestions.length === 0}
+          onClick={() => {
+            if (wrongOnlyQuestions.length === 0) return;
+            setDrilling(true);
+          }}
+        >
+          只练错题
+          {wrongOnlyQuestions.length > 0 ? ` ${wrongOnlyQuestions.length}` : ""}
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          className="h-8 px-2.5 text-xs"
+          disabled={unlockedPool.length === 0}
+          onClick={() => {
+            const picked = sampleQuestions(unlockedPool, 10);
+            if (picked.length === 0) return;
+            setRandomRun({ questions: picked, timeLimitSec: 900 });
+          }}
+        >
+          15分钟速刷
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          className="h-8 px-2.5 text-xs"
+          disabled={unlockedPool.length === 0}
+          onClick={() => {
+            const picked = sampleQuestions(unlockedPool, 20);
+            if (picked.length === 0) return;
+            setRandomRun({ questions: picked, timeLimitSec: 20 * 60 });
+          }}
+        >
+          限时20分钟
+        </Button>
+        {unlockedPapers.length > 0 ? (
+          unlockedPapers.map((day) => (
+            <Link
+              key={day.id}
+              href={dayHref(day)}
+              className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-xs hover:bg-muted"
+            >
+              {day.week === 5 ? "W5" : "W7"}·
+              {day.paperSlot === "morning" ? "上午卷" : "下午卷"}
+            </Link>
+          ))
+        ) : (
+          <Link
+            href="/practice"
+            className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-xs hover:bg-muted"
+          >
+            去练习
+          </Link>
+        )}
+      </div>
+    </Surface>
+  );
+}
 
 function WeekProgressCard({
   stats,
