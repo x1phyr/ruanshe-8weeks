@@ -1190,7 +1190,7 @@ function DailyTrapCard({ today }: { today: string }) {
       {trap.module ? (
         <div className="mt-2">
           <Link
-            href="/practice"
+            href={`/practice?module=${encodeURIComponent(trap.module)}`}
             className="inline-flex h-7 items-center rounded-md border border-border px-2.5 text-xs hover:bg-muted"
           >
             去练习 · {trap.module}
