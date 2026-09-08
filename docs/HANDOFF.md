@@ -34,7 +34,7 @@
 ### Question quality audit (QA)
 
 - Script：npm run qa:questions（node scripts/qa-questions.mjs）
-- Last PASS：2026-09-09 Asia/Shanghai，**862** 题，issues=0
+- Last PASS：2026-09-09 Asia/Shanghai，**880** 题，issues=0
 - **CI**：拟在 PR/main 跑 qa:questions 的 workflow **暂缓**——仓库 workflow 范围未定，**勿擅自改 workflows 目录**；本地 / Agent 合并前请自行跑一遍
 
 ### 4.1 日程结构
@@ -67,7 +67,7 @@
 | `status: live` | **49**（完整讲义 + 练习；**非试卷日 ≥12 题**） |
 | `status: paper` | **4**（计时壳 + 用法指导 + 站内自编模考） |
 | 自编模考 | 上午各 **85** / 下午各 **25**（两套：W5d6/d7、W7d5/d6） |
-| **全站题目总数（精确）** | **862** |
+| **全站题目总数（精确）** | **880** |
 
 计数方式（可复现）：
 
@@ -78,7 +78,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ```
 
-预期输出：`{ total: 862, daily: 642, mock: 220 }`（`questions` 数组末尾 `...mockPaperQuestions`，220 = 85+25+85+25）。
+预期输出：`{ total: 880, daily: 660, mock: 220 }`（`questions` 数组末尾 `...mockPaperQuestions`，220 = 85+25+85+25）。
 
 约束：**floor-12**：非试卷日（`live`）每课 **≥12 题**（试卷日保持模考题量 **85/25/85/25**，不削减）。
 
@@ -185,7 +185,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 1. 内容质量：校对讲义与解析措辞；补强易混点与 trap；统一 knowledgePath 粒度。
 2. 更多下午案例向练习：在 live 日或冲刺日增加读图、DFD、UML、数据库案例风格小题（须自编）。
 3. 可选云同步：目前仅 localStorage；多设备方案需用户明确同意后再设计；默认离线优先。
-4. 题量与覆盖度复查：当前全站 862 题（非试卷日 ≥12；W7d2/d3 系统分析与设计/Web 已加厚；上午模考各 85）；可按模块正确率与错题热点定向加题。
+4. 题量与覆盖度复查：当前全站 880 题（非试卷日 ≥12；W7d4 专业英语已加厚；上午模考各 85）；可按模块正确率与错题热点定向加题。
 
 ## 10. 快速自检
 
@@ -199,5 +199,5 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ---
 
-*文档刷新：2026-09-09（W7d2/d3 系统分析与设计/Web 题加厚）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **862**）。*
+*文档刷新：2026-09-09（W7d4 专业英语题加厚）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **880**）。*
 
