@@ -51,6 +51,8 @@ interface TrainerState {
     today: string,
   ) => boolean;
   setMistakeReason: (questionId: string, reason: MistakeReason) => void;
+  /** Remove mastered mistakes. If questionIds given, only those; else all mastered. */
+  clearMasteredMistakes: (questionIds?: string[]) => void;
   completeDay: (dayId: string) => void;
   resetAll: () => void;
 }
@@ -235,6 +237,17 @@ export const useTrainerStore = create<TrainerState>()(
           mistakes: get().mistakes.map((item) =>
             item.questionId === questionId ? { ...item, reason } : item,
           ),
+        });
+      },
+      clearMasteredMistakes: (questionIds) => {
+        const idSet =
+          questionIds == null ? null : new Set(questionIds);
+        set({
+          mistakes: get().mistakes.filter((item) => {
+            if (!item.mastered) return true;
+            if (idSet == null) return false;
+            return !idSet.has(item.questionId);
+          }),
         });
       },
       completeDay: (dayId) => {
