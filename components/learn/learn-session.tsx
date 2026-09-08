@@ -118,6 +118,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
             <QuizRun
               questions={due}
               mode="review"
+              navKey={`review:${scheduled.id}`}
               onFinished={() => {
                 markStep(scheduled.id, "review");
                 setForced("learn");
@@ -175,6 +176,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
             <QuizRun
               questions={bank}
               mode="daily"
+              navKey={`day:${scheduled.id}`}
               onFinished={() => {
                 markStep(scheduled.id, "practice");
                 setForced("wrapup");

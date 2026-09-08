@@ -139,6 +139,7 @@ export function MistakesView() {
           <QuizRun
             questions={dueQuestions}
             mode="review"
+            navKey="mistakes:due"
             onFinished={() => setDrilling(false)}
           />
         </div>
