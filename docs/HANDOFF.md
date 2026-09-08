@@ -93,7 +93,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ## 5. 功能清单
 
-近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考、模考历史、今日战报附最近模考 / 清空模考历史；本轮另加 **今日陷阱**（`data/daily-traps.ts` **42** 条，可选 `module` 对齐课表，day-of-year mod 轮换；有 module 时仪表盘链到 `/practice`）。CI 题库检查因 workflow 范围暂缓。
+近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考、模考历史、今日战报附最近模考 / 清空模考历史、今日陷阱；本轮另加 **练习页模块错题快捷入口**（选中模块 chip / `?module=` 时链到 `/mistakes?module=`，展示未掌握数；错题本同样支持 `?module=` 预选）。CI 题库检查因 workflow 范围暂缓。
 
 | 能力 | 说明 |
 | --- | --- |

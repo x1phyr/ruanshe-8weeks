@@ -79,3 +79,17 @@ export function resolveMistakeModule(mistake: Mistake): string {
   if (question?.topic?.trim()) return question.topic.trim();
   return "未分类";
 }
+
+
+/** Count unmastered mistakes whose resolved module matches `moduleName`. */
+export function countUnmasteredMistakesForModule(
+  mistakes: Mistake[],
+  moduleName: string,
+): number {
+  let n = 0;
+  for (const item of mistakes) {
+    if (item.mastered) continue;
+    if (resolveMistakeModule(item) === moduleName) n += 1;
+  }
+  return n;
+}
