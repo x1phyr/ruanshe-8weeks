@@ -27,6 +27,8 @@ export function PlanView() {
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const startDate = useTrainerStore((s) => s.startDate);
   const unlockAll = useTrainerStore((s) => s.unlockAll);
+  const planHideDone = useTrainerStore((s) => s.planHideDone);
+  const setPlanHideDone = useTrainerStore((s) => s.setPlanHideDone);
   const today = todayISO(simulateDate);
   const daysLeft = examCountdown(today);
   const days = scheduleDays(startDate);
@@ -48,6 +50,7 @@ export function PlanView() {
     !isCompleted(progress, nextIncompleteUnlocked!.id);
 
   const dayRefs = useRef<Map<string, HTMLLIElement | null>>(new Map());
+  const weekRefs = useRef<Map<number, HTMLElement | null>>(new Map());
   const [flashId, setFlashId] = useState<string | null>(null);
   const [jumpTip, setJumpTip] = useState<string | null>(null);
 
@@ -69,9 +72,19 @@ export function PlanView() {
     setJumpTip(null);
     if (!todayDay) return;
     const el = dayRefs.current.get(todayDay.id);
-    el?.scrollIntoView({ behavior: "smooth", block: "center" });
-    setFlashId(todayDay.id);
-  }, [phase, todayDay]);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      setFlashId(todayDay.id);
+      return;
+    }
+    // Hidden by 「只看未完成」 — scroll week header if all-done, else tip.
+    if (planHideDone && isCompleted(progress, todayDay.id)) {
+      const weekEl = weekRefs.current.get(todayDay.week);
+      weekEl?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setJumpTip("今日已完成");
+      return;
+    }
+  }, [phase, todayDay, planHideDone, progress]);
 
   return (
     <PageFrame className="plan-print-root">
@@ -111,6 +124,20 @@ export function PlanView() {
               下一个未完成
             </Button>
           )}
+          <button
+            type="button"
+            onClick={() => setPlanHideDone(!planHideDone)}
+            className={cn(
+              "inline-flex h-8 items-center rounded-md border px-2.5 text-sm transition-colors",
+              planHideDone
+                ? "border-brand/50 bg-brand/10 text-brand"
+                : "border-border text-muted-foreground hover:bg-muted hover:text-foreground",
+            )}
+            aria-pressed={planHideDone}
+            title={planHideDone ? "显示全部日程" : "只显示未完成的日程"}
+          >
+            只看未完成
+          </button>
           <Button
             type="button"
             size="sm"
@@ -138,8 +165,18 @@ export function PlanView() {
       <div className="space-y-6">
         {weeks.map((week) => {
           const weekDays = days.filter((day) => day.week === week.week);
+          const visibleDays = planHideDone
+            ? weekDays.filter((day) => !isCompleted(progress, day.id))
+            : weekDays;
+          const weekAllDone =
+            planHideDone && weekDays.length > 0 && visibleDays.length === 0;
           return (
-            <section key={week.week}>
+            <section
+              key={week.week}
+              ref={(node) => {
+                weekRefs.current.set(week.week, node);
+              }}
+            >
               <div className="mb-2 flex flex-wrap items-end justify-between gap-2">
                 <div>
                   <div className="mono-num text-xs text-brand">WEEK {pad2(week.week)}</div>
@@ -151,60 +188,74 @@ export function PlanView() {
                 </div>
               </div>
               <Surface className="overflow-hidden">
-                <ul className="divide-y divide-border">
-                  {weekDays.map((day) => {
-                    const unlocked = isUnlocked(progress, day.id, unlockAll);
-                    const done = isCompleted(progress, day.id);
-                    const isToday = day.date === today;
-                    const flashing = flashId === day.id;
-                    const inner = (
-                      <div
-                        className={cn(
-                          "flex items-start gap-3 px-3 py-2.5 md:items-center",
-                          !unlocked && "opacity-55",
-                          isToday && "bg-surface-hover",
-                          flashing && "ring-2 ring-inset ring-brand/60 bg-brand/10",
-                        )}
-                      >
-                        <div className="w-16 shrink-0 font-mono text-xs text-muted-foreground">
-                          <div>{formatDateShort(day.date)}</div>
-                          <div>{weekdayLabel(day.date)}</div>
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex flex-wrap items-center gap-1.5">
-                            <span className="text-sm">{day.title}</span>
-                            {isToday ? <KindPill tone="brand">今日</KindPill> : null}
-                            {day.makeup ? <KindPill>调休</KindPill> : null}
-                            {day.holiday ? (
-                              <KindPill>{holidayLabel[day.holiday]}</KindPill>
-                            ) : null}
-                          </div>
-                          <div className="mt-0.5 text-xs text-muted-foreground">
-                            {day.blurb}
-                          </div>
-                        </div>
-                        <div className="flex shrink-0 flex-col items-end gap-1 md:flex-row md:items-center md:gap-2">
-                          <KindPill
-                            tone={
-                              day.kind === "paper"
-                                ? "warn"
-                                : day.kind === "case"
-                                  ? "brand"
-                                  : "default"
-                            }
-                          >
-                            {kindLabel[day.kind]} {day.durationMin}m
-                          </KindPill>
-                          {done ? (
-                            <Check className="print-hidden size-3.5 text-brand" />
-                          ) : unlocked ? null : (
-                            <Lock className="print-hidden size-3.5 text-muted-foreground" />
+                {weekAllDone ? (
+                  <div className="px-3 py-2.5 text-sm text-muted-foreground">本周已完成</div>
+                ) : (
+                  <ul className="divide-y divide-border">
+                    {visibleDays.map((day) => {
+                      const unlocked = isUnlocked(progress, day.id, unlockAll);
+                      const done = isCompleted(progress, day.id);
+                      const isToday = day.date === today;
+                      const flashing = flashId === day.id;
+                      const inner = (
+                        <div
+                          className={cn(
+                            "flex items-start gap-3 px-3 py-2.5 md:items-center",
+                            !unlocked && "opacity-55",
+                            isToday && "bg-surface-hover",
+                            flashing && "ring-2 ring-inset ring-brand/60 bg-brand/10",
                           )}
+                        >
+                          <div className="w-16 shrink-0 font-mono text-xs text-muted-foreground">
+                            <div>{formatDateShort(day.date)}</div>
+                            <div>{weekdayLabel(day.date)}</div>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              <span className="text-sm">{day.title}</span>
+                              {isToday ? <KindPill tone="brand">今日</KindPill> : null}
+                              {day.makeup ? <KindPill>调休</KindPill> : null}
+                              {day.holiday ? (
+                                <KindPill>{holidayLabel[day.holiday]}</KindPill>
+                              ) : null}
+                            </div>
+                            <div className="mt-0.5 text-xs text-muted-foreground">
+                              {day.blurb}
+                            </div>
+                          </div>
+                          <div className="flex shrink-0 flex-col items-end gap-1 md:flex-row md:items-center md:gap-2">
+                            <KindPill
+                              tone={
+                                day.kind === "paper"
+                                  ? "warn"
+                                  : day.kind === "case"
+                                    ? "brand"
+                                    : "default"
+                              }
+                            >
+                              {kindLabel[day.kind]} {day.durationMin}m
+                            </KindPill>
+                            {done ? (
+                              <Check className="print-hidden size-3.5 text-brand" />
+                            ) : unlocked ? null : (
+                              <Lock className="print-hidden size-3.5 text-muted-foreground" />
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    );
+                      );
 
-                    if (!unlocked) {
+                      if (!unlocked) {
+                        return (
+                          <li
+                            key={day.id}
+                            ref={(node) => {
+                              dayRefs.current.set(day.id, node);
+                            }}
+                          >
+                            {inner}
+                          </li>
+                        );
+                      }
                       return (
                         <li
                           key={day.id}
@@ -212,24 +263,14 @@ export function PlanView() {
                             dayRefs.current.set(day.id, node);
                           }}
                         >
-                          {inner}
+                          <Link href={dayHref(day)} className="block hover:bg-surface-hover">
+                            {inner}
+                          </Link>
                         </li>
                       );
-                    }
-                    return (
-                      <li
-                        key={day.id}
-                        ref={(node) => {
-                          dayRefs.current.set(day.id, node);
-                        }}
-                      >
-                        <Link href={dayHref(day)} className="block hover:bg-surface-hover">
-                          {inner}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
+                    })}
+                  </ul>
+                )}
               </Surface>
             </section>
           );
