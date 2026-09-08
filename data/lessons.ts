@@ -3427,7 +3427,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "层不要串",
-          body: "IP 是网络层；端口是传输层；MAC 是链路层。题干「哪一层提供端到端可靠」→ 传输层 TCP。",
+          body: "IP 是网络层；端口是传输层；MAC 是链路层。题干「哪一层提供端到端可靠」→ 传输层 TCP。链路层「可靠」只是单跳，不是端到端。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（网络体系）",
+          body: "① TCP≠IP 同层。② 可用主机 2^n−2，忘减 2 选 16。③ 网络号=按位与，别把广播/主机当地址。④ HTTPS=443 不是 80。⑤ ARP 解 MAC，DNS 解 IP。⑥ UDP 快≠更安全。",
         },
       },
       {
@@ -3492,7 +3500,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "钥匙别拿反",
-          body: "公钥加密 → 私钥解密（保密给对方）。私钥签名 → 公钥验证（证明是我发的）。「用对方公钥签名」是错的。",
+          body: "公钥加密 → 私钥解密（保密给对方）。私钥签名 → 公钥验证（证明是我发的）。「用对方公钥签名」是错的。加密≠签名，题干信号不同。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（密码学）",
+          body: "① 对称快但分发难，非对称相反。② 哈希≠加密、不可逆。③ HTTPS 非全程 RSA 正文。④ 证书绑身份与公钥，不是口令本。⑤ 完整性+来源→签名；仅防窃听→加密。⑥ AES/DES 对称，别当成哈希。",
         },
       },
       {
@@ -3529,7 +3545,7 @@ const liveLessons: Lesson[] = [
     blocks: [
       {
         type: "p",
-        text: "kind=review。先攻击对照，再过本周数据库+网络错题出题人清单。不新开第 7 周知产。",
+        text: "kind=review。先攻击对照，再过本周数据库+网络错题出题人清单，共 12 道陷阱题。不新开第 7 周知产。",
       },
       { type: "h2", text: "常见 Web 攻击（必辨）" },
       {
@@ -3572,7 +3588,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "钥匙方向三连混",
-          body: "保密传输：公钥加密、私钥解密。数字签名：私钥签、公钥验。身份认证场景读题干「防抵赖/防篡改」还是「防窃听」。三者题干信号不同，选项常把签名和加密对调。",
+          body: "保密传输：公钥加密、私钥解密。数字签名：私钥签、公钥验。身份认证场景读题干「防抵赖/防篡改」还是「防窃听」。三者题干信号不同，选项常把签名和加密对调。验签绝不用发送方私钥。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（攻击与复盘速记）",
+          body: "① SQL 注入→参数化；XSS→编码/CSP；CSRF→Token/SameSite。② 部分→2NF，传递→3NF。③ 脏读=未提交。④ TCP 可靠 / UDP 尽力。⑤ HTTPS=证书+对称会话，端口 443。⑥ DoS 打可用性；MITM 打链路。",
         },
       },
       {
