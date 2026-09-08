@@ -9,8 +9,12 @@ import { KindPill, PageFrame, PageHeader, Surface, EmptyState } from "@/componen
 import { QuizRun } from "@/components/learn/quiz-run";
 import { dayHref, getDayById, scheduleDays } from "@/lib/calendar";
 import { isUnlocked } from "@/lib/progress";
+import {
+  MODULE_STATS_MIN_ATTEMPTS,
+  topWeakModules,
+} from "@/lib/module-stats";
 import { useTrainerStore } from "@/lib/store";
-import type { Progress, Question, StudyDay } from "@/lib/types";
+import type { AnswerRecord, Progress, Question, StudyDay } from "@/lib/types";
 
 const SEARCH_DRILL_CAP = 50;
 
@@ -54,6 +58,7 @@ export function PracticeView() {
   const progress = useTrainerStore((s) => s.progress);
   const startDate = useTrainerStore((s) => s.startDate);
   const unlockAll = useTrainerStore((s) => s.unlockAll);
+  const answers = useTrainerStore((s) => s.answers);
   const studyDays = scheduleDays(startDate);
   const [module, setModule] = useState<string>("全部");
   const [search, setSearch] = useState("");
@@ -183,6 +188,7 @@ export function PracticeView() {
         title="按模块练习"
         description="按日历模块筛选专题，或一键刷本模块已解锁题。未解锁日只显示路线，不跳关。可用关键词搜题干 / 专题 / 知识路径；也可随机抽 20 题，或开限时 20 分钟模考手感。"
       />
+      <ModuleAccuracyBlock answers={answers} />
       <div className="mb-3 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-2">
         <div className="min-w-0 flex-1 font-mono text-[11px] text-muted-foreground">
           已解锁题池 {unlockedPool.length}
@@ -387,5 +393,53 @@ export function PracticeView() {
         </>
       )}
     </PageFrame>
+  );
+}
+
+function ModuleAccuracyBlock({ answers }: { answers: AnswerRecord[] }) {
+  const weak = useMemo(
+    () => topWeakModules(answers, { minAttempts: MODULE_STATS_MIN_ATTEMPTS, limit: 5 }),
+    [answers],
+  );
+
+  return (
+    <Surface className="mb-4 p-3">
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <div>
+          <div className="label-caps">MODULE ACCURACY</div>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            按日历模块统计作答正确率 · 至少 {MODULE_STATS_MIN_ATTEMPTS} 次才计入弱项
+          </p>
+        </div>
+        {answers.length > 0 ? (
+          <span className="font-mono text-[11px] text-muted-foreground">
+            共 {answers.length} 次作答
+          </span>
+        ) : null}
+      </div>
+      {answers.length === 0 ? (
+        <p className="mt-2 text-sm text-muted-foreground">
+          暂无作答记录 · 练几题后再看弱项模块
+        </p>
+      ) : weak.length === 0 ? (
+        <p className="mt-2 text-sm text-muted-foreground">
+          各模块作答次数不足 {MODULE_STATS_MIN_ATTEMPTS}，再刷几题即可看到弱项排序
+        </p>
+      ) : (
+        <ul className="mt-2 divide-y divide-border border-t border-border">
+          {weak.map((item) => (
+            <li
+              key={item.module}
+              className="flex items-center justify-between gap-3 py-2 text-sm"
+            >
+              <span className="min-w-0 truncate">{item.module}</span>
+              <span className="mono-num shrink-0 text-muted-foreground">
+                {item.accuracy}% · {item.correct}/{item.attempts}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Surface>
   );
 }
