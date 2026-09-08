@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Flag } from "lucide-react";
+import { FocusModeToggle } from "@/components/focus-mode";
 import { Button } from "@/components/ui/button";
 import { KindPill, Surface } from "@/components/ui-bits";
 import { pad2 } from "@/lib/dates";
@@ -270,6 +271,7 @@ export function QuizRun({
           ) : null}
         </div>
         <div className="flex items-center gap-1.5">
+          <FocusModeToggle />
           {showNav ? (
             <button
               type="button"
@@ -472,7 +474,10 @@ function QuizScorecard({
 
   return (
     <div>
-      <div className="label-caps">{compact ? "QUIZ RESULT" : "MOCK DEBRIEF"}</div>
+      <div className="flex items-start justify-between gap-2">
+        <div className="label-caps">{compact ? "QUIZ RESULT" : "MOCK DEBRIEF"}</div>
+        <FocusModeToggle />
+      </div>
       <h2 className="mt-2 text-xl font-medium">
         {compact ? "本组结果" : "试卷复盘"}
       </h2>

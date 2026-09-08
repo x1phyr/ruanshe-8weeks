@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
+import { FocusModeToggle } from "@/components/focus-mode";
 import { getLesson } from "@/data/lessons";
 import { getQuestionById, questionsForDay } from "@/data/questions";
 import { Button } from "@/components/ui/button";
@@ -371,6 +372,7 @@ function FocusFrame({
             WEEK {pad2(day.week)} · DAY {pad2(day.dayInWeek)} · {day.date}
           </div>
         </div>
+        <FocusModeToggle />
         <div className="hidden items-center gap-1 sm:flex">
           {steps.map((item, index) => (
             <button
