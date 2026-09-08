@@ -28,6 +28,16 @@ interface QuizRunProps {
 }
 
 const NAV_THRESHOLD = 12;
+const OPTION_KEYS: OptionKey[] = ["A", "B", "C", "D"];
+
+function isTypingTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+  if (target.isContentEditable) return true;
+  return Boolean(target.closest("[contenteditable='true']"));
+}
+
 
 type FlagStore = Record<string, string[]>;
 
@@ -146,39 +156,87 @@ export function QuizRun({
     });
   }, [question]);
 
-  const result = useMemo(() => {
-    if (!submitted || !picked || !question) return null;
-    return picked === question.correct;
-  }, [submitted, picked, question]);
-
-  if (!question) {
-    return (
-      <Surface className="p-6 text-sm text-muted-foreground">本题库为空。</Surface>
-    );
-  }
-
-  function submit() {
-    if (!picked || !question) return;
+  const submit = useCallback(() => {
+    if (!picked || !question || submitted) return;
     const today = currentToday();
     const already = recorded.has(question.id);
     if (!already) {
-      const ok =
-        mode === "review"
-          ? reviewMistakeAnswer(question, picked, today)
-          : recordAnswer(question, picked, today);
-      void ok;
+      if (mode === "review") {
+        reviewMistakeAnswer(question, picked, today);
+      } else {
+        recordAnswer(question, picked, today);
+      }
       setRecorded((prev) => new Set(prev).add(question.id));
     }
     setAnswers((prev) => ({ ...prev, [question.id]: picked }));
     setSubmitted(true);
-  }
+  }, [
+    picked,
+    question,
+    submitted,
+    recorded,
+    mode,
+    recordAnswer,
+    reviewMistakeAnswer,
+  ]);
 
-  function finishedNext() {
+  const finishedNext = useCallback(() => {
+    if (!question || !submitted) return;
     if (index + 1 >= total) {
       setScorecard(buildSummary(questions, answers, question.id, picked));
       return;
     }
     goTo(index + 1);
+  }, [question, submitted, index, total, questions, answers, picked, goTo]);
+
+  const result = useMemo(() => {
+    if (!submitted || !picked || !question) return null;
+    return picked === question.correct;
+  }, [submitted, picked, question]);
+
+  // Hotkeys while answering (not on scorecard); ignore when typing in inputs.
+  useEffect(() => {
+    if (scorecard || !question) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTypingTarget(event.target)) return;
+
+      const key = event.key;
+      const upper = key.toUpperCase();
+
+      if (!submitted) {
+        const fromDigit = /^[1-4]$/.test(key) ? Number(key) - 1 : -1;
+        const fromLetter = OPTION_KEYS.indexOf(upper as OptionKey);
+        const optIndex = fromDigit >= 0 ? fromDigit : fromLetter;
+        if (optIndex >= 0 && optIndex < question!.options.length) {
+          event.preventDefault();
+          setPicked(OPTION_KEYS[optIndex]);
+          return;
+        }
+        if (key === " " || key === "Enter") {
+          if (!picked) return;
+          event.preventDefault();
+          submit();
+          return;
+        }
+        return;
+      }
+
+      if (key === " " || key === "Enter") {
+        event.preventDefault();
+        finishedNext();
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [scorecard, question, submitted, picked, submit, finishedNext]);
+
+  if (!question) {
+    return (
+      <Surface className="p-6 text-sm text-muted-foreground">本题库为空。</Surface>
+    );
   }
 
   if (scorecard) {
@@ -319,6 +377,9 @@ export function QuizRun({
           );
         })}
       </div>
+      <p className="mt-2 hidden font-mono text-[11px] text-muted-foreground md:block">
+        1-4 选题 · Space 下一题
+      </p>
 
       {!submitted ? (
         <div className="mt-4 flex flex-wrap gap-2">
