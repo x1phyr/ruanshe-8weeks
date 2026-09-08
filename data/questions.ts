@@ -7408,3 +7408,22 @@ export function questionsByTopic(): Map<string, Question[]> {
   }
   return map;
 }
+
+/** Fisher–Yates shuffle (Math.random); mutates a copy, returns up to `count` items. */
+export function sampleQuestions(pool: Question[], count: number): Question[] {
+  const copy = pool.slice();
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = copy[i]!;
+    copy[i] = copy[j]!;
+    copy[j] = tmp;
+  }
+  return copy.slice(0, Math.min(count, copy.length));
+}
+
+/** Questions whose day is unlocked (or all days when unlockAll). */
+export function unlockedQuestions(
+  isDayUnlocked: (dayId: string) => boolean,
+): Question[] {
+  return questions.filter((q) => isDayUnlocked(q.dayId));
+}
