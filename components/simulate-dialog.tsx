@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,6 +13,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import {
+  applyProgressBackup,
+  exportProgressBackup,
+  readProgressFile,
+} from "@/lib/backup";
 import { examConfig } from "@/lib/config";
 import { addDaysISO, todayISO } from "@/lib/dates";
 import { useTrainerStore } from "@/lib/store";
@@ -35,6 +40,8 @@ export function SimulateDialog({
   const resetAll = useTrainerStore((s) => s.resetAll);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(simulateDate ?? todayISO());
+  const [importHint, setImportHint] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
   const previewDate = normalizeISO(value) ?? value;
   const beforeStart =
     Boolean(previewDate) &&
@@ -43,6 +50,7 @@ export function SimulateDialog({
 
   function openDialog() {
     setValue(simulateDate ?? todayISO());
+    setImportHint(null);
     setOpen(true);
   }
 
@@ -56,6 +64,20 @@ export function SimulateDialog({
     if (!iso) return;
     setSimulateDate(iso);
     setOpen(false);
+  }
+
+  async function onImportFile(file: File | undefined) {
+    if (!file) return;
+    setImportHint(null);
+    const result = await readProgressFile(file);
+    if (!result.ok) {
+      setImportHint(result.error);
+      return;
+    }
+    if (!confirm("将覆盖本地进度")) return;
+    applyProgressBackup(result.data);
+    setImportHint("已导入进度备份");
+    if (fileRef.current) fileRef.current.value = "";
   }
 
   return (
@@ -149,6 +171,44 @@ export function SimulateDialog({
                 checked={unlockAll}
                 onCheckedChange={setUnlockAll}
               />
+            </div>
+            <div className="rounded-md border border-border p-3">
+              <div className="text-sm font-medium">进度备份</div>
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                导出/导入完整本地进度（进度、错题、作答、会话、开课日、模拟日、连续学习、全解锁等）。
+              </p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() =>
+                    exportProgressBackup(simulateDate ?? todayISO())
+                  }
+                >
+                  导出进度 JSON
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => fileRef.current?.click()}
+                >
+                  导入进度 JSON
+                </Button>
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept="application/json,.json"
+                  className="hidden"
+                  onChange={(e) => {
+                    void onImportFile(e.target.files?.[0]);
+                  }}
+                />
+              </div>
+              {importHint ? (
+                <p className="mt-2 text-xs text-muted-foreground">{importHint}</p>
+              ) : null}
             </div>
           </div>
           <DialogFooter className="gap-2 sm:justify-between">

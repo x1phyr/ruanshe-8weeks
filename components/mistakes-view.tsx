@@ -11,6 +11,7 @@ import {
   Surface,
 } from "@/components/ui-bits";
 import { QuizRun } from "@/components/learn/quiz-run";
+import { exportProgressBackup } from "@/lib/backup";
 import { todayISO } from "@/lib/dates";
 import { dueMistakes, mistakeBucket } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
@@ -198,6 +199,14 @@ export function MistakesView() {
         description="首次错 → 明天；第 2 次 → 3 天；第 3 次 → 7 天。复习做对进入 14 天；连续做对标记已掌握。"
         action={
           <div className="flex flex-wrap items-center gap-1.5">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => exportProgressBackup(stamp)}
+              title="导出完整本地进度备份"
+            >
+              备份进度
+            </Button>
             <Button
               variant="outline"
               size="sm"
