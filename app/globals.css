@@ -133,6 +133,7 @@
 
 /* —— Focus mode: hide app-shell chrome during learn / quiz —— */
 body.focus-mode .app-shell-aside,
+body.focus-mode .app-shell-mobile-top,
 body.focus-mode .app-shell-bottom-nav {
   display: none !important;
 }

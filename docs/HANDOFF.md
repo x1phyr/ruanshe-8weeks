@@ -112,6 +112,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **timed20** | 限时 20 分钟卷；到时自动交卷 |
 | **PWA** | 可「安装到桌面」（manifest + SW） |
 | **专注模式 focus** | 隐藏侧栏 / 底栏；偏好持久化 |
+| **移动端距考条** | `md:hidden` 顶栏紧凑「距考 XX 天」；`simulateDate` 时显示模拟徽标；不改桌面侧栏倒计时 |
 | **celebrate** | 通关 / 完成庆祝路径（仪表盘随机 / 只练错题等入口） |
 | **weekday tips** | `lib/coach-tips.ts` 按星期几教练提示 |
 | **tomorrow preview** | 仪表盘明日预览 |
