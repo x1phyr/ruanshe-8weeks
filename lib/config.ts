@@ -21,3 +21,6 @@ export const STORAGE_KEY = "ruanshe-8weeks-v1";
 
 export const APP_NAME = "软设 8 周通关";
 export const APP_TAGLINE = "45 分钟日训 · 软考中级软件设计师";
+
+/** Must match next.config basePath (GitHub Pages project site). */
+export const BASE_PATH = "/ruanshe-8weeks";

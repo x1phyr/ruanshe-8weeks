@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { InstallTip } from "@/components/install-tip";
 import { SimulateDialog } from "@/components/simulate-dialog";
 import { QuizRun } from "@/components/learn/quiz-run";
 import { KindPill, Metric, PageFrame, Surface } from "@/components/ui-bits";
@@ -142,6 +143,8 @@ export function DashboardView() {
         lessonsBeforeExam={lessonsBeforeExam}
         onChange={setStartDate}
       />
+
+      <InstallTip />
 
       <Surface className="mt-4">
         <div className="grid grid-cols-2 divide-x divide-border md:grid-cols-3 lg:grid-cols-6">
