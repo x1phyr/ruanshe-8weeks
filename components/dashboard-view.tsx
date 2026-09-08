@@ -42,6 +42,7 @@ import {
   diffDays,
   examCountdown,
   formatDateCn,
+  formatDateShort,
   pad2,
   todayISO,
   weekdayLabel,
@@ -62,6 +63,7 @@ import type {
   DaySession,
   LearnStep,
   Mistake,
+  MockRunRecord,
   Progress as ProgressState,
   Question,
   StudyDay,
@@ -84,6 +86,7 @@ export function DashboardView() {
   const answers = useTrainerStore((s) => s.answers);
   const sessions = useTrainerStore((s) => s.sessions);
   const streak = useTrainerStore((s) => s.streak);
+  const mockRuns = useTrainerStore((s) => s.mockRuns);
 
   const today = todayISO(simulateDate);
   const realToday = todayISO();
@@ -259,6 +262,8 @@ export function DashboardView() {
       />
 
       <WeekProgressCard stats={weekStats} />
+
+      <MockHistoryCard runs={mockRuns} />
 
       <ResumeLastCard resume={resume} />
 
@@ -828,6 +833,43 @@ function ExamNearModeCard({
           </Link>
         )}
       </div>
+    </Surface>
+  );
+}
+
+
+function mockRunDateLabel(at: string): string {
+  const day = at.slice(0, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(day) ? formatDateShort(day) : day;
+}
+
+function MockHistoryCard({ runs }: { runs: MockRunRecord[] }) {
+  const recent = runs.slice(0, 5);
+  if (recent.length === 0) return null;
+  return (
+    <Surface className="mt-4 px-4 py-3">
+      <div className="label-caps">模考历史</div>
+      <ul className="mt-2 divide-y divide-border">
+        {recent.map((run) => (
+          <li
+            key={run.id}
+            className="flex items-center justify-between gap-3 py-2 text-sm"
+          >
+            <span className="min-w-0 truncate text-muted-foreground">
+              <span className="font-mono text-foreground">
+                {mockRunDateLabel(run.at)}
+              </span>
+              <span className="text-border"> · </span>
+              <span className="font-mono text-foreground">{run.percent}%</span>
+              <span className="text-border"> · </span>
+              <span>{run.label}</span>
+            </span>
+            <span className="shrink-0 font-mono text-[11px] text-muted-foreground">
+              {pad2(run.correct)}/{pad2(run.total)}
+            </span>
+          </li>
+        ))}
+      </ul>
     </Surface>
   );
 }

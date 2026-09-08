@@ -128,3 +128,18 @@ export interface DaySession {
 }
 
 export type MistakeBucket = "needs-review" | "learning" | "mastered";
+
+/** Persisted one-click / paper-day mock score history (cap 20 in store). */
+export interface MockRunRecord {
+  id: string;
+  paperDayId: string;
+  label: string;
+  correct: number;
+  total: number;
+  percent: number;
+  /** ISO timestamp when the run finished (scorecard shown). */
+  at: string;
+  /** Time limit in seconds when the run was timed. */
+  timedSec?: number;
+}
+

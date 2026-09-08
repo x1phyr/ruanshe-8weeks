@@ -12,6 +12,7 @@ import { KindPill, Surface } from "@/components/ui-bits";
 import { LessonView } from "@/components/learn/lesson-view";
 import { PaperTimer } from "@/components/learn/paper-timer";
 import { QuizRun, type QuizFinishSummary } from "@/components/learn/quiz-run";
+import { mockHistoryLabelForDayId } from "@/components/one-click-mock";
 import { dayHref, getDayById, getNextDay, kindLabel } from "@/lib/calendar";
 import { pad2, todayISO } from "@/lib/dates";
 import { dueMistakes, isCompleted, isUnlocked } from "@/lib/progress";
@@ -191,6 +192,18 @@ export function LearnSession({ day }: { day: StudyDay }) {
               mode="daily"
               navKey={`day:${scheduled.id}`}
               finishLabel="进入收尾"
+              mockRecord={
+                scheduled.status === "paper" && bank.length >= 40
+                  ? {
+                      paperDayId: scheduled.id,
+                      label:
+                        mockHistoryLabelForDayId(scheduled.id) ??
+                        (scheduled.paperSlot === "afternoon"
+                          ? "下午模考"
+                          : "上午模考"),
+                    }
+                  : undefined
+              }
               onFinished={(summary) => {
                 setLastQuiz(summary);
                 markStep(scheduled.id, "practice");
