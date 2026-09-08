@@ -1,6 +1,6 @@
 import { firstDay, getDayById, getNextDay, scheduleDays, studyDays } from "@/lib/calendar";
 import { todayISO } from "@/lib/dates";
-import type { Mistake, MistakeBucket, Progress, StudyDay } from "@/lib/types";
+import type { DayKind, Mistake, MistakeBucket, Progress, StudyDay } from "@/lib/types";
 
 export const emptyProgress = (): Progress => ({
   currentWeek: 1,
@@ -93,4 +93,18 @@ export function reviewIntervalDays(wrongCount: number): number {
   if (wrongCount <= 1) return 1;
   if (wrongCount === 2) return 3;
   return 7;
+}
+
+/** Core plan kinds used for 通关 when counting learn/review/sprint/paper days. */
+const PLAN_CORE_KINDS: DayKind[] = ["learn", "review", "sprint", "paper"];
+
+/**
+ * True when all 53 curriculum days are completed, or every learn/review/sprint/paper day is done.
+ * unlockAll alone never counts as complete — only completedDays membership.
+ */
+export function isPlanComplete(progress: Progress): boolean {
+  const done = new Set(progress.completedDays);
+  if (studyDays.every((day) => done.has(day.id))) return true;
+  const core = studyDays.filter((day) => PLAN_CORE_KINDS.includes(day.kind));
+  return core.length > 0 && core.every((day) => done.has(day.id));
 }
