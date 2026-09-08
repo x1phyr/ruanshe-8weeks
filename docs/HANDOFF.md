@@ -67,7 +67,7 @@
 | `status: live` | **49**（完整讲义 + 练习；**非试卷日 ≥12 题**） |
 | `status: paper` | **4**（计时壳 + 用法指导 + 站内自编模考） |
 | 自编模考 | 上午各 **85** / 下午各 **25**（两套：W5d6/d7、W7d5/d6） |
-| **全站题目总数（精确）** | **1015** |
+| **全站题目总数（精确）** | **1039** |
 
 计数方式（可复现）：
 
@@ -78,7 +78,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ```
 
-预期输出：`{ total: 1015, daily: 795, mock: 220 }`（`questions` 数组末尾 `...mockPaperQuestions`，220 = 85+25+85+25）。
+预期输出：`{ total: 1039, daily: 819, mock: 220 }`（`questions` 数组末尾 `...mockPaperQuestions`，220 = 85+25+85+25）。
 
 约束：**floor-12**：非试卷日（`live`）每课 **≥12 题**（试卷日保持模考题量 **85/25/85/25**，不削减）。
 
