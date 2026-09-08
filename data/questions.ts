@@ -2752,6 +2752,95 @@ export const questions: Question[] = [
       D: "不稳，仍 O(n²)。",
     },
   },
+{
+    id: "q-w2d5-09",
+    dayId: "week-2/day-5",
+    topic: "排序与填空",
+    knowledgePath: "数据结构 / 排序 / 稳定性",
+    stem: "对关键字序列 (4a, 2, 4b, 3) 排序（a/b 仅区分相等的 4）。若结果中 4b 出现在 4a 之前，则该算法（ ）。",
+    options: [
+      { key: "A", text: "一定是稳定的" },
+      { key: "B", text: "一定是不稳定的" },
+      { key: "C", text: "无法判断稳定性" },
+      { key: "D", text: "一定是基数排序" },
+    ],
+    correct: "B",
+    explanation:
+      "相等关键字相对次序被改变，说明该次运行表现出不稳定；稳定算法在「相等不交换」约定下应保持 4a 在 4b 前。",
+    trap: "稳定看的是相等键的相对次序，不是看整体是否有序。",
+    whyWrong: {
+      A: "次序已变，不可能判定为稳定。",
+      C: "已有反例证明不稳定。",
+      D: "基数通常稳定，与题干现象相反。",
+    },
+  },
+  {
+    id: "q-w2d5-10",
+    dayId: "week-2/day-5",
+    topic: "排序与填空",
+    knowledgePath: "数据结构 / 排序 / 完形",
+    stem: "某快排伪代码划分后得到枢轴下标 p，接着写：quick(a, low, p); quick(a, p, high);。该写法的主要问题是（ ）。",
+    options: [
+      { key: "A", text: "左右区间都漏掉了 p，会导致元素丢失" },
+      { key: "B", text: "把已就位的枢轴再次划入子问题，可能错误或无法缩小规模" },
+      { key: "C", text: "快排不允许递归" },
+      { key: "D", text: "必须改成三个区间才正确" },
+    ],
+    correct: "B",
+    explanation:
+      "枢轴已在最终位置，子问题应是 [low,p−1] 与 [p+1,high]。把 p 再划进去是完形高频坑。",
+    trap: "区间开闭写错比「会不会快排思想」更常丢分。",
+    whyWrong: {
+      A: "不是「丢失」，而是重复处理 p。",
+      C: "快排本来就是递归（或显式栈）划分。",
+      D: "标准就是两个子区间。",
+    },
+  },
+  {
+    id: "q-w2d5-11",
+    dayId: "week-2/day-5",
+    topic: "排序与填空",
+    knowledgePath: "数据结构 / 排序 / 复杂度",
+    stem: "下列叙述正确的是（ ）。",
+    options: [
+      { key: "A", text: "堆排序稳定，且辅助空间为 O(n)" },
+      { key: "B", text: "归并排序不稳定，但最坏为 O(n log n)" },
+      { key: "C", text: "快速排序最坏为 O(n²)，平均为 O(n log n)，通常不稳定" },
+      { key: "D", text: "简单选择排序稳定，最坏为 O(n log n)" },
+    ],
+    correct: "C",
+    explanation:
+      "快排：平均 n log n、最坏 n²、不稳定。堆排不稳且就地；归并稳定且最坏 n log n；选择不稳且 O(n²)。",
+    trap: "把「稳定/空间/最坏阶」三件套拆开记，整句判断才不易栽。",
+    whyWrong: {
+      A: "堆排不稳定，辅助通常 O(1)。",
+      B: "归并是稳定的。",
+      D: "选择不稳定，且为 O(n²)。",
+    },
+  },
+  {
+    id: "q-w2d5-12",
+    dayId: "week-2/day-5",
+    topic: "排序与填空",
+    knowledgePath: "数据结构 / 排序 / 完形",
+    stem: "向大顶堆插入新元素时，通常的调整方向是（ ）；删除堆顶后把末元素填到堆顶，再执行的是（ ）。",
+    options: [
+      { key: "A", text: "下滤；下滤" },
+      { key: "B", text: "上滤；上滤" },
+      { key: "C", text: "上滤；下滤" },
+      { key: "D", text: "一次快排划分；重建 BST" },
+    ],
+    correct: "C",
+    explanation:
+      "插入：新元放末尾再上滤；删顶：末元上顶再下滤。方向反了是挖空题常设陷阱。",
+    trap: "插入≠删顶，上滤≠下滤。",
+    whyWrong: {
+      A: "插入不是下滤。",
+      B: "删顶不是上滤。",
+      D: "与堆调整无关。",
+    },
+  },
+
   {
     id: "q-w2d6-01",
     dayId: "week-2/day-6",
@@ -4204,6 +4293,117 @@ export const questions: Question[] = [
       D: "错。",
     },
   },
+{
+    id: "q-w4d5-08",
+    dayId: "week-4/day-5",
+    topic: "数据流图",
+    knowledgePath: "结构化方法 / DFD / 平衡",
+    stem: "父图加工「结算」仅有输出流「收据」。子图边界上除「收据」外又多出对外输出「优惠券」，且父图并无该流。这首先违反（ ）。",
+    options: [
+      { key: "A", text: "判定表完整性" },
+      { key: "B", text: "数据守恒 / 平衡原则" },
+      { key: "C", text: "McCabe 环路复杂度下限" },
+      { key: "D", text: "类图多重度约束" },
+    ],
+    correct: "B",
+    explanation:
+      "父无子有的边界输出流 → 不平衡。内部中间流可以多，对外净流不行。",
+    trap: "先问「穿不穿子图边界」，再谈别的质量属性。",
+    whyWrong: {
+      A: "加工说明手段，不是父子流对账。",
+      C: "白盒度量。",
+      D: "UML 类图概念。",
+    },
+  },
+  {
+    id: "q-w4d5-09",
+    dayId: "week-4/day-5",
+    topic: "数据流图",
+    knowledgePath: "结构化方法 / DFD / 字典",
+    stem: "数据字典写「发票 = 抬头 + 金额 + (税号)」。其中 (税号) 表示（ ）。",
+    options: [
+      { key: "A", text: "税号必须出现且可重复多次" },
+      { key: "B", text: "税号可选（可有可无）" },
+      { key: "C", text: "在多种税号中必须选一种" },
+      { key: "D", text: "税号与金额二者择一" },
+    ],
+    correct: "B",
+    explanation:
+      "() 表示可选。重复用 {}；选择用 []。",
+    trap: "三种括号对调是字典题经典挖坑方式。",
+    whyWrong: {
+      A: "重复是 {}。",
+      C: "选择是 []。",
+      D: "题干是 + 并列，不是二选一。",
+    },
+  },
+  {
+    id: "q-w4d5-10",
+    dayId: "week-4/day-5",
+    topic: "数据流图",
+    knowledgePath: "结构化方法 / DFD / 图错",
+    stem: "DFD 中某加工只有输入数据流、没有任何输出数据流。该缺陷通常称为（ ）。",
+    options: [
+      { key: "A", text: "奇迹" },
+      { key: "B", text: "黑洞" },
+      { key: "C", text: "平衡" },
+      { key: "D", text: "变换中心" },
+    ],
+    correct: "B",
+    explanation:
+      "有入无出称黑洞；有出无入称奇迹。二者都是图错信号。",
+    trap: "黑洞/奇迹名字易对调：先看「缺的是入还是出」。",
+    whyWrong: {
+      A: "奇迹是有出无入。",
+      C: "平衡是父子流关系，不是这个缺陷名。",
+      D: "变换分析用语，不是缺陷名。",
+    },
+  },
+  {
+    id: "q-w4d5-11",
+    dayId: "week-4/day-5",
+    topic: "数据流图",
+    knowledgePath: "结构化方法 / DFD / 图错",
+    stem: "下列画法中，不符合 DFD 规范的是（ ）。",
+    options: [
+      { key: "A", text: "外部实体经加工与数据存储交换数据" },
+      { key: "B", text: "两个外部实体之间直接画一条数据流" },
+      { key: "C", text: "加工读写数据存储" },
+      { key: "D", text: "子图内部增加仅用于加工之间的中间数据流" },
+    ],
+    correct: "B",
+    explanation:
+      "外部实体之间不能直接连数据流，须经加工。内部中间流与加工读写文件通常允许。",
+    trap: "「实体互连」「文件互连」都是改错题常客。",
+    whyWrong: {
+      A: "正规路径。",
+      C: "允许。",
+      D: "子图内部允许，一般不破平衡。",
+    },
+  },
+  {
+    id: "q-w4d5-12",
+    dayId: "week-4/day-5",
+    topic: "数据流图",
+    knowledgePath: "结构化方法 / DFD / 字典",
+    stem: "条目「优惠 = [满减 | 折扣码 | 会员价]」与「附件 = {图片}」相比，方括号与花括号的差别是（ ）。",
+    options: [
+      { key: "A", text: "[] 表示重复，{} 表示选择" },
+      { key: "B", text: "[] 表示选择其一，{} 表示可重复零次或多次" },
+      { key: "C", text: "二者都表示可选" },
+      { key: "D", text: "二者都表示「与」连接" },
+    ],
+    correct: "B",
+    explanation:
+      "[] 多选一；{} 重复；可选是 ()；与是 +。",
+    trap: "同一题里并排两种括号，专门诱你对调。",
+    whyWrong: {
+      A: "对调了。",
+      C: "可选是 ()。",
+      D: "与是 +。",
+    },
+  },
+
   {
     id: "q-w4d6-01",
     dayId: "week-4/day-6",
