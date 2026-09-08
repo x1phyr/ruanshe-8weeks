@@ -23,6 +23,7 @@ import {
   scheduleDays,
 } from "@/lib/calendar";
 import {
+  addDaysISO,
   diffDays,
   examCountdown,
   formatDateCn,
@@ -193,6 +194,8 @@ export function DashboardView() {
           <Progress value={totalDays ? (doneCount / totalDays) * 100 : 0} />
         </div>
       </Surface>
+
+      <TomorrowPreview startDate={startDate} today={today} lastDate={lastDate} />
 
       {phase === "not-started" ? (
         <Surface className="mt-6 p-5">
@@ -397,6 +400,103 @@ function ActiveDayPanel({
         </div>
       </Surface>
     </div>
+  );
+}
+
+
+function TomorrowPreview({
+  startDate,
+  today,
+  lastDate,
+}: {
+  startDate: string;
+  today: string;
+  lastDate: string;
+}) {
+  const tomorrow = addDaysISO(today, 1);
+
+  if (today < startDate) {
+    return (
+      <Surface className="mt-6 p-4">
+        <div className="label-caps">TOMORROW</div>
+        <h2 className="mt-2 text-base font-medium">开课日</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          学习从 {formatDateCn(startDate)}（{startDate}）开始，明天尚在开课前。
+        </p>
+        <Link
+          href="/plan"
+          className="mt-3 inline-flex h-8 items-center rounded-md border border-border px-2.5 text-sm hover:bg-muted"
+        >
+          查看计划
+        </Link>
+      </Surface>
+    );
+  }
+
+  if (tomorrow > lastDate) {
+    return (
+      <Surface className="mt-6 p-4">
+        <div className="label-caps">TOMORROW</div>
+        <h2 className="mt-2 text-base font-medium">计划已结束</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          最后学习日是 {lastDate}，明天已无排课。用错题本和模块练习继续收口。
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Link
+            href="/mistakes"
+            className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-sm hover:bg-muted"
+          >
+            错题本
+          </Link>
+          <Link
+            href="/practice"
+            className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-sm hover:bg-muted"
+          >
+            模块练习
+          </Link>
+        </div>
+      </Surface>
+    );
+  }
+
+  const day = getDayByDate(startDate, tomorrow);
+  if (!day) {
+    return (
+      <Surface className="mt-6 p-4">
+        <div className="label-caps">TOMORROW</div>
+        <h2 className="mt-2 text-base font-medium">计划已结束</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          明天（{tomorrow}）不在课程表内。
+        </p>
+      </Surface>
+    );
+  }
+
+  return (
+    <Surface className="mt-6 p-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="label-caps">TOMORROW</div>
+          <h2 className="mt-2 text-base font-medium">{day.title}</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {formatDateCn(tomorrow)} {weekdayLabel(tomorrow)} · {day.durationMin}{" "}
+            分钟 · {day.module}
+          </p>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            <KindPill tone="brand">{kindLabel[day.kind]}</KindPill>
+            <KindPill>{day.module}</KindPill>
+            <KindPill>{day.durationMin} MIN</KindPill>
+          </div>
+        </div>
+        <Link
+          href={dayHref(day)}
+          className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-md border border-border px-2.5 text-sm hover:bg-muted"
+        >
+          预览明日
+          <ArrowRight className="size-3.5" />
+        </Link>
+      </div>
+    </Surface>
   );
 }
 
