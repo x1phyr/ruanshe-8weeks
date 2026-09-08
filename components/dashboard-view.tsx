@@ -39,7 +39,9 @@ import {
   isCompleted,
   isPlanComplete,
   isUnlocked,
+  resolveCurrentWeek,
   resolveFocusDay,
+  weekProgressStats,
 } from "@/lib/progress";
 import { getSession, useTrainerStore } from "@/lib/store";
 import type {
@@ -76,6 +78,8 @@ export function DashboardView() {
   const phase = planPhase(startDate, today);
   const calendarToday = getDayByDate(startDate, today);
   const focus = resolveFocusDay(progress, simulateDate, startDate, unlockAll);
+  const currentWeek = resolveCurrentWeek(progress, simulateDate, startDate, unlockAll);
+  const weekStats = weekProgressStats(progress, startDate, currentWeek);
   const daysLeft = examCountdown(today);
   const acc = accuracyPercent(progress);
   const pending = dueMistakes(mistakes, today).length;
@@ -216,6 +220,8 @@ export function DashboardView() {
           <Progress value={totalDays ? (doneCount / totalDays) * 100 : 0} />
         </div>
       </Surface>
+
+      <WeekProgressCard stats={weekStats} />
 
       <TomorrowPreview startDate={startDate} today={today} lastDate={lastDate} />
 
@@ -425,6 +431,43 @@ function ActiveDayPanel({
   );
 }
 
+
+
+function WeekProgressCard({
+  stats,
+}: {
+  stats: { week: number; done: number; total: number; title: string };
+}) {
+  if (stats.total <= 0) return null;
+  const pct = (stats.done / stats.total) * 100;
+  return (
+    <Link href="/plan" className="mt-4 block">
+      <Surface className="px-4 py-3 transition-colors hover:bg-surface-hover">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <div className="label-caps">本周完成度</div>
+            <div className="mt-1 truncate text-sm">
+              <span className="mono-num font-medium">
+                本周 {stats.done}/{stats.total}
+              </span>
+              <span className="text-border"> · </span>
+              <span className="text-muted-foreground">
+                W{stats.week} {stats.title}
+              </span>
+            </div>
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
+            计划
+            <ArrowRight className="size-3.5" />
+          </span>
+        </div>
+        <div className="mt-2">
+          <Progress value={pct} className="gap-0" />
+        </div>
+      </Surface>
+    </Link>
+  );
+}
 
 function WeekdayCoachTip({ today }: { today: string }) {
   const tip = coachTipForDate(today);

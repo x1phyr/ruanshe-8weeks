@@ -107,6 +107,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **celebrate** | 通关 / 完成庆祝路径（仪表盘随机 / 只练错题等入口） |
 | **weekday tips** | `lib/coach-tips.ts` 按星期几教练提示 |
 | **tomorrow preview** | 仪表盘明日预览 |
+| **本周完成度** | 仪表盘紧凑卡片：当前周 completed/total + 细进度条，链到 /plan |
 | **module accuracy** | `lib/module-stats.ts` 模块正确率 |
 
 路由概览：`/` 仪表盘 · `/learn/[week]/[day]` 日训 · `/plan` · `/practice` · `/mistakes`。
