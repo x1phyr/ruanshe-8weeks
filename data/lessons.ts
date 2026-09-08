@@ -77,7 +77,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "补码陷阱",
-          body: "−128 的 8 位补码是 10000000，没有对应的正数 +128。问「最小负数」别答成 −127。",
+          body: "−128 的 8 位补码是 10000000，没有对应的正数 +128。问「最小负数」别答成 −127。正+正得负要想溢出；正数三码合一，负数反码+1才是补码。",
         },
       },
       { type: "h2", text: "校验码怎么选" },
@@ -95,9 +95,17 @@ const liveLessons: Lesson[] = [
       {
         type: "callout",
         callout: {
+          tone: "trap",
+          title: "出题人陷阱（概述·编码）",
+          body: "① 冯·诺依曼是通存通取，不是严格哈佛分存。② 二↔十六从小数点两侧按 4 位分组。③ 补码范围 −2^{n−1}～2^{n−1}−1。④ 奇偶只检不纠；海明可定位；帧/突发想 CRC。⑤ 偶校验先数 1 的个数再补位。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
           tone: "tip",
           title: "45 分钟收口",
-          body: "今天会：层次图、二八十六互转、补码范围、三种校验各管什么。计算题只要求短步骤，不考手算长除到吐。",
+          body: "今天会：层次图、二八十六互转、补码范围、三种校验各管什么。计算题只要求短步骤，不考手算长除到吐。共 12 道陷阱题。",
         },
       },
     ],
@@ -156,7 +164,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "相对 vs 基址",
-          body: "相对寻址的基准是 PC；基址寻址的基准是基址寄存器（可改）。变址常配合数组下标。题干写「相对当前指令」→ 相对寻址。",
+          body: "相对寻址的基准是 PC；基址寻址的基准是基址寄存器（可改）。变址常配合数组下标：EA=(Ix)+位移。题干写「相对当前指令」→ 相对寻址。",
         },
       },
       { type: "h2", text: "CISC 与 RISC" },
@@ -175,9 +183,17 @@ const liveLessons: Lesson[] = [
       {
         type: "callout",
         callout: {
+          tone: "trap",
+          title: "出题人陷阱（CPU·指令）",
+          body: "① 间址≠中断。② PC 指路、IR 装当前、MDR 缓冲数据、MAR 放地址。③ 立即=操作数在指令；直接=地址在指令。④ 相对盯 PC，变址盯 Ix。⑤ RISC：Load/Store + 定长 + 多寄存器；硬布线更贴流水。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
           tone: "tip",
           title: "对照口诀",
-          body: "RISC = 少指令 + 定长 + 多寄存器 + 只有 Load/Store 碰内存。看见「复杂寻址、一条指令干很多事」想 CISC。",
+          body: "RISC = 少指令 + 定长 + 多寄存器 + 只有 Load/Store 碰内存。看见「复杂寻址、一条指令干很多事」想 CISC。共 12 道题。",
         },
       },
     ],
@@ -247,7 +263,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "命中率公式别套错",
-          body: "有的题 Cache 与主存并行启动：缺失时总时间不是 t_c+(t_m)，而是接近 t_m。先读题干「是否同时访存」。",
+          body: "有的题 Cache 与主存并行启动：缺失时总时间不是 t_c+(t_m)，而是接近 t_m。先读题干「是否同时访存」。写直达≠写回；LRU≠FIFO。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（存储·Cache）",
+          body: "① 按字节编址：n 根地址线 → 2^n 字节。② 直接映射行号=块号 mod 行数，冲突多。③ 组数=行数/路数。④ 写直达同时写主存；写回靠脏位。⑤ 邻近扫描→空间局部性；同一地址再访→时间局部性。⑥ 芯片：先位扩展再字扩展。",
         },
       },
       {
@@ -255,7 +279,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "局存性",
-          body: "时间局部性：刚用过的还用；空间局部性：旁边的很快用到。Cache 有效的根就是这两条。",
+          body: "时间局部性：刚用过的还用；空间局部性：旁边的很快用到。Cache 有效的根就是这两条。共 12 道题。",
         },
       },
     ],
@@ -332,7 +356,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "DMA vs 中断",
-          body: "中断：每个数据（或小块）仍可能要 CPU 插手。DMA：成块搬运，CPU 被「窃取」总线周期，但不执行传送指令。问「适合高速成批」→ DMA。",
+          body: "中断：每个数据（或小块）仍可能要 CPU 插手。DMA：成块搬运，CPU 被「窃取」总线周期，但不执行传送指令。问「适合高速成批」→ DMA。争用同一端口→结构冒险。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（流水线·总线·I/O）",
+          body: "① T=(k+n−1)Δt，少写 −1 是标准错。② n 很大时加速比≈段数 k，不是 n。③ 结构/数据/控制冒险对号入座。④ 菊花链线少优先级固定；独立请求线多响应快。⑤ CPU 介入：查询>中断>DMA>通道。⑥ 中断仍可能由 CPU 搬数，别当成 DMA。",
         },
       },
       {
@@ -340,7 +372,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "流水线与总线别混",
-          body: "流水线讲的是指令重叠执行；总线讲的是部件互连与仲裁。加速比公式只用于流水线题。",
+          body: "流水线讲的是指令重叠执行；总线讲的是部件互连与仲裁。加速比公式只用于流水线题。共 12 道题。",
         },
       },
     ],
@@ -422,7 +454,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "传名 ≠ 传引用",
-          body: "传名是「用到再求值」，可能多次求值实参表达式；传引用是「同一块内存」。题干出现「每次引用形参都重新计算」→ 传名。",
+          body: "传名是「用到再求值」，可能多次求值实参表达式；传引用是「同一块内存」。值结果=进拷入、出拷回。题干出现「每次引用形参都重新计算」→ 传名。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（程序语言）",
+          body: "① 边译边跑→解释；先完整翻译→编译；字节码+VM→混合。② 堆地址/动态类型→运行时绑定；跨模块外部名→链接时。③ 传值改副本；传引用改实参；传名每次再算；值结果进出各拷一次。④ 文本嵌套→静态作用域。⑤ 赋值改状态→命令式，别见函数就答函数式。",
         },
       },
       {
@@ -430,7 +470,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "作用域预习",
-          body: "静态（词法）作用域看嵌套文本；动态作用域看调用链。明天起编译前端会用到「名字与结构」的感觉。",
+          body: "静态（词法）作用域看嵌套文本；动态作用域看调用链。明天起编译前端会用到「名字与结构」的感觉。共 12 道题。",
         },
       },
     ],
@@ -501,7 +541,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "LL vs LR",
-          body: "LL 是 Left-to-right scan, Leftmost derivation；LR 是 Left-to-right, Rightmost derivation in reverse。记：LL 预测展开，LR 移进归约。说「LR 不能处理左递归」是错的——恰恰 LL 怕左递归。",
+          body: "LL 是 Left-to-right scan, Leftmost derivation；LR 是 Left-to-right, Rightmost derivation in reverse。记：LL 预测展开，LR 移进归约。说「LR 不能处理左递归」是错的——恰恰 LL 怕左递归。递归下降≈手写 LL。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（词法·语法）",
+          body: "① Token→词法；括号/语句结构→语法；类型/声明→语义。② 正则/FA 管词法，嵌套结构要 CFG。③ 二义=多棵分析树，不是句子非法。④ LL 预测、怕左递归；LR 移进归约、能力更强。⑤ 「一非终结符一函数」→ 递归下降。",
         },
       },
       {
@@ -509,7 +557,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "二义性怎么消",
-          body: "改文法（拆优先级层）或用分析时的优先/结合规则。二义文法不是「句子非法」，而是「结构不唯一」。",
+          body: "改文法（拆优先级层）或用分析时的优先/结合规则。二义文法不是「句子非法」，而是「结构不唯一」。共 12 道题。",
         },
       },
     ],
@@ -587,7 +635,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "计算题三件套别混",
-          body: "补码范围、Cache 映射、流水线时间是第 1 周「必算三件」。每题先圈：位数？行数？段数 k 与指令数 n？写错一个参数整题崩。",
+          body: "补码范围、Cache 映射、流水线时间是第 1 周「必算三件」。每题先圈：位数？行数？段数 k 与指令数 n？写错一个参数整题崩。10000000→−128；组数=行数/路数；加速比上限≈k。",
         },
       },
       {
@@ -603,7 +651,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "复习节奏",
-          body: "先做本日综合题，错题进错题本。计组公式默写一页，编译用「阶段名+一句话」过完即进入第 2 周数据结构。",
+          body: "先做本日综合题（共 12 道），错题进错题本。计组公式默写一页，编译用「阶段名+一句话」过完即进入第 2 周数据结构。四元式拆步可复用公共子表达式临时量。",
         },
       },
       {

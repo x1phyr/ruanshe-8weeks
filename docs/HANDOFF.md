@@ -61,7 +61,7 @@
 | `status: live` | **49**（完整讲义 + 练习；冲刺日 4～6 题） |
 | `status: paper` | **4**（计时壳 + 用法指导 + 站内自编模考） |
 | 自编模考 | 上午各 **75** / 下午各 **20**（两套：W5d6/d7、W7d5/d6） |
-| **全站题目总数（精确）** | **675** |
+| **全站题目总数（精确）** | **705** |
 
 计数方式（可复现）：
 
@@ -72,7 +72,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ```
 
-预期输出：`{ total: 675, daily: 485, mock: 190 }`（`questions` 数组末尾 `...mockPaperQuestions`，190 = 75+20+75+20）。
+预期输出：`{ total: 705, daily: 515, mock: 190 }`（`questions` 数组末尾 `...mockPaperQuestions`，190 = 75+20+75+20）。
 
 试卷日（`paper`，**非法拷真题**）：
 
@@ -163,7 +163,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 1. 内容质量：校对讲义与解析措辞；补强易混点与 trap；统一 knowledgePath 粒度。
 2. 更多下午案例向练习：在 live 日或冲刺日增加读图、DFD、UML、数据库案例风格小题（须自编）。
 3. 可选云同步：目前仅 localStorage；多设备方案需用户明确同意后再设计；默认离线优先。
-4. 题量与覆盖度复查：当前全站 675 题；可按模块正确率与错题热点定向加题。
+4. 题量与覆盖度复查：当前全站 705 题；可按模块正确率与错题热点定向加题。
 
 ## 10. 快速自检
 
