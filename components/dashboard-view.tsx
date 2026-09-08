@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { SimulateDialog } from "@/components/simulate-dialog";
 import { QuizRun } from "@/components/learn/quiz-run";
 import { KindPill, Metric, PageFrame, Surface } from "@/components/ui-bits";
-import { getQuestionById } from "@/data/questions";
+import { getQuestionById, sampleQuestions, unlockedQuestions } from "@/data/questions";
 import { examConfig } from "@/lib/config";
 import {
   CURRICULUM_LENGTH,
@@ -29,13 +29,14 @@ import {
   todayISO,
   weekdayLabel,
 } from "@/lib/dates";
-import { accuracyPercent, dueMistakes, isCompleted, resolveFocusDay } from "@/lib/progress";
+import { accuracyPercent, dueMistakes, isCompleted, isUnlocked, resolveFocusDay } from "@/lib/progress";
 import { getSession, useTrainerStore } from "@/lib/store";
 import type {
   AnswerRecord,
   DaySession,
   Mistake,
   Progress as ProgressState,
+  Question,
   StudyDay,
 } from "@/lib/types";
 
@@ -264,7 +265,7 @@ export function DashboardView() {
         />
       ) : null}
 
-      <WeakTopicsCard mistakes={mistakes} today={today} />
+      <WeakTopicsCard mistakes={mistakes} today={today} progress={progress} unlockAll={unlockAll} />
     </PageFrame>
   );
 }
@@ -472,13 +473,23 @@ function AccuracyCard({
 function WeakTopicsCard({
   mistakes,
   today,
+  progress,
+  unlockAll,
 }: {
   mistakes: Mistake[];
   today: string;
+  progress: ProgressState;
+  unlockAll: boolean;
 }) {
   const [drilling, setDrilling] = useState(false);
+  const [randomRun, setRandomRun] = useState<Question[] | null>(null);
   const active = mistakes.filter((m) => !m.mastered);
   const due = dueMistakes(mistakes, today);
+  const unlockedPool = useMemo(
+    () =>
+      unlockedQuestions((dayId) => isUnlocked(progress, dayId, unlockAll)),
+    [progress, unlockAll],
+  );
   const wrongOnlyQuestions = useMemo(() => {
     const duePool = dueMistakes(mistakes, today);
     const pool =
@@ -498,6 +509,33 @@ function WeakTopicsCard({
   const top = [...buckets.entries()]
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh"))
     .slice(0, 5);
+
+  if (randomRun && randomRun.length > 0) {
+    return (
+      <Surface className="mt-6 p-4">
+        <button
+          type="button"
+          onClick={() => setRandomRun(null)}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回弱项
+        </button>
+        <h2 className="mt-2 text-lg font-medium">随机 {randomRun.length} 题</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          从已解锁题库抽取（池 {unlockedPool.length}）。对错会计入正确率；错题写入错题本。
+        </p>
+        <div className="mt-4">
+          <QuizRun
+            questions={randomRun}
+            mode="practice"
+            navKey={`dashboard:random:${randomRun.length}`}
+            finishLabel="返回仪表盘"
+            onFinished={() => setRandomRun(null)}
+          />
+        </div>
+      </Surface>
+    );
+  }
 
   if (drilling && wrongOnlyQuestions.length > 0) {
     return (
@@ -538,6 +576,20 @@ function WeakTopicsCard({
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-xs"
+            disabled={unlockedPool.length === 0}
+            onClick={() => {
+              const picked = sampleQuestions(unlockedPool, 20);
+              if (picked.length === 0) return;
+              setRandomRun(picked);
+            }}
+          >
+            随机 {Math.min(20, unlockedPool.length) || 20} 题
+          </Button>
           <Button
             type="button"
             size="sm"
