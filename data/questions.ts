@@ -2027,6 +2027,95 @@ export const questions: Question[] = [
     },
   },
   {
+    id: "q-w3d6-09",
+    dayId: "week-3/day-6",
+    topic: "内聚与耦合",
+    knowledgePath: "软件工程 / 模块化 / 内聚",
+    stem: "某初始化模块依次打开日志、连接数据库、加载配置，这些步骤无数据传递关系，只因「系统启动时都要做」放在一起。其内聚类型是（ ）。",
+    options: [
+      { key: "A", text: "功能内聚" },
+      { key: "B", text: "顺序内聚" },
+      { key: "C", text: "时间内聚" },
+      { key: "D", text: "通信内聚" },
+    ],
+    correct: "C",
+    explanation:
+      "时间内聚：各成分因在同一时间段执行而聚集，彼此无强数据依赖。顺序内聚要求前一步输出是后一步输入；通信内聚要求访问同一数据。",
+    trap: "「启动时一起做」→ 时间内聚，别升格成功能内聚。",
+    whyWrong: {
+      A: "功能内聚只完成一个完整功能。",
+      B: "顺序内聚有数据流水线。",
+      D: "通信内聚共享同一数据区/记录。",
+    },
+  },
+  {
+    id: "q-w3d6-10",
+    dayId: "week-3/day-6",
+    topic: "内聚与耦合",
+    knowledgePath: "软件工程 / 模块化 / 内聚",
+    stem: "模块内先读传感器原始值，再换算成工程单位，后一步输入正是前一步输出。该内聚属于（ ）。",
+    options: [
+      { key: "A", text: "偶然内聚" },
+      { key: "B", text: "逻辑内聚" },
+      { key: "C", text: "顺序内聚" },
+      { key: "D", text: "时间内聚" },
+    ],
+    correct: "C",
+    explanation:
+      "顺序内聚：处理成分有先后，且前一成分的输出是后一成分的输入。比通信内聚强，比功能内聚弱。",
+    trap: "有「输出→输入」流水 → 顺序；只是「同一数据」无先后流水 → 通信。",
+    whyWrong: {
+      A: "成分毫无关系才是偶然。",
+      B: "逻辑内聚靠开关选做哪件。",
+      D: "时间只绑时刻，不要求数据接力。",
+    },
+  },
+  {
+    id: "q-w3d6-11",
+    dayId: "week-3/day-6",
+    topic: "内聚与耦合",
+    knowledgePath: "软件工程 / 模块化 / 耦合",
+    stem: "若干模块通过同一外部设备接口规范（如共享一种设备驱动约定）发生联系，但不共享全局数据区。这种耦合通常称为（ ）。",
+    options: [
+      { key: "A", text: "数据耦合" },
+      { key: "B", text: "外部耦合" },
+      { key: "C", text: "内容耦合" },
+      { key: "D", text: "非直接耦合" },
+    ],
+    correct: "B",
+    explanation:
+      "外部耦合：模块共享外部约束（设备、协议、环境、I/O 格式）。比控制紧、比公共松。公共耦合强调共享全局数据区。",
+    trap: "外部=共享外部设施/约定；公共=共享全局数据。",
+    whyWrong: {
+      A: "数据耦合经参数传简单值。",
+      C: "内容耦合闯入对方内部。",
+      D: "非直接是最松、无直接联系。",
+    },
+  },
+  {
+    id: "q-w3d6-12",
+    dayId: "week-3/day-6",
+    topic: "内聚与耦合",
+    knowledgePath: "软件工程 / 模块化 / 内聚",
+    stem: "按内聚由强到弱，下列排序正确的是（ ）。",
+    options: [
+      { key: "A", text: "功能 > 顺序 > 通信 > 过程 > 时间 > 逻辑 > 偶然" },
+      { key: "B", text: "功能 > 通信 > 顺序 > 时间 > 过程 > 逻辑 > 偶然" },
+      { key: "C", text: "顺序 > 功能 > 通信 > 逻辑 > 时间 > 过程 > 偶然" },
+      { key: "D", text: "通信 > 功能 > 顺序 > 过程 > 时间 > 逻辑 > 偶然" },
+    ],
+    correct: "A",
+    explanation:
+      "教材口径：功能 > 顺序 > 通信 > 过程 > 时间 > 逻辑 > 偶然。过程内聚按控制流先后但无数据接力，弱于通信。",
+    trap: "易把「通信」和「顺序」对调；记住有数据流水的顺序更强。",
+    whyWrong: {
+      B: "顺序应强于通信。",
+      C: "功能才是最强。",
+      D: "功能必须最强。",
+    },
+  },
+
+  {
     id: "q-0902-01",
     dayId: "week-3/day-7",
     topic: "开发模型",
@@ -2203,6 +2292,95 @@ export const questions: Question[] = [
     },
   },
   {
+    id: "q-w3d7-09",
+    dayId: "week-3/day-7",
+    topic: "开发模型",
+    knowledgePath: "软件工程 / V 模型",
+    stem: "V 模型中，与「概要设计（系统设计）」对应的测试级别是（ ）。",
+    options: [
+      { key: "A", text: "单元测试" },
+      { key: "B", text: "集成测试" },
+      { key: "C", text: "系统测试" },
+      { key: "D", text: "验收测试" },
+    ],
+    correct: "C",
+    explanation:
+      "配对：需求↔验收，概要/系统↔系统测试，详细↔集成，编码↔单元。",
+    trap: "概要对系统测试，不是集成；集成对详细设计。",
+    whyWrong: {
+      A: "对编码。",
+      B: "对详细设计。",
+      D: "对需求分析。",
+    },
+  },
+  {
+    id: "q-w3d7-10",
+    dayId: "week-3/day-7",
+    topic: "开发模型",
+    knowledgePath: "软件工程 / 过程模型 / 喷泉",
+    stem: "强调面向对象分析与设计可相互重叠、迭代，常用「喷泉」隐喻的模型是（ ）。",
+    options: [
+      { key: "A", text: "瀑布模型" },
+      { key: "B", text: "喷泉模型" },
+      { key: "C", text: "大爆炸模型" },
+      { key: "D", text: "仅等价类模型" },
+    ],
+    correct: "B",
+    explanation:
+      "喷泉模型突出 OO 中分析、设计、实现的迭代与重叠，如同喷泉高低错落、可回落再喷。",
+    trap: "喷泉≈OO 迭代重叠；瀑布≈阶段严格单向。",
+    whyWrong: {
+      A: "阶段清晰少重叠。",
+      C: "非推荐模型。",
+      D: "测试方法不是过程模型。",
+    },
+  },
+  {
+    id: "q-w3d7-11",
+    dayId: "week-3/day-7",
+    topic: "开发模型",
+    knowledgePath: "软件工程 / 过程模型 / 选型",
+    stem: "下列关于开发模型选型的叙述，错误的是（ ）。",
+    options: [
+      { key: "A", text: "需求稳定、文档驱动可优先考虑瀑布" },
+      { key: "B", text: "需求不清、需可见演示可优先考虑原型" },
+      { key: "C", text: "高风险大型项目可优先考虑螺旋" },
+      { key: "D", text: "需求每周剧变时，瀑布通常是最佳首选" },
+    ],
+    correct: "D",
+    explanation:
+      "需求剧变更适合敏捷等拥抱变化的模型；瀑布敌视中后期变更，不是最佳首选。",
+    trap: "选「错误」：把「变化」硬塞给瀑布的那句。",
+    whyWrong: {
+      A: "正确适用面。",
+      B: "正确适用面。",
+      C: "正确适用面。",
+    },
+  },
+  {
+    id: "q-w3d7-12",
+    dayId: "week-3/day-7",
+    topic: "开发模型",
+    knowledgePath: "软件工程 / 过程模型 / 原型",
+    stem: "抛弃型原型与演化型原型的主要差别是（ ）。",
+    options: [
+      { key: "A", text: "抛弃型最终丢弃演示代码；演化型在原型上继续演进成产品" },
+      { key: "B", text: "抛弃型一定比演化型更适合瀑布收尾" },
+      { key: "C", text: "演化型禁止与用户交流" },
+      { key: "D", text: "二者与需求澄清无关" },
+    ],
+    correct: "A",
+    explanation:
+      "抛弃型（快速原型）用于弄清需求后重写；演化型把原型逐步完善为交付系统。",
+    trap: "关键是「扔」还是「留着长」。",
+    whyWrong: {
+      B: "无此必然。",
+      C: "原型恰恰要用户反馈。",
+      D: "澄清需求是原型核心用途。",
+    },
+  },
+
+  {
     id: "q-0903-01",
     dayId: "week-4/day-1",
     topic: "黑盒测试",
@@ -2356,6 +2534,117 @@ export const questions: Question[] = [
       D: "经验补充，无组合模型。",
     },
   },
+  {
+    id: "q-w4d1-08",
+    dayId: "week-4/day-1",
+    topic: "黑盒测试",
+    knowledgePath: "软件测试 / 黑盒 / 边界值",
+    stem: "规格写「密码长度必须为 8～16 个字符」。按边界值分析，下列集合最合理的是（ ）。",
+    options: [
+      { key: "A", text: "8, 12, 16" },
+      { key: "B", text: "7, 8, 16, 17" },
+      { key: "C", text: "1, 16, 100" },
+      { key: "D", text: "仅 10" },
+    ],
+    correct: "B",
+    explanation:
+      "闭区间 [8,16] 的上点 8、16 与离点 7、17。内点可加，但「必须」的是边上与边外。",
+    trap: "字符串长度题同样打上下界±1。",
+    whyWrong: {
+      A: "缺越界点。",
+      C: "未打在真正边界。",
+      D: "只有内点。",
+    },
+  },
+  {
+    id: "q-w4d1-09",
+    dayId: "week-4/day-1",
+    topic: "黑盒测试",
+    knowledgePath: "软件测试 / 黑盒 / 等价类",
+    stem: "对下拉框「省份」（必选，枚举 34 个合法值）做等价类划分，较合理的是（ ）。",
+    options: [
+      { key: "A", text: "每个省份各做一个有效类，共 34 个有效类，另加「未选」无效类" },
+      { key: "B", text: "全体合法省份合为一个有效类，另设「未选/非法值」等无效类" },
+      { key: "C", text: "只测第 1 个省份，其它永不测" },
+      { key: "D", text: "等价类不适用于枚举型输入" },
+    ],
+    correct: "B",
+    explanation:
+      "同一有效类中任取代表即可；枚举型通常把全部合法值归为一个有效等价类，再补无效类。",
+    trap: "合法枚举不必拆成 34 个有效类（除非业务规则对各省不同）。",
+    whyWrong: {
+      A: "过度切分。",
+      C: "覆盖不足。",
+      D: "枚举很适合等价类。",
+    },
+  },
+  {
+    id: "q-w4d1-10",
+    dayId: "week-4/day-1",
+    topic: "黑盒测试",
+    knowledgePath: "软件测试 / 黑盒 / 判定表",
+    stem: "由因果图导出判定表后，每一列通常对应（ ）。",
+    options: [
+      { key: "A", text: "一条测试用例（一组条件取值及其动作）" },
+      { key: "B", text: "一条 McCabe 独立路径" },
+      { key: "C", text: "一个数据流图加工编号" },
+      { key: "D", text: "一个基线版本号" },
+    ],
+    correct: "A",
+    explanation:
+      "判定表列=条件组合+动作，可直接映射为黑盒用例。",
+    trap: "判定表列不是白盒路径。",
+    whyWrong: {
+      B: "白盒。",
+      C: "DFD。",
+      D: "配置管理。",
+    },
+  },
+  {
+    id: "q-w4d1-11",
+    dayId: "week-4/day-1",
+    topic: "黑盒测试",
+    knowledgePath: "软件测试 / 黑盒 / 方法组合",
+    stem: "对数值区间输入，常见的高效组合是（ ）。",
+    options: [
+      { key: "A", text: "先等价类划分，再在各类边界上取边界值" },
+      { key: "B", text: "只用路径覆盖替代一切黑盒方法" },
+      { key: "C", text: "只做错误推测，禁止系统化方法" },
+      { key: "D", text: "先算 V(G) 再决定是否测边界" },
+    ],
+    correct: "A",
+    explanation:
+      "等价类解决「测哪些代表」，边界值解决「端点与越界」；二者常联用。",
+    trap: "黑盒轴上：等价类 + 边界值是固定搭档。",
+    whyWrong: {
+      B: "路径是白盒。",
+      C: "错误推测是补充。",
+      D: "V(G) 是白盒度量。",
+    },
+  },
+  {
+    id: "q-w4d1-12",
+    dayId: "week-4/day-1",
+    topic: "黑盒测试",
+    knowledgePath: "软件测试 / 黑盒 / 场景",
+    stem: "某登录框：用户名非空、密码 6～20 位，且二者同时合法才允许提交。要系统检查「条件组合与约束」，优先选用（ ）。",
+    options: [
+      { key: "A", text: "语句覆盖" },
+      { key: "B", text: "因果图 / 判定表" },
+      { key: "C", text: "仅二分查找" },
+      { key: "D", text: "仅扇入扇出分析" },
+    ],
+    correct: "B",
+    explanation:
+      "多条件约束与组合 → 因果图/判定表。语句覆盖是白盒且最弱。",
+    trap: "「同时成立/互斥」信号词锁定因果图。",
+    whyWrong: {
+      A: "白盒最弱覆盖。",
+      C: "算法查找。",
+      D: "结构化设计度量。",
+    },
+  },
+
   {
     id: "q-0904-01",
     dayId: "week-4/day-2",
@@ -2532,6 +2821,95 @@ export const questions: Question[] = [
       D: "教材通常把路径覆盖放在最强一侧。",
     },
   },
+  {
+    id: "q-w4d2-09",
+    dayId: "week-4/day-2",
+    topic: "白盒测试",
+    knowledgePath: "软件测试 / 白盒 / 语句覆盖",
+    stem: "语句覆盖的基本要求是（ ）。",
+    options: [
+      { key: "A", text: "每条语句至少执行一次" },
+      { key: "B", text: "每个判定的真假各一次" },
+      { key: "C", text: "每个原子条件真假各一次" },
+      { key: "D", text: "所有路径都执行" },
+    ],
+    correct: "A",
+    explanation:
+      "语句覆盖只保证语句被执行到，是最弱标准之一；不保证每个分支都走到。",
+    trap: "语句覆盖 ≠ 分支覆盖。",
+    whyWrong: {
+      B: "判定覆盖。",
+      C: "条件覆盖。",
+      D: "路径覆盖。",
+    },
+  },
+  {
+    id: "q-w4d2-10",
+    dayId: "week-4/day-2",
+    topic: "白盒测试",
+    knowledgePath: "软件测试 / 白盒 / 判定条件",
+    stem: "判定-条件覆盖相对「仅判定覆盖」或「仅条件覆盖」的增强在于（ ）。",
+    options: [
+      { key: "A", text: "取消对语句的执行要求" },
+      { key: "B", text: "同时满足判定的 T/F 与各原子条件的 T/F" },
+      { key: "C", text: "自动达到路径覆盖" },
+      { key: "D", text: "只适用于黑盒" },
+    ],
+    correct: "B",
+    explanation:
+      "判定-条件覆盖 = 判定覆盖 + 条件覆盖；仍弱于条件组合与路径覆盖。",
+    trap: "判定-条件 ≠ 条件组合（组合要全部真假搭配）。",
+    whyWrong: {
+      A: "相反仍要执行。",
+      C: "不能自动等价路径覆盖。",
+      D: "它是白盒标准。",
+    },
+  },
+  {
+    id: "q-w4d2-11",
+    dayId: "week-4/day-2",
+    topic: "白盒测试",
+    knowledgePath: "软件测试 / 白盒 / McCabe",
+    stem: "某单入口单出口连通流图 E=12、N=10。V(G) 为（ ）。",
+    options: [
+      { key: "A", text: "2" },
+      { key: "B", text: "4" },
+      { key: "C", text: "22" },
+      { key: "D", text: "8" },
+    ],
+    correct: "B",
+    explanation:
+      "V(G)=E−N+2=12−10+2=4。",
+    trap: "牢记 +2；算成 12−10=2 即漏项。",
+    whyWrong: {
+      A: "漏了 +2。",
+      C: "E+N。",
+      D: "可能误用其它公式。",
+    },
+  },
+  {
+    id: "q-w4d2-12",
+    dayId: "week-4/day-2",
+    topic: "白盒测试",
+    knowledgePath: "软件测试 / 白盒 / 条件组合",
+    stem: "对判定 (A && B)，条件组合（多重条件）覆盖至少需要几组 (A,B) 取值？（ ）",
+    options: [
+      { key: "A", text: "1" },
+      { key: "B", text: "2" },
+      { key: "C", text: "4" },
+      { key: "D", text: "与 V(G) 无关的任意 0 组" },
+    ],
+    correct: "C",
+    explanation:
+      "两原子条件，全部真假组合 2²=4：(T,T)(T,F)(F,T)(F,F)。",
+    trap: "条件组合看原子条件个数的笛卡尔积，不是「测两次就够」。",
+    whyWrong: {
+      A: "远不够。",
+      B: "可能只够判定或条件覆盖。",
+      D: "荒谬。",
+    },
+  },
+
   {
     id: "q-0905-01",
     dayId: "week-4/day-5",
@@ -5765,7 +6143,7 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "无故障时间、失效率等属可靠性范畴。",
-    trap: "可靠 ≠ 易用。",
+    trap: "MTTF/失效率 → 可靠性；别和易用、性能搅在一起。",
     whyWrong: {
       A: "上手与操作。",
       C: "换环境。",
@@ -5787,7 +6165,7 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "越早发现缺陷越便宜；评审是静态手段，不能证明无缺陷。",
-    trap: "早发现 = 评审价值。",
+    trap: "评审价值=更早更便宜；不能证明无缺陷，也不能替代配置管理。",
     whyWrong: {
       A: "测试/评审都不能穷尽证明。",
       C: "不替代。",
@@ -5809,7 +6187,7 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "基线是受控的、已评审的版本参考点；变更须走流程。",
-    trap: "基线 ≠ 随便 copy。",
+    trap: "基线=已评审受控的版本参考点，不是私人拷贝或文件名。",
     whyWrong: {
       A: "不受控。",
       C: "过窄。",
@@ -5831,7 +6209,7 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "变更控制防范围与质量失控。",
-    trap: "变更要评估，不是鼓励私改。",
+    trap: "变更控制防范围蔓延；批准前先评估影响。",
     whyWrong: {
       A: "相反。",
       C: "错误。",
@@ -5853,7 +6231,7 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "FP 从需求功能规模出发，比 LOC 少受语言影响；仍是估算，不是精确预言。",
-    trap: "FP 看功能规模。",
+    trap: "FP 从需求功能规模出发，少受语言影响；仍是估算不是预言。",
     whyWrong: {
       A: "需要需求。",
       C: "估算有误差。",
@@ -5875,7 +6253,7 @@ export const questions: Question[] = [
     correct: "C",
     explanation:
       "曝光度≈概率×影响，用于排序优先处理项。",
-    trap: "两个因子都要。",
+    trap: "风险曝光度=概率×影响，缺一不可。",
     whyWrong: {
       A: "不全。",
       B: "不全。",
@@ -5897,13 +6275,124 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "QA 关注过程与体系；QC/测试偏产品检查。制定标准、评审、度量是 QA 典型活动。",
-    trap: "过程 vs 找 bug。",
+    trap: "QA 管过程与标准；QC/测试偏找产品失效。",
     whyWrong: {
       A: "偏测试。",
       C: "现象记录。",
       D: "有害。",
     },
   },
+  {
+    id: "q-w4d3-08",
+    dayId: "week-4/day-3",
+    topic: "软件质量",
+    knowledgePath: "软件工程 / 质量 / 特性",
+    stem: "「软件易于从 Windows 迁移到 Linux 且改动很少」主要体现（ ）。",
+    options: [
+      { key: "A", text: "可靠性" },
+      { key: "B", text: "可移植性" },
+      { key: "C", text: "功能性完整性唯一指标" },
+      { key: "D", text: "内容耦合强度" },
+    ],
+    correct: "B",
+    explanation:
+      "可移植性关注跨环境迁移的能力与代价。",
+    trap: "迁移/平台 → 可移植，不是可靠性。",
+    whyWrong: {
+      A: "无故障运行。",
+      C: "过窄且非本题。",
+      D: "耦合概念。",
+    },
+  },
+  {
+    id: "q-w4d3-09",
+    dayId: "week-4/day-3",
+    topic: "软件质量",
+    knowledgePath: "软件工程 / 质量 / 维护",
+    stem: "在交付后修正已暴露缺陷，这类维护通常称为（ ）。",
+    options: [
+      { key: "A", text: "完善性维护" },
+      { key: "B", text: "适应性维护" },
+      { key: "C", text: "改正性（纠错性）维护" },
+      { key: "D", text: "预防性维护之唯一形式" },
+    ],
+    correct: "C",
+    explanation:
+      "改正性=修 bug；适应性=跟环境变；完善性=加功能改进；预防性=为未来改进结构。",
+    trap: "修缺陷=改正性，别写成完善性。",
+    whyWrong: {
+      A: "功能增强/性能改进等。",
+      B: "适应新 OS/新法规等。",
+      D: "预防性是另一类。",
+    },
+  },
+  {
+    id: "q-w4d3-10",
+    dayId: "week-4/day-3",
+    topic: "软件质量",
+    knowledgePath: "软件工程 / 质量 / ISO",
+    stem: "关于软件质量特性（如 ISO/IEC 25010 思路），下列叙述较合理的是（ ）。",
+    options: [
+      { key: "A", text: "质量只有「能跑起来」一个维度" },
+      { key: "B", text: "除功能适合性外，还常包括性能效率、兼容性、可用性、可靠性、安全性、可维护性、可移植性等" },
+      { key: "C", text: "可维护性与可移植性从未被讨论" },
+      { key: "D", text: "质量特性与用户无关" },
+    ],
+    correct: "B",
+    explanation:
+      "现代质量模型是多维的；软考认「多特性」而非单一能跑。",
+    trap: "别把质量缩成「没崩溃」。",
+    whyWrong: {
+      A: "过窄。",
+      C: "恰恰常考。",
+      D: "质量面向干系人。",
+    },
+  },
+  {
+    id: "q-w4d3-11",
+    dayId: "week-4/day-3",
+    topic: "软件质量",
+    knowledgePath: "软件工程 / 配置 / CCB",
+    stem: "配置控制委员会（CCB）的主要职责更接近（ ）。",
+    options: [
+      { key: "A", text: "代替程序员写全部代码" },
+      { key: "B", text: "评审并裁决基线变更请求" },
+      { key: "C", text: "取消版本号" },
+      { key: "D", text: "禁止一切测试" },
+    ],
+    correct: "B",
+    explanation:
+      "CCB 评估变更影响、批准或驳回，维护基线受控。",
+    trap: "CCB=变更裁决，不是编码小队。",
+    whyWrong: {
+      A: "不是。",
+      C: "相反要管版本。",
+      D: "荒谬。",
+    },
+  },
+  {
+    id: "q-w4d3-12",
+    dayId: "week-4/day-3",
+    topic: "软件质量",
+    knowledgePath: "软件工程 / 估算",
+    stem: "用类比法估算工作量时，关键前提是（ ）。",
+    options: [
+      { key: "A", text: "找到规模与特征相似的历史项目作参照" },
+      { key: "B", text: "完全不看任何历史数据" },
+      { key: "C", text: "只统计空行注释" },
+      { key: "D", text: "估算结果必须与功能点法数字位位相同" },
+    ],
+    correct: "A",
+    explanation:
+      "类比法依赖可比项目；不同方法可交叉校验，不必数字完全一致。",
+    trap: "类比=找相似项目。",
+    whyWrong: {
+      B: "没有参照无法类比。",
+      C: "无意义。",
+      D: "过强要求。",
+    },
+  },
+
   {
     id: "q-w4d4-01",
     dayId: "week-4/day-4",
@@ -5919,7 +6408,7 @@ export const questions: Question[] = [
     correct: "C",
     explanation:
       "数据存储用开口矩形/双横线；方框实体；圆角/圆为加工；箭头为数据流。",
-    trap: "四种符号要对号。",
+    trap: "开口矩形/双横线=存储；方框=实体；圆/圆角=加工。",
     whyWrong: {
       A: "外部实体是方框。",
       B: "加工是圆角/圆。",
@@ -5941,7 +6430,7 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "数据流表示流动的数据，用名词；控制语义留在加工内。",
-    trap: "别把控制流画上去。",
+    trap: "数据流名用名词；动词「启动/执行」是控制流味道。",
     whyWrong: {
       A: "控制流味道。",
       C: "必须命名。",
@@ -5963,7 +6452,7 @@ export const questions: Question[] = [
     correct: "A",
     explanation:
       "语境图把整个系统看成一个加工，聚焦系统边界与外部交互。",
-    trap: "顶层看边界。",
+    trap: "语境图=系统一个加工+外部实体，细节下放到 0 层/子图。",
     whyWrong: {
       B: "细节在下层。",
       C: "恰恰要有外部实体。",
@@ -6058,6 +6547,117 @@ export const questions: Question[] = [
       D: "配置。",
     },
   },
+  {
+    id: "q-w4d4-08",
+    dayId: "week-4/day-4",
+    topic: "数据流图基础",
+    knowledgePath: "结构化方法 / DFD / 符号",
+    stem: "DFD 中用方框表示的通常是（ ）。",
+    options: [
+      { key: "A", text: "加工" },
+      { key: "B", text: "数据存储" },
+      { key: "C", text: "外部实体（源/宿）" },
+      { key: "D", text: "控制流" },
+    ],
+    correct: "C",
+    explanation:
+      "外部实体用方框；加工用圆/圆角；存储用开口矩形/双横线；箭头为数据流。",
+    trap: "方框=人/外系统，不是加工。",
+    whyWrong: {
+      A: "圆/圆角。",
+      B: "开口矩形。",
+      D: "DFD 不画控制流。",
+    },
+  },
+  {
+    id: "q-w4d4-09",
+    dayId: "week-4/day-4",
+    topic: "数据流图基础",
+    knowledgePath: "结构化方法 / DFD / 图错",
+    stem: "加工「计算折扣」只有输出数据流、没有任何输入数据流。该缺陷通常称为（ ）。",
+    options: [
+      { key: "A", text: "黑洞" },
+      { key: "B", text: "奇迹" },
+      { key: "C", text: "平衡" },
+      { key: "D", text: "扇出过大" },
+    ],
+    correct: "B",
+    explanation:
+      "有出无入=奇迹；有入无出=黑洞。",
+    trap: "奇迹/黑洞名字易对调：缺的是入还是出。",
+    whyWrong: {
+      A: "黑洞是有入无出。",
+      C: "平衡是父子流对账。",
+      D: "结构图度量。",
+    },
+  },
+  {
+    id: "q-w4d4-10",
+    dayId: "week-4/day-4",
+    topic: "数据流图基础",
+    knowledgePath: "结构化方法 / DFD / 存储",
+    stem: "关于数据存储，下列叙述正确的是（ ）。",
+    options: [
+      { key: "A", text: "两个数据存储可以直接用数据流互连作为常规画法" },
+      { key: "B", text: "数据存储之间的数据交换应经过加工" },
+      { key: "C", text: "数据存储必须画在语境图里并分解外部实体" },
+      { key: "D", text: "数据存储箭头名称必须是动词「启动」" },
+    ],
+    correct: "B",
+    explanation:
+      "文件/存储不直接互连；经加工读写。语境图通常突出系统与外部实体。",
+    trap: "「文件互连」是改错常客。",
+    whyWrong: {
+      A: "不规范。",
+      C: "外部实体不分解；语境图不一定展开内部存储细节。",
+      D: "流名应是名词性数据。",
+    },
+  },
+  {
+    id: "q-w4d4-11",
+    dayId: "week-4/day-4",
+    topic: "数据流图基础",
+    knowledgePath: "结构化方法 / DFD / 分层",
+    stem: "0 层图相对语境图（顶层）的主要变化是（ ）。",
+    options: [
+      { key: "A", text: "把单一系统加工分解为若干主要加工，并引入内部数据存储等" },
+      { key: "B", text: "删掉全部外部实体" },
+      { key: "C", text: "改画成甘特图" },
+      { key: "D", text: "只保留类图多重度" },
+    ],
+    correct: "A",
+    explanation:
+      "语境图一个加工；0 层展开主要加工与内部文件，仍与外部实体交互。",
+    trap: "分层=由外向内逐步展开。",
+    whyWrong: {
+      B: "外部实体仍在。",
+      C: "进度图。",
+      D: "UML。",
+    },
+  },
+  {
+    id: "q-w4d4-12",
+    dayId: "week-4/day-4",
+    topic: "数据流图基础",
+    knowledgePath: "结构化方法 / DFD / 规则",
+    stem: "下列 DFD 画法中正确的是（ ）。",
+    options: [
+      { key: "A", text: "允许加工无任何输入输出" },
+      { key: "B", text: "数据流可以没有名字" },
+      { key: "C", text: "每个加工应至少有一个输入和一个输出" },
+      { key: "D", text: "外部实体之间直接连数据流是推荐画法" },
+    ],
+    correct: "C",
+    explanation:
+      "加工需有入有出；流必须命名；实体不直接互连。",
+    trap: "合法加工=有入有出。",
+    whyWrong: {
+      A: "非法。",
+      B: "必须命名。",
+      D: "不推荐/不规范。",
+    },
+  },
+
   {
     id: "q-w4d5-03",
     dayId: "week-4/day-5",
@@ -6294,7 +6894,7 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "变换型 DFD 用变换分析映射输入支、变换中心、输出支。",
-    trap: "主干变换 → 变换分析。",
+    trap: "主干变换→变换分析；按类型分派→事务分析。",
     whyWrong: {
       A: "分派型用事务分析。",
       C: "测试。",
@@ -6316,7 +6916,7 @@ export const questions: Question[] = [
     correct: "A",
     explanation:
       "事务型：接收并分派到各事务处理模块。",
-    trap: "分派中心 = 事务分析。",
+    trap: "输入类型决定路径=事务型，映射出事务中心+各处理模块。",
     whyWrong: {
       B: "OO 另一套。",
       C: "荒谬。",
@@ -6338,7 +6938,7 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "扇出过大说明直接下属太多，应分层分解。",
-    trap: "扇出大 → 加中间层。",
+    trap: "扇出过大=直接下属太多，加中间层分解，别继续塞功能。",
     whyWrong: {
       A: "更糟。",
       C: "改名无用。",
@@ -6404,7 +7004,7 @@ export const questions: Question[] = [
     correct: "B",
     explanation:
       "经典目标：模块内职责集中，模块间依赖松。",
-    trap: "高内聚低耦合。",
+    trap: "结构化设计口头禅：高内聚、低耦合——方向反了就全错。",
     whyWrong: {
       A: "最差。",
       C: "耦合高不好。",
@@ -6426,13 +7026,124 @@ export const questions: Question[] = [
     correct: "A",
     explanation:
       "作用域（受判定影响的集合）应在控制域（下属模块集合）之内，否则结构难理解。",
-    trap: "作用域 ⊆ 控制域。",
+    trap: "作判定的模块，其影响范围应落在下属控制域内（作用域⊆控制域）。",
     whyWrong: {
       B: "内容耦合，差。",
       C: "无限制不好。",
       D: "错误。",
     },
   },
+  {
+    id: "q-w4d6-08",
+    dayId: "week-4/day-6",
+    topic: "结构化设计",
+    knowledgePath: "结构化方法 / SD / 变换",
+    stem: "变换分析映射模块结构时，典型的三大部分是（ ）。",
+    options: [
+      { key: "A", text: "仅测试用例生成器" },
+      { key: "B", text: "传入（输入）支、变换中心、传出（输出）支" },
+      { key: "C", text: "仅 Cookie 与 Session" },
+      { key: "D", text: "仅主键与外键" },
+    ],
+    correct: "B",
+    explanation:
+      "变换型：输入处理 → 变换中心 → 输出处理，再映射到模块层次。",
+    trap: "看见「主干变换」就拆三截。",
+    whyWrong: {
+      A: "测试。",
+      C: "Web。",
+      D: "数据库。",
+    },
+  },
+  {
+    id: "q-w4d6-09",
+    dayId: "week-4/day-6",
+    topic: "结构化设计",
+    knowledgePath: "结构化方法 / SD / 事务",
+    stem: "事务型 DFD 映射后，顶层附近常出现的模块角色是（ ）。",
+    options: [
+      { key: "A", text: "事务中心（接收并分派）" },
+      { key: "B", text: "仅物理网卡中断服务" },
+      { key: "C", text: "仅 RAID 校验模块" },
+      { key: "D", text: "禁止任何下属模块" },
+    ],
+    correct: "A",
+    explanation:
+      "事务中心识别事务类型并调用对应处理模块。",
+    trap: "分派中心=事务分析标志。",
+    whyWrong: {
+      B: "OS/组成。",
+      C: "存储。",
+      D: "荒谬。",
+    },
+  },
+  {
+    id: "q-w4d6-10",
+    dayId: "week-4/day-6",
+    topic: "结构化设计",
+    knowledgePath: "结构化方法 / SD / 扇出",
+    stem: "一般认为模块扇出（直接下属数）过大时，主要风险是（ ）。",
+    options: [
+      { key: "A", text: "模块过于简单、永远无害" },
+      { key: "B", text: "管理跨度过大、结构难理解，宜加中间层" },
+      { key: "C", text: "必然提高功能内聚到最强" },
+      { key: "D", text: "自动消除公共耦合" },
+    ],
+    correct: "B",
+    explanation:
+      "经验上扇出宜适中；过大则分解、加中间层。",
+    trap: "扇出大 ≠ 好事。",
+    whyWrong: {
+      A: "过大有害。",
+      C: "无此必然。",
+      D: "无关。",
+    },
+  },
+  {
+    id: "q-w4d6-11",
+    dayId: "week-4/day-6",
+    topic: "结构化设计",
+    knowledgePath: "结构化方法 / SD / 内聚对照",
+    stem: "从 DFD 导出模块时，若把毫无关系的处理硬塞进同一模块，最可能造成（ ）。",
+    options: [
+      { key: "A", text: "功能内聚" },
+      { key: "B", text: "偶然内聚或逻辑内聚等弱内聚" },
+      { key: "C", text: "非直接耦合自动形成" },
+      { key: "D", text: "V(G) 必然为 0" },
+    ],
+    correct: "B",
+    explanation:
+      "无关功能捆在一起 → 偶然/逻辑等弱内聚，违背高内聚目标。",
+    trap: "导出模块时仍要盯内聚。",
+    whyWrong: {
+      A: "功能内聚是目标。",
+      C: "非直接是最松耦合，不是塞功能的结果。",
+      D: "荒谬。",
+    },
+  },
+  {
+    id: "q-w4d6-12",
+    dayId: "week-4/day-6",
+    topic: "结构化设计",
+    knowledgePath: "结构化方法 / SD / 结构图",
+    stem: "模块结构图（SC）相对 DFD 更强调（ ）。",
+    options: [
+      { key: "A", text: "数据如何在加工间流动的逻辑模型" },
+      { key: "B", text: "模块的调用层次与接口关系" },
+      { key: "C", text: "仅外部实体的地理位置" },
+      { key: "D", text: "仅测试覆盖率数字" },
+    ],
+    correct: "B",
+    explanation:
+      "DFD 偏分析期数据流；结构图偏设计期模块调用树。",
+    trap: "DFD→SC：从「数据流」到「谁调用谁」。",
+    whyWrong: {
+      A: "那是 DFD。",
+      C: "无关。",
+      D: "测试度量。",
+    },
+  },
+
   {
     id: "q-w4d7-01",
     dayId: "week-4/day-7",
@@ -6565,6 +7276,139 @@ export const questions: Question[] = [
       D: "两句都错。",
     },
   },
+  {
+    id: "q-w4d7-07",
+    dayId: "week-4/day-7",
+    topic: "软工复盘",
+    knowledgePath: "软件工程 / 复盘 / 黑盒",
+    stem: "（复盘）输入条件存在互斥与组合约束时，优先选用的黑盒技术是（ ）。",
+    options: [
+      { key: "A", text: "因果图 / 判定表" },
+      { key: "B", text: "仅语句覆盖" },
+      { key: "C", text: "仅 Dijkstra" },
+      { key: "D", text: "仅 Huffman" },
+    ],
+    correct: "A",
+    explanation:
+      "组合与约束 → 因果图/判定表。",
+    trap: "复盘信号词：组合/互斥。",
+    whyWrong: {
+      B: "白盒最弱。",
+      C: "最短路。",
+      D: "编码树。",
+    },
+  },
+  {
+    id: "q-w4d7-08",
+    dayId: "week-4/day-7",
+    topic: "软工复盘",
+    knowledgePath: "软件工程 / 复盘 / 白盒",
+    stem: "（复盘）单入口单出口连通流图 E=8、N=6，V(G) 为（ ）。",
+    options: [
+      { key: "A", text: "2" },
+      { key: "B", text: "4" },
+      { key: "C", text: "14" },
+      { key: "D", text: "0" },
+    ],
+    correct: "B",
+    explanation:
+      "8−6+2=4。",
+    trap: "复盘默写 +2。",
+    whyWrong: {
+      A: "漏 +2。",
+      C: "E+N。",
+      D: "荒谬。",
+    },
+  },
+  {
+    id: "q-w4d7-09",
+    dayId: "week-4/day-7",
+    topic: "软工复盘",
+    knowledgePath: "软件工程 / 复盘 / V模型",
+    stem: "（复盘）详细设计对应的测试级别是（ ）。",
+    options: [
+      { key: "A", text: "验收测试" },
+      { key: "B", text: "系统测试" },
+      { key: "C", text: "集成测试" },
+      { key: "D", text: "仅性能测试" },
+    ],
+    correct: "C",
+    explanation:
+      "详细↔集成；概要↔系统；需求↔验收；编码↔单元。",
+    trap: "详细不是验收。",
+    whyWrong: {
+      A: "对需求。",
+      B: "对概要。",
+      D: "过窄。",
+    },
+  },
+  {
+    id: "q-w4d7-10",
+    dayId: "week-4/day-7",
+    topic: "软工复盘",
+    knowledgePath: "软件工程 / 复盘 / DFD",
+    stem: "（复盘）有入无出的加工缺陷名称是（ ）。",
+    options: [
+      { key: "A", text: "奇迹" },
+      { key: "B", text: "黑洞" },
+      { key: "C", text: "喷泉" },
+      { key: "D", text: "增量" },
+    ],
+    correct: "B",
+    explanation:
+      "有入无出=黑洞；有出无入=奇迹。",
+    trap: "复盘对调坑。",
+    whyWrong: {
+      A: "奇迹相反。",
+      C: "过程模型。",
+      D: "过程模型。",
+    },
+  },
+  {
+    id: "q-w4d7-11",
+    dayId: "week-4/day-7",
+    topic: "软工复盘",
+    knowledgePath: "软件工程 / 复盘 / 耦合",
+    stem: "（复盘）耦合由松到紧，下列正确的是（ ）。",
+    options: [
+      { key: "A", text: "非直接 > 数据 > 标记 > 控制 > 外部 > 公共 > 内容" },
+      { key: "B", text: "内容 > 数据 > 非直接" },
+      { key: "C", text: "公共是最松的" },
+      { key: "D", text: "控制比数据更松" },
+    ],
+    correct: "A",
+    explanation:
+      "标准排序：非直接最松，内容最紧。",
+    trap: "复盘把「最高耦合」钉死在内容。",
+    whyWrong: {
+      B: "方向反了。",
+      C: "公共很紧。",
+      D: "控制紧于数据。",
+    },
+  },
+  {
+    id: "q-w4d7-12",
+    dayId: "week-4/day-7",
+    topic: "软工复盘",
+    knowledgePath: "软件工程 / 复盘 / 质量",
+    stem: "（复盘）「概率 × 影响」常用来度量（ ）。",
+    options: [
+      { key: "A", text: "风险曝光度" },
+      { key: "B", text: "扇入" },
+      { key: "C", text: "Cache 命中率" },
+      { key: "D", text: "补码位数" },
+    ],
+    correct: "A",
+    explanation:
+      "风险量/曝光度≈概率×影响。",
+    trap: "复盘别串到组成/结构度量。",
+    whyWrong: {
+      B: "结构图。",
+      C: "组成。",
+      D: "编码。",
+    },
+  },
+
 
   // —— Week 5 day 1 ——
   {
@@ -7730,6 +8574,117 @@ export const questions: Question[] = [
       D: "不一定是分治。",
     },
   },
+  {
+    id: "q-w5d5-08",
+    dayId: "week-5/day-5",
+    topic: "算法精要",
+    knowledgePath: "算法 / 策略 / 回溯",
+    stem: "八皇后、迷宫寻路这类「尝试—碰壁—回退」的经典策略是（ ）。",
+    options: [
+      { key: "A", text: "贪心每步永久选定" },
+      { key: "B", text: "回溯" },
+      { key: "C", text: "仅哈希开放定址" },
+      { key: "D", text: "仅基数排序" },
+    ],
+    correct: "B",
+    explanation:
+      "回溯系统化搜索状态空间，失败则撤销选择。",
+    trap: "回退信号 → 回溯，不是贪心。",
+    whyWrong: {
+      A: "贪心不回退。",
+      C: "查找结构。",
+      D: "排序。",
+    },
+  },
+  {
+    id: "q-w5d5-09",
+    dayId: "week-5/day-5",
+    topic: "算法精要",
+    knowledgePath: "算法 / 策略 / DP",
+    stem: "背包、最长公共子序列等常被用作（ ）的典型例子。",
+    options: [
+      { key: "A", text: "动态规划" },
+      { key: "B", text: "仅冒泡排序" },
+      { key: "C", text: "仅选择排序" },
+      { key: "D", text: "仅直接插入" },
+    ],
+    correct: "A",
+    explanation:
+      "重叠子问题 + 最优子结构 → DP 记表。",
+    trap: "看见最优子结构且子问题重算 → DP。",
+    whyWrong: {
+      B: "交换排序。",
+      C: "选择。",
+      D: "插入。",
+    },
+  },
+  {
+    id: "q-w5d5-10",
+    dayId: "week-5/day-5",
+    topic: "算法精要",
+    knowledgePath: "算法 / 策略 / 分治",
+    stem: "快速排序的算法设计策略主要是（ ）。",
+    options: [
+      { key: "A", text: "贪心选局部最优边" },
+      { key: "B", text: "分治（划分后递归处理子区间）" },
+      { key: "C", text: "仅分支限界剪枝" },
+      { key: "D", text: "仅字符串 KMP" },
+    ],
+    correct: "B",
+    explanation:
+      "快排：分区 + 递归处理左右 → 分治。",
+    trap: "归并/快排/二分都偏分治侧。",
+    whyWrong: {
+      A: "不是快排主标签。",
+      C: "搜索树策略。",
+      D: "串匹配。",
+    },
+  },
+  {
+    id: "q-w5d5-11",
+    dayId: "week-5/day-5",
+    topic: "算法精要",
+    knowledgePath: "算法 / 策略 / MST",
+    stem: "边权可为任意实数的无向连通图求最小生成树，可用（ ）。",
+    options: [
+      { key: "A", text: "Dijkstra（默认非负单源最短路）" },
+      { key: "B", text: "Kruskal 或 Prim" },
+      { key: "C", text: "仅拓扑排序" },
+      { key: "D", text: "仅二分查找" },
+    ],
+    correct: "B",
+    explanation:
+      "MST：Kruskal/Prim；Dijkstra 是最短路。",
+    trap: "MST ≠ 最短路径。",
+    whyWrong: {
+      A: "最短路。",
+      C: "DAG 次序。",
+      D: "有序查找。",
+    },
+  },
+  {
+    id: "q-w5d5-12",
+    dayId: "week-5/day-5",
+    topic: "算法精要",
+    knowledgePath: "算法 / 策略 / 对比",
+    stem: "下列对比正确的是（ ）。",
+    options: [
+      { key: "A", text: "贪心强调每步局部最优且通常不回退；回溯会系统试探并回退" },
+      { key: "B", text: "分治禁止分解问题" },
+      { key: "C", text: "DP 一定没有最优子结构" },
+      { key: "D", text: "Dijkstra 专门构造 Huffman 树" },
+    ],
+    correct: "A",
+    explanation:
+      "贪心 vs 回溯的关键差别是是否回退/全局搜索。",
+    trap: "策略对比题：抓「回退」一词。",
+    whyWrong: {
+      B: "分治就是分解。",
+      C: "DP 要最优子结构。",
+      D: "张冠李戴。",
+    },
+  },
+
   // —— Week 6 day 1 ——
   {
     id: "q-w6d1-01",
@@ -9974,6 +10929,117 @@ export const questions: Question[] = [
       D: "过窄。",
     },
   },
+  {
+    id: "q-w7d2-08",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 可行性 / 经济",
+    stem: "可行性研究中，成本效益分析、投资回收期等主要属于（ ）。",
+    options: [
+      { key: "A", text: "技术可行性" },
+      { key: "B", text: "经济可行性" },
+      { key: "C", text: "仅编码规范可行性" },
+      { key: "D", text: "仅寄存器分配可行性" },
+    ],
+    correct: "B",
+    explanation:
+      "经济可行性评估投入产出是否划算。",
+    trap: "钱/效益 → 经济；能不能做出来 → 技术。",
+    whyWrong: {
+      A: "实现能力。",
+      C: "非标准维度。",
+      D: "编译细节。",
+    },
+  },
+  {
+    id: "q-w7d2-09",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 需求 / 功能",
+    stem: "「用户可以导出对账单为 PDF」描述的是（ ）。",
+    options: [
+      { key: "A", text: "非功能性能需求" },
+      { key: "B", text: "功能需求" },
+      { key: "C", text: "详细设计伪代码" },
+      { key: "D", text: "仅网络物理层约束" },
+    ],
+    correct: "B",
+    explanation:
+      "功能需求描述系统应提供的能力/行为。",
+    trap: "「可以做什么」→ 功能；「多快/多稳」→ 非功能。",
+    whyWrong: {
+      A: "未给性能指标。",
+      C: "设计产物。",
+      D: "无关。",
+    },
+  },
+  {
+    id: "q-w7d2-10",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 分析 / 模型",
+    stem: "结构化分析阶段常用的逻辑模型工具是（ ）。",
+    options: [
+      { key: "A", text: "数据流图与数据字典" },
+      { key: "B", text: "仅RAID阵列配置" },
+      { key: "C", text: "仅 CPU 流水线冒险表" },
+      { key: "D", text: "仅补码加法电路" },
+    ],
+    correct: "A",
+    explanation:
+      "SA 经典产物：DFD、数据字典、加工说明等。",
+    trap: "分析期逻辑模型，不是硬件。",
+    whyWrong: {
+      B: "存储。",
+      C: "组成。",
+      D: "组成。",
+    },
+  },
+  {
+    id: "q-w7d2-11",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 阶段 / 顺序",
+    stem: "典型信息系统开发中，较合理的前期顺序是（ ）。",
+    options: [
+      { key: "A", text: "先详细设计伪代码，再做可行性研究" },
+      { key: "B", text: "可行性研究 → 需求分析 → 概要设计 → 详细设计" },
+      { key: "C", text: "先验收测试，再写需求" },
+      { key: "D", text: "先编码全部模块，再决定是否立项" },
+    ],
+    correct: "B",
+    explanation:
+      "先决定做不做与需求是什么，再分层设计。",
+    trap: "阶段不可倒置。",
+    whyWrong: {
+      A: "倒置。",
+      C: "倒置。",
+      D: "倒置。",
+    },
+  },
+  {
+    id: "q-w7d2-12",
+    dayId: "week-7/day-2",
+    topic: "系统分析设计",
+    knowledgePath: "系统分析 / 需求 / 管理",
+    stem: "需求规格说明书（SRS）的主要作用是（ ）。",
+    options: [
+      { key: "A", text: "替代全部源代码" },
+      { key: "B", text: "清晰定义「做什么」，作为设计、测试与验收依据" },
+      { key: "C", text: "只记录程序员私人备忘且不可评审" },
+      { key: "D", text: "专门描述网卡驱动中断优先级" },
+    ],
+    correct: "B",
+    explanation:
+      "SRS 是需求基线文档，贯通设计与验收。",
+    trap: "SRS≠代码。",
+    whyWrong: {
+      A: "不替代实现。",
+      C: "应可评审受控。",
+      D: "过窄。",
+    },
+  },
+
   // —— Week 7 day 3 ——
   {
     id: "q-w7d3-01",
@@ -10122,6 +11188,117 @@ export const questions: Question[] = [
       D: "错误。",
     },
   },
+  {
+    id: "q-w7d3-08",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / MVC / View",
+    stem: "在 MVC 中，主要负责向用户展示信息的是（ ）。",
+    options: [
+      { key: "A", text: "Model" },
+      { key: "B", text: "View" },
+      { key: "C", text: "仅外键" },
+      { key: "D", text: "仅汇编宏" },
+    ],
+    correct: "B",
+    explanation:
+      "View=展示；Model=数据与规则；Controller=协调。",
+    trap: "展示别塞进 Model 职责里答。",
+    whyWrong: {
+      A: "业务数据。",
+      C: "数据库。",
+      D: "语言。",
+    },
+  },
+  {
+    id: "q-w7d3-09",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / 风格 / 客户服务器",
+    stem: "关于 C/S 与 B/S，下列叙述较合理的是（ ）。",
+    options: [
+      { key: "A", text: "B/S 客户端通常是浏览器，业务升级更集中在服务器" },
+      { key: "B", text: "B/S 必须在每台客户机安装厚客户端专用程序" },
+      { key: "C", text: "C/S 不可能存在服务器" },
+      { key: "D", text: "二者都禁止使用数据库" },
+    ],
+    correct: "A",
+    explanation:
+      "B/S 瘦客户端；C/S 常有较重的专用客户端。",
+    trap: "升级集中度是常考点。",
+    whyWrong: {
+      B: "那是胖客户端特征。",
+      C: "C/S 本来就有服务器。",
+      D: "错误。",
+    },
+  },
+  {
+    id: "q-w7d3-10",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / 风格 / 仓库",
+    stem: "多个组件共享一个中心数据仓库（如黑板/共享库）进行协作，常归类为（ ）。",
+    options: [
+      { key: "A", text: "仓库（Repository）风格" },
+      { key: "B", text: "仅内容耦合的另一种名字" },
+      { key: "C", text: "仅补码溢出处理" },
+      { key: "D", text: "仅滑动窗口协议" },
+    ],
+    correct: "A",
+    explanation:
+      "仓库/黑板风格：中心数据，外围组件读写。",
+    trap: "别和「坏耦合」混为一谈——这是架构风格名。",
+    whyWrong: {
+      B: "耦合类型。",
+      C: "组成。",
+      D: "网络。",
+    },
+  },
+  {
+    id: "q-w7d3-11",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / Web / 状态码",
+    stem: "HTTP 响应状态码 404 通常表示（ ）。",
+    options: [
+      { key: "A", text: "请求成功" },
+      { key: "B", text: "未找到资源" },
+      { key: "C", text: "服务器内部错误（5xx）" },
+      { key: "D", text: "切换协议成功" },
+    ],
+    correct: "B",
+    explanation:
+      "404 Not Found；200 OK；5xx 服务器错。",
+    trap: "4xx 客户端侧问题居多；5xx 服务器。",
+    whyWrong: {
+      A: "200。",
+      C: "如 500。",
+      D: "101 等。",
+    },
+  },
+  {
+    id: "q-w7d3-12",
+    dayId: "week-7/day-3",
+    topic: "Web 与架构",
+    knowledgePath: "架构 / 分层 / REST",
+    stem: "关于 REST 风格 Web API 的叙述，较合理的是（ ）。",
+    options: [
+      { key: "A", text: "通常用资源 URL + HTTP 方法表达操作，并常保持无状态交互" },
+      { key: "B", text: "REST 要求必须使用 SOAP 信封" },
+      { key: "C", text: "REST 禁止使用 JSON" },
+      { key: "D", text: "REST 等于必须部署微服务网格" },
+    ],
+    correct: "A",
+    explanation:
+      "REST：资源、统一接口、无状态等约束；常见 JSON，但不绑死实现。",
+    trap: "REST≠SOAP，也不等于微服务强制项。",
+    whyWrong: {
+      B: "那是 SOAP。",
+      C: "常用 JSON。",
+      D: "无必然。",
+    },
+  },
+
   // —— Week 7 day 4 英语+薄弱 ——
   {
     id: "q-w7d4-01",
