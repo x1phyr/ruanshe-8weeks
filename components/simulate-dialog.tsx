@@ -51,6 +51,8 @@ export function SimulateDialog({
   const largeText = useTrainerStore((s) => s.largeText);
   const setLargeText = useTrainerStore((s) => s.setLargeText);
   const resetAll = useTrainerStore((s) => s.resetAll);
+  const clearMockRuns = useTrainerStore((s) => s.clearMockRuns);
+  const mockRuns = useTrainerStore((s) => s.mockRuns);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(simulateDate ?? todayISO());
   const [importHint, setImportHint] = useState<string | null>(null);
@@ -278,6 +280,31 @@ export function SimulateDialog({
               {importHint ? (
                 <p className="mt-2 text-xs text-muted-foreground">{importHint}</p>
               ) : null}
+            </div>
+            <div className="rounded-md border border-border p-3">
+              <div className="text-sm font-medium">模考历史</div>
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                清空仪表盘「模考历史」记录（共 {mockRuns.length} 条）。不影响学习进度与错题。
+              </p>
+              <div className="mt-2">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  disabled={mockRuns.length === 0}
+                  onClick={() => {
+                    if (
+                      confirm(
+                        "确认清空全部模考历史？此操作不可撤销。",
+                      )
+                    ) {
+                      clearMockRuns();
+                    }
+                  }}
+                >
+                  清空模考历史
+                </Button>
+              </div>
             </div>
           </div>
           <DialogFooter className="gap-2 sm:justify-between">

@@ -93,7 +93,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ## 5. 功能清单
 
-近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考；本轮另加 **模考历史**（zustand `mockRuns`，仪表盘最近 5 条）。CI 题库检查因 workflow 范围暂缓。
+近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考、模考历史；本轮另加 **今日战报附最近模考** + 调试设置 **清空模考历史**（`clearMockRuns`）。CI 题库检查因 workflow 范围暂缓。
 
 | 能力 | 说明 |
 | --- | --- |
@@ -115,7 +115,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **timed20** | 限时 20 分钟卷；到时自动交卷 |
 | **quick15** | 15 分钟速刷：至多 10 题，`timeLimitSec=900`；仪表盘弱项卡 / 练习页入口 |
 | **一键模考** | 练习页 + 临考模式：已解锁试卷日（或 `unlockAll`）可开「一键上午模考」套1 `week-5/day-6` / 套2 `week-7/day-5`（85 题 · `timeLimitSec=9000`）与「一键下午模考」套1 `week-5/day-7` / 套2 `week-7/day-6`（25 题 · `7200`）；`QuizRun` + `navKey` 标记 + 完整 scorecard；文案「自编模拟 85 题 · 150 分钟」/「自编模拟 25 题 · 120 分钟」 |
-| **模考历史** | Zustand 持久化 `mockRuns`（最多 20，最新在前）：`{ id, paperDayId, label, correct, total, percent, at, timedSec? }`。**记录时机**：`QuizRun` 成绩单首次出现时——① 一键模考（`OneClickMockQuiz` 传 `mockRecord`，含下午 25 题）；② 日训试卷日练习且题数 ≥40（上午 85）。仪表盘紧凑「模考历史」展示最近 5 条（日期 · 正确率 · 套别如 `上午·套1`）；空则隐藏。`resetAll` / 进度备份含此字段 |
+| **模考历史** | Zustand 持久化 `mockRuns`（最多 20，最新在前）：`{ id, paperDayId, label, correct, total, percent, at, timedSec? }`。**记录时机**：`QuizRun` 成绩单首次出现时——① 一键模考（`OneClickMockQuiz` 传 `mockRecord`，含下午 25 题）；② 日训试卷日练习且题数 ≥40（上午 85）。仪表盘紧凑「模考历史」展示最近 5 条（日期 · 正确率 · 套别如 `上午·套1`）；空则隐藏。调试设置「清空模考历史」→ `clearMockRuns`（需确认）。`resetAll` / 进度备份含此字段 |
 | **PWA** | 可「安装到桌面」（manifest + SW） |
 | **专注模式 focus** | 隐藏侧栏 / 底栏；偏好持久化 |
 | **大号文字 largeText** | 调试设置开关；略放大正文字号与测验题干/选项；持久化，重置进度保留 |
@@ -128,7 +128,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **接着上次** | 仪表盘紧凑卡：sessions 中最近 `lastActiveAt` 的未完成已解锁日 → 日训；无则隐藏 |
 | **今日推荐** | 仪表盘紧凑卡：弱项模块抽练 → 到期错题 → 今日焦点日训 / 随机20；一行中文理由 |
 | **临考模式** | 距考 0–7 天仪表盘突出卡：剩几天 + 只练错题 / 15 分钟速刷 / 限时 20 分钟 + 已解锁 W5/W7 试卷日链（否则 /practice）；考后极简「考试已过」 |
-| **复制今日战报** | 仪表盘按钮：`navigator.clipboard` 复制中文战报（模拟日日期 / 距考 / streak / 正确率 / 完成日 /53 / 到期错题 / 弱项 top1 + 站点 URL），2s 显示「已复制」 |
+| **复制今日战报** | 仪表盘按钮：`navigator.clipboard` 复制中文战报（模拟日日期 / 距考 / streak / 正确率 / 完成日 /53 / 到期错题 / 弱项 top1 / 最近模考一行（若有，如 `最近模考：上午·套1 72%（09-08）`）+ 站点 URL），2s 显示「已复制」 |
 | **module accuracy** | `lib/module-stats.ts` 模块正确率 |
 | **30 秒速览** | 讲义顶栏紧凑列出 keyPoints（可折叠；学习步默认展开） |
 
