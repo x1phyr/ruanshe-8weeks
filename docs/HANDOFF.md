@@ -109,6 +109,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **tomorrow preview** | 仪表盘明日预览 |
 | **本周完成度** | 仪表盘紧凑卡片：当前周 completed/total + 细进度条，链到 /plan |
 | **接着上次** | 仪表盘紧凑卡：sessions 中最近 `lastActiveAt` 的未完成已解锁日 → 日训；无则隐藏 |
+| **今日推荐** | 仪表盘紧凑卡：弱项模块抽练 → 到期错题 → 今日焦点日训 / 随机20；一行中文理由 |
 | **module accuracy** | `lib/module-stats.ts` 模块正确率 |
 
 路由概览：`/` 仪表盘 · `/learn/[week]/[day]` 日训 · `/plan` · `/practice` · `/mistakes`。
