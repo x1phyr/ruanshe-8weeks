@@ -1,0 +1,32 @@
+{
+  "name": "软设8周通关",
+  "short_name": "软设8周通关",
+  "description": "45 分钟日训 · 软考中级软件设计师",
+  "lang": "zh-CN",
+  "start_url": "/ruanshe-8weeks/",
+  "scope": "/ruanshe-8weeks/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#0b0d10",
+  "background_color": "#0b0d10",
+  "icons": [
+    {
+      "src": "/ruanshe-8weeks/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/ruanshe-8weeks/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/ruanshe-8weeks/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
