@@ -125,6 +125,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **本周完成度** | 仪表盘紧凑卡片：当前周 completed/total + 细进度条，链到 /plan |
 | **接着上次** | 仪表盘紧凑卡：sessions 中最近 `lastActiveAt` 的未完成已解锁日 → 日训；无则隐藏 |
 | **今日推荐** | 仪表盘紧凑卡：弱项模块抽练 → 到期错题 → 今日焦点日训 / 随机20；一行中文理由 |
+| **临考模式** | 距考 0–7 天仪表盘突出卡：剩几天 + 只练错题 / 15 分钟速刷 / 限时 20 分钟 + 已解锁 W5/W7 试卷日链（否则 /practice）；考后极简「考试已过」 |
 | **module accuracy** | `lib/module-stats.ts` 模块正确率 |
 | **30 秒速览** | 讲义顶栏紧凑列出 keyPoints（可折叠；学习步默认展开） |
 
