@@ -1,6 +1,6 @@
 # 软设 8 周通关 · 交接文档
 
-> 截至 **2026-09-09**（Asia/Shanghai）。给后续维护者 / Agent 的完整交接。
+> 截至 **2026-09-09 晚间**（Asia/Shanghai）。给后续维护者 / Agent 的完整交接。
 
 ## 1. 产品目标
 
@@ -33,8 +33,9 @@
 
 ### Question quality audit (QA)
 
-- Script: node scripts/qa-questions.mjs
-- Last PASS: 2026-09-09 Asia/Shanghai, 820 questions, issues=0
+- Script：npm run qa:questions（node scripts/qa-questions.mjs）
+- Last PASS：2026-09-09 Asia/Shanghai，**820** 题，issues=0
+- **CI**：拟在 PR/main 跑 qa:questions 的 workflow **暂缓**——仓库 workflow 范围未定，**勿擅自改 workflows 目录**；本地 / Agent 合并前请自行跑一遍
 
 ### 4.1 日程结构
 
@@ -79,7 +80,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 预期输出：`{ total: 820, daily: 600, mock: 220 }`（`questions` 数组末尾 `...mockPaperQuestions`，220 = 85+25+85+25）。
 
-约束：**非试卷日 ≥12 题**（试卷日保持模考题量 85/25/85/25，不削减）。
+约束：**floor-12**：非试卷日（`live`）每课 **≥12 题**（试卷日保持模考题量 **85/25/85/25**，不削减）。
 
 试卷日（`paper`，**非法拷真题**）：
 
@@ -91,6 +92,8 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | week-7/day-6 | 下午案例风格 25 |
 
 ## 5. 功能清单
+
+近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本；CI 题库检查因 workflow 范围暂缓。本轮另加 **reduced motion**。
 
 | 能力 | 说明 |
 | --- | --- |
@@ -114,7 +117,8 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **PWA** | 可「安装到桌面」（manifest + SW） |
 | **专注模式 focus** | 隐藏侧栏 / 底栏；偏好持久化 |
 | **大号文字 largeText** | 调试设置开关；略放大正文字号与测验题干/选项；持久化，重置进度保留 |
-| **移动端距考条** | `md:hidden` 顶栏紧凑「距考 XX 天」；`simulateDate` 时显示模拟徽标；不改桌面侧栏倒计时 |
+| **减弱动效 reduced motion** | `globals.css`：`@media (prefers-reduced-motion: reduce)` 全站缩短/关闭 `transition` / `animate-*`（含 tw-animate 进退场）；跟随系统偏好，无需额外开关 |
+| **移动端距考倒计时** | `md:hidden` 顶栏紧凑「距考 XX 天」；`simulateDate` 时显示模拟徽标；不改桌面侧栏倒计时 |
 | **celebrate** | 通关 / 完成庆祝路径（仪表盘随机 / 只练错题等入口） |
 | **weekday tips** | `lib/coach-tips.ts` 按星期几教练提示 |
 | **tomorrow preview** | 仪表盘明日预览 |
@@ -186,5 +190,5 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ---
 
-*文档生成日：2026-09-09。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准。*
+*文档刷新：2026-09-09 晚间。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **820**）。*
 

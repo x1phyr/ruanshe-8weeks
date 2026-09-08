@@ -142,6 +142,27 @@ body.focus-mode .app-shell-main {
   padding-bottom: 0 !important;
 }
 
+/* —— Reduced motion: shorten/disable transitions & animations —— */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* tw-animate-css / shadcn enter-exit helpers */
+  .animate-in,
+  .animate-out,
+  [class*="animate-in"],
+  [class*="animate-out"] {
+    animation: none !important;
+  }
+}
+
 /* —— Large text: slight base + quiz stem/options bump —— */
 html[data-large-text="1"] {
   font-size: 108%;
