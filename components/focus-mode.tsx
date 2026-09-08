@@ -19,6 +19,25 @@ export function FocusModeSync() {
   return null;
 }
 
+/** Sync persisted largeText onto <html data-large-text> for CSS font bump. */
+export function LargeTextSync() {
+  const largeText = useTrainerStore((s) => s.largeText);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (largeText) {
+      root.dataset.largeText = "1";
+    } else {
+      delete root.dataset.largeText;
+    }
+    return () => {
+      delete root.dataset.largeText;
+    };
+  }, [largeText]);
+
+  return null;
+}
+
 /** Compact 「专注」 toggle for learn-session / quiz-run headers. */
 export function FocusModeToggle({ className }: { className?: string }) {
   const focusMode = useTrainerStore((s) => s.focusMode);

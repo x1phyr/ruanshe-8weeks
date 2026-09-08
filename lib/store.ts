@@ -35,11 +35,14 @@ interface TrainerState {
   focusMode: boolean;
   /** Plan view: hide days in completedDays. Persisted. */
   planHideDone: boolean;
+  /** Slightly larger base / quiz text. Persisted; not cleared by resetAll. */
+  largeText: boolean;
   setSimulateDate: (value: string | null) => void;
   setStartDate: (value: string) => void;
   setUnlockAll: (value: boolean) => void;
   setFocusMode: (value: boolean) => void;
   setPlanHideDone: (value: boolean) => void;
+  setLargeText: (value: boolean) => void;
   markStep: (dayId: string, step: LearnStep) => void;
   recordAnswer: (question: Question, selected: OptionKey, today: string) => boolean;
   reviewMistakeAnswer: (
@@ -156,6 +159,7 @@ export const useTrainerStore = create<TrainerState>()(
       unlockAll: false,
       focusMode: false,
       planHideDone: false,
+      largeText: false,
       setSimulateDate: (value) => set({ simulateDate: value }),
       setStartDate: (value) => {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return;
@@ -164,6 +168,7 @@ export const useTrainerStore = create<TrainerState>()(
       setUnlockAll: (value) => set({ unlockAll: value }),
       setFocusMode: (value) => set({ focusMode: value }),
       setPlanHideDone: (value) => set({ planHideDone: value }),
+      setLargeText: (value) => set({ largeText: value }),
       markStep: (dayId, step) => {
         const current = get().sessions[dayId] ?? emptySession();
         const next = { ...current, lastActiveAt: new Date().toISOString() };
@@ -251,7 +256,7 @@ export const useTrainerStore = create<TrainerState>()(
           ...streakPatch,
         });
       },
-      // Clears progress/mistakes/answers/sessions only; keeps unlockAll, simulateDate, startDate.
+      // Clears progress/mistakes/answers/sessions only; keeps unlockAll, simulateDate, startDate, largeText, focusMode, planHideDone.
       resetAll: () =>
         set({
           progress: emptyProgress(),
@@ -278,6 +283,7 @@ export const useTrainerStore = create<TrainerState>()(
         unlockAll: state.unlockAll,
         focusMode: state.focusMode,
         planHideDone: state.planHideDone,
+        largeText: state.largeText,
       }),
       merge: (persistedState, currentState) => {
         const persisted = (persistedState ?? {}) as Partial<TrainerState>;
@@ -298,6 +304,10 @@ export const useTrainerStore = create<TrainerState>()(
           typeof persisted.planHideDone === "boolean"
             ? persisted.planHideDone
             : false;
+        const largeText =
+          typeof persisted.largeText === "boolean"
+            ? persisted.largeText
+            : false;
         const streak =
           typeof persisted.streak === "number" && persisted.streak >= 0
             ? persisted.streak
@@ -314,6 +324,7 @@ export const useTrainerStore = create<TrainerState>()(
           unlockAll,
           focusMode,
           planHideDone,
+          largeText,
           streak,
           lastStudyDate,
         };

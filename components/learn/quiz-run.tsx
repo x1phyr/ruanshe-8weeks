@@ -398,7 +398,7 @@ export function QuizRun({
         </div>
       ) : null}
 
-      <p className="mt-3 text-[15px] leading-7" id={`quiz-stem-${question.id}`}>
+      <p className="quiz-stem mt-3 text-[15px] leading-7" id={`quiz-stem-${question.id}`}>
         {question.stem}
       </p>
       <div
@@ -421,7 +421,7 @@ export function QuizRun({
               disabled={submitted}
               onClick={() => setPicked(option.key)}
               className={cn(
-                "flex w-full items-start gap-3 rounded-md border px-3 py-2.5 text-left text-sm transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+                "quiz-option flex w-full items-start gap-3 rounded-md border px-3 py-2.5 text-left text-sm transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
                 !submitted && selected && "border-brand bg-brand/10",
                 !submitted && !selected && "border-border hover:bg-surface-hover",
                 showKey && isCorrect && "border-emerald-500/40 bg-emerald-500/10",
