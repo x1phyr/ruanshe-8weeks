@@ -1,6 +1,6 @@
 import { getDayById } from "@/lib/calendar";
 import { getQuestionById } from "@/data/questions";
-import type { AnswerRecord } from "@/lib/types";
+import type { AnswerRecord, Mistake } from "@/lib/types";
 
 /** Minimum attempts before a module can rank as "weak". */
 export const MODULE_STATS_MIN_ATTEMPTS = 3;
@@ -62,4 +62,20 @@ export function topWeakModules(
   return moduleAccuracyFromAnswers(answers)
     .filter((item) => item.attempts >= minAttempts)
     .slice(0, limit);
+}
+
+/** Module/topic label for a mistake: StudyDay.module → knowledgePath head → mistake.topic. */
+export function resolveMistakeModule(mistake: Mistake): string {
+  const question = getQuestionById(mistake.questionId);
+  if (question?.dayId) {
+    const day = getDayById(question.dayId);
+    if (day?.module) return day.module;
+  }
+  if (question?.knowledgePath) {
+    const head = question.knowledgePath.split("/")[0]?.trim();
+    if (head) return head;
+  }
+  if (mistake.topic?.trim()) return mistake.topic.trim();
+  if (question?.topic?.trim()) return question.topic.trim();
+  return "未分类";
 }

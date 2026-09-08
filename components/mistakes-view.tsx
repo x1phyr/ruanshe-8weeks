@@ -13,10 +13,12 @@ import {
 import { QuizRun } from "@/components/learn/quiz-run";
 import { exportProgressBackup } from "@/lib/backup";
 import { todayISO } from "@/lib/dates";
+import { resolveMistakeModule } from "@/lib/module-stats";
 import { dueMistakes, mistakeBucket } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
 import type { Mistake, MistakeBucket, MistakeReason } from "@/lib/types";
 
+const ALL_MODULES = "全部";
 
 function resolveWrongOnlyQuestions(mistakes: Mistake[], today: string) {
   const due = dueMistakes(mistakes, today);
@@ -63,6 +65,7 @@ function mistakesToRows(mistakes: Mistake[]) {
   return mistakes.map((m) => ({
     questionId: m.questionId,
     topic: m.topic,
+    module: resolveMistakeModule(m),
     wrongCount: m.wrongCount,
     reason: m.reason,
     mastered: m.mastered,
@@ -87,6 +90,7 @@ function exportMistakesCsv(mistakes: Mistake[], stamp: string) {
   const headers = [
     "questionId",
     "topic",
+    "module",
     "wrongCount",
     "reason",
     "mastered",
@@ -111,10 +115,26 @@ export function MistakesView() {
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
   const [tab, setTab] = useState<MistakeBucket>("needs-review");
+  const [moduleFilter, setModuleFilter] = useState<string>(ALL_MODULES);
   const [drillMode, setDrillMode] = useState<"due" | "wrong-only" | null>(null);
 
   const today = todayISO(simulateDate);
   const stamp = exportDateStamp(today);
+
+  const moduleOptions = useMemo(() => {
+    const set = new Set<string>();
+    for (const item of mistakes) {
+      set.add(resolveMistakeModule(item));
+    }
+    return Array.from(set).sort((a, b) => a.localeCompare(b, "zh"));
+  }, [mistakes]);
+
+  const filteredMistakes = useMemo(() => {
+    if (moduleFilter === ALL_MODULES) return mistakes;
+    return mistakes.filter(
+      (item) => resolveMistakeModule(item) === moduleFilter,
+    );
+  }, [mistakes, moduleFilter]);
 
   const grouped = useMemo(() => {
     const map: Record<MistakeBucket, Mistake[]> = {
@@ -122,21 +142,24 @@ export function MistakesView() {
       learning: [],
       mastered: [],
     };
-    for (const item of mistakes) {
+    for (const item of filteredMistakes) {
       map[mistakeBucket(item, today)].push(item);
     }
     return map;
-  }, [mistakes, today]);
+  }, [filteredMistakes, today]);
 
   const list = grouped[tab];
-  const due = dueMistakes(mistakes, today);
+  const due = dueMistakes(filteredMistakes, today);
   const dueQuestions = due
     .map((item) => getQuestionById(item.questionId))
     .filter((item): item is NonNullable<typeof item> => Boolean(item));
   const wrongOnlyQuestions = useMemo(
-    () => resolveWrongOnlyQuestions(mistakes, today),
-    [mistakes, today],
+    () => resolveWrongOnlyQuestions(filteredMistakes, today),
+    [filteredMistakes, today],
   );
+
+  const filterActive = moduleFilter !== ALL_MODULES;
+  const exportPool = filteredMistakes;
 
   if (drillMode === "due" && dueQuestions.length > 0) {
     return (
@@ -149,6 +172,11 @@ export function MistakesView() {
           ← 返回错题本
         </button>
         <h1 className="mt-2 text-xl font-medium">复习到期错题</h1>
+        {filterActive ? (
+          <p className="mt-1 text-sm text-muted-foreground">
+            模块筛选：{moduleFilter}
+          </p>
+        ) : null}
         <div className="mt-6">
           <QuizRun
             questions={dueQuestions}
@@ -174,6 +202,7 @@ export function MistakesView() {
         </button>
         <h1 className="mt-2 text-xl font-medium">只练错题</h1>
         <p className="mt-1 text-sm text-muted-foreground">
+          {filterActive ? `${moduleFilter} · ` : ""}
           {dueQuestions.length > 0
             ? `到期 ${dueQuestions.length} 题`
             : `未掌握 ${wrongOnlyQuestions.length} 题`}
@@ -210,16 +239,26 @@ export function MistakesView() {
             <Button
               variant="outline"
               size="sm"
-              disabled={mistakes.length === 0}
-              onClick={() => exportMistakesJson(mistakes, stamp)}
+              disabled={exportPool.length === 0}
+              onClick={() => exportMistakesJson(exportPool, stamp)}
+              title={
+                filterActive
+                  ? `导出当前筛选（${moduleFilter}）共 ${exportPool.length} 题`
+                  : "导出全部错题 JSON"
+              }
             >
               导出 JSON
             </Button>
             <Button
               variant="outline"
               size="sm"
-              disabled={mistakes.length === 0}
-              onClick={() => exportMistakesCsv(mistakes, stamp)}
+              disabled={exportPool.length === 0}
+              onClick={() => exportMistakesCsv(exportPool, stamp)}
+              title={
+                filterActive
+                  ? `导出当前筛选（${moduleFilter}）共 ${exportPool.length} 题`
+                  : "导出全部错题 CSV"
+              }
             >
               导出 CSV
             </Button>
@@ -234,9 +273,15 @@ export function MistakesView() {
               title={
                 wrongOnlyQuestions.length === 0
                   ? "暂无可练错题"
-                  : dueQuestions.length > 0
-                    ? `到期 ${dueQuestions.length} 题`
-                    : `未掌握 ${wrongOnlyQuestions.length} 题`
+                  : filterActive
+                    ? `${moduleFilter} · ${
+                        dueQuestions.length > 0
+                          ? `到期 ${dueQuestions.length} 题`
+                          : `未掌握 ${wrongOnlyQuestions.length} 题`
+                      }`
+                    : dueQuestions.length > 0
+                      ? `到期 ${dueQuestions.length} 题`
+                      : `未掌握 ${wrongOnlyQuestions.length} 题`
               }
             >
               只练错题
@@ -252,6 +297,24 @@ export function MistakesView() {
           </div>
         }
       />
+      {moduleOptions.length > 0 ? (
+        <div className="mb-3 flex flex-wrap gap-1.5">
+          {[ALL_MODULES, ...moduleOptions].map((name) => (
+            <button
+              key={name}
+              type="button"
+              onClick={() => setModuleFilter(name)}
+              className={`h-7 rounded-sm border px-2 font-mono text-[11px] ${
+                moduleFilter === name
+                  ? "border-brand/50 bg-brand/10 text-brand"
+                  : "border-border text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
+      ) : null}
       <div className="mb-4 flex gap-1">
         {tabs.map((item) => (
           <button
@@ -272,20 +335,30 @@ export function MistakesView() {
       <Surface>
         {list.length === 0 ? (
           <EmptyState
-            title={tab === "needs-review" ? "没有到期错题" : "这里是空的"}
+            title={
+              filterActive
+                ? "当前模块下没有错题"
+                : tab === "needs-review"
+                  ? "没有到期错题"
+                  : "这里是空的"
+            }
             description={
-              tab === "needs-review"
-                ? "做题出错后会自动进来。今日复习步也可以直接跳过。"
-                : "换一个分组看看。"
+              filterActive
+                ? "换一个模块筛选，或清除筛选查看全部。"
+                : tab === "needs-review"
+                  ? "做题出错后会自动进来。今日复习步也可以直接跳过。"
+                  : "换一个分组看看。"
             }
           />
         ) : (
           <ul className="divide-y divide-border">
             {list.map((item) => {
               const question = getQuestionById(item.questionId);
+              const moduleLabel = resolveMistakeModule(item);
               return (
                 <li key={item.questionId} className="px-3 py-3">
                   <div className="flex flex-wrap items-center gap-1.5">
+                    <KindPill>{moduleLabel}</KindPill>
                     <KindPill>{item.topic}</KindPill>
                     <KindPill>错 {item.wrongCount} 次</KindPill>
                     <span className="font-mono text-[11px] text-muted-foreground">
