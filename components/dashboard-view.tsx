@@ -10,6 +10,13 @@ import { Label } from "@/components/ui/label";
 import { InstallTip } from "@/components/install-tip";
 import { SimulateDialog } from "@/components/simulate-dialog";
 import { QuizRun } from "@/components/learn/quiz-run";
+import {
+  OneClickMockButtons,
+  OneClickMockQuiz,
+  mockRunSubtitle,
+  mockRunTitle,
+  type MockRun,
+} from "@/components/one-click-mock";
 import { KindPill, Metric, PageFrame, Surface } from "@/components/ui-bits";
 import { getQuestionById, sampleQuestions, unlockedQuestions } from "@/data/questions";
 import {
@@ -492,6 +499,7 @@ function ExamNearModeCard({
     questions: Question[];
     timeLimitSec?: number;
   } | null>(null);
+  const [mockRun, setMockRun] = useState<MockRun | null>(null);
 
   const unlockedPool = useMemo(
     () =>
@@ -523,6 +531,32 @@ function ExamNearModeCard({
   }
 
   if (daysLeft > 7) return null;
+
+  if (mockRun) {
+    return (
+      <Surface className="mt-4 border-brand/40 bg-brand/5 p-4">
+        <button
+          type="button"
+          onClick={() => setMockRun(null)}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回临考模式
+        </button>
+        <h2 className="mt-2 text-lg font-medium">{mockRunTitle(mockRun)}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {mockRunSubtitle(mockRun)} · 到时自动交卷；标记可保留。交卷后显示完整成绩单。
+        </p>
+        <div className="mt-4">
+          <OneClickMockQuiz
+            run={mockRun}
+            navKey={`dashboard:exam-near:mock:${mockRun.dayId}`}
+            finishLabel="返回临考模式"
+            onFinished={() => setMockRun(null)}
+          />
+        </div>
+      </Surface>
+    );
+  }
 
   if (randomRun && randomRun.questions.length > 0) {
     return (
@@ -648,6 +682,12 @@ function ExamNearModeCard({
         >
           限时20分钟
         </Button>
+        <OneClickMockButtons
+          progress={progress}
+          unlockAll={unlockAll}
+          buttonClassName="h-8 px-2.5 text-xs"
+          onStart={(run) => setMockRun(run)}
+        />
         {unlockedPapers.length > 0 ? (
           unlockedPapers.map((day) => (
             <Link

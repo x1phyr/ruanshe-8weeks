@@ -7,6 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { KindPill, PageFrame, PageHeader, Surface, EmptyState } from "@/components/ui-bits";
 import { QuizRun } from "@/components/learn/quiz-run";
+import {
+  OneClickMockButtons,
+  OneClickMockQuiz,
+  mockRunSubtitle,
+  mockRunTitle,
+  mockTimeLimitSec,
+  type MockRun,
+} from "@/components/one-click-mock";
 import { dayHref, getDayById, scheduleDays } from "@/lib/calendar";
 import { isUnlocked } from "@/lib/progress";
 import {
@@ -23,7 +31,8 @@ type ActiveRun =
   | { kind: "day"; dayId: string }
   | { kind: "module"; module: string }
   | { kind: "search"; query: string }
-  | { kind: "random"; questions: Question[]; timeLimitSec?: number };
+  | { kind: "random"; questions: Question[]; timeLimitSec?: number }
+  | { kind: "mock"; mock: MockRun };
 
 function matchesQuery(q: Question, query: string): boolean {
   const needle = query.trim().toLowerCase();
@@ -87,6 +96,7 @@ export function PracticeView() {
       return questionsForModule(active.module, studyDays, progress, unlockAll);
     }
     if (active.kind === "random") return active.questions;
+    if (active.kind === "mock") return questionsForDay(active.mock.dayId);
     return questions
       .filter(
         (item) =>
@@ -109,7 +119,9 @@ export function PracticeView() {
           ? active.timeLimitSec
             ? `限时随机 ${active.questions.length} 题`
             : `随机 ${active.questions.length} 题`
-          : activeDay?.topic ?? "";
+          : active?.kind === "mock"
+            ? mockRunTitle(active.mock)
+            : activeDay?.topic ?? "";
 
   if (active && activeQuestions.length > 0) {
     return (
@@ -131,27 +143,38 @@ export function PracticeView() {
                 ? active.timeLimitSec
                   ? `限时 ${Math.round(active.timeLimitSec / 60)} 分钟 · 从已解锁题库随机抽取 ${activeQuestions.length} 题（池 ${unlockedPool.length}）。到时自动交卷，未答不计分（按错计）。可提前交卷。`
                   : `从已解锁题库随机抽取 ${activeQuestions.length} 题（池 ${unlockedPool.length}）。对错会计入正确率；错题写入错题本。`
-                : "来自同一题库。对错会计入正确率；错题写入错题本。此页不自动完成本日。"}
+                : active.kind === "mock"
+                  ? `${mockRunSubtitle(active.mock)} · 限时 ${Math.round(mockTimeLimitSec(active.mock) / 60)} 分钟，到时自动交卷；标记可保留。交卷后显示完整成绩单。此页不自动完成本日。`
+                  : "来自同一题库。对错会计入正确率；错题写入错题本。此页不自动完成本日。"}
         </p>
         <div className="mt-6">
-          <QuizRun
-            questions={activeQuestions}
-            mode="practice"
-            navKey={
-              active.kind === "day"
-                ? `day:${active.dayId}`
-                : active.kind === "module"
-                  ? `module:${active.module}`
-                  : active.kind === "random"
-                    ? `random:${active.timeLimitSec ? `timed${active.timeLimitSec}:` : ""}${active.questions.length}`
-                    : `search:${active.query}`
-            }
-            timeLimitSec={
-              active.kind === "random" ? active.timeLimitSec : undefined
-            }
-            finishLabel="返回题库"
-            onFinished={() => setActive(null)}
-          />
+          {active.kind === "mock" ? (
+            <OneClickMockQuiz
+              run={active.mock}
+              navKey={`practice:mock:${active.mock.dayId}`}
+              finishLabel="返回题库"
+              onFinished={() => setActive(null)}
+            />
+          ) : (
+            <QuizRun
+              questions={activeQuestions}
+              mode="practice"
+              navKey={
+                active.kind === "day"
+                  ? `day:${active.dayId}`
+                  : active.kind === "module"
+                    ? `module:${active.module}`
+                    : active.kind === "random"
+                      ? `random:${active.timeLimitSec ? `timed${active.timeLimitSec}:` : ""}${active.questions.length}`
+                      : `search:${active.query}`
+              }
+              timeLimitSec={
+                active.kind === "random" ? active.timeLimitSec : undefined
+              }
+              finishLabel="返回题库"
+              onFinished={() => setActive(null)}
+            />
+          )}
         </div>
       </PageFrame>
     );
@@ -164,7 +187,7 @@ export function PracticeView() {
       <PageHeader
         kicker="DRILL"
         title="按模块练习"
-        description="按日历模块筛选专题，或一键刷本模块已解锁题。未解锁日只显示路线，不跳关。可用关键词搜题干 / 专题 / 知识路径；也可随机抽 20 题、开限时 20 分钟，或 15 分钟速刷（至多 10 题）。"
+        description="按日历模块筛选专题，或一键刷本模块已解锁题。未解锁日只显示路线，不跳关。可用关键词搜题干 / 专题 / 知识路径；也可随机抽 20 题、开限时 20 分钟、15 分钟速刷，或一键开自编上午/下午模考（试卷日已解锁或全解锁时）。"
       />
       <ModuleAccuracyBlock answers={answers} />
       <div className="mb-3 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-2">
@@ -219,6 +242,12 @@ export function PracticeView() {
           15 分钟速刷
         </Button>
       </div>
+      <OneClickMockButtons
+        progress={progress}
+        unlockAll={unlockAll}
+        className="mb-3 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-2"
+        onStart={(mock) => setActive({ kind: "mock", mock })}
+      />
       <div className="mb-3">
         <Input
           type="search"
