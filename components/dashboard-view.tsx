@@ -55,6 +55,7 @@ export function DashboardView() {
   const mistakes = useTrainerStore((s) => s.mistakes);
   const answers = useTrainerStore((s) => s.answers);
   const sessions = useTrainerStore((s) => s.sessions);
+  const streak = useTrainerStore((s) => s.streak);
 
   const today = todayISO(simulateDate);
   const realToday = todayISO();
@@ -142,7 +143,7 @@ export function DashboardView() {
       />
 
       <Surface className="mt-4">
-        <div className="grid grid-cols-2 divide-x divide-border md:grid-cols-5">
+        <div className="grid grid-cols-2 divide-x divide-border md:grid-cols-3 lg:grid-cols-6">
           <Metric
             label="距考试"
             value={daysLeft > 0 ? `${pad2(daysLeft)} 天` : "—"}
@@ -152,6 +153,11 @@ export function DashboardView() {
             label="总进度"
             value={`${pad2(doneCount)} / ${pad2(totalDays)}`}
             hint="已完成学习日"
+          />
+          <Metric
+            label="连续学习"
+            value={streak > 0 ? `连续 ${streak} 天` : "—"}
+            hint={streak > 0 ? "学习打卡" : "完成本日或做题开始"}
           />
           <Metric
             label="今日时长"

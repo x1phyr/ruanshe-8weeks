@@ -24,6 +24,9 @@ interface TrainerState {
   sessions: Record<string, DaySession>;
   simulateDate: string | null;
   startDate: string;
+  /** Consecutive study days; updated via completeDay / answer activity. */
+  streak: number;
+  lastStudyDate: string | null;
   /** Debug: browse all days without sequential unlock. Not cleared by resetAll. */
   unlockAll: boolean;
   setSimulateDate: (value: string | null) => void;
@@ -47,6 +50,22 @@ const emptySession = (): DaySession => ({
   practiceDone: false,
   wrapupDone: false,
 });
+
+
+function bumpStreak(
+  lastStudyDate: string | null,
+  streak: number,
+  today: string,
+): { streak: number; lastStudyDate: string } {
+  if (lastStudyDate === today) {
+    return { streak: Math.max(streak, 1), lastStudyDate: today };
+  }
+  const yesterday = addDaysISO(today, -1);
+  if (lastStudyDate === yesterday) {
+    return { streak: streak + 1, lastStudyDate: today };
+  }
+  return { streak: 1, lastStudyDate: today };
+}
 
 function upsertMistakeOnWrong(
   list: Mistake[],
@@ -124,6 +143,8 @@ export const useTrainerStore = create<TrainerState>()(
       sessions: {},
       simulateDate: null,
       startDate: todayISO(),
+      streak: 0,
+      lastStudyDate: null,
       unlockAll: false,
       setSimulateDate: (value) => set({ simulateDate: value }),
       setStartDate: (value) => {
@@ -149,17 +170,20 @@ export const useTrainerStore = create<TrainerState>()(
           at: today,
           dayId: question.dayId,
         };
+        const state = get();
+        const streakPatch = bumpStreak(state.lastStudyDate, state.streak, today);
         set({
-          answers: [...get().answers, record],
+          answers: [...state.answers, record],
           progress: {
-            ...get().progress,
-            totalQuestions: get().progress.totalQuestions + 1,
+            ...state.progress,
+            totalQuestions: state.progress.totalQuestions + 1,
             correctQuestions:
-              get().progress.correctQuestions + (correct ? 1 : 0),
+              state.progress.correctQuestions + (correct ? 1 : 0),
           },
           mistakes: correct
-            ? get().mistakes
-            : upsertMistakeOnWrong(get().mistakes, question, selected, today),
+            ? state.mistakes
+            : upsertMistakeOnWrong(state.mistakes, question, selected, today),
+          ...streakPatch,
         });
         return correct;
       },
@@ -172,17 +196,20 @@ export const useTrainerStore = create<TrainerState>()(
           at: today,
           dayId: question.dayId,
         };
+        const state = get();
+        const streakPatch = bumpStreak(state.lastStudyDate, state.streak, today);
         set({
-          answers: [...get().answers, record],
+          answers: [...state.answers, record],
           progress: {
-            ...get().progress,
-            totalQuestions: get().progress.totalQuestions + 1,
+            ...state.progress,
+            totalQuestions: state.progress.totalQuestions + 1,
             correctQuestions:
-              get().progress.correctQuestions + (correct ? 1 : 0),
+              state.progress.correctQuestions + (correct ? 1 : 0),
           },
           mistakes: correct
-            ? applyReviewCorrect(get().mistakes, question.id, today)
-            : upsertMistakeOnWrong(get().mistakes, question, selected, today),
+            ? applyReviewCorrect(state.mistakes, question.id, today)
+            : upsertMistakeOnWrong(state.mistakes, question, selected, today),
+          ...streakPatch,
         });
         return correct;
       },
@@ -194,14 +221,18 @@ export const useTrainerStore = create<TrainerState>()(
         });
       },
       completeDay: (dayId) => {
-        const progress = afterComplete(get().progress, dayId);
-        const session = get().sessions[dayId] ?? emptySession();
+        const state = get();
+        const progress = afterComplete(state.progress, dayId);
+        const session = state.sessions[dayId] ?? emptySession();
+        const today = todayISO(state.simulateDate);
+        const streakPatch = bumpStreak(state.lastStudyDate, state.streak, today);
         set({
           progress,
           sessions: {
-            ...get().sessions,
+            ...state.sessions,
             [dayId]: { ...session, wrapupDone: true },
           },
+          ...streakPatch,
         });
       },
       // Clears progress/mistakes/answers/sessions only; keeps unlockAll, simulateDate, startDate.
@@ -211,6 +242,8 @@ export const useTrainerStore = create<TrainerState>()(
           mistakes: [],
           answers: [],
           sessions: {},
+          streak: 0,
+          lastStudyDate: null,
         }),
     }),
     {
@@ -224,6 +257,8 @@ export const useTrainerStore = create<TrainerState>()(
         sessions: state.sessions,
         simulateDate: state.simulateDate,
         startDate: state.startDate,
+        streak: state.streak,
+        lastStudyDate: state.lastStudyDate,
         unlockAll: state.unlockAll,
       }),
       merge: (persistedState, currentState) => {
@@ -237,11 +272,22 @@ export const useTrainerStore = create<TrainerState>()(
           typeof persisted.unlockAll === "boolean"
             ? persisted.unlockAll
             : false;
+        const streak =
+          typeof persisted.streak === "number" && persisted.streak >= 0
+            ? persisted.streak
+            : 0;
+        const lastStudyDate =
+          typeof persisted.lastStudyDate === "string" &&
+          /^\d{4}-\d{2}-\d{2}$/.test(persisted.lastStudyDate)
+            ? persisted.lastStudyDate
+            : null;
         return {
           ...currentState,
           ...persisted,
           startDate,
           unlockAll,
+          streak,
+          lastStudyDate,
         };
       },
     },
