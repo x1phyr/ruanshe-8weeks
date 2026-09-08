@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { ArrowRight, Settings2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, Copy, Settings2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -248,6 +248,16 @@ export function DashboardView() {
         </div>
       </Surface>
 
+      <CopyDailyReportButton
+        today={today}
+        daysLeft={daysLeft}
+        streak={streak}
+        accuracy={acc}
+        doneCount={doneCount}
+        pending={pending}
+        answers={answers}
+      />
+
       <WeekProgressCard stats={weekStats} />
 
       <ResumeLastCard resume={resume} />
@@ -342,6 +352,116 @@ export function DashboardView() {
     </PageFrame>
   );
 }
+
+const SITE_URL = "https://x1phyr.github.io/ruanshe-8weeks/";
+
+function buildDailyReportText(opts: {
+  today: string;
+  daysLeft: number;
+  streak: number;
+  accuracy: number | null;
+  doneCount: number;
+  pending: number;
+  weakModule: { module: string; accuracy: number } | null;
+}): string {
+  const { today, daysLeft, streak, accuracy, doneCount, pending, weakModule } =
+    opts;
+  const daysLine =
+    daysLeft > 0
+      ? `距考试：${daysLeft} 天`
+      : daysLeft === 0
+        ? "距考试：今天考试"
+        : "距考试：已过";
+  const lines = [
+    "软设 8 周通关 · 今日战报",
+    `日期：${formatDateCn(today)} ${weekdayLabel(today)}`,
+    daysLine,
+    `连续学习：${streak > 0 ? `${streak} 天` : "—"}`,
+    `正确率：${accuracy === null ? "—" : `${accuracy}%`}`,
+    `完成进度：${doneCount} / ${CURRICULUM_LENGTH}`,
+    `待复习错题：${pending}`,
+  ];
+  if (weakModule) {
+    lines.push(
+      `弱项模块：${weakModule.module}（正确率 ${weakModule.accuracy}%）`,
+    );
+  }
+  lines.push(SITE_URL);
+  return lines.join("\n");
+}
+
+function CopyDailyReportButton({
+  today,
+  daysLeft,
+  streak,
+  accuracy,
+  doneCount,
+  pending,
+  answers,
+}: {
+  today: string;
+  daysLeft: number;
+  streak: number;
+  accuracy: number | null;
+  doneCount: number;
+  pending: number;
+  answers: AnswerRecord[];
+}) {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 2000);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
+  const weak = useMemo(
+    () =>
+      topWeakModules(answers, {
+        minAttempts: MODULE_STATS_MIN_ATTEMPTS,
+        limit: 1,
+      }),
+    [answers],
+  );
+  const weakModule = weak[0] ?? null;
+
+  return (
+    <div className="mt-3 flex flex-wrap items-center gap-2">
+      <Button
+        type="button"
+        size="sm"
+        variant="outline"
+        className="h-8 gap-1.5 px-2.5 text-xs"
+        onClick={async () => {
+          const text = buildDailyReportText({
+            today,
+            daysLeft,
+            streak,
+            accuracy,
+            doneCount,
+            pending,
+            weakModule,
+          });
+          try {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+          } catch {
+            // Clipboard may be unavailable (insecure context / denied).
+          }
+        }}
+      >
+        <Copy className="size-3.5" />
+        复制今日战报
+      </Button>
+      {copied ? (
+        <span className="text-xs text-brand" role="status">
+          已复制
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
 
 function StartDateControl({
   startDate,
