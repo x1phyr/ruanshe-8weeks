@@ -1,6 +1,6 @@
 # 软设 8 周通关 · 交接文档
 
-> 截至 **2026-09-09 晚间**（Asia/Shanghai）。给后续维护者 / Agent 的完整交接。
+> 截至 **2026-09-09**（Asia/Shanghai）。给后续维护者 / Agent 的完整交接。
 
 ## 1. 产品目标
 
@@ -93,7 +93,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ## 5. 功能清单
 
-近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本；CI 题库检查因 workflow 范围暂缓。本轮另加 **reduced motion**。
+近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion；本轮另加 **一键上午/下午模考**（练习页 + 临考模式）。CI 题库检查因 workflow 范围暂缓。
 
 | 能力 | 说明 |
 | --- | --- |
@@ -114,6 +114,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **random20** | 随机抽至多 20 题（不足则全抽） |
 | **timed20** | 限时 20 分钟卷；到时自动交卷 |
 | **quick15** | 15 分钟速刷：至多 10 题，`timeLimitSec=900`；仪表盘弱项卡 / 练习页入口 |
+| **一键模考** | 练习页 + 临考模式：已解锁试卷日（或 `unlockAll`）可开「一键上午模考」套1 `week-5/day-6` / 套2 `week-7/day-5`（85 题 · `timeLimitSec=9000`）与「一键下午模考」套1 `week-5/day-7` / 套2 `week-7/day-6`（25 题 · `7200`）；`QuizRun` + `navKey` 标记 + 完整 scorecard；文案「自编模拟 85 题 · 150 分钟」/「自编模拟 25 题 · 120 分钟」 |
 | **PWA** | 可「安装到桌面」（manifest + SW） |
 | **专注模式 focus** | 隐藏侧栏 / 底栏；偏好持久化 |
 | **大号文字 largeText** | 调试设置开关；略放大正文字号与测验题干/选项；持久化，重置进度保留 |
@@ -148,7 +149,8 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | `data/mock-papers.ts` | 自编模考 220 题 |
 | `components/dashboard-view.tsx` | 仪表盘 |
 | `components/learn/*` | 日训会话、讲义、测验、试卷计时 |
-| `components/practice-view.tsx` | 模块 / 搜索 / 随机 / 限时 / 15 分钟速刷 |
+| `components/practice-view.tsx` | 模块 / 搜索 / 随机 / 限时 / 15 分钟速刷 / 一键模考 |
+| `components/one-click-mock.tsx` | 一键上午/下午模考按钮与 QuizRun 封装 |
 | `components/plan-view.tsx` | 计划表、跳转、打印 |
 | `components/mistakes-view.tsx` | 错题本 |
 | `components/focus-mode.tsx` / `pwa-register.tsx` / `simulate-dialog.tsx` | 专注、PWA、模拟日 |
@@ -186,10 +188,11 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 - [ ] 静态构建通过
 - [ ] Pages 能打开仪表盘与某一 live 日训
 - [ ] 试卷日能进计时壳并拉起自编模考（85 / 25）
+- [ ] 练习页 / 临考模式「一键上午模考」「一键下午模考」在 unlockAll 或对应试卷日解锁时可见，限时与成绩单正常
 - [ ] 改 startDate 后计划日期平移、已完成 week-N/day-M 仍在
 - [ ] 未引入教材扫描件或受版权保护原文
 
 ---
 
-*文档刷新：2026-09-09 晚间。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **820**）。*
+*文档刷新：2026-09-09（一键模考）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **820**）。*
 
