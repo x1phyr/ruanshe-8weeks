@@ -16,6 +16,15 @@ import { dueMistakes, mistakeBucket } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
 import type { Mistake, MistakeBucket, MistakeReason } from "@/lib/types";
 
+
+function resolveWrongOnlyQuestions(mistakes: Mistake[], today: string) {
+  const due = dueMistakes(mistakes, today);
+  const pool = due.length > 0 ? due : mistakes.filter((item) => !item.mastered);
+  return pool
+    .map((item) => getQuestionById(item.questionId))
+    .filter((item): item is NonNullable<typeof item> => Boolean(item));
+}
+
 const tabs: { id: MistakeBucket; label: string }[] = [
   { id: "needs-review", label: "待复习" },
   { id: "learning", label: "学习中" },
@@ -101,7 +110,7 @@ export function MistakesView() {
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
   const [tab, setTab] = useState<MistakeBucket>("needs-review");
-  const [drilling, setDrilling] = useState(false);
+  const [drillMode, setDrillMode] = useState<"due" | "wrong-only" | null>(null);
 
   const today = todayISO(simulateDate);
   const stamp = exportDateStamp(today);
@@ -123,13 +132,17 @@ export function MistakesView() {
   const dueQuestions = due
     .map((item) => getQuestionById(item.questionId))
     .filter((item): item is NonNullable<typeof item> => Boolean(item));
+  const wrongOnlyQuestions = useMemo(
+    () => resolveWrongOnlyQuestions(mistakes, today),
+    [mistakes, today],
+  );
 
-  if (drilling && dueQuestions.length > 0) {
+  if (drillMode === "due" && dueQuestions.length > 0) {
     return (
       <PageFrame>
         <button
           type="button"
-          onClick={() => setDrilling(false)}
+          onClick={() => setDrillMode(null)}
           className="label-caps hover:text-foreground"
         >
           ← 返回错题本
@@ -141,7 +154,36 @@ export function MistakesView() {
             mode="review"
             navKey="mistakes:due"
             finishLabel="返回错题本"
-            onFinished={() => setDrilling(false)}
+            onFinished={() => setDrillMode(null)}
+          />
+        </div>
+      </PageFrame>
+    );
+  }
+
+  if (drillMode === "wrong-only" && wrongOnlyQuestions.length > 0) {
+    return (
+      <PageFrame>
+        <button
+          type="button"
+          onClick={() => setDrillMode(null)}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回错题本
+        </button>
+        <h1 className="mt-2 text-xl font-medium">只练错题</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {dueQuestions.length > 0
+            ? `到期 ${dueQuestions.length} 题`
+            : `未掌握 ${wrongOnlyQuestions.length} 题`}
+        </p>
+        <div className="mt-6">
+          <QuizRun
+            questions={wrongOnlyQuestions}
+            mode="review"
+            navKey="mistakes:wrong-only"
+            finishLabel="返回错题本"
+            onFinished={() => setDrillMode(null)}
           />
         </div>
       </PageFrame>
@@ -172,8 +214,29 @@ export function MistakesView() {
             >
               导出 CSV
             </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={wrongOnlyQuestions.length === 0}
+              onClick={() => {
+                if (wrongOnlyQuestions.length === 0) return;
+                setDrillMode("wrong-only");
+              }}
+              title={
+                wrongOnlyQuestions.length === 0
+                  ? "暂无可练错题"
+                  : dueQuestions.length > 0
+                    ? `到期 ${dueQuestions.length} 题`
+                    : `未掌握 ${wrongOnlyQuestions.length} 题`
+              }
+            >
+              只练错题
+              {wrongOnlyQuestions.length > 0
+                ? ` ${wrongOnlyQuestions.length}`
+                : ""}
+            </Button>
             {dueQuestions.length > 0 ? (
-              <Button size="sm" onClick={() => setDrilling(true)}>
+              <Button size="sm" onClick={() => setDrillMode("due")}>
                 复习 {dueQuestions.length} 题
               </Button>
             ) : null}
