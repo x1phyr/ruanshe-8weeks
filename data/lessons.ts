@@ -3038,7 +3038,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "外码可否为空",
-          body: "参照完整性允许外码为空（表示「尚未关联」），除非另有非空约束。不要说「外码绝不能空」。",
+          body: "参照完整性允许外码为空（表示「尚未关联」），除非另有非空约束。不要说「外码绝不能空」。删被参照主码行前先想：仍有外码引用且无级联/置空 → 直接违约。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（关系 / E-R）",
+          body: "① m:n 只在单边塞外码 → 错，要联系表。② 成绩属联系属性，别塞进学生表当单值。③ 1:n 外码在 n 端，不是 1 端。④ 1:1 不必强制第三表。⑤ 超键可冗余，候选码须最小；主码非空。⑥ 「关系模式」是型，「关系」是值。",
         },
       },
       {
@@ -3046,7 +3054,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "收口",
-          body: "今天会：m:n 转表、三类完整性。明天范式：部分依赖与传递依赖。",
+          body: "今天会：m:n 转表、三类完整性、型/值与码的层次。明天范式：部分依赖与传递依赖。",
         },
       },
     ],
@@ -3102,7 +3110,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "2NF vs 3NF",
-          body: "单属性主码的关系自动满足 2NF（无部分依赖），但仍可能因传递依赖不满足 3NF。先看码是否复合，再看传递。",
+          body: "单属性主码的关系自动满足 2NF（无部分依赖），但仍可能因传递依赖不满足 3NF。先看码是否复合，再看传递。口诀：部分→缺 2NF；传递→缺 3NF。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（范式）",
+          body: "① 属性都原子 ≠ 已是 2NF/3NF。② 3NF 达标仍可能非 BCNF（主属性侧决定因素未含码）。③ 规范化降冗余、减插入/删除/更新异常；分解可能增连接代价，但目的不是「制造异常」。④ 非主属性 ≠ 外码。",
         },
       },
       {
@@ -3110,7 +3126,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "收口",
-          body: "会判 1/2/3/BCNF，会写一次分解。明天 SQL：连接、分组、EXISTS。",
+          body: "会判 1/2/3/BCNF，会写一次分解，能说清异常类型。明天 SQL：连接、分组、EXISTS。",
         },
       },
     ],
@@ -3178,8 +3194,16 @@ const liveLessons: Lesson[] = [
         type: "callout",
         callout: {
           tone: "trap",
-          title: "GROUP BY",
-          body: "SELECT 中未聚合的列必须出现在 GROUP BY（标准 SQL）。「每人选了几门课」按学号分组，课程名不能随便挂在 SELECT 上。",
+          title: "GROUP BY / HAVING",
+          body: "SELECT 中未聚合的列必须出现在 GROUP BY（标准 SQL）。「每人选了几门课」按学号分组，课程名不能随便挂在 SELECT 上。聚合结果过滤用 HAVING；WHERE COUNT(*)>=3 是经典错法。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（SQL）",
+          body: "① 左外连后对右列写 WHERE 等值 → 易丢掉 NULL 匹配行，效果接近内连；右表条件宜放 ON。② COUNT(*) 计行，COUNT(列) 跳过 NULL；AVG 默认忽略 NULL≠当 0。③ EXISTS 看有没有行；= (子查询) 要标量。④ DISTINCT 去重结果，不改基表。",
         },
       },
       {
@@ -3187,7 +3211,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "收口",
-          body: "今天会：WHERE vs HAVING、左连接、EXISTS。明天事务 ACID、隔离、索引最左前缀。",
+          body: "今天会：WHERE vs HAVING、左连接陷阱、EXISTS/标量。明天事务 ACID、隔离、索引最左前缀。",
         },
       },
     ],
@@ -3250,7 +3274,23 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "exam",
           title: "考法",
-          body: "「下列隔离级别能避免脏读但不能避免不可重复读」→ 读已提交。索引题给 WHERE b=? AND a=? 却只有 (a,b) 仍可用；只有 (b,c) 对 a 条件未必最优。",
+          body: "「下列隔离级别能避免脏读但不能避免不可重复读」→ 读已提交。索引题：WHERE a=? AND b=? 对 (a,b) 可用；WHERE b=? AND c=? 对 (a,b,c) 通常用不上最左前缀。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "三种读异常别串台",
+          body: "脏读=读未提交；不可重复读=同一行两次读到已提交的不同值；幻读=范围查询行集合多了/少了。原子性是全或无，持久性是提交后不丢——别和隔离现象混答。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（事务 / 索引）",
+          body: "① 读未提交才允许脏读。② S 锁与 S 兼容，X 与其它一般不兼容；别把 S/X 读写角色弄反。③ 复合索引必须盯最左列。④ 视图多为虚表，可更新性受限；不是索引别名。⑤ 一致性（约束保持）≠ 原子性同义词。",
         },
       },
       {
@@ -3258,7 +3298,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "收口",
-          body: "ACID 四字、四级隔离、最左前缀。明天起网络体系：OSI/TCP-IP、IP 与子网。",
+          body: "ACID 四字、三级读异常、四级隔离、S/X、最左前缀。明天起网络体系：OSI/TCP-IP、IP 与子网。",
         },
       },
     ],
