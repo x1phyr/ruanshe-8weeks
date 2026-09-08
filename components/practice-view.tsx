@@ -104,6 +104,7 @@ export function PracticeView() {
                 ? `day:${active.dayId}`
                 : `module:${active.module}`
             }
+            finishLabel="返回题库"
             onFinished={() => setActive(null)}
           />
         </div>

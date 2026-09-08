@@ -29,7 +29,13 @@ import {
 } from "@/lib/dates";
 import { accuracyPercent, dueMistakes, isCompleted, resolveFocusDay } from "@/lib/progress";
 import { getSession, useTrainerStore } from "@/lib/store";
-import type { DaySession, Mistake, Progress as ProgressState, StudyDay } from "@/lib/types";
+import type {
+  AnswerRecord,
+  DaySession,
+  Mistake,
+  Progress as ProgressState,
+  StudyDay,
+} from "@/lib/types";
 
 const taskDefs = [
   { key: "review", label: "复习错题" },
@@ -45,6 +51,7 @@ export function DashboardView() {
   const setStartDate = useTrainerStore((s) => s.setStartDate);
   const progress = useTrainerStore((s) => s.progress);
   const mistakes = useTrainerStore((s) => s.mistakes);
+  const answers = useTrainerStore((s) => s.answers);
   const sessions = useTrainerStore((s) => s.sessions);
 
   const today = todayISO(simulateDate);
@@ -240,6 +247,15 @@ export function DashboardView() {
         />
       ) : null}
 
+      {progress.totalQuestions > 0 ? (
+        <AccuracyCard
+          progress={progress}
+          answers={answers}
+          accuracy={acc}
+          pending={pending}
+        />
+      ) : null}
+
       <WeakTopicsCard mistakes={mistakes} />
     </PageFrame>
   );
@@ -372,6 +388,78 @@ function ActiveDayPanel({
   );
 }
 
+
+const RECENT_WINDOW = 20;
+const LOW_ACCURACY = 70;
+
+function AccuracyCard({
+  progress,
+  answers,
+  accuracy,
+  pending,
+}: {
+  progress: ProgressState;
+  answers: AnswerRecord[];
+  accuracy: number | null;
+  pending: number;
+}) {
+  const recent = answers.slice(-RECENT_WINDOW);
+  const recentCorrect = recent.filter((a) => a.correct).length;
+  const recentPct =
+    recent.length > 0
+      ? Math.round((recentCorrect / recent.length) * 100)
+      : null;
+  const low = accuracy !== null && accuracy < LOW_ACCURACY;
+  const showMistakesLink = low || pending > 0;
+
+  return (
+    <Surface className="mt-6 p-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <div className="label-caps">ACCURACY</div>
+          <div className="mt-1 font-mono text-2xl tracking-wide">
+            {accuracy === null ? "—" : `${accuracy}%`}
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">
+            累计作答 {progress.totalQuestions} 题 · 正确{" "}
+            {progress.correctQuestions}
+          </p>
+          {recentPct !== null ? (
+            <p className="mt-1 text-xs text-muted-foreground">
+              近 {recent.length} 题正确率 {recentPct}%（{recentCorrect}/
+              {recent.length}）
+            </p>
+          ) : null}
+        </div>
+        <div className="flex flex-col items-end gap-2">
+          {low ? (
+            <KindPill tone="warn">正确率偏低</KindPill>
+          ) : accuracy !== null && accuracy >= 80 ? (
+            <KindPill tone="ok">状态良好</KindPill>
+          ) : (
+            <KindPill tone="brand">继续保持</KindPill>
+          )}
+          {showMistakesLink ? (
+            <Link
+              href="/mistakes"
+              className="inline-flex h-7 items-center gap-1 rounded-md border border-border px-2 text-xs text-muted-foreground hover:text-foreground"
+            >
+              {pending > 0 ? `去错题本 · ${pad2(pending)} 到期` : "去错题本复盘"}
+              <ArrowRight className="size-3" />
+            </Link>
+          ) : (
+            <Link
+              href="/mistakes"
+              className="inline-flex h-7 items-center rounded-md px-2 text-xs text-muted-foreground hover:text-foreground"
+            >
+              错题本
+            </Link>
+          )}
+        </div>
+      </div>
+    </Surface>
+  );
+}
 
 function WeakTopicsCard({ mistakes }: { mistakes: Mistake[] }) {
   const active = mistakes.filter((m) => !m.mastered);

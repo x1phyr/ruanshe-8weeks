@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { KindPill, Surface } from "@/components/ui-bits";
 import { LessonView } from "@/components/learn/lesson-view";
 import { PaperTimer } from "@/components/learn/paper-timer";
-import { QuizRun } from "@/components/learn/quiz-run";
+import { QuizRun, type QuizFinishSummary } from "@/components/learn/quiz-run";
 import { dayHref, getDayById, getNextDay, kindLabel } from "@/lib/calendar";
 import { pad2, todayISO } from "@/lib/dates";
 import { dueMistakes, isCompleted, isUnlocked } from "@/lib/progress";
@@ -43,6 +43,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
   const completeDay = useTrainerStore((s) => s.completeDay);
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
   const [forced, setForced] = useState<LearnStep | null>(null);
+  const [lastQuiz, setLastQuiz] = useState<QuizFinishSummary | null>(null);
 
   const scheduled = getDayById(day.id, startDate) ?? day;
   const session = getSession(sessions, scheduled.id);
@@ -119,7 +120,9 @@ export function LearnSession({ day }: { day: StudyDay }) {
               questions={due}
               mode="review"
               navKey={`review:${scheduled.id}`}
-              onFinished={() => {
+              finishLabel="进入学习"
+              onFinished={(summary) => {
+                setLastQuiz(summary);
                 markStep(scheduled.id, "review");
                 setForced("learn");
               }}
@@ -177,7 +180,9 @@ export function LearnSession({ day }: { day: StudyDay }) {
               questions={bank}
               mode="daily"
               navKey={`day:${scheduled.id}`}
-              onFinished={() => {
+              finishLabel="进入收尾"
+              onFinished={(summary) => {
+                setLastQuiz(summary);
                 markStep(scheduled.id, "practice");
                 setForced("wrapup");
               }}
@@ -192,6 +197,30 @@ export function LearnSession({ day }: { day: StudyDay }) {
           <h2 className="mt-2 text-xl font-medium">
             {completed ? "本日已完成" : "记录错题，然后完成本日"}
           </h2>
+          {lastQuiz ? (
+            <Surface className="mt-4 p-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <div className="label-caps">本组得分</div>
+                  <div className="mt-1 font-mono text-lg">
+                    {lastQuiz.percent}% · {pad2(lastQuiz.correct)}/{pad2(lastQuiz.total)}
+                  </div>
+                </div>
+                {lastQuiz.wrongIndexes.length > 0 ? (
+                  <KindPill tone="warn">
+                    错 {pad2(lastQuiz.wrongIndexes.length)} 题
+                  </KindPill>
+                ) : (
+                  <KindPill tone="ok">全对</KindPill>
+                )}
+              </div>
+              {lastQuiz.wrongIndexes.length > 0 ? (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  错题题号：{lastQuiz.wrongIndexes.map((i) => i + 1).join("、")}
+                </p>
+              ) : null}
+            </Surface>
+          ) : null}
           {newMistakes.length === 0 ? (
             <p className="mt-2 text-sm text-muted-foreground">
               今天没有新错题。可以完成本日并解锁下一天。
