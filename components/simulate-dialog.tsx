@@ -159,15 +159,17 @@ export function SimulateDialog({
             ) : null}
             <div className="flex items-start justify-between gap-3 rounded-md border border-border p-3">
               <div className="min-w-0 space-y-1">
-                <Label htmlFor="unlock-all" className="text-sm font-medium">
+                <Label id="unlock-all-label" htmlFor="unlock-all" className="text-sm font-medium">
                   全解锁（调试）
                 </Label>
-                <p className="text-xs leading-5 text-muted-foreground">
+                <p id="unlock-all-hint" className="text-xs leading-5 text-muted-foreground">
                   打开后可跳关浏览全部学习日；进度不自动标完成。重置进度不会关闭本开关。
                 </p>
               </div>
               <Switch
                 id="unlock-all"
+                aria-labelledby="unlock-all-label"
+                aria-describedby="unlock-all-hint"
                 checked={unlockAll}
                 onCheckedChange={setUnlockAll}
               />

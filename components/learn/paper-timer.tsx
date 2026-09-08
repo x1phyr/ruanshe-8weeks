@@ -6,7 +6,7 @@ import { Surface } from "@/components/ui-bits";
 import { pad2 } from "@/lib/dates";
 import type { StudyDay } from "@/lib/types";
 
-function formatRemain(seconds: number) {
+export function formatRemain(seconds: number) {
   const safe = Math.max(0, seconds);
   const h = Math.floor(safe / 3600);
   const m = Math.floor((safe % 3600) / 60);
