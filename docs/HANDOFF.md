@@ -34,7 +34,7 @@
 ### Question quality audit (QA)
 
 - Script: node scripts/qa-questions.mjs
-- Last PASS: 2026-09-09 Asia/Shanghai, 784 questions, issues=0
+- Last PASS: 2026-09-09 Asia/Shanghai, 794 questions, issues=0
 
 ### 4.1 日程结构
 
@@ -65,8 +65,8 @@
 | 课程日 | **53** |
 | `status: live` | **49**（完整讲义 + 练习；**非试卷日 ≥12 题**） |
 | `status: paper` | **4**（计时壳 + 用法指导 + 站内自编模考） |
-| 自编模考 | 上午各 **75** / 下午各 **20**（两套：W5d6/d7、W7d5/d6） |
-| **全站题目总数（精确）** | **784** |
+| 自编模考 | 上午各 **75** / 下午各 **25**（两套：W5d6/d7、W7d5/d6） |
+| **全站题目总数（精确）** | **794** |
 
 计数方式（可复现）：
 
@@ -77,18 +77,18 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ```
 
-预期输出：`{ total: 784, daily: 594, mock: 190 }`（`questions` 数组末尾 `...mockPaperQuestions`，190 = 75+20+75+20）。
+预期输出：`{ total: 794, daily: 594, mock: 200 }`（`questions` 数组末尾 `...mockPaperQuestions`，200 = 75+25+75+25）。
 
-约束：**非试卷日 ≥12 题**（试卷日保持模考题量 75/20/75/20，不削减）。
+约束：**非试卷日 ≥12 题**（试卷日保持模考题量 75/25/75/25，不削减）。
 
 试卷日（`paper`，**非法拷真题**）：
 
 | dayId | 槽位 |
 | --- | --- |
 | week-5/day-6 | 上午模考 75 |
-| week-5/day-7 | 下午案例风格 20 |
+| week-5/day-7 | 下午案例风格 25 |
 | week-7/day-5 | 上午模考 75 |
-| week-7/day-6 | 下午案例风格 20 |
+| week-7/day-6 | 下午案例风格 25 |
 
 ## 5. 功能清单
 
@@ -136,7 +136,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | `lib/dates.ts` / `lib/types.ts` | 日期工具与类型 |
 | `data/lessons.ts` | 53 日讲义正文 |
 | `data/questions.ts` | 日训题 + 合并模考题 |
-| `data/mock-papers.ts` | 自编模考 190 题 |
+| `data/mock-papers.ts` | 自编模考 200 题 |
 | `components/dashboard-view.tsx` | 仪表盘 |
 | `components/learn/*` | 日训会话、讲义、测验、试卷计时 |
 | `components/practice-view.tsx` | 模块 / 搜索 / 随机 / 限时 |
@@ -170,13 +170,13 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 1. 内容质量：校对讲义与解析措辞；补强易混点与 trap；统一 knowledgePath 粒度。
 2. 更多下午案例向练习：在 live 日或冲刺日增加读图、DFD、UML、数据库案例风格小题（须自编）。
 3. 可选云同步：目前仅 localStorage；多设备方案需用户明确同意后再设计；默认离线优先。
-4. 题量与覆盖度复查：当前全站 784 题（非试卷日 ≥12）；可按模块正确率与错题热点定向加题。
+4. 题量与覆盖度复查：当前全站 794 题（非试卷日 ≥12）；可按模块正确率与错题热点定向加题。
 
 ## 10. 快速自检
 
 - [ ] 静态构建通过
 - [ ] Pages 能打开仪表盘与某一 live 日训
-- [ ] 试卷日能进计时壳并拉起自编模考（75 / 20）
+- [ ] 试卷日能进计时壳并拉起自编模考（75 / 25）
 - [ ] 改 startDate 后计划日期平移、已完成 week-N/day-M 仍在
 - [ ] 未引入教材扫描件或受版权保护原文
 
