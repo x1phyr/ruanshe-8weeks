@@ -13,6 +13,7 @@ import type {
   LearnStep,
   Mistake,
   MistakeReason,
+  MockRunRecord,
   OptionKey,
   Progress,
   Question,
@@ -37,6 +38,8 @@ interface TrainerState {
   planHideDone: boolean;
   /** Slightly larger base / quiz text. Persisted; not cleared by resetAll. */
   largeText: boolean;
+  /** Recent mock / large paper runs (newest first). Cap 20. Cleared by resetAll. */
+  mockRuns: MockRunRecord[];
   setSimulateDate: (value: string | null) => void;
   setStartDate: (value: string) => void;
   setUnlockAll: (value: boolean) => void;
@@ -53,6 +56,10 @@ interface TrainerState {
   setMistakeReason: (questionId: string, reason: MistakeReason) => void;
   /** Remove mastered mistakes. If questionIds given, only those; else all mastered. */
   clearMasteredMistakes: (questionIds?: string[]) => void;
+  /** Append a mock/paper run; keeps newest 20. */
+  appendMockRun: (
+    run: Omit<MockRunRecord, "id" | "at"> & { id?: string; at?: string },
+  ) => void;
   completeDay: (dayId: string) => void;
   resetAll: () => void;
 }
@@ -64,6 +71,37 @@ const emptySession = (): DaySession => ({
   wrapupDone: false,
 });
 
+const MOCK_RUNS_CAP = 20;
+
+function normalizeMockRuns(value: unknown): MockRunRecord[] {
+  if (!Array.isArray(value)) return [];
+  const out: MockRunRecord[] = [];
+  for (const item of value) {
+    if (!item || typeof item !== "object") continue;
+    const row = item as Record<string, unknown>;
+    if (typeof row.id !== "string") continue;
+    if (typeof row.paperDayId !== "string") continue;
+    if (typeof row.label !== "string") continue;
+    if (typeof row.correct !== "number") continue;
+    if (typeof row.total !== "number") continue;
+    if (typeof row.percent !== "number") continue;
+    if (typeof row.at !== "string") continue;
+    const rec: MockRunRecord = {
+      id: row.id,
+      paperDayId: row.paperDayId,
+      label: row.label,
+      correct: row.correct,
+      total: row.total,
+      percent: row.percent,
+      at: row.at,
+    };
+    if (typeof row.timedSec === "number" && row.timedSec > 0) {
+      rec.timedSec = row.timedSec;
+    }
+    out.push(rec);
+  }
+  return out.slice(0, MOCK_RUNS_CAP);
+}
 
 function bumpStreak(
   lastStudyDate: string | null,
@@ -162,6 +200,7 @@ export const useTrainerStore = create<TrainerState>()(
       focusMode: false,
       planHideDone: false,
       largeText: false,
+      mockRuns: [],
       setSimulateDate: (value) => set({ simulateDate: value }),
       setStartDate: (value) => {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return;
@@ -250,6 +289,33 @@ export const useTrainerStore = create<TrainerState>()(
           }),
         });
       },
+      appendMockRun: (run) => {
+        const id =
+          run.id ??
+          (typeof crypto !== "undefined" && "randomUUID" in crypto
+            ? crypto.randomUUID()
+            : `mock-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`);
+        const at = run.at ?? new Date().toISOString();
+        const record: MockRunRecord = {
+          id,
+          paperDayId: run.paperDayId,
+          label: run.label,
+          correct: run.correct,
+          total: run.total,
+          percent: run.percent,
+          at,
+        };
+        if (typeof run.timedSec === "number" && run.timedSec > 0) {
+          record.timedSec = run.timedSec;
+        }
+        const prev = get().mockRuns;
+        set({
+          mockRuns: [record, ...prev.filter((item) => item.id !== id)].slice(
+            0,
+            MOCK_RUNS_CAP,
+          ),
+        });
+      },
       completeDay: (dayId) => {
         const state = get();
         const progress = afterComplete(state.progress, dayId);
@@ -278,6 +344,7 @@ export const useTrainerStore = create<TrainerState>()(
           sessions: {},
           streak: 0,
           lastStudyDate: null,
+          mockRuns: [],
         }),
     }),
     {
@@ -297,6 +364,7 @@ export const useTrainerStore = create<TrainerState>()(
         focusMode: state.focusMode,
         planHideDone: state.planHideDone,
         largeText: state.largeText,
+        mockRuns: state.mockRuns,
       }),
       merge: (persistedState, currentState) => {
         const persisted = (persistedState ?? {}) as Partial<TrainerState>;
@@ -330,6 +398,7 @@ export const useTrainerStore = create<TrainerState>()(
           /^\d{4}-\d{2}-\d{2}$/.test(persisted.lastStudyDate)
             ? persisted.lastStudyDate
             : null;
+        const mockRuns = normalizeMockRuns(persisted.mockRuns);
         return {
           ...currentState,
           ...persisted,
@@ -340,6 +409,7 @@ export const useTrainerStore = create<TrainerState>()(
           largeText,
           streak,
           lastStudyDate,
+          mockRuns,
         };
       },
     },

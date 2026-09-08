@@ -5,6 +5,7 @@ import type {
   AnswerRecord,
   DaySession,
   Mistake,
+  MockRunRecord,
   Progress,
 } from "@/lib/types";
 
@@ -19,6 +20,7 @@ export interface ProgressBackup {
   unlockAll: boolean;
   streak: number;
   lastStudyDate: string | null;
+  mockRuns?: MockRunRecord[];
 }
 
 const ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -49,6 +51,7 @@ export function snapshotProgress(): ProgressBackup {
     unlockAll: s.unlockAll,
     streak: s.streak,
     lastStudyDate: s.lastStudyDate,
+    mockRuns: s.mockRuns,
   };
 }
 
@@ -142,6 +145,10 @@ export function validateProgressBackup(
     return { ok: false, error: "缺少进度字段（progress / mistakes 等）" };
   }
 
+  if (raw.mockRuns != null && !Array.isArray(raw.mockRuns)) {
+    return { ok: false, error: "mockRuns 应为数组" };
+  }
+
   return {
     ok: true,
     data: {
@@ -156,6 +163,9 @@ export function validateProgressBackup(
       unlockAll,
       streak,
       lastStudyDate,
+      mockRuns: (Array.isArray(raw.mockRuns)
+        ? raw.mockRuns
+        : []) as MockRunRecord[],
     },
   };
 }
@@ -172,6 +182,7 @@ export function applyProgressBackup(data: ProgressBackup) {
     unlockAll: data.unlockAll,
     streak: data.streak,
     lastStudyDate: data.lastStudyDate,
+    mockRuns: data.mockRuns ?? [],
   });
 }
 

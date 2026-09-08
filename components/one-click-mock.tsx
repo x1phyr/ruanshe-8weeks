@@ -116,6 +116,23 @@ export function mockTimeLimitSec(run: MockRun): number {
   return run.slot === "morning" ? MORNING_MOCK_SEC : AFTERNOON_MOCK_SEC;
 }
 
+/** Compact 套别 label for mock history (e.g. 上午·套1). */
+export function mockHistoryLabel(run: MockRun): string {
+  const slot = run.slot === "morning" ? "上午" : "下午";
+  return `${slot}·${run.setLabel}`;
+}
+
+/** Resolve 套别 label for a paper dayId (learn flow / dashboard). */
+export function mockHistoryLabelForDayId(dayId: string): string | null {
+  for (const m of MORNING_MOCK_SETS) {
+    if (m.dayId === dayId) return `上午·${m.setLabel}`;
+  }
+  for (const m of AFTERNOON_MOCK_SETS) {
+    if (m.dayId === dayId) return `下午·${m.setLabel}`;
+  }
+  return null;
+}
+
 /** Active QuizRun for a one-click mock; parent supplies back chrome. */
 export function OneClickMockQuiz({
   run,
@@ -137,6 +154,10 @@ export function OneClickMockQuiz({
       timeLimitSec={mockTimeLimitSec(run)}
       finishLabel={finishLabel}
       onFinished={onFinished}
+      mockRecord={{
+        paperDayId: run.dayId,
+        label: mockHistoryLabel(run),
+      }}
     />
   );
 }

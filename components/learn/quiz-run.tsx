@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Flag } from "lucide-react";
 import { FocusModeToggle } from "@/components/focus-mode";
 import { Button } from "@/components/ui/button";
@@ -31,6 +31,11 @@ interface QuizRunProps {
   finishLabel?: string;
   /** When set, show countdown and auto-finish on timeout (seconds). */
   timeLimitSec?: number;
+  /**
+   * When set, append one mockRuns entry when the scorecard first appears
+   * (one-click mock, or paper-day practice ≥40).
+   */
+  mockRecord?: { paperDayId: string; label: string };
 }
 
 const NAV_THRESHOLD = 12;
@@ -115,9 +120,12 @@ export function QuizRun({
   navKey,
   finishLabel = "继续",
   timeLimitSec,
+  mockRecord,
 }: QuizRunProps) {
   const recordAnswer = useTrainerStore((s) => s.recordAnswer);
   const reviewMistakeAnswer = useTrainerStore((s) => s.reviewMistakeAnswer);
+  const appendMockRun = useTrainerStore((s) => s.appendMockRun);
+  const mockRecordedRef = useRef(false);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, OptionKey>>({});
   const [recorded, setRecorded] = useState<Set<string>>(() => new Set());
@@ -169,6 +177,19 @@ export function QuizRun({
     if (!timed || scorecard || remain > 0) return;
     forceFinish(true);
   }, [timed, scorecard, remain, forceFinish]);
+
+  useEffect(() => {
+    if (!scorecard || !mockRecord || mockRecordedRef.current) return;
+    mockRecordedRef.current = true;
+    appendMockRun({
+      paperDayId: mockRecord.paperDayId,
+      label: mockRecord.label,
+      correct: scorecard.correct,
+      total: scorecard.total,
+      percent: scorecard.percent,
+      timedSec: timed ? timeLimitSec : undefined,
+    });
+  }, [scorecard, mockRecord, appendMockRun, timed, timeLimitSec]);
 
   const goTo = useCallback(
     (next: number) => {

@@ -93,7 +93,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ## 5. 功能清单
 
-近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion；本轮另加 **一键上午/下午模考**（练习页 + 临考模式）。CI 题库检查因 workflow 范围暂缓。
+近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考；本轮另加 **模考历史**（zustand `mockRuns`，仪表盘最近 5 条）。CI 题库检查因 workflow 范围暂缓。
 
 | 能力 | 说明 |
 | --- | --- |
@@ -115,6 +115,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **timed20** | 限时 20 分钟卷；到时自动交卷 |
 | **quick15** | 15 分钟速刷：至多 10 题，`timeLimitSec=900`；仪表盘弱项卡 / 练习页入口 |
 | **一键模考** | 练习页 + 临考模式：已解锁试卷日（或 `unlockAll`）可开「一键上午模考」套1 `week-5/day-6` / 套2 `week-7/day-5`（85 题 · `timeLimitSec=9000`）与「一键下午模考」套1 `week-5/day-7` / 套2 `week-7/day-6`（25 题 · `7200`）；`QuizRun` + `navKey` 标记 + 完整 scorecard；文案「自编模拟 85 题 · 150 分钟」/「自编模拟 25 题 · 120 分钟」 |
+| **模考历史** | Zustand 持久化 `mockRuns`（最多 20，最新在前）：`{ id, paperDayId, label, correct, total, percent, at, timedSec? }`。**记录时机**：`QuizRun` 成绩单首次出现时——① 一键模考（`OneClickMockQuiz` 传 `mockRecord`，含下午 25 题）；② 日训试卷日练习且题数 ≥40（上午 85）。仪表盘紧凑「模考历史」展示最近 5 条（日期 · 正确率 · 套别如 `上午·套1`）；空则隐藏。`resetAll` / 进度备份含此字段 |
 | **PWA** | 可「安装到桌面」（manifest + SW） |
 | **专注模式 focus** | 隐藏侧栏 / 底栏；偏好持久化 |
 | **大号文字 largeText** | 调试设置开关；略放大正文字号与测验题干/选项；持久化，重置进度保留 |
@@ -139,7 +140,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | --- | --- |
 | `lib/config.ts` | `examDate`、`STORAGE_KEY`、`BASE_PATH`、应用名 |
 | `lib/calendar.ts` | 53 日课表元数据（title / module / kind / status） |
-| `lib/store.ts` | Zustand 进度、错题、开课日、解锁、专注、streak |
+| `lib/store.ts` | Zustand 进度、错题、开课日、解锁、专注、streak、`mockRuns` |
 | `lib/progress.ts` | 解锁、完课、通关判定 |
 | `lib/backup.ts` | 进度备份导入导出 |
 | `lib/module-stats.ts` | 模块正确率 |
@@ -190,10 +191,11 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 - [ ] Pages 能打开仪表盘与某一 live 日训
 - [ ] 试卷日能进计时壳并拉起自编模考（85 / 25）
 - [ ] 练习页 / 临考模式「一键上午模考」「一键下午模考」在 unlockAll 或对应试卷日解锁时可见，限时与成绩单正常
+- [ ] 一键模考或试卷日（≥40 题）交卷后仪表盘「模考历史」出现记录；空则不显示该卡
 - [ ] 改 startDate 后计划日期平移、已完成 week-N/day-M 仍在
 - [ ] 未引入教材扫描件或受版权保护原文
 
 ---
 
-*文档刷新：2026-09-09（一键模考）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **820**）。*
+*文档刷新：2026-09-09（模考历史）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **820**）。*
 
