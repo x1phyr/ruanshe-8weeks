@@ -60,6 +60,8 @@ interface TrainerState {
   appendMockRun: (
     run: Omit<MockRunRecord, "id" | "at"> & { id?: string; at?: string },
   ) => void;
+  /** Clear all mock run history. */
+  clearMockRuns: () => void;
   completeDay: (dayId: string) => void;
   resetAll: () => void;
 }
@@ -316,6 +318,7 @@ export const useTrainerStore = create<TrainerState>()(
           ),
         });
       },
+      clearMockRuns: () => set({ mockRuns: [] }),
       completeDay: (dayId) => {
         const state = get();
         const progress = afterComplete(state.progress, dayId);

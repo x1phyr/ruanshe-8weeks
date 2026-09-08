@@ -259,6 +259,7 @@ export function DashboardView() {
         doneCount={doneCount}
         pending={pending}
         answers={answers}
+        lastMock={mockRuns[0] ?? null}
       />
 
       <WeekProgressCard stats={weekStats} />
@@ -368,9 +369,18 @@ function buildDailyReportText(opts: {
   doneCount: number;
   pending: number;
   weakModule: { module: string; accuracy: number } | null;
+  lastMock: MockRunRecord | null;
 }): string {
-  const { today, daysLeft, streak, accuracy, doneCount, pending, weakModule } =
-    opts;
+  const {
+    today,
+    daysLeft,
+    streak,
+    accuracy,
+    doneCount,
+    pending,
+    weakModule,
+    lastMock,
+  } = opts;
   const daysLine =
     daysLeft > 0
       ? `距考试：${daysLeft} 天`
@@ -391,6 +401,15 @@ function buildDailyReportText(opts: {
       `弱项模块：${weakModule.module}（正确率 ${weakModule.accuracy}%）`,
     );
   }
+  if (lastMock) {
+    const mockDay = lastMock.at.slice(0, 10);
+    const dateLabel = /^\d{4}-\d{2}-\d{2}$/.test(mockDay)
+      ? formatDateShort(mockDay)
+      : mockDay;
+    lines.push(
+      `最近模考：${lastMock.label} ${lastMock.percent}%（${dateLabel}）`,
+    );
+  }
   lines.push(SITE_URL);
   return lines.join("\n");
 }
@@ -403,6 +422,7 @@ function CopyDailyReportButton({
   doneCount,
   pending,
   answers,
+  lastMock,
 }: {
   today: string;
   daysLeft: number;
@@ -411,6 +431,7 @@ function CopyDailyReportButton({
   doneCount: number;
   pending: number;
   answers: AnswerRecord[];
+  lastMock: MockRunRecord | null;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -446,6 +467,7 @@ function CopyDailyReportButton({
             doneCount,
             pending,
             weakModule,
+            lastMock,
           });
           try {
             await navigator.clipboard.writeText(text);
