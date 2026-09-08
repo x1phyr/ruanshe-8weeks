@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,6 +22,14 @@ import { examConfig } from "@/lib/config";
 import { addDaysISO, todayISO } from "@/lib/dates";
 import { useTrainerStore } from "@/lib/store";
 
+function isTypingTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+  if (target.isContentEditable) return true;
+  return Boolean(target.closest("[contenteditable='true']"));
+}
+
 function normalizeISO(value: string): string | null {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
   return value;
@@ -29,8 +37,11 @@ function normalizeISO(value: string): string | null {
 
 export function SimulateDialog({
   children,
+  hotkeyOpen = false,
 }: {
   children: React.ReactNode;
+  /** When true, `?` opens this dialog (ignored while typing). */
+  hotkeyOpen?: boolean;
 }) {
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const setSimulateDate = useTrainerStore((s) => s.setSimulateDate);
@@ -55,6 +66,21 @@ export function SimulateDialog({
     setImportHint(null);
     setOpen(true);
   }
+
+  useEffect(() => {
+    if (!hotkeyOpen) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTypingTarget(event.target)) return;
+      if (event.key !== "?") return;
+      event.preventDefault();
+      setValue(simulateDate ?? todayISO());
+      setImportHint(null);
+      setOpen(true);
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [hotkeyOpen, simulateDate]);
 
   function applyDate(next: string | null) {
     if (next === null) {
@@ -192,6 +218,28 @@ export function SimulateDialog({
                 checked={largeText}
                 onCheckedChange={setLargeText}
               />
+            </div>
+            <div className="rounded-md border border-border p-3">
+              <div className="text-sm font-medium">答题快捷键</div>
+              <ul className="mt-1.5 space-y-0.5 text-xs leading-5 text-muted-foreground">
+                <li>
+                  <span className="font-mono text-foreground">1–4</span>
+                  {" / "}
+                  <span className="font-mono text-foreground">A–D</span>
+                  {" "}选题
+                </li>
+                <li>
+                  <span className="font-mono text-foreground">Space</span>
+                  {" / "}
+                  <span className="font-mono text-foreground">Enter</span>
+                  {" "}确认或下一题
+                </li>
+                <li>题号格跳转 · 标记按钮可标复查</li>
+                <li>
+                  <span className="font-mono text-foreground">?</span>
+                  {" "}打开本面板（非输入时）
+                </li>
+              </ul>
             </div>
             <div className="rounded-md border border-border p-3">
               <div className="text-sm font-medium">进度备份</div>

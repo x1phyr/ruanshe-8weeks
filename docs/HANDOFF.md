@@ -102,7 +102,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **simulate** | 模拟「今日」日期（调试 / 赶进度） |
 | **模块练习** | `/practice` 按模块刷已解锁题 |
 | **搜索** | 关键词搜题干 / 知识点（受解锁约束） |
-| **测验导航 / 标记 / 快捷键** | 题号跳转、标记、键盘操作；标记可按 `navKey` 进 sessionStorage |
+| **测验导航 / 标记 / 快捷键** | 题号跳转、标记、键盘操作；标记可按 `navKey` 进 sessionStorage；调试设置内「答题快捷键」速览（`?` 可开） |
 | **scorecard** | 交卷后正确率与分专题汇总 |
 | **薄弱模块** | 错题 + 作答统计；仪表盘弱项卡 |
 | **streak** | 连续学习天数 |
