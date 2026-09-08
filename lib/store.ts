@@ -29,9 +29,12 @@ interface TrainerState {
   lastStudyDate: string | null;
   /** Debug: browse all days without sequential unlock. Not cleared by resetAll. */
   unlockAll: boolean;
+  /** Hide app-shell sidebar / bottom nav during learn & quiz. Persisted. */
+  focusMode: boolean;
   setSimulateDate: (value: string | null) => void;
   setStartDate: (value: string) => void;
   setUnlockAll: (value: boolean) => void;
+  setFocusMode: (value: boolean) => void;
   markStep: (dayId: string, step: LearnStep) => void;
   recordAnswer: (question: Question, selected: OptionKey, today: string) => boolean;
   reviewMistakeAnswer: (
@@ -146,12 +149,14 @@ export const useTrainerStore = create<TrainerState>()(
       streak: 0,
       lastStudyDate: null,
       unlockAll: false,
+      focusMode: false,
       setSimulateDate: (value) => set({ simulateDate: value }),
       setStartDate: (value) => {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return;
         set({ startDate: value });
       },
       setUnlockAll: (value) => set({ unlockAll: value }),
+      setFocusMode: (value) => set({ focusMode: value }),
       markStep: (dayId, step) => {
         const current = get().sessions[dayId] ?? emptySession();
         const next = { ...current };
@@ -260,6 +265,7 @@ export const useTrainerStore = create<TrainerState>()(
         streak: state.streak,
         lastStudyDate: state.lastStudyDate,
         unlockAll: state.unlockAll,
+        focusMode: state.focusMode,
       }),
       merge: (persistedState, currentState) => {
         const persisted = (persistedState ?? {}) as Partial<TrainerState>;
@@ -271,6 +277,10 @@ export const useTrainerStore = create<TrainerState>()(
         const unlockAll =
           typeof persisted.unlockAll === "boolean"
             ? persisted.unlockAll
+            : false;
+        const focusMode =
+          typeof persisted.focusMode === "boolean"
+            ? persisted.focusMode
             : false;
         const streak =
           typeof persisted.streak === "number" && persisted.streak >= 0
@@ -286,6 +296,7 @@ export const useTrainerStore = create<TrainerState>()(
           ...persisted,
           startDate,
           unlockAll,
+          focusMode,
           streak,
           lastStudyDate,
         };

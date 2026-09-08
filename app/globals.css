@@ -122,6 +122,17 @@
   color: #8b949e;
 }
 
+
+/* —— Focus mode: hide app-shell chrome during learn / quiz —— */
+body.focus-mode .app-shell-aside,
+body.focus-mode .app-shell-bottom-nav {
+  display: none !important;
+}
+
+body.focus-mode .app-shell-main {
+  padding-bottom: 0 !important;
+}
+
 /* —— Print: /plan clean calendar dump —— */
 @media print {
   :root,

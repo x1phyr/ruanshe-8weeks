@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { FocusModeExitButton, FocusModeSync } from "@/components/focus-mode";
 import { PwaRegister } from "@/components/pwa-register";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useTrainerStore } from "@/lib/store";
@@ -16,6 +17,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <TooltipProvider>
+      <FocusModeSync />
+      <FocusModeExitButton />
       <PwaRegister />
       {children}
     </TooltipProvider>

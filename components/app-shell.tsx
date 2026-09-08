@@ -35,7 +35,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-dvh bg-background">
-      <aside className="print-hidden sticky top-0 hidden h-dvh w-[220px] shrink-0 flex-col border-r border-border bg-background md:flex">
+      <aside className="app-shell-aside print-hidden sticky top-0 hidden h-dvh w-[220px] shrink-0 flex-col border-r border-border bg-background md:flex">
         <div className="flex h-14 items-center gap-2.5 px-4">
           <span className="flex size-6 items-center justify-center rounded-sm border border-border bg-surface font-mono text-[10px] text-brand">
             软
@@ -87,8 +87,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <div className="flex-1 pb-16 md:pb-0 print:pb-0">{children}</div>
-        <nav className="print-hidden fixed inset-x-0 bottom-0 z-40 flex h-14 border-t border-border bg-background/95 backdrop-blur md:hidden">
+        <div className="app-shell-main flex-1 pb-16 md:pb-0 print:pb-0">{children}</div>
+        <nav className="app-shell-bottom-nav print-hidden fixed inset-x-0 bottom-0 z-40 flex h-14 border-t border-border bg-background/95 backdrop-blur md:hidden">
           {items.map((item) => {
             const Icon = item.icon;
             const active = isActive(pathname, item.href);
