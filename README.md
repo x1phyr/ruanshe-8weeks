@@ -14,6 +14,11 @@
 
 Pages 是项目站点，资源前缀为 `/ruanshe-8weeks`。仓库设置里 Pages source 选 **GitHub Actions**（不要用 branch `/docs`）。推到 `main` 后由 `.github/workflows/pages.yml` 构建 `out/` 并部署。
 
+## 交接文档
+
+完整维护交接见 [docs/HANDOFF.md](docs/HANDOFF.md)（产品目标、内容现状、功能清单、关键文件、约束与建议下一步）。
+
+
 ## 本地运行
 
 ```bash
