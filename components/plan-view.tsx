@@ -18,20 +18,11 @@ import {
 } from "@/lib/calendar";
 import { examConfig } from "@/lib/config";
 import { examCountdown, formatDateShort, pad2, todayISO, weekdayLabel } from "@/lib/dates";
-import { practiceModuleHref } from "@/lib/practice";
+import { dayPracticeModule, practiceModuleHref } from "@/lib/practice";
 import { firstIncompleteUnlocked, isCompleted, isUnlocked } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
 import type { StudyDay } from "@/lib/types";
 import { cn } from "@/lib/utils";
-
-/** Primary module for plan → practice CTA; skip paper/mock and stub/empty. */
-function dayPracticeModule(day: StudyDay): string | null {
-  if (day.kind === "paper" || day.status === "paper") return null;
-  if (day.status === "stub") return null;
-  const module = day.module?.trim();
-  if (!module || module === "真题卷") return null;
-  return module;
-}
 
 export function PlanView() {
   const progress = useTrainerStore((s) => s.progress);

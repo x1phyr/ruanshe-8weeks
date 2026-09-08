@@ -15,6 +15,7 @@ import { QuizRun, type QuizFinishSummary } from "@/components/learn/quiz-run";
 import { mockHistoryLabelForDayId } from "@/components/one-click-mock";
 import { dayHref, getDayById, getNextDay, kindLabel } from "@/lib/calendar";
 import { pad2, todayISO } from "@/lib/dates";
+import { dayPracticeModule, practiceModuleHref } from "@/lib/practice";
 import { dueMistakes, isCompleted, isUnlocked } from "@/lib/progress";
 import { getSession, resolveStep, useTrainerStore } from "@/lib/store";
 import type { LearnStep, MistakeReason, StudyDay } from "@/lib/types";
@@ -73,6 +74,17 @@ export function LearnSession({ day }: { day: StudyDay }) {
       .map((item) => getQuestionById(item.questionId))
       .filter((item): item is NonNullable<typeof item> => Boolean(item));
   }, [mistakes, today]);
+  const practiceModule = dayPracticeModule(scheduled);
+  const practiceModuleLink =
+    practiceModule != null ? (
+      <Link
+        href={practiceModuleHref(practiceModule)}
+        className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+        title={`练习模块：${practiceModule}`}
+      >
+        练此模块
+      </Link>
+    ) : null;
 
   if (!unlocked) {
     return (
@@ -151,15 +163,17 @@ export function LearnSession({ day }: { day: StudyDay }) {
           <p className="mt-2 mb-5 text-sm text-muted-foreground">{scheduled.blurb}</p>
           {scheduled.status === "paper" ? <PaperTimer day={scheduled} /> : null}
           {lesson ? <LessonView lesson={lesson} /> : null}
-          <Button
-            className="mt-6"
-            onClick={() => {
-              markStep(scheduled.id, "learn");
-              setForced("practice");
-            }}
-          >
-            {bank.length > 0 ? "开始练习" : "下一步"}
-          </Button>
+          <div className="mt-6 flex flex-wrap items-center gap-2">
+            <Button
+              onClick={() => {
+                markStep(scheduled.id, "learn");
+                setForced("practice");
+              }}
+            >
+              {bank.length > 0 ? "开始练习" : "下一步"}
+            </Button>
+            {practiceModuleLink}
+          </div>
         </div>
       ) : null}
 
@@ -186,7 +200,10 @@ export function LearnSession({ day }: { day: StudyDay }) {
         ) : (
           <div>
             <div className="label-caps">PRACTICE · {pad2(bank.length)} 题</div>
-            <h2 className="mt-2 mb-5 text-xl font-medium">提交后立刻看解释</h2>
+            <div className="mt-2 mb-5 flex flex-wrap items-center justify-between gap-2">
+              <h2 className="text-xl font-medium">提交后立刻看解释</h2>
+              {practiceModuleLink}
+            </div>
             <QuizRun
               questions={bank}
               mode="daily"
@@ -337,6 +354,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
               只练错题
               {wrongOnlyQuestions.length > 0 ? ` ${wrongOnlyQuestions.length}` : ""}
             </Button>
+            {practiceModuleLink}
             <Link
               href="/"
               className="inline-flex h-8 items-center rounded-md px-2.5 text-sm text-muted-foreground hover:text-foreground"

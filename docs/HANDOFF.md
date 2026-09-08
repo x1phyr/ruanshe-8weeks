@@ -108,7 +108,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **streak** | 连续学习天数 |
 | **错题模块筛选 / 清空已掌握** | `/mistakes` 按模块 chip 筛选；导出与只练错题、已掌握桶「清空已掌握」均尊重当前筛选（无筛选则清全部已掌握） |
 | **进度备份** | 调试设置内导出 / 导入完整本地进度；可重置进度 |
-| **计划跳转 / 打印 / 模块练习** | `/plan` 跳到指定日（受解锁）；非试卷/非 stub 日紧凑「练此模块」→ `practiceModuleHref`；`window.print()` |
+| **计划跳转 / 打印 / 模块练习** | `/plan` 与日训学习/练习步：非试卷/非 stub 日紧凑「练此模块」→ `practiceModuleHref`；计划另支持跳日与 `window.print()` |
 | **计划只看未完成** | `/plan` chip 隐藏 completedDays（zustand 持久化）；整周完成显示「本周已完成」 |
 | **retry wrong** | 只练错题（到期优先） |
 | **random20** | 随机抽至多 20 题（不足则全抽） |
