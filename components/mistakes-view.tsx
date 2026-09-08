@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { getQuestionById } from "@/data/questions";
+import { getQuestionById, sampleQuestions } from "@/data/questions";
 import { Button } from "@/components/ui/button";
 import {
   EmptyState,
@@ -18,9 +18,10 @@ import { resolveMistakeModule } from "@/lib/module-stats";
 import { mistakesModuleHref, readModuleFromUrl } from "@/lib/practice";
 import { dueMistakes, mistakeBucket } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
-import type { Mistake, MistakeBucket, MistakeReason } from "@/lib/types";
+import type { Mistake, MistakeBucket, MistakeReason, Question } from "@/lib/types";
 
 const ALL_MODULES = "全部";
+const FILTERED_RETRY_CAP = 30;
 
 function resolveWrongOnlyQuestions(mistakes: Mistake[], today: string) {
   const due = dueMistakes(mistakes, today);
@@ -121,7 +122,12 @@ export function MistakesView() {
   const pathname = usePathname();
   const [tab, setTab] = useState<MistakeBucket>("needs-review");
   const [moduleFilter, setModuleFilter] = useState<string>(ALL_MODULES);
-  const [drillMode, setDrillMode] = useState<"due" | "wrong-only" | null>(null);
+  const [drillMode, setDrillMode] = useState<
+    "due" | "wrong-only" | "filtered" | null
+  >(null);
+  const [filteredSession, setFilteredSession] = useState<Question[] | null>(
+    null,
+  );
 
   const today = todayISO(simulateDate);
   const stamp = exportDateStamp(today);
@@ -240,6 +246,45 @@ export function MistakesView() {
     );
   }
 
+  if (drillMode === "filtered" && filteredSession && filteredSession.length > 0) {
+    const tabLabel =
+      tabs.find((item) => item.id === tab)?.label ?? tab;
+    return (
+      <PageFrame>
+        <button
+          type="button"
+          onClick={() => {
+            setDrillMode(null);
+            setFilteredSession(null);
+          }}
+          className="label-caps hover:text-foreground"
+        >
+          ← 返回错题本
+        </button>
+        <h1 className="mt-2 text-xl font-medium">重练当前筛选</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {filterActive ? `${moduleFilter} · ` : ""}
+          {tabLabel} · 本次 {filteredSession.length} 题
+          {list.length > FILTERED_RETRY_CAP
+            ? `（从 ${list.length} 题中随机抽取）`
+            : ""}
+        </p>
+        <div className="mt-6">
+          <QuizRun
+            questions={filteredSession}
+            mode="review"
+            navKey={`mistakes:filtered:${tab}:${moduleFilter}`}
+            finishLabel="返回错题本"
+            onFinished={() => {
+              setDrillMode(null);
+              setFilteredSession(null);
+            }}
+          />
+        </div>
+      </PageFrame>
+    );
+  }
+
   return (
     <PageFrame>
       <PageHeader
@@ -284,6 +329,34 @@ export function MistakesView() {
             </Button>
             <Button
               size="sm"
+              disabled={list.length === 0}
+              onClick={() => {
+                const pool = list
+                  .map((item) => getQuestionById(item.questionId))
+                  .filter(
+                    (item): item is NonNullable<typeof item> => Boolean(item),
+                  );
+                if (pool.length === 0) return;
+                const picked = sampleQuestions(pool, FILTERED_RETRY_CAP);
+                if (picked.length === 0) return;
+                setFilteredSession(picked);
+                setDrillMode("filtered");
+              }}
+              title={
+                list.length === 0
+                  ? "当前筛选下没有可练题目"
+                  : list.length > FILTERED_RETRY_CAP
+                    ? `从当前筛选 ${list.length} 题中随机抽取 ${FILTERED_RETRY_CAP} 题重练`
+                    : `重练当前筛选共 ${list.length} 题`
+              }
+            >
+              重练当前筛选
+              {list.length > 0
+                ? ` ${Math.min(list.length, FILTERED_RETRY_CAP)}`
+                : ""}
+            </Button>
+            <Button
+              size="sm"
               variant="outline"
               disabled={wrongOnlyQuestions.length === 0}
               onClick={() => {
@@ -310,7 +383,11 @@ export function MistakesView() {
                 : ""}
             </Button>
             {dueQuestions.length > 0 ? (
-              <Button size="sm" onClick={() => setDrillMode("due")}>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setDrillMode("due")}
+              >
                 复习 {dueQuestions.length} 题
               </Button>
             ) : null}
