@@ -1943,7 +1943,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "「链表插入一定 O(1)」？",
-          body: "只有在你已经拿到插入位置的前驱（或有头结点做头插）时才是。若题干是「在第 i 个位置插入」且要从头数到 i−1，访问本身就是 O(n)。",
+          body: "只有在你已经拿到插入位置的前驱（或有头结点做头插）时才是。若题干是「在第 i 个位置插入」且要从头数到 i−1，访问本身就是 O(n)。双链「已知 p 删 p」才是真 O(1)。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（复杂度·线性表）",
+          body: "① 大 O 去系数、看主项。② 随机访问 O(1)≠插入 O(1)。③ 「第 i 位」链表先要走到前驱。④ 头结点统一空/非空操作，不改按位 O(n)。⑤ 循环+尾指针可 O(1) 头插；只有头指针则尾插可能 O(n)。⑥ log n 慢增长，别当成比 n 大。",
         },
       },
       {
@@ -2018,7 +2026,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "空满都写成 front==rear？",
-          body: "若空满都用同一条件，必须另加 length 或 tag。牺牲一格的方案里：空 front==rear，满 (rear+1)%m==front。题干若给了另一种约定，以题为准。",
+          body: "若空满都用同一条件，必须另加 length 或 tag。牺牲一格的方案里：空 front==rear，满 (rear+1)%m==front。题干若给了另一种约定，以题为准。元素个数常用 (rear−front+m)%m。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（栈·队列）",
+          body: "① 栈 LIFO / 队列 FIFO，别记反。② 出栈合法性：要出的若在栈中更深则非法。③ 假溢出≠真满，循环队列治它。④ 括号/撤销/递归→栈；打印/BFS→队列。⑤ 后缀运算在后，别把中缀符号硬挪。⑥ 共享栈两端向中，顶相遇才满。",
         },
       },
       {
@@ -2026,7 +2042,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "收口",
-          body: "今天会：LIFO/FIFO、合法出栈判断思路、循环队列空满与元素个数。表达式题只要求跟步骤，不考手写大编译器。",
+          body: "今天会：LIFO/FIFO、合法出栈判断思路、循环队列空满与元素个数。表达式题只要求跟步骤，不考手写大编译器。共 12 道陷阱题。",
         },
       },
     ],
@@ -2103,7 +2119,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "WPL 别算成边权和",
-          body: "是「叶权 × 深度（或路径上边数）」，不是把所有边权加一遍。合并过程中的内部结点权也会出现在某些等价算法里，但标准定义盯叶子。",
+          body: "是「叶权 × 深度（或路径上边数）」，不是把所有边权加一遍。合并过程中的内部结点权也会出现在某些等价算法里，但标准定义盯叶子。n 叶 → 总结点 2n−1。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（树·堆·Huffman）",
+          body: "① 还原必须有中序；先+后一般不唯一。② 中序=LNR，别写成先序。③ 堆是完全树+堆序，中序无序；BST 有序但不一定完全。④ 插入上滤、删顶下滤，方向别反。⑤ Huffman 无度 1 结点；WPL 盯叶子。⑥ 满二叉树叶=(n+1)/2，别套成 n/2。",
         },
       },
       {
@@ -2111,7 +2135,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "收口",
-          body: "三种遍历字母序别混；完全二叉树编号公式会用；Huffman 会算小规模 WPL。图论明天单独一天。",
+          body: "三种遍历字母序别混；完全二叉树编号公式会用；Huffman 会算小规模 WPL。图论明天单独一天。共 12 道题。",
         },
       },
     ],
@@ -2186,7 +2210,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "Prim ≠ Dijkstra",
-          body: "两者都「贪心扩点」，但 Dijkstra 比的是到源点的路径长，Prim 比的是跨割的边权。别把最短路径树当成最小生成树。",
+          body: "两者都「贪心扩点」，但 Dijkstra 比的是到源点的路径长，Prim 比的是跨割的边权。别把最短路径树当成最小生成树。负权别直接套 Dijkstra。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（图算法）",
+          body: "① 稀疏→邻接表，稠密→矩阵。② 无权最少边→BFS；负权单源→别用 Dijkstra。③ 任意点对→Floyd。④ 总造价连通最低→MST，不是单源最短路。⑤ 拓扑失败=有环。⑥ 度数和=2e（无向）。本周不做深 DP/回溯。",
         },
       },
       {
@@ -2194,7 +2226,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "收口",
-          body: "会选 BFS/DFS；Dijkstra/Floyd/Prim/Kruskal 的前提各说清一句。贪心/DP/回溯深挖不在本周——留给后面算法精要周。",
+          body: "会选 BFS/DFS；Dijkstra/Floyd/Prim/Kruskal 的前提各说清一句。贪心/DP/回溯深挖不在本周——留给后面算法精要周。共 12 道题。",
         },
       },
     ],
@@ -2288,7 +2320,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "快排最坏",
-          body: "已排序 / 逆序 + 总取最边元素作枢轴 → 每次只减 1 → O(n²)，栈也可能到 O(n)。随机枢轴或三数取中是对策。题干强调「最坏」时，别把平均阶抄上去。",
+          body: "已排序 / 逆序 + 总取最边元素作枢轴 → 每次只减 1 → O(n²)，栈也可能到 O(n)。随机枢轴或三数取中是对策。题干强调「最坏」时，别把平均阶抄上去。本日保持 12 题，盯稳定/空间/区间开闭三件套。",
         },
       },
       { type: "h2", text: "迷你例③：堆排删顶三步（原创）" },
@@ -2391,7 +2423,15 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "trap",
           title: "next[0] / next[1]",
-          body: "教材有 next[1]=0 或 −1 等不同约定。做题以题干数组定义为准，不要把两套下标体系混用。",
+          body: "教材有 next[1]=0 或 −1 等不同约定。做题以题干数组定义为准，不要把两套下标体系混用。KMP 失配主串不回退。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（查找·哈希·串）",
+          body: "① 折半：有序+随机访问，链表不行。② α=关键字数/表长，越大冲突越多。③ 开放定址删要留标记；拉链挂同槽链。④ 除留余数模宜取素数。⑤ 分块：块间有序、块内可无序。⑥ KMP≠两边回退。不做深 DP。",
         },
       },
       {
@@ -2399,7 +2439,7 @@ const liveLessons: Lesson[] = [
         callout: {
           tone: "tip",
           title: "收口",
-          body: "折半前提、哈希冲突两策略、KMP「不回退主串」一句话。明天复盘本周易混点，不新开 DP。",
+          body: "折半前提、哈希冲突两策略、KMP「不回退主串」一句话。明天复盘本周易混点，不新开 DP。共 12 道题。",
         },
       },
     ],
@@ -2420,7 +2460,7 @@ const liveLessons: Lesson[] = [
     blocks: [
       {
         type: "p",
-        text: "kind=review。本周只收数据结构易混点，不做贪心/DP/回溯深潜。先过出题人对照表，再做陷阱题，错题进错题本。",
+        text: "kind=review。本周只收数据结构易混点，不做贪心/DP/回溯深潜。先过出题人对照表，再做 12 道陷阱题，错题进错题本。",
       },
       { type: "h2", text: "本周出题人陷阱清单" },
       {
@@ -2459,6 +2499,14 @@ const liveLessons: Lesson[] = [
           tone: "trap",
           title: "最小生成树 ≠ 最短路径",
           body: "题干出现「到某点距离最短」却塞 Prim/Kruskal，或「铺光缆总费用最小」却塞 Dijkstra——这是第 2 周经典嫁接陷阱。先判目标：路径长还是生成树权值和。",
+        },
+      },
+      {
+        type: "callout",
+        callout: {
+          tone: "trap",
+          title: "出题人陷阱（第 2 周总复盘）",
+          body: "① 链表第 i 位≠O(1)。② 循环队列空满公式别套反。③ 还原缺中序。④ Dijkstra 禁负权；MST≠单源最短。⑤ 稳定+最坏 n log n→归并。⑥ 开放定址删除留标记；KMP 主串不回退。今天 12 题，不新开 DP/回溯。",
         },
       },
       {
