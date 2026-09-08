@@ -199,5 +199,5 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ---
 
-*文档刷新：2026-09-09（今日陷阱 42 + `/practice?module=` 预选）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **820**）。*
+*文档刷新：2026-09-09（弱项/推荐/陷阱等模块入口统一 `/practice?module=`）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **820**）。*
 

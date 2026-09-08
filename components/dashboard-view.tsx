@@ -23,7 +23,7 @@ import {
   MODULE_STATS_MIN_ATTEMPTS,
   topWeakModules,
 } from "@/lib/module-stats";
-import { questionsForModule } from "@/lib/practice";
+import { practiceModuleHref, questionsForModule } from "@/lib/practice";
 import { exportProgressBackup } from "@/lib/backup";
 import { coachTipForDate } from "@/lib/coach-tips";
 import { dailyTrapForDate } from "@/data/daily-traps";
@@ -1139,6 +1139,33 @@ function TodayRecommendCard({
             {recommendation.cta}
             <ArrowRight className="size-3.5" />
           </Link>
+        ) : recommendation.kind === "module" && weakModule ? (
+          <div className="flex shrink-0 flex-wrap items-center justify-end gap-1.5">
+            <Link
+              href={practiceModuleHref(weakModule.module)}
+              className="inline-flex h-7 items-center gap-1 rounded-md border border-border px-2.5 text-xs hover:bg-muted"
+            >
+              去练习
+              <ArrowRight className="size-3.5" />
+            </Link>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              className="h-7 px-2 text-xs"
+              onClick={() => {
+                const picked = sampleQuestions(moduleBank, 20);
+                if (picked.length === 0) return;
+                setRun({
+                  kind: "module",
+                  module: weakModule.module,
+                  questions: picked,
+                });
+              }}
+            >
+              {recommendation.cta}
+            </Button>
+          </div>
         ) : (
           <Button
             type="button"
@@ -1147,16 +1174,6 @@ function TodayRecommendCard({
             className="h-7 shrink-0 px-2 text-xs"
             disabled={recommendation.disabled}
             onClick={() => {
-              if (recommendation.kind === "module" && weakModule) {
-                const picked = sampleQuestions(moduleBank, 20);
-                if (picked.length === 0) return;
-                setRun({
-                  kind: "module",
-                  module: weakModule.module,
-                  questions: picked,
-                });
-                return;
-              }
               if (recommendation.kind === "wrong") {
                 if (wrongOnlyQuestions.length === 0) return;
                 setRun({ kind: "wrong", questions: wrongOnlyQuestions });
@@ -1190,7 +1207,7 @@ function DailyTrapCard({ today }: { today: string }) {
       {trap.module ? (
         <div className="mt-2">
           <Link
-            href={`/practice?module=${encodeURIComponent(trap.module)}`}
+            href={practiceModuleHref(trap.module)}
             className="inline-flex h-7 items-center rounded-md border border-border px-2.5 text-xs hover:bg-muted"
           >
             去练习 · {trap.module}
@@ -1731,9 +1748,27 @@ function WeakTopicsCard({
       ) : (
         <ul className="mt-3 divide-y divide-border border-t border-border">
           {top.map(([name, count]) => (
-            <li key={name} className="flex items-center justify-between gap-3 py-2.5 text-sm">
-              <span className="min-w-0 truncate text-foreground">{name}</span>
-              <span className="mono-num shrink-0 text-muted-foreground">{pad2(count)}</span>
+            <li
+              key={name}
+              className="flex items-center justify-between gap-3 py-2.5 text-sm"
+            >
+              <Link
+                href={practiceModuleHref(name)}
+                className="min-w-0 truncate text-foreground hover:text-brand"
+              >
+                {name}
+              </Link>
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="mono-num text-muted-foreground">
+                  {pad2(count)}
+                </span>
+                <Link
+                  href={practiceModuleHref(name)}
+                  className="inline-flex h-7 items-center rounded-md border border-border px-2 text-xs text-muted-foreground hover:text-foreground"
+                >
+                  去练习
+                </Link>
+              </div>
             </li>
           ))}
         </ul>

@@ -22,7 +22,7 @@ import {
   MODULE_STATS_MIN_ATTEMPTS,
   topWeakModules,
 } from "@/lib/module-stats";
-import { questionsForModule } from "@/lib/practice";
+import { practiceModuleHref, questionsForModule } from "@/lib/practice";
 import { useTrainerStore } from "@/lib/store";
 import type { AnswerRecord, Question } from "@/lib/types";
 
@@ -90,7 +90,7 @@ export function PracticeView() {
   const selectModule = (name: string) => {
     setModule(name);
     const qs =
-      name === "全部" ? "" : `?module=${encodeURIComponent(name)}`;
+      name === "全部" ? "" : practiceModuleHref(name).slice("/practice".length);
     router.replace(`${pathname}${qs}`, { scroll: false });
   };
 
@@ -228,7 +228,7 @@ export function PracticeView() {
         title="按模块练习"
         description="按日历模块筛选专题，或一键刷本模块已解锁题。未解锁日只显示路线，不跳关。可用关键词搜题干 / 专题 / 知识路径；也可随机抽 20 题、开限时 20 分钟、15 分钟速刷，或一键开自编上午/下午模考（试卷日已解锁或全解锁时）。"
       />
-      <ModuleAccuracyBlock answers={answers} />
+      <ModuleAccuracyBlock answers={answers} onSelectModule={selectModule} />
       <div className="mb-3 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-2">
         <div className="min-w-0 flex-1 font-mono text-[11px] text-muted-foreground">
           已解锁题池 {unlockedPool.length}
@@ -462,7 +462,13 @@ export function PracticeView() {
   );
 }
 
-function ModuleAccuracyBlock({ answers }: { answers: AnswerRecord[] }) {
+function ModuleAccuracyBlock({
+  answers,
+  onSelectModule,
+}: {
+  answers: AnswerRecord[];
+  onSelectModule: (module: string) => void;
+}) {
   const weak = useMemo(
     () => topWeakModules(answers, { minAttempts: MODULE_STATS_MIN_ATTEMPTS, limit: 5 }),
     [answers],
@@ -498,10 +504,31 @@ function ModuleAccuracyBlock({ answers }: { answers: AnswerRecord[] }) {
               key={item.module}
               className="flex items-center justify-between gap-3 py-2 text-sm"
             >
-              <span className="min-w-0 truncate">{item.module}</span>
-              <span className="mono-num shrink-0 text-muted-foreground">
-                {item.accuracy}% · {item.correct}/{item.attempts}
-              </span>
+              <Link
+                href={practiceModuleHref(item.module)}
+                className="min-w-0 truncate hover:text-brand"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectModule(item.module);
+                }}
+              >
+                {item.module}
+              </Link>
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="mono-num text-muted-foreground">
+                  {item.accuracy}% · {item.correct}/{item.attempts}
+                </span>
+                <Link
+                  href={practiceModuleHref(item.module)}
+                  className="inline-flex h-7 items-center rounded-md border border-border px-2 text-xs text-muted-foreground hover:text-foreground"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectModule(item.module);
+                  }}
+                >
+                  去练习
+                </Link>
+              </div>
             </li>
           ))}
         </ul>
