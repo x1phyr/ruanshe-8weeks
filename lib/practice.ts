@@ -24,3 +24,8 @@ export function questionsForModule(
     return isUnlocked(progress, q.dayId, unlockAll);
   });
 }
+
+/** Deep link to practice page with a module chip preselected. */
+export function practiceModuleHref(module: string): string {
+  return `/practice?module=${encodeURIComponent(module)}`;
+}
