@@ -43,10 +43,11 @@ import {
   resolveFocusDay,
   weekProgressStats,
 } from "@/lib/progress";
-import { getSession, useTrainerStore } from "@/lib/store";
+import { getSession, resolveResumeDay, stepLabel, useTrainerStore } from "@/lib/store";
 import type {
   AnswerRecord,
   DaySession,
+  LearnStep,
   Mistake,
   Progress as ProgressState,
   Question,
@@ -80,6 +81,10 @@ export function DashboardView() {
   const focus = resolveFocusDay(progress, simulateDate, startDate, unlockAll);
   const currentWeek = resolveCurrentWeek(progress, simulateDate, startDate, unlockAll);
   const weekStats = weekProgressStats(progress, startDate, currentWeek);
+  const resume = useMemo(
+    () => resolveResumeDay(sessions, progress, unlockAll, startDate),
+    [sessions, progress, unlockAll, startDate],
+  );
   const daysLeft = examCountdown(today);
   const acc = accuracyPercent(progress);
   const pending = dueMistakes(mistakes, today).length;
@@ -222,6 +227,8 @@ export function DashboardView() {
       </Surface>
 
       <WeekProgressCard stats={weekStats} />
+
+      <ResumeLastCard resume={resume} />
 
       <TomorrowPreview startDate={startDate} today={today} lastDate={lastDate} />
 
@@ -463,6 +470,35 @@ function WeekProgressCard({
         </div>
         <div className="mt-2">
           <Progress value={pct} className="gap-0" />
+        </div>
+      </Surface>
+    </Link>
+  );
+}
+
+function ResumeLastCard({
+  resume,
+}: {
+  resume: { day: StudyDay; step: LearnStep } | null;
+}) {
+  if (!resume) return null;
+  const { day, step } = resume;
+  return (
+    <Link href={dayHref(day)} className="mt-4 block">
+      <Surface className="px-4 py-3 transition-colors hover:bg-surface-hover">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <div className="label-caps">接着上次</div>
+            <div className="mt-1 truncate text-sm">
+              <span className="font-medium">{day.title}</span>
+              <span className="text-border"> · </span>
+              <span className="text-muted-foreground">{stepLabel(step)}</span>
+            </div>
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
+            继续
+            <ArrowRight className="size-3.5" />
+          </span>
         </div>
       </Surface>
     </Link>

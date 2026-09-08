@@ -108,6 +108,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **weekday tips** | `lib/coach-tips.ts` 按星期几教练提示 |
 | **tomorrow preview** | 仪表盘明日预览 |
 | **本周完成度** | 仪表盘紧凑卡片：当前周 completed/total + 细进度条，链到 /plan |
+| **接着上次** | 仪表盘紧凑卡：sessions 中最近 `lastActiveAt` 的未完成已解锁日 → 日训；无则隐藏 |
 | **module accuracy** | `lib/module-stats.ts` 模块正确率 |
 
 路由概览：`/` 仪表盘 · `/learn/[week]/[day]` 日训 · `/plan` · `/practice` · `/mistakes`。

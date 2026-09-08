@@ -4,8 +4,9 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { STORAGE_KEY } from "@/lib/config";
 import { getPersistStorage } from "@/lib/storage";
+import { getDayById } from "@/lib/calendar";
 import { addDaysISO, todayISO } from "@/lib/dates";
-import { afterComplete, emptyProgress, reviewIntervalDays } from "@/lib/progress";
+import { afterComplete, emptyProgress, isCompleted, isUnlocked, reviewIntervalDays } from "@/lib/progress";
 import type {
   AnswerRecord,
   DaySession,
@@ -15,6 +16,7 @@ import type {
   OptionKey,
   Progress,
   Question,
+  StudyDay,
 } from "@/lib/types";
 
 interface TrainerState {
@@ -159,7 +161,7 @@ export const useTrainerStore = create<TrainerState>()(
       setFocusMode: (value) => set({ focusMode: value }),
       markStep: (dayId, step) => {
         const current = get().sessions[dayId] ?? emptySession();
-        const next = { ...current };
+        const next = { ...current, lastActiveAt: new Date().toISOString() };
         if (step === "review") next.reviewDone = true;
         if (step === "learn") next.learnDone = true;
         if (step === "practice") next.practiceDone = true;
@@ -235,7 +237,11 @@ export const useTrainerStore = create<TrainerState>()(
           progress,
           sessions: {
             ...state.sessions,
-            [dayId]: { ...session, wrapupDone: true },
+            [dayId]: {
+              ...session,
+              wrapupDone: true,
+              lastActiveAt: new Date().toISOString(),
+            },
           },
           ...streakPatch,
         });
@@ -314,6 +320,41 @@ export function resolveStep(session: DaySession): LearnStep {
   if (!session.learnDone) return "learn";
   if (!session.practiceDone) return "practice";
   return "wrapup";
+}
+
+const STEP_LABEL: Record<LearnStep, string> = {
+  review: "复习",
+  learn: "学习",
+  practice: "练习",
+  wrapup: "收尾",
+};
+
+export function stepLabel(step: LearnStep): string {
+  return STEP_LABEL[step];
+}
+
+/**
+ * Most recently touched unlocked day that is not fully completed
+ * (wrapupDone false or day not in completedDays). Null if none.
+ */
+export function resolveResumeDay(
+  sessions: Record<string, DaySession>,
+  progress: Progress,
+  unlockAll = false,
+  startDate?: string,
+): { day: StudyDay; step: LearnStep } | null {
+  let best: { day: StudyDay; step: LearnStep; at: string } | null = null;
+  for (const [dayId, session] of Object.entries(sessions)) {
+    if (session.wrapupDone && isCompleted(progress, dayId)) continue;
+    if (!isUnlocked(progress, dayId, unlockAll)) continue;
+    const day = getDayById(dayId, startDate) ?? getDayById(dayId);
+    if (!day) continue;
+    const at = session.lastActiveAt ?? "";
+    if (!best || at > best.at) {
+      best = { day, step: resolveStep(session), at };
+    }
+  }
+  return best ? { day: best.day, step: best.step } : null;
 }
 
 export function currentToday(): string {

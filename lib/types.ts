@@ -123,6 +123,8 @@ export interface DaySession {
   learnDone: boolean;
   practiceDone: boolean;
   wrapupDone: boolean;
+  /** ISO timestamp; bumped on markStep / completeDay for resume ordering. */
+  lastActiveAt?: string;
 }
 
 export type MistakeBucket = "needs-review" | "learning" | "mastered";
