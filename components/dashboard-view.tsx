@@ -26,6 +26,7 @@ import {
 import { questionsForModule } from "@/lib/practice";
 import { exportProgressBackup } from "@/lib/backup";
 import { coachTipForDate } from "@/lib/coach-tips";
+import { dailyTrapForDate } from "@/data/daily-traps";
 import { examConfig } from "@/lib/config";
 import {
   CURRICULUM_LENGTH,
@@ -191,6 +192,8 @@ export function DashboardView() {
       />
 
       <WeekdayCoachTip today={today} />
+
+      <DailyTrapCard today={today} />
 
       {isPlanComplete(progress) ? (
         <CelebrationCard
@@ -1168,6 +1171,19 @@ function TodayRecommendCard({
           </Button>
         )}
       </div>
+    </Surface>
+  );
+}
+
+function DailyTrapCard({ today }: { today: string }) {
+  const trap = dailyTrapForDate(today);
+  return (
+    <Surface className="mt-3 px-4 py-2.5">
+      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+        <span className="label-caps shrink-0">今日陷阱</span>
+        <span className="text-sm font-medium text-foreground">{trap.title}</span>
+      </div>
+      <p className="mt-1 text-xs leading-5 text-muted-foreground">{trap.body}</p>
     </Surface>
   );
 }

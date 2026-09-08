@@ -93,7 +93,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ## 5. 功能清单
 
-近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考、模考历史；本轮另加 **今日战报附最近模考** + 调试设置 **清空模考历史**（`clearMockRuns`）。CI 题库检查因 workflow 范围暂缓。
+近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考、模考历史、今日战报附最近模考 / 清空模考历史；本轮另加 **今日陷阱**（`data/daily-traps.ts`，day-of-year mod 轮换）。CI 题库检查因 workflow 范围暂缓。
 
 | 能力 | 说明 |
 | --- | --- |
@@ -123,6 +123,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **移动端距考倒计时** | `md:hidden` 顶栏紧凑「距考 XX 天」；`simulateDate` 时显示模拟徽标；不改桌面侧栏倒计时 |
 | **celebrate** | 通关 / 完成庆祝路径（仪表盘随机 / 只练错题等入口） |
 | **weekday tips** | `lib/coach-tips.ts` 按星期几教练提示 |
+| **今日陷阱** | `data/daily-traps.ts` ≈21 条易错短提示；仪表盘按模拟感知「今日」的 day-of-year mod 轮换，一题一 title+body |
 | **tomorrow preview** | 仪表盘明日预览 |
 | **本周完成度** | 仪表盘紧凑卡片：当前周 completed/total + 细进度条，链到 /plan |
 | **接着上次** | 仪表盘紧凑卡：sessions 中最近 `lastActiveAt` 的未完成已解锁日 → 日训；无则隐藏 |
