@@ -31,6 +31,11 @@
 
 ## 4. 课程与内容现状（2026-09-09）
 
+### Question quality audit (QA)
+
+- Script: node scripts/qa-questions.mjs
+- Last PASS: 2026-09-09 Asia/Shanghai, 784 questions, issues=0
+
 ### 4.1 日程结构
 
 - **53 日**连续专题表（约 8 周）；第 8 周 4 日冲刺，不学新章

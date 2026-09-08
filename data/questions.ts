@@ -1701,7 +1701,7 @@ export const questions: Question[] = [
     dayId: "week-1/day-7",
     topic: "中间代码与复盘",
     knowledgePath: "程序语言 / 编译 / 易混",
-    stem: "（复盘）下列对应正确的是（ ）。",
+    stem: "（复盘·编译）词法/语法与 Token、移进归约的对应，正确的是（ ）。",
     options: [
       { key: "A", text: "识别 Token — 语法分析；移进归约 — LL" },
       { key: "B", text: "识别 Token — 词法分析；移进归约 — LR" },
@@ -5868,7 +5868,7 @@ export const questions: Question[] = [
     dayId: "week-3/day-5",
     topic: "OS 复盘",
     knowledgePath: "操作系统 / 复盘 / 进程",
-    stem: "（复盘）下列叙述正确的是（ ）。",
+    stem: "（复盘·进程状态）关于进程状态转换与调度，正确的是（ ）。",
     options: [
       { key: "A", text: "阻塞态进程事件完成后直接进入运行态" },
       { key: "B", text: "线程是资源分配基本单位" },
@@ -5978,7 +5978,7 @@ export const questions: Question[] = [
     dayId: "week-3/day-5",
     topic: "OS 复盘",
     knowledgePath: "操作系统 / 复盘 / 综合",
-    stem: "（复盘）下列对应关系正确的是（ ）。",
+    stem: "（复盘·OS 概念）抖动、页表、路径与 DMA 等对应关系，正确的是（ ）。",
     options: [
       { key: "A", text: "抖动 — CPU 一直 100% 且无缺页；DMA — 每字节中断一次" },
       { key: "B", text: "不安全状态 — 业已死锁；SJF — 绝不会饥饿" },
@@ -6089,7 +6089,7 @@ export const questions: Question[] = [
     dayId: "week-3/day-5",
     topic: "OS 复盘",
     knowledgePath: "操作系统 / 复盘 / 设备",
-    stem: "（复盘）下列对应正确的是（ ）。",
+    stem: "（复盘·OS I/O）DMA 与 SPOOLing 的对应，正确的是（ ）。",
     options: [
       { key: "A", text: "DMA — 每字符必中断；SPOOLing — 提高 CPU 主频" },
       { key: "B", text: "DMA — 成块传送少打扰 CPU；SPOOLing — 独占设备虚拟化为可共享" },
@@ -6111,7 +6111,7 @@ export const questions: Question[] = [
     dayId: "week-3/day-5",
     topic: "OS 复盘",
     knowledgePath: "操作系统 / 复盘 / 综合",
-    stem: "（复盘）下列叙述错误的是（ ）。",
+    stem: "（复盘·OS 存储与死锁）下列关于页面置换与死锁预防的叙述中，错误的是（ ）。",
     options: [
       { key: "A", text: "Clock 算法用引用位给页面「第二次机会」" },
       { key: "B", text: "绝对路径从根目录开始" },
@@ -7171,7 +7171,7 @@ export const questions: Question[] = [
     dayId: "week-4/day-7",
     topic: "软工复盘",
     knowledgePath: "软件工程 / 复盘 / 白盒",
-    stem: "（复盘）下列叙述错误的是（ ）。",
+    stem: "（复盘·白盒测试）关于语句/条件/判定覆盖与环复杂度，错误的是（ ）。",
     options: [
       { key: "A", text: "语句覆盖相对最弱" },
       { key: "B", text: "条件覆盖一定包含判定覆盖" },
@@ -7259,7 +7259,7 @@ export const questions: Question[] = [
     dayId: "week-4/day-7",
     topic: "软工复盘",
     knowledgePath: "软件工程 / 复盘 / 结构",
-    stem: "（复盘）下列对应正确的是（ ）。",
+    stem: "（复盘·软件设计）事务/变换分析与内聚耦合，对应正确的是（ ）。",
     options: [
       { key: "A", text: "变换分析 — 事务分派中心；标记耦合 — 只传简单标量" },
       { key: "B", text: "事务分析 — 按类型分派处理；结构化设计目标 — 高内聚低耦合" },
@@ -10278,7 +10278,7 @@ export const questions: Question[] = [
     dayId: "week-6/day-7",
     topic: "攻击与复盘",
     knowledgePath: "数据库 / 复盘 / 范式",
-    stem: "（复盘）非主属性传递依赖于候选码，应继续规范化以达到（ ）。",
+    stem: "（复盘·范式）非主属性对候选码存在传递依赖时，消除后通常达到（ ）。",
     options: [
       { key: "A", text: "2NF 为止即可无视" },
       { key: "B", text: "3NF" },
@@ -10320,7 +10320,7 @@ export const questions: Question[] = [
     dayId: "week-6/day-7",
     topic: "攻击与复盘",
     knowledgePath: "数据库 / 复盘 / SQL",
-    stem: "（复盘）下列对应正确的是（ ）。",
+    stem: "（复盘·库表与网络）SQL/范式/协议相关对应，正确的是（ ）。",
     options: [
       { key: "A", text: "WHERE 过滤组；HAVING 过滤行；外码绝不可空" },
       { key: "B", text: "m:n 要联系表；最左前缀；脏读=读未提交" },
@@ -10426,7 +10426,7 @@ export const questions: Question[] = [
     dayId: "week-6/day-7",
     topic: "攻击与复盘",
     knowledgePath: "数据库 / 复盘 / 2NF",
-    stem: "（复盘）非主属性部分依赖于候选码，应继续规范化以达到（ ）。",
+    stem: "（复盘·范式）非主属性对候选码存在部分函数依赖时，消除后通常达到（ ）。",
     options: [
       { key: "A", text: "2NF" },
       { key: "B", text: "仅物理层 RAID 即可" },
