@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { questions, questionsForDay, sampleQuestions, unlockedQuestions } from "@/data/questions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,12 +42,38 @@ function matchesQuery(q: Question, query: string): boolean {
   return hay.includes(needle);
 }
 
+
+function readModuleFromUrl(modules: string[]): string | null {
+  if (typeof window === "undefined") return null;
+  const params = new URLSearchParams(window.location.search);
+  let raw = params.get("module");
+  if (!raw && window.location.hash) {
+    const hash = window.location.hash.replace(/^#/, "");
+    if (hash.startsWith("module=")) {
+      raw = new URLSearchParams(hash).get("module");
+    } else if (hash.includes("=")) {
+      raw = new URLSearchParams(hash).get("module");
+    } else {
+      try {
+        raw = decodeURIComponent(hash);
+      } catch {
+        raw = hash;
+      }
+    }
+  }
+  if (!raw) return null;
+  if (raw === "全部" || modules.includes(raw)) return raw;
+  return null;
+}
+
 export function PracticeView() {
   const progress = useTrainerStore((s) => s.progress);
   const startDate = useTrainerStore((s) => s.startDate);
   const unlockAll = useTrainerStore((s) => s.unlockAll);
   const answers = useTrainerStore((s) => s.answers);
   const studyDays = scheduleDays(startDate);
+  const router = useRouter();
+  const pathname = usePathname();
   const [module, setModule] = useState<string>("全部");
   const [search, setSearch] = useState("");
   const [active, setActive] = useState<ActiveRun | null>(null);
@@ -54,6 +81,18 @@ export function PracticeView() {
     () => Array.from(new Set(studyDays.map((day) => day.module))),
     [studyDays],
   );
+
+  useEffect(() => {
+    const fromUrl = readModuleFromUrl(modules);
+    if (fromUrl) setModule(fromUrl);
+  }, [modules]);
+
+  const selectModule = (name: string) => {
+    setModule(name);
+    const qs =
+      name === "全部" ? "" : `?module=${encodeURIComponent(name)}`;
+    router.replace(`${pathname}${qs}`, { scroll: false });
+  };
 
   const days = useMemo(() => {
     return studyDays.filter((day) => module === "全部" || day.module === module);
@@ -336,7 +375,7 @@ export function PracticeView() {
               <button
                 key={name}
                 type="button"
-                onClick={() => setModule(name)}
+                onClick={() => selectModule(name)}
                 className={`h-7 rounded-sm border px-2 font-mono text-[11px] ${
                   module === name
                     ? "border-brand/50 bg-brand/10 text-brand"

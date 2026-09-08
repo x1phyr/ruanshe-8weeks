@@ -123,7 +123,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **移动端距考倒计时** | `md:hidden` 顶栏紧凑「距考 XX 天」；`simulateDate` 时显示模拟徽标；不改桌面侧栏倒计时 |
 | **celebrate** | 通关 / 完成庆祝路径（仪表盘随机 / 只练错题等入口） |
 | **weekday tips** | `lib/coach-tips.ts` 按星期几教练提示 |
-| **今日陷阱** | `data/daily-traps.ts` **42** 条易错短提示（`title`/`body`/`module?`，module 对齐 `StudyDay.module`）；仪表盘按模拟感知「今日」的 day-of-year mod 轮换；有 module 时显示模块 pill +「去练习」链到 `/practice`（练习页暂无 module 查询参数） |
+| **今日陷阱** | `data/daily-traps.ts` **42** 条易错短提示（`title`/`body`/`module?`，module 对齐 `StudyDay.module`）；仪表盘按模拟感知「今日」的 day-of-year mod 轮换；有 module 时显示模块 pill +「去练习」链到 `/practice?module=`（练习页读 query/hash 预选模块 chip，切换 chip 同步 URL） |
 | **tomorrow preview** | 仪表盘明日预览 |
 | **本周完成度** | 仪表盘紧凑卡片：当前周 completed/total + 细进度条，链到 /plan |
 | **接着上次** | 仪表盘紧凑卡：sessions 中最近 `lastActiveAt` 的未完成已解锁日 → 日训；无则隐藏 |
@@ -199,5 +199,5 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ---
 
-*文档刷新：2026-09-09（今日陷阱 42 + module 练习链）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **820**）。*
+*文档刷新：2026-09-09（今日陷阱 42 + `/practice?module=` 预选）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **820**）。*
 
