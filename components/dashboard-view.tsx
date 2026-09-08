@@ -1182,8 +1182,21 @@ function DailyTrapCard({ today }: { today: string }) {
       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
         <span className="label-caps shrink-0">今日陷阱</span>
         <span className="text-sm font-medium text-foreground">{trap.title}</span>
+        {trap.module ? (
+          <KindPill tone="brand">{trap.module}</KindPill>
+        ) : null}
       </div>
       <p className="mt-1 text-xs leading-5 text-muted-foreground">{trap.body}</p>
+      {trap.module ? (
+        <div className="mt-2">
+          <Link
+            href="/practice"
+            className="inline-flex h-7 items-center rounded-md border border-border px-2.5 text-xs hover:bg-muted"
+          >
+            去练习 · {trap.module}
+          </Link>
+        </div>
+      ) : null}
     </Surface>
   );
 }
