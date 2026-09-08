@@ -24,8 +24,11 @@ interface TrainerState {
   sessions: Record<string, DaySession>;
   simulateDate: string | null;
   startDate: string;
+  /** Debug: browse all days without sequential unlock. Not cleared by resetAll. */
+  unlockAll: boolean;
   setSimulateDate: (value: string | null) => void;
   setStartDate: (value: string) => void;
+  setUnlockAll: (value: boolean) => void;
   markStep: (dayId: string, step: LearnStep) => void;
   recordAnswer: (question: Question, selected: OptionKey, today: string) => boolean;
   reviewMistakeAnswer: (
@@ -121,11 +124,13 @@ export const useTrainerStore = create<TrainerState>()(
       sessions: {},
       simulateDate: null,
       startDate: todayISO(),
+      unlockAll: false,
       setSimulateDate: (value) => set({ simulateDate: value }),
       setStartDate: (value) => {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return;
         set({ startDate: value });
       },
+      setUnlockAll: (value) => set({ unlockAll: value }),
       markStep: (dayId, step) => {
         const current = get().sessions[dayId] ?? emptySession();
         const next = { ...current };
@@ -199,6 +204,7 @@ export const useTrainerStore = create<TrainerState>()(
           },
         });
       },
+      // Clears progress/mistakes/answers/sessions only; keeps unlockAll, simulateDate, startDate.
       resetAll: () =>
         set({
           progress: emptyProgress(),
@@ -218,6 +224,7 @@ export const useTrainerStore = create<TrainerState>()(
         sessions: state.sessions,
         simulateDate: state.simulateDate,
         startDate: state.startDate,
+        unlockAll: state.unlockAll,
       }),
       merge: (persistedState, currentState) => {
         const persisted = (persistedState ?? {}) as Partial<TrainerState>;
@@ -226,10 +233,15 @@ export const useTrainerStore = create<TrainerState>()(
           /^\d{4}-\d{2}-\d{2}$/.test(persisted.startDate)
             ? persisted.startDate
             : currentState.startDate;
+        const unlockAll =
+          typeof persisted.unlockAll === "boolean"
+            ? persisted.unlockAll
+            : false;
         return {
           ...currentState,
           ...persisted,
           startDate,
+          unlockAll,
         };
       },
     },

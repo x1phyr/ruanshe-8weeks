@@ -14,7 +14,12 @@ export function isCompleted(progress: Progress, dayId: string): boolean {
   return progress.completedDays.includes(dayId);
 }
 
-export function isUnlocked(progress: Progress, dayId: string): boolean {
+export function isUnlocked(
+  progress: Progress,
+  dayId: string,
+  unlockAll = false,
+): boolean {
+  if (unlockAll) return true;
   if (dayId === firstDay.id) return true;
   const day = getDayById(dayId);
   if (!day) return false;
@@ -24,9 +29,12 @@ export function isUnlocked(progress: Progress, dayId: string): boolean {
   return isCompleted(progress, prev.id);
 }
 
-export function firstIncompleteUnlocked(progress: Progress): StudyDay {
+export function firstIncompleteUnlocked(
+  progress: Progress,
+  unlockAll = false,
+): StudyDay {
   for (const day of studyDays) {
-    if (isUnlocked(progress, day.id) && !isCompleted(progress, day.id)) {
+    if (isUnlocked(progress, day.id, unlockAll) && !isCompleted(progress, day.id)) {
       return day;
     }
   }
@@ -37,18 +45,19 @@ export function resolveFocusDay(
   progress: Progress,
   simulateDate: string | null,
   startDate: string,
+  unlockAll = false,
 ): StudyDay {
   const today = todayISO(simulateDate);
   const days = scheduleDays(startDate);
   const todayDay = days.find((day) => day.date === today);
   if (
     todayDay &&
-    isUnlocked(progress, todayDay.id) &&
+    isUnlocked(progress, todayDay.id, unlockAll) &&
     !isCompleted(progress, todayDay.id)
   ) {
     return todayDay;
   }
-  const fallback = firstIncompleteUnlocked(progress);
+  const fallback = firstIncompleteUnlocked(progress, unlockAll);
   return days.find((day) => day.id === fallback.id) ?? fallback;
 }
 

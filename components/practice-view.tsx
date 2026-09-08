@@ -13,6 +13,7 @@ import { useTrainerStore } from "@/lib/store";
 export function PracticeView() {
   const progress = useTrainerStore((s) => s.progress);
   const startDate = useTrainerStore((s) => s.startDate);
+  const unlockAll = useTrainerStore((s) => s.unlockAll);
   const studyDays = scheduleDays(startDate);
   const [module, setModule] = useState<string>("全部");
   const [activeDayId, setActiveDayId] = useState<string | null>(null);
@@ -80,7 +81,7 @@ export function PracticeView() {
           <ul className="divide-y divide-border">
             {days.map((day) => {
               const bank = questions.filter((q) => q.dayId === day.id);
-              const unlocked = isUnlocked(progress, day.id);
+              const unlocked = isUnlocked(progress, day.id, unlockAll);
               return (
                 <li
                   key={day.id}

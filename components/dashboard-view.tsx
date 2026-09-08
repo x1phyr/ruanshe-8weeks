@@ -39,6 +39,7 @@ const taskDefs = [
 export function DashboardView() {
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const startDate = useTrainerStore((s) => s.startDate);
+  const unlockAll = useTrainerStore((s) => s.unlockAll);
   const setStartDate = useTrainerStore((s) => s.setStartDate);
   const progress = useTrainerStore((s) => s.progress);
   const mistakes = useTrainerStore((s) => s.mistakes);
@@ -50,7 +51,7 @@ export function DashboardView() {
   const lastDate = lastPlannedDate(startDate);
   const phase = planPhase(startDate, today);
   const calendarToday = getDayByDate(startDate, today);
-  const focus = resolveFocusDay(progress, simulateDate, startDate);
+  const focus = resolveFocusDay(progress, simulateDate, startDate, unlockAll);
   const daysLeft = examCountdown(today);
   const acc = accuracyPercent(progress);
   const pending = dueMistakes(mistakes, today).length;

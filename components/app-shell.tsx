@@ -80,7 +80,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <SimulateDialog>
             <div className="mt-3 flex w-full items-center gap-1.5 text-left text-[12px] text-muted-foreground hover:text-foreground">
               <FlaskConical className="size-3.5" />
-              {simulateDate ? `模拟 ${simulateDate}` : "模拟今日"}
+              {simulateDate ? `调试 · ${simulateDate}` : "调试设置"}
             </div>
           </SimulateDialog>
         </div>
