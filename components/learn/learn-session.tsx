@@ -38,6 +38,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
   const sessions = useTrainerStore((s) => s.sessions);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const startDate = useTrainerStore((s) => s.startDate);
+  const unlockAll = useTrainerStore((s) => s.unlockAll);
   const markStep = useTrainerStore((s) => s.markStep);
   const completeDay = useTrainerStore((s) => s.completeDay);
   const setMistakeReason = useTrainerStore((s) => s.setMistakeReason);
@@ -48,7 +49,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
   const derived = resolveStep(session);
   const step = forced && stepUnlocked(session, forced) ? forced : derived;
   const today = todayISO(simulateDate);
-  const unlocked = isUnlocked(progress, scheduled.id);
+  const unlocked = isUnlocked(progress, scheduled.id, unlockAll);
   const completed = isCompleted(progress, scheduled.id);
   const lesson = getLesson(scheduled.id);
   const bank = questionsForDay(scheduled.id);
@@ -68,7 +69,7 @@ export function LearnSession({ day }: { day: StudyDay }) {
           <div className="label-caps">LOCKED</div>
           <h2 className="mt-2 text-lg font-medium">本日尚未解锁</h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            v1 不允许跳关。完成上一学习日之后才会打开 {scheduled.date} · {scheduled.title}。
+            v1 默认不允许跳关。完成上一学习日之后才会打开 {scheduled.date} · {scheduled.title}。也可在侧栏「调试设置」中开启「全解锁（调试）」浏览全部学习日（不会自动标完成）。
           </p>
           <Link
             href="/"

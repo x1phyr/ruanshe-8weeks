@@ -14,6 +14,7 @@ export default function LearnCurrentPage() {
   const progress = useTrainerStore((s) => s.progress);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const startDate = useTrainerStore((s) => s.startDate);
+  const unlockAll = useTrainerStore((s) => s.unlockAll);
   const setStartDate = useTrainerStore((s) => s.setStartDate);
   const today = todayISO(simulateDate);
   const realToday = todayISO();
@@ -79,5 +80,7 @@ export default function LearnCurrentPage() {
     );
   }
 
-  return <LearnSession day={resolveFocusDay(progress, simulateDate, startDate)} />;
+  return (
+    <LearnSession day={resolveFocusDay(progress, simulateDate, startDate, unlockAll)} />
+  );
 }

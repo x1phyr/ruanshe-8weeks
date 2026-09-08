@@ -22,6 +22,7 @@ export function PlanView() {
   const progress = useTrainerStore((s) => s.progress);
   const simulateDate = useTrainerStore((s) => s.simulateDate);
   const startDate = useTrainerStore((s) => s.startDate);
+  const unlockAll = useTrainerStore((s) => s.unlockAll);
   const today = todayISO(simulateDate);
   const daysLeft = examCountdown(today);
   const days = scheduleDays(startDate);
@@ -68,7 +69,7 @@ export function PlanView() {
               <Surface className="overflow-hidden">
                 <ul className="divide-y divide-border">
                   {weekDays.map((day) => {
-                    const unlocked = isUnlocked(progress, day.id);
+                    const unlocked = isUnlocked(progress, day.id, unlockAll);
                     const done = isCompleted(progress, day.id);
                     const isToday = day.date === today;
                     const inner = (

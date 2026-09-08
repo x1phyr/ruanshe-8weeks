@@ -1,4 +1,5 @@
 import type { Question } from "@/lib/types";
+import { mockPaperQuestions } from "@/data/mock-papers";
 
 export const questions: Question[] = [
   {
@@ -7387,6 +7388,7 @@ export const questions: Question[] = [
     },
   },
 
+  ...mockPaperQuestions,
 ];
 
 export function questionsForDay(dayId: string): Question[] {
