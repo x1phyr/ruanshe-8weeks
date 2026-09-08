@@ -110,6 +110,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **retry wrong** | 只练错题（到期优先） |
 | **random20** | 随机抽至多 20 题（不足则全抽） |
 | **timed20** | 限时 20 分钟卷；到时自动交卷 |
+| **quick15** | 15 分钟速刷：至多 10 题，`timeLimitSec=900`；仪表盘弱项卡 / 练习页入口 |
 | **PWA** | 可「安装到桌面」（manifest + SW） |
 | **专注模式 focus** | 隐藏侧栏 / 底栏；偏好持久化 |
 | **大号文字 largeText** | 调试设置开关；略放大正文字号与测验题干/选项；持久化，重置进度保留 |
@@ -142,7 +143,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | `data/mock-papers.ts` | 自编模考 220 题 |
 | `components/dashboard-view.tsx` | 仪表盘 |
 | `components/learn/*` | 日训会话、讲义、测验、试卷计时 |
-| `components/practice-view.tsx` | 模块 / 搜索 / 随机 / 限时 |
+| `components/practice-view.tsx` | 模块 / 搜索 / 随机 / 限时 / 15 分钟速刷 |
 | `components/plan-view.tsx` | 计划表、跳转、打印 |
 | `components/mistakes-view.tsx` | 错题本 |
 | `components/focus-mode.tsx` / `pwa-register.tsx` / `simulate-dialog.tsx` | 专注、PWA、模拟日 |

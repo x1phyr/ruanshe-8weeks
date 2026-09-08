@@ -1084,7 +1084,7 @@ function WeakTopicsCard({
   const [drilling, setDrilling] = useState(false);
   const [randomRun, setRandomRun] = useState<{
     questions: Question[];
-    timed?: boolean;
+    timeLimitSec?: number;
   } | null>(null);
   const active = mistakes.filter((m) => !m.mastered);
   const due = dueMistakes(mistakes, today);
@@ -1124,21 +1124,21 @@ function WeakTopicsCard({
           ← 返回弱项
         </button>
         <h2 className="mt-2 text-lg font-medium">
-          {randomRun.timed
+          {randomRun.timeLimitSec
             ? `限时随机 ${randomRun.questions.length} 题`
             : `随机 ${randomRun.questions.length} 题`}
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          {randomRun.timed
-            ? `限时 20 分钟 · 从已解锁题库抽取（池 ${unlockedPool.length}）。到时自动交卷，未答按错计；可提前交卷。`
+          {randomRun.timeLimitSec
+            ? `限时 ${Math.round(randomRun.timeLimitSec / 60)} 分钟 · 从已解锁题库抽取（池 ${unlockedPool.length}）。到时自动交卷，未答按错计；可提前交卷。`
             : `从已解锁题库抽取（池 ${unlockedPool.length}）。对错会计入正确率；错题写入错题本。`}
         </p>
         <div className="mt-4">
           <QuizRun
             questions={randomRun.questions}
             mode="practice"
-            navKey={`dashboard:random:${randomRun.timed ? "timed:" : ""}${randomRun.questions.length}`}
-            timeLimitSec={randomRun.timed ? 20 * 60 : undefined}
+            navKey={`dashboard:random:${randomRun.timeLimitSec ? `timed${randomRun.timeLimitSec}:` : ""}${randomRun.questions.length}`}
+            timeLimitSec={randomRun.timeLimitSec}
             finishLabel="返回仪表盘"
             onFinished={() => setRandomRun(null)}
           />
@@ -1209,10 +1209,24 @@ function WeakTopicsCard({
             onClick={() => {
               const picked = sampleQuestions(unlockedPool, 20);
               if (picked.length === 0) return;
-              setRandomRun({ questions: picked, timed: true });
+              setRandomRun({ questions: picked, timeLimitSec: 20 * 60 });
             }}
           >
             限时 20 分钟
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-xs"
+            disabled={unlockedPool.length === 0}
+            onClick={() => {
+              const picked = sampleQuestions(unlockedPool, 10);
+              if (picked.length === 0) return;
+              setRandomRun({ questions: picked, timeLimitSec: 900 });
+            }}
+          >
+            15 分钟速刷
           </Button>
           <Button
             type="button"
