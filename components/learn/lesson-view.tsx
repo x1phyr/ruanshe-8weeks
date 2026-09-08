@@ -1,4 +1,9 @@
-import { KindPill, Surface } from "@/components/ui-bits";
+"use client";
+
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+import { Surface } from "@/components/ui-bits";
+import { pad2 } from "@/lib/dates";
 import type { Lesson, LessonBlock } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -117,20 +122,80 @@ function Block({ block }: { block: LessonBlock }) {
   }
 }
 
-export function LessonView({ lesson }: { lesson: Lesson }) {
+function SkimStrip({
+  keyPoints,
+  minutes,
+  defaultExpanded = true,
+}: {
+  keyPoints: string[];
+  minutes: number;
+  defaultExpanded?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultExpanded);
+  if (keyPoints.length === 0) return null;
+
   return (
-    <div className="space-y-4">
-      <Surface className="p-3">
-        <div className="label-caps">Key points · {lesson.minutes} MIN</div>
-        <ul className="mt-2 space-y-1.5">
-          {lesson.keyPoints.map((point) => (
-            <li key={point} className="flex gap-2 text-sm leading-6">
-              <KindPill tone="brand">·</KindPill>
-              <span>{point}</span>
+    <Surface className="overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center gap-2 px-3 py-2.5 text-left hover:bg-surface-hover/60"
+        aria-expanded={open}
+      >
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <span className="label-caps">30 秒速览</span>
+            <span className="font-mono text-[10px] tracking-wide text-muted-foreground">
+              {pad2(keyPoints.length)} POINTS · {minutes} MIN
+            </span>
+          </div>
+          {!open ? (
+            <p className="mt-1 truncate text-xs text-muted-foreground">
+              {keyPoints[0]}
+              {keyPoints.length > 1 ? ` · +${keyPoints.length - 1}` : ""}
+            </p>
+          ) : null}
+        </div>
+        <ChevronDown
+          className={cn(
+            "size-4 shrink-0 text-muted-foreground transition-transform",
+            open && "rotate-180",
+          )}
+          aria-hidden
+        />
+        <span className="sr-only">{open ? "收起" : "展开"}</span>
+      </button>
+      {open ? (
+        <ol className="space-y-1 border-t border-border px-3 py-2.5">
+          {keyPoints.map((point, i) => (
+            <li key={point} className="flex gap-2 text-[13px] leading-5">
+              <span className="w-5 shrink-0 pt-px font-mono text-[10px] tracking-wide text-muted-foreground">
+                {pad2(i + 1)}
+              </span>
+              <span className="min-w-0 text-foreground/90">{point}</span>
             </li>
           ))}
-        </ul>
-      </Surface>
+        </ol>
+      ) : null}
+    </Surface>
+  );
+}
+
+export function LessonView({
+  lesson,
+  defaultSkimExpanded = true,
+}: {
+  lesson: Lesson;
+  /** Learn-day default: expanded. Collapse optional. */
+  defaultSkimExpanded?: boolean;
+}) {
+  return (
+    <div className="space-y-4">
+      <SkimStrip
+        keyPoints={lesson.keyPoints}
+        minutes={lesson.minutes}
+        defaultExpanded={defaultSkimExpanded}
+      />
       {lesson.blocks.map((block, index) => (
         <Block key={index} block={block} />
       ))}
