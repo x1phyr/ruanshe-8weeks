@@ -18,7 +18,7 @@ type ActiveRun =
   | { kind: "day"; dayId: string }
   | { kind: "module"; module: string }
   | { kind: "search"; query: string }
-  | { kind: "random"; questions: Question[] };
+  | { kind: "random"; questions: Question[]; timed?: boolean };
 
 function questionsForModule(
   moduleName: string,
@@ -123,7 +123,9 @@ export function PracticeView() {
       : active?.kind === "search"
         ? `搜索 · ${active.query}`
         : active?.kind === "random"
-          ? `随机 ${active.questions.length} 题`
+          ? active.timed
+            ? `限时随机 ${active.questions.length} 题`
+            : `随机 ${active.questions.length} 题`
           : activeDay?.topic ?? "";
 
   if (active && activeQuestions.length > 0) {
@@ -143,7 +145,9 @@ export function PracticeView() {
             : active.kind === "search"
               ? `筛选结果最多刷 ${SEARCH_DRILL_CAP} 题（本次 ${activeQuestions.length}）。对错会计入正确率；错题写入错题本。`
               : active.kind === "random"
-                ? `从已解锁题库随机抽取 ${activeQuestions.length} 题（池 ${unlockedPool.length}）。对错会计入正确率；错题写入错题本。`
+                ? active.timed
+                  ? `限时 20 分钟 · 从已解锁题库随机抽取 ${activeQuestions.length} 题（池 ${unlockedPool.length}）。到时自动交卷，未答不计分（按错计）。可提前交卷。`
+                  : `从已解锁题库随机抽取 ${activeQuestions.length} 题（池 ${unlockedPool.length}）。对错会计入正确率；错题写入错题本。`
                 : "来自同一题库。对错会计入正确率；错题写入错题本。此页不自动完成本日。"}
         </p>
         <div className="mt-6">
@@ -156,8 +160,11 @@ export function PracticeView() {
                 : active.kind === "module"
                   ? `module:${active.module}`
                   : active.kind === "random"
-                    ? `random:${active.questions.length}`
+                    ? `random:${active.timed ? "timed:" : ""}${active.questions.length}`
                     : `search:${active.query}`
+            }
+            timeLimitSec={
+              active.kind === "random" && active.timed ? 20 * 60 : undefined
             }
             finishLabel="返回题库"
             onFinished={() => setActive(null)}
@@ -174,7 +181,7 @@ export function PracticeView() {
       <PageHeader
         kicker="DRILL"
         title="按模块练习"
-        description="按日历模块筛选专题，或一键刷本模块已解锁题。未解锁日只显示路线，不跳关。可用关键词搜题干 / 专题 / 知识路径；也可随机抽 20 题模考手感。"
+        description="按日历模块筛选专题，或一键刷本模块已解锁题。未解锁日只显示路线，不跳关。可用关键词搜题干 / 专题 / 知识路径；也可随机抽 20 题，或开限时 20 分钟模考手感。"
       />
       <div className="mb-3 flex flex-wrap items-center gap-2 rounded-md border border-border bg-card/40 px-3 py-2">
         <div className="min-w-0 flex-1 font-mono text-[11px] text-muted-foreground">
@@ -194,6 +201,18 @@ export function PracticeView() {
           }}
         >
           随机 {Math.min(20, unlockedPool.length) || 20} 题
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          disabled={unlockedPool.length === 0}
+          onClick={() => {
+            const picked = sampleQuestions(unlockedPool, 20);
+            if (picked.length === 0) return;
+            setActive({ kind: "random", questions: picked, timed: true });
+          }}
+        >
+          限时 20 分钟
         </Button>
       </div>
       <div className="mb-3">

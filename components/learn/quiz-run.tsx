@@ -6,6 +6,7 @@ import { FocusModeToggle } from "@/components/focus-mode";
 import { Button } from "@/components/ui/button";
 import { KindPill, Surface } from "@/components/ui-bits";
 import { pad2 } from "@/lib/dates";
+import { formatRemain } from "@/components/learn/paper-timer";
 import { currentToday, useTrainerStore } from "@/lib/store";
 import type { OptionKey, Question } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -14,6 +15,8 @@ export interface QuizFinishSummary {
   correct: number;
   total: number;
   percent: number;
+  answered: number;
+  timedOut?: boolean;
   wrongIndexes: number[];
   byTopic: { topic: string; correct: number; total: number }[];
 }
@@ -26,6 +29,8 @@ interface QuizRunProps {
   navKey?: string;
   /** Label on scorecard continue button (default 继续). */
   finishLabel?: string;
+  /** When set, show countdown and auto-finish on timeout (seconds). */
+  timeLimitSec?: number;
 }
 
 const NAV_THRESHOLD = 12;
@@ -99,7 +104,8 @@ function buildSummary(
     );
   const total = questions.length;
   const percent = total ? Math.round((correct / total) * 100) : 0;
-  return { correct, total, percent, wrongIndexes, byTopic };
+  const answered = Object.keys(resolved).length;
+  return { correct, total, percent, answered, wrongIndexes, byTopic };
 }
 
 export function QuizRun({
@@ -108,6 +114,7 @@ export function QuizRun({
   onFinished,
   navKey,
   finishLabel = "继续",
+  timeLimitSec,
 }: QuizRunProps) {
   const recordAnswer = useTrainerStore((s) => s.recordAnswer);
   const reviewMistakeAnswer = useTrainerStore((s) => s.reviewMistakeAnswer);
@@ -119,7 +126,8 @@ export function QuizRun({
   const [submitted, setSubmitted] = useState(false);
   const [flagsReady, setFlagsReady] = useState(false);
   const [scorecard, setScorecard] = useState<QuizFinishSummary | null>(null);
-
+  const timed = typeof timeLimitSec === "number" && timeLimitSec > 0;
+  const [remain, setRemain] = useState(() => (timed ? timeLimitSec! : 0));
   const question = questions[index];
   const total = questions.length;
   const showNav = total >= NAV_THRESHOLD;
@@ -134,6 +142,33 @@ export function QuizRun({
     if (!flagsReady) return;
     saveFlags(navKey, flagged);
   }, [flagged, navKey, flagsReady]);
+
+  const forceFinish = useCallback(
+    (fromTimeout: boolean) => {
+      const summary = buildSummary(questions, answers, undefined, null);
+      setScorecard({ ...summary, timedOut: fromTimeout });
+    },
+    [questions, answers],
+  );
+
+  useEffect(() => {
+    if (!timed || scorecard) return;
+    const id = window.setInterval(() => {
+      setRemain((value) => {
+        if (value <= 1) {
+          window.clearInterval(id);
+          return 0;
+        }
+        return value - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [timed, scorecard]);
+
+  useEffect(() => {
+    if (!timed || scorecard || remain > 0) return;
+    forceFinish(true);
+  }, [timed, scorecard, remain, forceFinish]);
 
   const goTo = useCallback(
     (next: number) => {
@@ -263,7 +298,7 @@ export function QuizRun({
       <div className="flex items-center justify-between gap-2">
         <div className="label-caps">
           Question {pad2(index + 1)} / {pad2(total)}
-          {showNav ? (
+          {showNav || timed ? (
             <span className="ml-2 text-muted-foreground">
               · 已答 {pad2(answeredCount)}
               {flagged.size > 0 ? ` · 标记 ${pad2(flagged.size)}` : ""}
@@ -271,6 +306,20 @@ export function QuizRun({
           ) : null}
         </div>
         <div className="flex items-center gap-1.5">
+          {timed ? (
+            <span
+              className={cn(
+                "inline-flex h-7 items-center rounded-sm border px-2 font-mono text-[12px] tracking-wider",
+                remain <= 60
+                  ? "border-destructive/40 bg-destructive/10 text-destructive"
+                  : "border-border text-foreground",
+              )}
+              aria-live="polite"
+              aria-label={`剩余时间 ${formatRemain(remain)}`}
+            >
+              {formatRemain(remain)}
+            </span>
+          ) : null}
           <FocusModeToggle />
           {showNav ? (
             <button
@@ -349,8 +398,15 @@ export function QuizRun({
         </div>
       ) : null}
 
-      <p className="mt-3 text-[15px] leading-7">{question.stem}</p>
-      <div className="mt-4 space-y-2">
+      <p className="mt-3 text-[15px] leading-7" id={`quiz-stem-${question.id}`}>
+        {question.stem}
+      </p>
+      <div
+        className="mt-4 space-y-2"
+        role="radiogroup"
+        aria-labelledby={`quiz-stem-${question.id}`}
+        aria-disabled={submitted || undefined}
+      >
         {question.options.map((option) => {
           const selected = picked === option.key;
           const showKey = submitted;
@@ -360,10 +416,12 @@ export function QuizRun({
             <button
               key={option.key}
               type="button"
+              role="radio"
+              aria-checked={selected}
               disabled={submitted}
               onClick={() => setPicked(option.key)}
               className={cn(
-                "flex w-full items-start gap-3 rounded-md border px-3 py-2.5 text-left text-sm transition-colors",
+                "flex w-full items-start gap-3 rounded-md border px-3 py-2.5 text-left text-sm transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
                 !submitted && selected && "border-brand bg-brand/10",
                 !submitted && !selected && "border-border hover:bg-surface-hover",
                 showKey && isCorrect && "border-emerald-500/40 bg-emerald-500/10",
@@ -371,7 +429,7 @@ export function QuizRun({
                 submitted && !isCorrect && !selected && "border-border opacity-60",
               )}
             >
-              <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-sm border border-border font-mono text-[11px]">
+              <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-sm border border-border font-mono text-[11px]" aria-hidden>
                 {option.key}
               </span>
               <span className="leading-6">{option.text}</span>
@@ -391,6 +449,11 @@ export function QuizRun({
           {showNav && index + 1 < total ? (
             <Button variant="outline" onClick={() => goTo(index + 1)}>
               跳过
+            </Button>
+          ) : null}
+          {timed ? (
+            <Button variant="outline" onClick={() => forceFinish(false)}>
+              交卷
             </Button>
           ) : null}
         </div>
@@ -430,6 +493,11 @@ export function QuizRun({
             <Button onClick={finishedNext}>
               {index + 1 >= total ? "完成本组" : "下一题"}
             </Button>
+            {timed && index + 1 < total ? (
+              <Button variant="outline" onClick={() => forceFinish(false)}>
+                交卷
+              </Button>
+            ) : null}
             {showNav &&
             index + 1 >= total &&
             (answeredCount < total || flagged.size > 0) ? (
@@ -468,7 +536,8 @@ function QuizScorecard({
   onJump: (index: number) => void;
   onContinue: () => void;
 }) {
-  const { correct, total, percent, wrongIndexes, byTopic } = summary;
+  const { correct, total, percent, answered, timedOut, wrongIndexes, byTopic } =
+    summary;
   const topTopics = byTopic.slice(0, compact ? 3 : 6);
   const tone = percent >= 80 ? "ok" : percent >= 60 ? "brand" : "warn";
 
@@ -479,7 +548,7 @@ function QuizScorecard({
         <FocusModeToggle />
       </div>
       <h2 className="mt-2 text-xl font-medium">
-        {compact ? "本组结果" : "试卷复盘"}
+        {timedOut ? "时间到 · 已交卷" : compact ? "本组结果" : "试卷复盘"}
       </h2>
       <Surface className="mt-4 p-4">
         <div className="flex flex-wrap items-end justify-between gap-3">
@@ -490,10 +559,18 @@ function QuizScorecard({
             </div>
             <div className="mt-1 text-sm text-muted-foreground">
               {pad2(correct)} / {pad2(total)} 题正确
+              {" · "}
+              已答 {pad2(answered)} / {pad2(total)}
             </div>
           </div>
           <KindPill tone={tone}>
-            {percent >= 80 ? "表现不错" : percent >= 60 ? "继续巩固" : "建议复盘错题"}
+            {timedOut
+              ? "限时结束"
+              : percent >= 80
+                ? "表现不错"
+                : percent >= 60
+                  ? "继续巩固"
+                  : "建议复盘错题"}
           </KindPill>
         </div>
       </Surface>

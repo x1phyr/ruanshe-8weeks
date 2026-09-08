@@ -45,7 +45,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="label-caps">Soft Designer</div>
           </div>
         </div>
-        <nav className="flex flex-1 flex-col gap-0.5 px-2 pt-2">
+        <nav className="flex flex-1 flex-col gap-0.5 px-2 pt-2" aria-label="主导航">
           {items.map((item) => {
             const Icon = item.icon;
             const active = isActive(pathname, item.href);
@@ -53,14 +53,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-label={item.label}
+                aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex h-8 items-center gap-2 rounded-md px-2 text-[13px] transition-colors",
+                  "flex h-8 items-center gap-2 rounded-md px-2 text-[13px] transition-colors focus-visible:ring-3 focus-visible:ring-ring/50",
                   active
                     ? "bg-surface-hover text-foreground"
                     : "text-muted-foreground hover:bg-surface hover:text-foreground",
                 )}
               >
-                <Icon className="size-3.5" />
+                <Icon className="size-3.5" aria-hidden />
                 {item.label}
               </Link>
             );
@@ -87,8 +89,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <div className="app-shell-main flex-1 pb-16 md:pb-0 print:pb-0">{children}</div>
-        <nav className="app-shell-bottom-nav print-hidden fixed inset-x-0 bottom-0 z-40 flex h-14 border-t border-border bg-background/95 backdrop-blur md:hidden">
+        <main className="app-shell-main flex-1 pb-16 md:pb-0 print:pb-0">{children}</main>
+        <nav
+          className="app-shell-bottom-nav print-hidden fixed inset-x-0 bottom-0 z-40 flex h-14 border-t border-border bg-background/95 backdrop-blur md:hidden"
+          aria-label="主导航"
+        >
           {items.map((item) => {
             const Icon = item.icon;
             const active = isActive(pathname, item.href);
@@ -96,12 +101,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-label={item.label}
+                aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex flex-1 flex-col items-center justify-center gap-0.5 text-[11px]",
+                  "flex flex-1 flex-col items-center justify-center gap-0.5 text-[11px] focus-visible:ring-3 focus-visible:ring-ring/50",
                   active ? "text-foreground" : "text-muted-foreground",
                 )}
               >
-                <Icon className="size-4" />
+                <Icon className="size-4" aria-hidden />
                 {item.label}
               </Link>
             );

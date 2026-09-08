@@ -485,7 +485,10 @@ function WeakTopicsCard({
   unlockAll: boolean;
 }) {
   const [drilling, setDrilling] = useState(false);
-  const [randomRun, setRandomRun] = useState<Question[] | null>(null);
+  const [randomRun, setRandomRun] = useState<{
+    questions: Question[];
+    timed?: boolean;
+  } | null>(null);
   const active = mistakes.filter((m) => !m.mastered);
   const due = dueMistakes(mistakes, today);
   const unlockedPool = useMemo(
@@ -513,7 +516,7 @@ function WeakTopicsCard({
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh"))
     .slice(0, 5);
 
-  if (randomRun && randomRun.length > 0) {
+  if (randomRun && randomRun.questions.length > 0) {
     return (
       <Surface className="mt-6 p-4">
         <button
@@ -523,15 +526,22 @@ function WeakTopicsCard({
         >
           ← 返回弱项
         </button>
-        <h2 className="mt-2 text-lg font-medium">随机 {randomRun.length} 题</h2>
+        <h2 className="mt-2 text-lg font-medium">
+          {randomRun.timed
+            ? `限时随机 ${randomRun.questions.length} 题`
+            : `随机 ${randomRun.questions.length} 题`}
+        </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          从已解锁题库抽取（池 {unlockedPool.length}）。对错会计入正确率；错题写入错题本。
+          {randomRun.timed
+            ? `限时 20 分钟 · 从已解锁题库抽取（池 ${unlockedPool.length}）。到时自动交卷，未答按错计；可提前交卷。`
+            : `从已解锁题库抽取（池 ${unlockedPool.length}）。对错会计入正确率；错题写入错题本。`}
         </p>
         <div className="mt-4">
           <QuizRun
-            questions={randomRun}
+            questions={randomRun.questions}
             mode="practice"
-            navKey={`dashboard:random:${randomRun.length}`}
+            navKey={`dashboard:random:${randomRun.timed ? "timed:" : ""}${randomRun.questions.length}`}
+            timeLimitSec={randomRun.timed ? 20 * 60 : undefined}
             finishLabel="返回仪表盘"
             onFinished={() => setRandomRun(null)}
           />
@@ -588,10 +598,24 @@ function WeakTopicsCard({
             onClick={() => {
               const picked = sampleQuestions(unlockedPool, 20);
               if (picked.length === 0) return;
-              setRandomRun(picked);
+              setRandomRun({ questions: picked });
             }}
           >
             随机 {Math.min(20, unlockedPool.length) || 20} 题
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 text-xs"
+            disabled={unlockedPool.length === 0}
+            onClick={() => {
+              const picked = sampleQuestions(unlockedPool, 20);
+              if (picked.length === 0) return;
+              setRandomRun({ questions: picked, timed: true });
+            }}
+          >
+            限时 20 分钟
           </Button>
           <Button
             type="button"
