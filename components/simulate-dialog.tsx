@@ -20,7 +20,11 @@ import {
 } from "@/lib/backup";
 import { examConfig } from "@/lib/config";
 import { addDaysISO, todayISO } from "@/lib/dates";
-import { useTrainerStore } from "@/lib/store";
+import {
+  DAILY_STUDY_MINUTES_OPTIONS,
+  useTrainerStore,
+  type DailyStudyMinutes,
+} from "@/lib/store";
 
 function isTypingTarget(target: EventTarget | null): boolean {
   if (!(target instanceof HTMLElement)) return false;
@@ -50,6 +54,10 @@ export function SimulateDialog({
   const setUnlockAll = useTrainerStore((s) => s.setUnlockAll);
   const largeText = useTrainerStore((s) => s.largeText);
   const setLargeText = useTrainerStore((s) => s.setLargeText);
+  const dailyStudyMinutes = useTrainerStore((s) => s.dailyStudyMinutes);
+  const setDailyStudyMinutes = useTrainerStore((s) => s.setDailyStudyMinutes);
+  const preferredStudyTime = useTrainerStore((s) => s.preferredStudyTime);
+  const setPreferredStudyTime = useTrainerStore((s) => s.setPreferredStudyTime);
   const resetAll = useTrainerStore((s) => s.resetAll);
   const clearMockRuns = useTrainerStore((s) => s.clearMockRuns);
   const mockRuns = useTrainerStore((s) => s.mockRuns);
@@ -221,6 +229,44 @@ export function SimulateDialog({
                 onCheckedChange={setLargeText}
               />
             </div>
+
+            <div className="rounded-md border border-border p-3">
+              <div className="text-sm font-medium">复习计划</div>
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">仅影响站内今日任务文案与推荐入口，不会推系统通知。</p>
+              <div className="mt-3 grid gap-1.5">
+                <Label className="text-xs text-muted-foreground">每日时长</Label>
+                <div className="flex flex-wrap gap-1.5">
+                  {DAILY_STUDY_MINUTES_OPTIONS.map((mins) => (
+                    <button
+                      key={mins}
+                      type="button"
+                      onClick={() =>
+                        setDailyStudyMinutes(mins as DailyStudyMinutes)
+                      }
+                      className={`h-7 rounded-sm border px-2.5 font-mono text-[11px] ${
+                        dailyStudyMinutes === mins
+                          ? "border-brand/50 bg-brand/10 text-brand"
+                          : "border-border text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {mins} 分钟
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-3 grid gap-1.5">
+                <Label htmlFor="preferred-study-time" className="text-xs text-muted-foreground">
+                  偏好复习时间
+                </Label>
+                <Input
+                  id="preferred-study-time"
+                  type="time"
+                  value={preferredStudyTime}
+                  onChange={(e) => setPreferredStudyTime(e.target.value)}
+                  className="max-w-[10rem] font-mono"
+                />
+              </div>
+            </div>
             <div className="rounded-md border border-border p-3">
               <div className="text-sm font-medium">答题快捷键</div>
               <ul className="mt-1.5 space-y-0.5 text-xs leading-5 text-muted-foreground">
@@ -313,7 +359,7 @@ export function SimulateDialog({
               onClick={() => {
                 if (
                   confirm(
-                    "清空本地进度、错题与作答记录？（保留全解锁、大号文字与模拟日期设置）",
+                    "清空本地进度、错题与作答记录？（保留全解锁、大号文字、复习计划与模拟日期设置）",
                   )
                 ) {
                   resetAll();

@@ -55,6 +55,8 @@ export function PracticeView() {
   const unlockAll = useTrainerStore((s) => s.unlockAll);
   const answers = useTrainerStore((s) => s.answers);
   const mistakes = useTrainerStore((s) => s.mistakes);
+  const dailyStudyMinutes = useTrainerStore((s) => s.dailyStudyMinutes);
+  const preferQuick15 = dailyStudyMinutes === 15;
   const studyDays = scheduleDays(startDate);
   const router = useRouter();
   const pathname = usePathname();
@@ -255,7 +257,7 @@ export function PracticeView() {
         </Button>
         <Button
           size="sm"
-          variant="outline"
+          variant={preferQuick15 ? "default" : "outline"}
           disabled={unlockedPool.length === 0}
           onClick={() => {
             const picked = sampleQuestions(unlockedPool, 10);
@@ -267,7 +269,7 @@ export function PracticeView() {
             });
           }}
         >
-          15 分钟速刷
+          {preferQuick15 ? "今日推荐 · 15 分钟速刷" : "15 分钟速刷"}
         </Button>
       </div>
       <OneClickMockButtons

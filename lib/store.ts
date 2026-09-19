@@ -20,6 +20,31 @@ import type {
   StudyDay,
 } from "@/lib/types";
 
+export const DAILY_STUDY_MINUTES_OPTIONS = [15, 30, 45, 60] as const;
+export type DailyStudyMinutes = (typeof DAILY_STUDY_MINUTES_OPTIONS)[number];
+
+const DEFAULT_DAILY_STUDY_MINUTES: DailyStudyMinutes = 45;
+/** Evening catch-up friendly default (24h HH:MM). */
+const DEFAULT_PREFERRED_STUDY_TIME = "21:00";
+
+function normalizeDailyStudyMinutes(value: unknown): DailyStudyMinutes {
+  if (
+    typeof value === "number" &&
+    (DAILY_STUDY_MINUTES_OPTIONS as readonly number[]).includes(value)
+  ) {
+    return value as DailyStudyMinutes;
+  }
+  return DEFAULT_DAILY_STUDY_MINUTES;
+}
+
+function normalizePreferredStudyTime(value: unknown): string {
+  if (typeof value === "string" && /^\d{2}:\d{2}$/.test(value)) {
+    const [hh, mm] = value.split(":").map(Number);
+    if (hh >= 0 && hh <= 23 && mm >= 0 && mm <= 59) return value;
+  }
+  return DEFAULT_PREFERRED_STUDY_TIME;
+}
+
 interface TrainerState {
   progress: Progress;
   mistakes: Mistake[];
@@ -38,6 +63,10 @@ interface TrainerState {
   planHideDone: boolean;
   /** Slightly larger base / quiz text. Persisted; not cleared by resetAll. */
   largeText: boolean;
+  /** Daily review budget in minutes. Persisted; not cleared by resetAll. */
+  dailyStudyMinutes: DailyStudyMinutes;
+  /** Preferred local review clock time HH:MM (24h). Persisted; not cleared by resetAll. */
+  preferredStudyTime: string;
   /** Recent mock / large paper runs (newest first). Cap 20. Cleared by resetAll. */
   mockRuns: MockRunRecord[];
   setSimulateDate: (value: string | null) => void;
@@ -46,6 +75,8 @@ interface TrainerState {
   setFocusMode: (value: boolean) => void;
   setPlanHideDone: (value: boolean) => void;
   setLargeText: (value: boolean) => void;
+  setDailyStudyMinutes: (value: DailyStudyMinutes) => void;
+  setPreferredStudyTime: (value: string) => void;
   markStep: (dayId: string, step: LearnStep) => void;
   recordAnswer: (question: Question, selected: OptionKey, today: string) => boolean;
   reviewMistakeAnswer: (
@@ -202,6 +233,8 @@ export const useTrainerStore = create<TrainerState>()(
       focusMode: false,
       planHideDone: false,
       largeText: false,
+      dailyStudyMinutes: DEFAULT_DAILY_STUDY_MINUTES,
+      preferredStudyTime: DEFAULT_PREFERRED_STUDY_TIME,
       mockRuns: [],
       setSimulateDate: (value) => set({ simulateDate: value }),
       setStartDate: (value) => {
@@ -212,6 +245,10 @@ export const useTrainerStore = create<TrainerState>()(
       setFocusMode: (value) => set({ focusMode: value }),
       setPlanHideDone: (value) => set({ planHideDone: value }),
       setLargeText: (value) => set({ largeText: value }),
+      setDailyStudyMinutes: (value) =>
+        set({ dailyStudyMinutes: normalizeDailyStudyMinutes(value) }),
+      setPreferredStudyTime: (value) =>
+        set({ preferredStudyTime: normalizePreferredStudyTime(value) }),
       markStep: (dayId, step) => {
         const current = get().sessions[dayId] ?? emptySession();
         const next = { ...current, lastActiveAt: new Date().toISOString() };
@@ -338,7 +375,7 @@ export const useTrainerStore = create<TrainerState>()(
           ...streakPatch,
         });
       },
-      // Clears progress/mistakes/answers/sessions only; keeps unlockAll, simulateDate, startDate, largeText, focusMode, planHideDone.
+      // Clears progress/mistakes/answers/sessions only; keeps unlockAll, simulateDate, startDate, largeText, focusMode, planHideDone, dailyStudyMinutes, preferredStudyTime.
       resetAll: () =>
         set({
           progress: emptyProgress(),
@@ -367,6 +404,8 @@ export const useTrainerStore = create<TrainerState>()(
         focusMode: state.focusMode,
         planHideDone: state.planHideDone,
         largeText: state.largeText,
+        dailyStudyMinutes: state.dailyStudyMinutes,
+        preferredStudyTime: state.preferredStudyTime,
         mockRuns: state.mockRuns,
       }),
       merge: (persistedState, currentState) => {
@@ -392,6 +431,12 @@ export const useTrainerStore = create<TrainerState>()(
           typeof persisted.largeText === "boolean"
             ? persisted.largeText
             : false;
+        const dailyStudyMinutes = normalizeDailyStudyMinutes(
+          persisted.dailyStudyMinutes,
+        );
+        const preferredStudyTime = normalizePreferredStudyTime(
+          persisted.preferredStudyTime,
+        );
         const streak =
           typeof persisted.streak === "number" && persisted.streak >= 0
             ? persisted.streak
@@ -410,6 +455,8 @@ export const useTrainerStore = create<TrainerState>()(
           focusMode,
           planHideDone,
           largeText,
+          dailyStudyMinutes,
+          preferredStudyTime,
           streak,
           lastStudyDate,
           mockRuns,
