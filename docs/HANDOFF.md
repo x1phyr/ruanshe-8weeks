@@ -93,7 +93,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ## 5. 功能清单
 
-近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考、模考历史、今日战报附最近模考 / 清空模考历史、今日陷阱；本轮另加 **练习页模块错题快捷入口**（选中模块 chip / `?module=` 时链到 `/mistakes?module=`，展示未掌握数；错题本同样支持 `?module=` 预选）。CI 题库检查因 workflow 范围暂缓。
+近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考、模考历史、今日战报附最近模考 / 清空模考历史、今日陷阱；本轮另加 **复习计划设置**（`dailyStudyMinutes` 15/30/45/60 默认 45、`preferredStudyTime` 默认 `21:00`，调试设置可改；仪表盘文案与 15 分钟速刷推荐入口跟随）与 **练习页模块错题快捷入口**（选中模块 chip / `?module=` 时链到 `/mistakes?module=`，展示未掌握数；错题本同样支持 `?module=` 预选）。CI 题库检查因 workflow 范围暂缓。
 
 | 能力 | 说明 |
 | --- | --- |
@@ -119,6 +119,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **PWA** | 可「安装到桌面」（manifest + SW） |
 | **专注模式 focus** | 隐藏侧栏 / 底栏；偏好持久化 |
 | **大号文字 largeText** | 调试设置开关；略放大正文字号与测验题干/选项；持久化，重置进度保留 |
+| **复习计划** | 调试设置「复习计划」：`dailyStudyMinutes`（15/30/45/60，默认 **45**）与 `preferredStudyTime`（`HH:MM`，默认 **21:00** 晚间补课友好）；仅影响站内今日任务文案与推荐入口（15 分钟时强调速刷），不推系统通知；持久化，`resetAll` 保留 |
 | **减弱动效 reduced motion** | `globals.css`：`@media (prefers-reduced-motion: reduce)` 全站缩短/关闭 `transition` / `animate-*`（含 tw-animate 进退场）；跟随系统偏好，无需额外开关 |
 | **移动端距考倒计时** | `md:hidden` 顶栏紧凑「距考 XX 天」；`simulateDate` 时显示模拟徽标；不改桌面侧栏倒计时 |
 | **celebrate** | 通关 / 完成庆祝路径（仪表盘随机 / 只练错题等入口） |
@@ -141,7 +142,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | --- | --- |
 | `lib/config.ts` | `examDate`、`STORAGE_KEY`、`BASE_PATH`、应用名 |
 | `lib/calendar.ts` | 53 日课表元数据（title / module / kind / status） |
-| `lib/store.ts` | Zustand 进度、错题、开课日、解锁、专注、streak、`mockRuns` |
+| `lib/store.ts` | Zustand 进度、错题、开课日、解锁、专注、streak、`mockRuns`、复习计划（`dailyStudyMinutes` / `preferredStudyTime`） |
 | `lib/progress.ts` | 解锁、完课、通关判定 |
 | `lib/backup.ts` | 进度备份导入导出 |
 | `lib/module-stats.ts` | 模块正确率 |

@@ -88,6 +88,8 @@ export function DashboardView() {
   const sessions = useTrainerStore((s) => s.sessions);
   const streak = useTrainerStore((s) => s.streak);
   const mockRuns = useTrainerStore((s) => s.mockRuns);
+  const dailyStudyMinutes = useTrainerStore((s) => s.dailyStudyMinutes);
+  const preferredStudyTime = useTrainerStore((s) => s.preferredStudyTime);
 
   const today = todayISO(simulateDate);
   const realToday = todayISO();
@@ -189,6 +191,7 @@ export function DashboardView() {
         progress={progress}
         unlockAll={unlockAll}
         startDate={startDate}
+        dailyStudyMinutes={dailyStudyMinutes}
       />
 
       <WeekdayCoachTip today={today} />
@@ -225,17 +228,11 @@ export function DashboardView() {
           />
           <Metric
             label="今日时长"
-            value={
-              phase === "active" && calendarToday
-                ? `${calendarToday.durationMin} MIN`
-                : "—"
-            }
+            value={`${dailyStudyMinutes} MIN`}
             hint={
               phase === "active" && calendarToday
-                ? kindLabel[calendarToday.kind]
-                : phase === "not-started"
-                  ? "未开课"
-                  : "计划外"
+                ? `课表 ${calendarToday.durationMin} · 建议 ${preferredStudyTime}`
+                : `建议 ${preferredStudyTime}`
             }
           />
           <Metric
@@ -279,6 +276,8 @@ export function DashboardView() {
         unlockAll={unlockAll}
         startDate={startDate}
         focus={focus}
+        dailyStudyMinutes={dailyStudyMinutes}
+        preferredStudyTime={preferredStudyTime}
       />
 
       <TomorrowPreview startDate={startDate} today={today} lastDate={lastDate} />
@@ -345,6 +344,8 @@ export function DashboardView() {
           focus={focus}
           progress={progress}
           sessions={sessions}
+          dailyStudyMinutes={dailyStudyMinutes}
+          preferredStudyTime={preferredStudyTime}
         />
       ) : null}
 
@@ -357,7 +358,13 @@ export function DashboardView() {
         />
       ) : null}
 
-      <WeakTopicsCard mistakes={mistakes} today={today} progress={progress} unlockAll={unlockAll} />
+      <WeakTopicsCard
+        mistakes={mistakes}
+        today={today}
+        progress={progress}
+        unlockAll={unlockAll}
+        dailyStudyMinutes={dailyStudyMinutes}
+      />
     </PageFrame>
   );
 }
@@ -549,13 +556,18 @@ function ActiveDayPanel({
   focus,
   progress,
   sessions,
+  dailyStudyMinutes,
+  preferredStudyTime,
 }: {
   display: StudyDay;
   focus: StudyDay;
   progress: ProgressState;
   sessions: Record<string, DaySession>;
+  dailyStudyMinutes: number;
+  preferredStudyTime: string;
 }) {
   const session = getSession(sessions, display.id);
+  const preferQuick15 = dailyStudyMinutes === 15;
   const tasks = taskDefs.map((task) => {
     const done =
       task.key === "review"
@@ -576,6 +588,9 @@ function ActiveDayPanel({
           <KindPill tone="brand">{kindLabel[display.kind]}</KindPill>
         </div>
         <div className="mt-1 text-sm text-muted-foreground">{display.blurb}</div>
+        <p className="mt-2 text-xs leading-5 text-muted-foreground">
+          今日约 {dailyStudyMinutes} 分钟 · 建议每天 {preferredStudyTime} 左右完成
+        </p>
         <ol className="mt-4 space-y-2">
           {tasks.map((task, index) => (
             <li key={task.key} className="flex items-center gap-3 text-sm">
@@ -594,13 +609,35 @@ function ActiveDayPanel({
             </li>
           ))}
         </ol>
-        <Link
-          href={dayHref(focus)}
-          className="mt-5 inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
-        >
-          {isCompleted(progress, focus.id) ? "查看学习日" : "继续学习"}
-          <ArrowRight className="size-4" />
-        </Link>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {preferQuick15 ? (
+            <>
+              <Link
+                href="/practice"
+                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+              >
+                15 分钟速刷
+                <ArrowRight className="size-4" />
+              </Link>
+              <Link
+                href={dayHref(focus)}
+                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-md border border-border px-3 text-sm hover:bg-muted"
+              >
+                {isCompleted(progress, focus.id) ? "查看学习日" : "完整日训"}
+              </Link>
+            </>
+          ) : (
+            <Link
+              href={dayHref(focus)}
+              className="inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+            >
+              {isCompleted(progress, focus.id)
+                ? "查看学习日"
+                : `继续学习（约 ${dailyStudyMinutes} 分钟）`}
+              <ArrowRight className="size-4" />
+            </Link>
+          )}
+        </div>
       </Surface>
 
       <Surface className="p-4">
@@ -636,6 +673,7 @@ function ExamNearModeCard({
   progress,
   unlockAll,
   startDate,
+  dailyStudyMinutes,
 }: {
   daysLeft: number;
   mistakes: Mistake[];
@@ -643,7 +681,9 @@ function ExamNearModeCard({
   progress: ProgressState;
   unlockAll: boolean;
   startDate: string;
+  dailyStudyMinutes: number;
 }) {
+  const preferQuick15 = dailyStudyMinutes === 15;
   const [drilling, setDrilling] = useState(false);
   const [randomRun, setRandomRun] = useState<{
     questions: Question[];
@@ -807,7 +847,7 @@ function ExamNearModeCard({
         <Button
           type="button"
           size="sm"
-          variant="outline"
+          variant={preferQuick15 ? "default" : "outline"}
           className="h-8 px-2.5 text-xs"
           disabled={unlockedPool.length === 0}
           onClick={() => {
@@ -816,7 +856,7 @@ function ExamNearModeCard({
             setRandomRun({ questions: picked, timeLimitSec: 900 });
           }}
         >
-          15分钟速刷
+          {preferQuick15 ? "今日推荐 · 15分钟速刷" : "15分钟速刷"}
         </Button>
         <Button
           type="button"
@@ -973,6 +1013,8 @@ function TodayRecommendCard({
   unlockAll,
   startDate,
   focus,
+  dailyStudyMinutes,
+  preferredStudyTime,
 }: {
   answers: AnswerRecord[];
   mistakes: Mistake[];
@@ -981,7 +1023,10 @@ function TodayRecommendCard({
   unlockAll: boolean;
   startDate: string;
   focus: StudyDay;
+  dailyStudyMinutes: number;
+  preferredStudyTime: string;
 }) {
+  const preferQuick15 = dailyStudyMinutes === 15;
   const studyDays = useMemo(() => scheduleDays(startDate), [startDate]);
   const pendingDue = useMemo(() => dueMistakes(mistakes, today), [mistakes, today]);
   const weak = useMemo(
@@ -1022,7 +1067,7 @@ function TodayRecommendCard({
   type RunState =
     | { kind: "module"; module: string; questions: Question[] }
     | { kind: "wrong"; questions: Question[] }
-    | { kind: "random"; questions: Question[] };
+    | { kind: "random"; questions: Question[]; timeLimitSec?: number };
 
   const [run, setRun] = useState<RunState | null>(null);
 
@@ -1047,10 +1092,19 @@ function TodayRecommendCard({
       };
     }
     if (!isCompleted(progress, focus.id)) {
+      if (preferQuick15 && unlockedPool.length > 0) {
+        return {
+          kind: "quick15" as const,
+          title: "今日 15 分钟速刷",
+          reason: `你的每日时长设为 15 分钟 · 建议 ${preferredStudyTime} 左右完成；优先短练保持手感。`,
+          cta: "开始速刷",
+          disabled: false,
+        };
+      }
       return {
         kind: "focus" as const,
         title: `今日焦点 · ${focus.topic}`,
-        reason: `按计划学「${focus.title}」，约 ${focus.durationMin} 分钟收口今日。`,
+        reason: `按计划学「${focus.title}」，约 ${dailyStudyMinutes} 分钟收口今日 · 建议 ${preferredStudyTime} 左右。`,
         cta: "进入日训",
         disabled: false,
       };
@@ -1074,6 +1128,9 @@ function TodayRecommendCard({
     progress,
     focus,
     unlockedPool.length,
+    preferQuick15,
+    dailyStudyMinutes,
+    preferredStudyTime,
   ]);
 
   if (run && run.questions.length > 0) {
@@ -1082,7 +1139,9 @@ function TodayRecommendCard({
         ? `弱项 · ${run.module}`
         : run.kind === "wrong"
           ? "只练错题"
-          : `随机 ${run.questions.length} 题`;
+          : run.timeLimitSec === 900
+            ? `15 分钟速刷 · ${run.questions.length} 题`
+            : `随机 ${run.questions.length} 题`;
     return (
       <Surface className="mt-4 p-4">
         <button
@@ -1109,8 +1168,9 @@ function TodayRecommendCard({
                 ? `dashboard:today:module:${run.module}`
                 : run.kind === "wrong"
                   ? "dashboard:today:wrong-only"
-                  : `dashboard:today:random:${run.questions.length}`
+                  : `dashboard:today:random:${run.timeLimitSec ? `timed${run.timeLimitSec}:` : ""}${run.questions.length}`
             }
+            timeLimitSec={run.kind === "random" ? run.timeLimitSec : undefined}
             finishLabel="返回推荐"
             onFinished={() => setRun(null)}
           />
@@ -1131,7 +1191,21 @@ function TodayRecommendCard({
             {recommendation.reason}
           </p>
         </div>
-        {recommendation.kind === "focus" ? (
+        {recommendation.kind === "quick15" ? (
+          <Button
+            type="button"
+            size="sm"
+            className="h-7 shrink-0 px-2.5 text-xs"
+            onClick={() => {
+              const picked = sampleQuestions(unlockedPool, 10);
+              if (picked.length === 0) return;
+              setRun({ kind: "random", questions: picked, timeLimitSec: 900 });
+            }}
+          >
+            {recommendation.cta}
+            <ArrowRight className="ml-1 size-3.5" />
+          </Button>
+        ) : recommendation.kind === "focus" ? (
           <Link
             href={dayHref(focus)}
             className="inline-flex h-7 shrink-0 items-center gap-1 rounded-md border border-border px-2.5 text-xs hover:bg-muted"
@@ -1562,12 +1636,15 @@ function WeakTopicsCard({
   today,
   progress,
   unlockAll,
+  dailyStudyMinutes,
 }: {
   mistakes: Mistake[];
   today: string;
   progress: ProgressState;
   unlockAll: boolean;
+  dailyStudyMinutes: number;
 }) {
+  const preferQuick15 = dailyStudyMinutes === 15;
   const [drilling, setDrilling] = useState(false);
   const [randomRun, setRandomRun] = useState<{
     questions: Question[];
@@ -1704,7 +1781,7 @@ function WeakTopicsCard({
           <Button
             type="button"
             size="sm"
-            variant="outline"
+            variant={preferQuick15 ? "default" : "outline"}
             className="h-7 px-2 text-xs"
             disabled={unlockedPool.length === 0}
             onClick={() => {
@@ -1713,7 +1790,7 @@ function WeakTopicsCard({
               setRandomRun({ questions: picked, timeLimitSec: 900 });
             }}
           >
-            15 分钟速刷
+            {preferQuick15 ? "今日推荐 · 15 分钟速刷" : "15 分钟速刷"}
           </Button>
           <Button
             type="button"
