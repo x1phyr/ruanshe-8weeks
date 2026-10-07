@@ -1,6 +1,6 @@
 # 软设 8 周通关 · 交接文档
 
-> 截至 **2026-09-09**（Asia/Shanghai）。给后续维护者 / Agent 的完整交接。
+> 截至 **2026-10-08**（Asia/Shanghai）。给后续维护者 / Agent 的完整交接。
 
 ## 1. 产品目标
 
@@ -93,7 +93,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ## 5. 功能清单
 
-近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考、模考历史、今日战报附最近模考 / 清空模考历史、今日陷阱；本轮另加 **复习计划设置**（`dailyStudyMinutes` 15/30/45/60 默认 45、`preferredStudyTime` 默认 `21:00`，调试设置可改；仪表盘文案与 15 分钟速刷推荐入口跟随）与 **练习页模块错题快捷入口**（选中模块 chip / `?module=` 时链到 `/mistakes?module=`，展示未掌握数；错题本同样支持 `?module=` 预选）。CI 题库检查因 workflow 范围暂缓。
+近期已落地（摘要）：错题模块筛选、清空已掌握、30 秒速览、移动端距考倒计时、largeText、quick-15、floor-12、qa 脚本、reduced motion、一键上午/下午模考、模考历史、今日战报附最近模考 / 清空模考历史、今日陷阱；本轮另加 **冲刺版课表（16 天）**（`data/sprint-plan.ts`：固定 2026-10-08…10-23，仪表盘近考卡 + `/plan` 分区；不改 examDate）、**复习计划设置**（`dailyStudyMinutes` 15/30/45/60 默认 45、`preferredStudyTime` 默认 `21:00`，调试设置可改；仪表盘文案与 15 分钟速刷推荐入口跟随）与 **练习页模块错题快捷入口**（选中模块 chip / `?module=` 时链到 `/mistakes?module=`，展示未掌握数；错题本同样支持 `?module=` 预选）。CI 题库检查因 workflow 范围暂缓。
 
 | 能力 | 说明 |
 | --- | --- |
@@ -129,6 +129,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | **本周完成度** | 仪表盘紧凑卡片：当前周 completed/total + 细进度条，链到 /plan |
 | **接着上次** | 仪表盘紧凑卡：sessions 中最近 `lastActiveAt` 的未完成已解锁日 → 日训；无则隐藏 |
 | **今日推荐** | 仪表盘紧凑卡：弱项模块抽练 → 到期错题 → 今日焦点日训 / 随机20；一行中文理由 |
+| **冲刺版课表** | 固定 16 日冲刺（10/8–10/23）：`data/sprint-plan.ts`；距考 ≤20 天仪表盘「冲刺课表」卡（今日焦点 / 即将开始 / 考前收口）；`/plan` 顶部「冲刺版（约16天）」三相列表，高亮今日，深链 `/practice?module=` 或错题本/模考；考试日提示休息，考后隐藏；与 8 周 `startDate` 课表并行，方便从未开课者跟 |
 | **临考模式** | 距考 0–7 天仪表盘突出卡：剩几天 + 只练错题 / 15 分钟速刷 / 限时 20 分钟 + 已解锁 W5/W7 试卷日链（否则 /practice）；考后极简「考试已过」 |
 | **复制今日战报** | 仪表盘按钮：`navigator.clipboard` 复制中文战报（模拟日日期 / 距考 / streak / 正确率 / 完成日 /53 / 到期错题 / 弱项 top1 / 最近模考一行（若有，如 `最近模考：上午·套1 72%（09-08）`）+ 站点 URL），2s 显示「已复制」 |
 | **module accuracy** | `lib/module-stats.ts` 模块正确率 |
@@ -152,6 +153,7 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 | `data/questions.ts` | 日训题 + 合并模考题 |
 | `data/mock-papers.ts` | 自编模考 220 题 |
 | `data/daily-traps.ts` | 今日陷阱 42 条（title/body/module?；day-of-year 轮换） |
+| `data/sprint-plan.ts` | 冲刺版 16 日课表（固定日历日；phase/title/focus/tip/moduleKey） |
 | `components/dashboard-view.tsx` | 仪表盘 |
 | `components/learn/*` | 日训会话、讲义、测验、试卷计时 |
 | `components/practice-view.tsx` | 模块 / 搜索 / 随机 / 限时 / 15 分钟速刷 / 一键模考 |
@@ -200,5 +202,5 @@ console.log({ total: questions.length, daily: daily.length, mock: mockPaperQuest
 
 ---
 
-*文档刷新：2026-09-09（W6 网络与安全软考陷阱再加厚 +24）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准（全站约 **1015**）。*
+*文档刷新：2026-10-08（冲刺版 16 日课表：仪表盘 + `/plan`）。题量以仓库内 data/questions.ts + data/mock-papers.ts 导出数组为准。*
 

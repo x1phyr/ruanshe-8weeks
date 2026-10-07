@@ -17,6 +17,16 @@ import {
   scheduleWeeks,
 } from "@/lib/calendar";
 import { examConfig } from "@/lib/config";
+import {
+  SPRINT_END,
+  SPRINT_START,
+  getSprintDay,
+  resolveSprintFocus,
+  sprintDaysByPhase,
+  sprintPhaseLabel,
+  type SprintDay,
+  type SprintPhase,
+} from "@/data/sprint-plan";
 import { examCountdown, formatDateShort, pad2, todayISO, weekdayLabel } from "@/lib/dates";
 import { dayPracticeModule, practiceModuleHref } from "@/lib/practice";
 import { firstIncompleteUnlocked, isCompleted, isUnlocked } from "@/lib/progress";
@@ -164,6 +174,8 @@ export function PlanView() {
         </div>
       </Surface>
 
+      <SprintPlanSection today={today} />
+
       <div className="space-y-6">
         {weeks.map((week) => {
           const weekDays = days.filter((day) => day.week === week.week);
@@ -309,3 +321,140 @@ export function PlanView() {
     </PageFrame>
   );
 }
+
+function sprintDayHref(day: SprintDay): string | null {
+  if (day.moduleKey && (day.practiceHint === "module" || day.practiceHint === "case")) {
+    return practiceModuleHref(day.moduleKey);
+  }
+  if (day.practiceHint === "mock") return "/practice";
+  if (
+    day.practiceHint === "mistakes" ||
+    day.practiceHint === "weak" ||
+    day.practiceHint === "wrap"
+  ) {
+    return "/mistakes";
+  }
+  if (day.moduleKey) return practiceModuleHref(day.moduleKey);
+  return null;
+}
+
+function SprintPlanSection({ today }: { today: string }) {
+  const focus = resolveSprintFocus(today);
+  const todaySprint = getSprintDay(today);
+  const phases: SprintPhase[] = [1, 2, 3];
+
+  return (
+    <section className="mb-8">
+      <div className="mb-2 flex flex-wrap items-end justify-between gap-2">
+        <div>
+          <div className="mono-num text-xs text-brand">SPRINT · 16 DAYS</div>
+          <h2 className="text-base font-medium">冲刺版（约 16 天）</h2>
+          <p className="text-xs text-muted-foreground">
+            {SPRINT_START} → {SPRINT_END} · 考试日 {examConfig.examDate} 不排新学。
+            没跟过 8 周课表可直接跟这张：上午高频 → 模考弱项 → 案例收口。每日地板 15 分钟。
+          </p>
+        </div>
+        {focus.kind === "today" && todaySprint ? (
+          <KindPill tone="warn">今日 · {todaySprint.title}</KindPill>
+        ) : focus.kind === "upcoming" && focus.day ? (
+          <KindPill tone="brand">即将 · {focus.day.date}</KindPill>
+        ) : focus.kind === "exam" ? (
+          <KindPill tone="warn">今天考试</KindPill>
+        ) : null}
+      </div>
+
+      <Surface className="mb-3 border-brand/30 bg-brand/5 px-3 py-3">
+        <div className="label-caps text-brand">原则</div>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          不追完整 8 周课表；上午选择优先 + 下午案例够不空白；砍掉：追全讲义、真题 PDF、冷门犄角。
+          每日建议：错题 → 模块练习 →（可选）讲义。
+        </p>
+        {focus.status ? (
+          <p className="mt-2 text-xs text-foreground">{focus.status}</p>
+        ) : null}
+      </Surface>
+
+      <div className="space-y-4">
+        {phases.map((phase) => {
+          const days = sprintDaysByPhase(phase);
+          return (
+            <div key={phase}>
+              <div className="mb-1.5 flex flex-wrap items-baseline gap-2">
+                <span className="mono-num text-xs text-brand">PHASE {phase}</span>
+                <span className="text-sm font-medium">{sprintPhaseLabel[phase]}</span>
+                <span className="font-mono text-[11px] text-muted-foreground">
+                  {days[0]?.date} → {days[days.length - 1]?.date}
+                </span>
+              </div>
+              <Surface className="overflow-hidden">
+                <ul className="divide-y divide-border">
+                  {days.map((day) => {
+                    const isToday = day.date === today;
+                    const href = sprintDayHref(day);
+                    const body = (
+                      <>
+                        <div className="w-16 shrink-0 font-mono text-xs text-muted-foreground">
+                          <div>{formatDateShort(day.date)}</div>
+                          <div>{weekdayLabel(day.date)}</div>
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <span className="text-sm">{day.title}</span>
+                            {isToday ? <KindPill tone="brand">今日</KindPill> : null}
+                          </div>
+                          <div className="mt-0.5 text-xs text-muted-foreground">
+                            {day.focus}
+                          </div>
+                          <div className="mt-0.5 text-xs text-muted-foreground/80">
+                            {day.tip}
+                          </div>
+                        </div>
+                      </>
+                    );
+                    return (
+                      <li
+                        key={day.date}
+                        className={cn(
+                          "flex items-start gap-3 px-3 py-2.5 md:items-center",
+                          isToday && "bg-surface-hover",
+                        )}
+                      >
+                        <div className="flex min-w-0 flex-1 items-start gap-3 md:items-center">
+                          {body}
+                        </div>
+                        <div className="flex shrink-0 flex-col items-end gap-1 md:flex-row md:items-center md:gap-2">
+                          {day.moduleKey ? (
+                            <KindPill tone="brand">{day.moduleKey}</KindPill>
+                          ) : day.practiceHint === "mock" ? (
+                            <KindPill tone="warn">模考</KindPill>
+                          ) : day.practiceHint === "wrap" || day.practiceHint === "weak" ? (
+                            <KindPill>错题</KindPill>
+                          ) : null}
+                          {href ? (
+                            <Link
+                              href={href}
+                              className="print-hidden inline-flex h-7 items-center rounded-md border border-border px-2 text-xs text-muted-foreground hover:bg-muted hover:text-foreground"
+                            >
+                              {day.practiceHint === "mock"
+                                ? "去模考"
+                                : day.practiceHint === "mistakes" ||
+                                    day.practiceHint === "weak" ||
+                                    day.practiceHint === "wrap"
+                                  ? "错题本"
+                                  : "练此模块"}
+                            </Link>
+                          ) : null}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Surface>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+

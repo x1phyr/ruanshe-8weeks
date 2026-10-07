@@ -27,6 +27,12 @@ import { practiceModuleHref, questionsForModule } from "@/lib/practice";
 import { exportProgressBackup } from "@/lib/backup";
 import { coachTipForDate } from "@/lib/coach-tips";
 import { dailyTrapForDate } from "@/data/daily-traps";
+import {
+  isSprintCardVisible,
+  resolveSprintFocus,
+  sprintPhaseLabel,
+  type SprintDay,
+} from "@/data/sprint-plan";
 import { examConfig } from "@/lib/config";
 import {
   CURRICULUM_LENGTH,
@@ -183,6 +189,8 @@ export function DashboardView() {
       />
 
       <InstallTip />
+
+      <SprintPlanCard today={today} />
 
       <ExamNearModeCard
         daysLeft={daysLeft}
@@ -496,6 +504,131 @@ function CopyDailyReportButton({
         </span>
       ) : null}
     </div>
+  );
+}
+
+
+function sprintCta(day: SprintDay): { href: string; label: string }[] {
+  const hint = day.practiceHint;
+  const links: { href: string; label: string }[] = [];
+  if (hint === "module" && day.moduleKey) {
+    links.push({ href: practiceModuleHref(day.moduleKey), label: `练 · ${day.moduleKey}` });
+  } else if (hint === "mock") {
+    links.push({ href: "/practice", label: "去练习 · 一键模考" });
+  } else if (hint === "mistakes" || hint === "wrap") {
+    links.push({ href: "/mistakes", label: "去错题本" });
+  } else if (hint === "weak") {
+    links.push({ href: "/mistakes", label: "去错题本" });
+    links.push({ href: "/practice", label: "弱项模块练习" });
+  } else if (hint === "case") {
+    if (day.moduleKey) {
+      links.push({ href: practiceModuleHref(day.moduleKey), label: `练 · ${day.moduleKey}` });
+    }
+    links.push({ href: "/practice", label: "模块练习" });
+  }
+  if (links.length === 0) {
+    links.push({ href: "/plan", label: "查看冲刺课表" });
+  }
+  return links;
+}
+
+function SprintPlanCard({ today }: { today: string }) {
+  if (!isSprintCardVisible(today)) return null;
+  const focus = resolveSprintFocus(today);
+  if (focus.kind === "hidden") return null;
+
+  if (focus.kind === "exam") {
+    return (
+      <Surface className="mt-4 border-brand/40 bg-brand/5 p-4">
+        <div className="label-caps text-brand">冲刺课表</div>
+        <h2 className="mt-2 text-lg font-medium">今天考试</h2>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">{focus.status}</p>
+      </Surface>
+    );
+  }
+
+  if (focus.kind === "wrap") {
+    return (
+      <Surface className="mt-4 border-brand/40 bg-brand/5 p-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0">
+            <div className="label-caps text-brand">冲刺课表</div>
+            <h2 className="mt-2 text-lg font-medium">考前收口</h2>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">{focus.status}</p>
+          </div>
+          <Link
+            href="/mistakes"
+            className="inline-flex h-8 shrink-0 items-center rounded-md bg-primary px-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+          >
+            去错题本
+          </Link>
+        </div>
+      </Surface>
+    );
+  }
+
+  const day = focus.day;
+  if (!day) return null;
+  const ctas = focus.kind === "today" ? sprintCta(day) : [];
+  const heading =
+    focus.kind === "upcoming" ? `即将开始 · ${day.title}` : day.title;
+
+  return (
+    <Surface className="mt-4 border-brand/40 bg-brand/5 p-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="label-caps text-brand">冲刺课表</span>
+            <KindPill tone="brand">PHASE {day.phase}</KindPill>
+            <KindPill>{sprintPhaseLabel[day.phase]}</KindPill>
+            {focus.kind === "today" ? <KindPill tone="warn">今日</KindPill> : null}
+          </div>
+          <h2 className="mt-2 text-lg font-medium">{heading}</h2>
+          <p className="mt-1 text-sm text-foreground">{day.focus}</p>
+          <p className="mt-1 text-xs leading-5 text-muted-foreground">
+            {focus.status} · {day.tip}
+          </p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            没跟过 8 周课表也能从这里跟：上午高频选择 → 模考弱项 → 案例收口。每日地板 15 分钟。
+          </p>
+        </div>
+        <Link
+          href="/plan"
+          className="inline-flex h-8 shrink-0 items-center gap-1 rounded-md border border-border px-2.5 text-sm hover:bg-muted"
+        >
+          完整课表
+          <ArrowRight className="size-3.5" />
+        </Link>
+      </div>
+      {ctas.length > 0 ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {ctas.map((cta) => (
+            <Link
+              key={cta.href + cta.label}
+              href={cta.href}
+              className="inline-flex h-8 items-center rounded-md bg-primary px-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+            >
+              {cta.label}
+            </Link>
+          ))}
+          <Link
+            href="/mistakes"
+            className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-sm hover:bg-muted"
+          >
+            错题本
+          </Link>
+        </div>
+      ) : focus.kind === "upcoming" ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href="/plan"
+            className="inline-flex h-8 items-center rounded-md bg-primary px-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+          >
+            预览冲刺版
+          </Link>
+        </div>
+      ) : null}
+    </Surface>
   );
 }
 
