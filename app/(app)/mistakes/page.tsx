@@ -1,5 +1,5 @@
-import { MistakesView } from "@/components/mistakes-view";
+import { MistakeView } from "@/components/quizzer/mistake-view";
 
 export default function MistakesPage() {
-  return <MistakesView />;
+  return <MistakeView />;
 }

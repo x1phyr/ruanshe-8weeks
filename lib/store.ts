@@ -2,10 +2,10 @@
 
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { STORAGE_KEY } from "@/lib/config";
+import { STORAGE_KEY, examConfig } from "@/lib/config";
 import { getPersistStorage } from "@/lib/storage";
 import { getDayById } from "@/lib/calendar";
-import { addDaysISO, todayISO } from "@/lib/dates";
+import { addDaysISO, diffDays, todayISO } from "@/lib/dates";
 import { afterComplete, emptyProgress, isCompleted, isUnlocked, reviewIntervalDays } from "@/lib/progress";
 import type {
   AnswerRecord,
@@ -45,7 +45,97 @@ function normalizePreferredStudyTime(value: unknown): string {
   return DEFAULT_PREFERRED_STUDY_TIME;
 }
 
-interface TrainerState {
+
+export type PrepMode = "regular" | "sprint";
+
+export function getPrepMode(remainingDays: number): PrepMode {
+  return remainingDays < 10 ? "sprint" : "regular";
+}
+
+export interface RadarMetrics {
+  taskCompletionRate: number; // 0..100
+  completedTasks: number;
+  totalTasks: number;
+  morningScore: number;
+  afternoonScore: number;
+  morningPass: boolean;
+  afternoonPass: boolean;
+  doublePass: boolean;
+  passProbability: number;
+  statusLabel: string;
+}
+
+export function computeRadarMetrics({
+  checklist,
+  totalTasks,
+  answeredQuestionsCount = 0,
+  correctQuestionsCount = 0,
+  caseScoresTotal = 0,
+  casePossibleTotal = 0,
+}: {
+  checklist: Record<string, boolean>;
+  totalTasks: number;
+  answeredQuestionsCount?: number;
+  correctQuestionsCount?: number;
+  caseScoresTotal?: number;
+  casePossibleTotal?: number;
+}): RadarMetrics {
+  const completedTasks = Object.values(checklist).filter(Boolean).length;
+  const taskCompletionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+  const questionBonus =
+    answeredQuestionsCount > 0
+      ? (correctQuestionsCount / Math.max(1, answeredQuestionsCount)) * 8
+      : 0;
+  const morningScore = Math.min(
+    74,
+    Math.max(30, Math.round(35 + (taskCompletionRate / 100) * 30 + questionBonus))
+  );
+
+  const caseBonus =
+    casePossibleTotal > 0 ? (caseScoresTotal / casePossibleTotal) * 8 : 0;
+  const afternoonScore = Math.min(
+    72,
+    Math.max(25, Math.round(30 + (taskCompletionRate / 100) * 33 + caseBonus))
+  );
+
+  const morningPass = morningScore >= 45;
+  const afternoonPass = afternoonScore >= 45;
+  const doublePass = morningPass && afternoonPass;
+
+  let passProbability = Math.round(
+    Math.min(99, Math.max(15, ((morningScore + afternoonScore) / 150) * 100))
+  );
+  if (doublePass) {
+    passProbability = Math.max(75, passProbability);
+  }
+
+  let statusLabel = "冲刺及格线";
+  if (doublePass) {
+    statusLabel = morningScore >= 55 && afternoonScore >= 55 ? "高分稳过" : "安全达标";
+  } else if (!morningPass && !afternoonPass) {
+    statusLabel = "双科攻坚中";
+  } else if (!morningPass) {
+    statusLabel = "上午重点攻坚";
+  } else {
+    statusLabel = "下午大题攻坚";
+  }
+
+  return {
+    taskCompletionRate,
+    completedTasks,
+    totalTasks,
+    morningScore,
+    afternoonScore,
+    morningPass,
+    afternoonPass,
+    doublePass,
+    passProbability,
+    statusLabel,
+  };
+}
+
+export interface TrainerState {
   progress: Progress;
   mistakes: Mistake[];
   answers: AnswerRecord[];
@@ -69,6 +159,30 @@ interface TrainerState {
   preferredStudyTime: string;
   /** Recent mock / large paper runs (newest first). Cap 20. Cleared by resetAll. */
   mockRuns: MockRunRecord[];
+
+  // Dynamic Prep Period Engine State
+  remainingDays: number;
+  targetExamDate: string;
+  checklist: Record<string, boolean>;
+  mistakeQuestionIds: string[];
+  masteredPointIds: number[];
+  masteredFlashcardIds: string[];
+  caseAnswers: Record<string, Record<string, string>>;
+  caseChecked: Record<string, boolean>;
+
+  setRemainingDays: (days: number) => void;
+  setTargetExamDate: (date: string) => void;
+  toggleTask: (taskId: string) => void;
+  setTaskCompleted: (taskId: string, completed: boolean) => void;
+  addMistakeQuestion: (questionId: string) => void;
+  removeMistakeQuestion: (questionId: string) => void;
+  clearAllMistakes: () => void;
+  toggleMasteredPoint: (pointId: number) => void;
+  toggleMasteredFlashcard: (cardId: string) => void;
+  setCaseAnswer: (caseId: string, blankIndex: string | number, answer: string) => void;
+  setCaseChecked: (caseId: string, checked: boolean) => void;
+  resetAllPrepData: () => void;
+
   setSimulateDate: (value: string | null) => void;
   setStartDate: (value: string) => void;
   setUnlockAll: (value: boolean) => void;
@@ -236,6 +350,98 @@ export const useTrainerStore = create<TrainerState>()(
       dailyStudyMinutes: DEFAULT_DAILY_STUDY_MINUTES,
       preferredStudyTime: DEFAULT_PREFERRED_STUDY_TIME,
       mockRuns: [],
+
+      // Dynamic Prep Period Engine State
+      remainingDays: 56,
+      targetExamDate: examConfig.examDate,
+      checklist: {},
+      mistakeQuestionIds: [],
+      masteredPointIds: [],
+      masteredFlashcardIds: [],
+      caseAnswers: {},
+      caseChecked: {},
+
+      setRemainingDays: (days: number) => {
+        const clamped = Math.max(1, Math.min(56, Math.round(days)));
+        set({ remainingDays: clamped });
+      },
+      setTargetExamDate: (date: string) => {
+        set({ targetExamDate: date });
+        const days = diffDays(todayISO(get().simulateDate), date);
+        if (days > 0 && days <= 56) {
+          set({ remainingDays: days });
+        }
+      },
+      toggleTask: (taskId: string) => {
+        const current = get().checklist;
+        set({ checklist: { ...current, [taskId]: !current[taskId] } });
+      },
+      setTaskCompleted: (taskId: string, completed: boolean) => {
+        set({ checklist: { ...get().checklist, [taskId]: completed } });
+      },
+      addMistakeQuestion: (questionId: string) => {
+        const current = get().mistakeQuestionIds;
+        if (!current.includes(questionId)) {
+          set({ mistakeQuestionIds: [...current, questionId] });
+        }
+      },
+      removeMistakeQuestion: (questionId: string) => {
+        set({
+          mistakeQuestionIds: get().mistakeQuestionIds.filter((id) => id !== questionId),
+        });
+      },
+      clearAllMistakes: () => {
+        set({ mistakeQuestionIds: [] });
+      },
+      toggleMasteredPoint: (pointId: number) => {
+        const current = get().masteredPointIds;
+        const exists = current.includes(pointId);
+        set({
+          masteredPointIds: exists
+            ? current.filter((id) => id !== pointId)
+            : [...current, pointId],
+        });
+      },
+      toggleMasteredFlashcard: (cardId: string) => {
+        const current = get().masteredFlashcardIds;
+        const exists = current.includes(cardId);
+        set({
+          masteredFlashcardIds: exists
+            ? current.filter((id) => id !== cardId)
+            : [...current, cardId],
+        });
+      },
+      setCaseAnswer: (caseId: string, blankIndex: string | number, answer: string) => {
+        const currentCaseAnswers = get().caseAnswers[caseId] || {};
+        set({
+          caseAnswers: {
+            ...get().caseAnswers,
+            [caseId]: {
+              ...currentCaseAnswers,
+              [String(blankIndex)]: answer,
+            },
+          },
+        });
+      },
+      setCaseChecked: (caseId: string, checked: boolean) => {
+        set({
+          caseChecked: {
+            ...get().caseChecked,
+            [caseId]: checked,
+          },
+        });
+      },
+      resetAllPrepData: () => {
+        set({
+          checklist: {},
+          mistakeQuestionIds: [],
+          masteredPointIds: [],
+          masteredFlashcardIds: [],
+          caseAnswers: {},
+          caseChecked: {},
+        });
+      },
+
       setSimulateDate: (value) => set({ simulateDate: value }),
       setStartDate: (value) => {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return;
@@ -407,6 +613,14 @@ export const useTrainerStore = create<TrainerState>()(
         dailyStudyMinutes: state.dailyStudyMinutes,
         preferredStudyTime: state.preferredStudyTime,
         mockRuns: state.mockRuns,
+        remainingDays: state.remainingDays,
+        targetExamDate: state.targetExamDate,
+        checklist: state.checklist,
+        mistakeQuestionIds: state.mistakeQuestionIds,
+        masteredPointIds: state.masteredPointIds,
+        masteredFlashcardIds: state.masteredFlashcardIds,
+        caseAnswers: state.caseAnswers,
+        caseChecked: state.caseChecked,
       }),
       merge: (persistedState, currentState) => {
         const persisted = (persistedState ?? {}) as Partial<TrainerState>;
@@ -447,6 +661,40 @@ export const useTrainerStore = create<TrainerState>()(
             ? persisted.lastStudyDate
             : null;
         const mockRuns = normalizeMockRuns(persisted.mockRuns);
+
+        const remainingDays =
+          typeof persisted.remainingDays === "number" &&
+          persisted.remainingDays >= 1 &&
+          persisted.remainingDays <= 56
+            ? persisted.remainingDays
+            : currentState.remainingDays;
+        const targetExamDate =
+          typeof persisted.targetExamDate === "string" &&
+          /^\d{4}-\d{2}-\d{2}$/.test(persisted.targetExamDate)
+            ? persisted.targetExamDate
+            : currentState.targetExamDate;
+        const checklist =
+          persisted.checklist && typeof persisted.checklist === "object"
+            ? (persisted.checklist as Record<string, boolean>)
+            : currentState.checklist;
+        const mistakeQuestionIds = Array.isArray(persisted.mistakeQuestionIds)
+          ? (persisted.mistakeQuestionIds as string[])
+          : currentState.mistakeQuestionIds;
+        const masteredPointIds = Array.isArray(persisted.masteredPointIds)
+          ? (persisted.masteredPointIds as number[])
+          : currentState.masteredPointIds;
+        const masteredFlashcardIds = Array.isArray(persisted.masteredFlashcardIds)
+          ? (persisted.masteredFlashcardIds as string[])
+          : currentState.masteredFlashcardIds;
+        const caseAnswers =
+          persisted.caseAnswers && typeof persisted.caseAnswers === "object"
+            ? (persisted.caseAnswers as Record<string, Record<string, string>>)
+            : currentState.caseAnswers;
+        const caseChecked =
+          persisted.caseChecked && typeof persisted.caseChecked === "object"
+            ? (persisted.caseChecked as Record<string, boolean>)
+            : currentState.caseChecked;
+
         return {
           ...currentState,
           ...persisted,
@@ -460,6 +708,14 @@ export const useTrainerStore = create<TrainerState>()(
           streak,
           lastStudyDate,
           mockRuns,
+          remainingDays,
+          targetExamDate,
+          checklist,
+          mistakeQuestionIds,
+          masteredPointIds,
+          masteredFlashcardIds,
+          caseAnswers,
+          caseChecked,
         };
       },
     },

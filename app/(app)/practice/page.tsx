@@ -1,5 +1,5 @@
-import { PracticeView } from "@/components/practice-view";
+import { QuizzerView } from "@/components/quizzer/quizzer-view";
 
 export default function PracticePage() {
-  return <PracticeView />;
+  return <QuizzerView />;
 }

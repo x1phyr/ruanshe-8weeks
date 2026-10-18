@@ -1,0 +1,372 @@
+[
+  {
+    "day": 1,
+    "title": "Day 1：底层核心体系与数据流图建模突破",
+    "focusMorning": "结合《软件设计师知识锦囊.pdf》第1-2章、《软设知识点100条.pdf》(第1~22条)与《易混淆知识点.pdf》(辨析1~4)：攻克原/反/补/移码人为定义(-128)、五种寻址方式、流水线理论与实践公式、单缓冲区(2阶段)与双缓冲区(3阶段)磁盘流水线、MTTF/MTTR/MTBF可靠性与可维护性1/(1+MTTR)、前趋图PV操作(箭线起点V终点P)、死锁最小资源数 m*(w-1)+1<=n、页表淘汰原则(先访问位0再修改位0)与三级索引文件寻址",
+    "focusAfternoon": "结合《软件设计师模考.pdf》试题一(慕课在线作业批改系统DFD)、《2018上半年下午试题及解析.docx》试题一(Web医疗护理管理系统DFD)与《2019下半年真题详解》：掌握外部实体(人物/组织/外部系统)、数据存储(**表/**库/**文件)、加工(动词+名词)及父子图平衡/黑洞/奇迹/灰洞排查",
+    "targetScore": "上午冲刺：硬件6分+OS 6分（合集考纲占比16%）| 下午冲刺：DFD必拿 13~15 分（合集《考前必备》目标13分+）",
+    "strategy": "依据合集《软件设计师高频考点.pdf》章节问答：流水线计算默认先用理论公式，无答案再用实践公式；PSW状态条件寄存器归属有争议做题放最后考虑；Cache地址映射由硬件直接完成；磁盘单缓冲区读入与送用户区合并为1阶段，双缓冲区拆为3阶段并行流水线；下午DFD依靠顶层图与0层图输入输出守恒+逐句划掉题干法稳拿13分以上！",
+    "tasks": [
+      {
+        "id": "D1-T1",
+        "category": "reading",
+        "title": "合集速记：《软设知识点100条》第1~13条 +《易混淆知识点》辨析1~4（码制/寻址/DMA/可维护性公式）",
+        "points": 10,
+        "recommendedMinutes": 30,
+        "relatedDomain": "计算机系统与体系结构"
+      },
+      {
+        "id": "D1-T2",
+        "category": "reading",
+        "title": "合集速记：《知识锦囊》第2章 + 章节问答（前趋图箭线起点V终点P、单/双缓冲区流水线、三级索引）",
+        "points": 10,
+        "recommendedMinutes": 35,
+        "relatedDomain": "操作系统"
+      },
+      {
+        "id": "D1-T3",
+        "category": "morning_quiz",
+        "title": "合集真题：《2021年5月真题》+《模考卷一/二》计算机组成与体系结构 19 题极速特训",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedDomain": "计算机系统与体系结构"
+      },
+      {
+        "id": "D1-T4",
+        "category": "morning_quiz",
+        "title": "合集真题：《2021年5月真题》+《2018/2019真题》操作系统核心调度与资源管理 19 题极速特训",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedDomain": "操作系统"
+      },
+      {
+        "id": "D1-T5",
+        "category": "reading",
+        "title": "下午突破：DFD 数据流图解题套路、父子平衡检查与三大经典陷阱（黑洞/奇迹/灰洞）",
+        "points": 10,
+        "recommendedMinutes": 25,
+        "relatedCaseType": "DFD"
+      },
+      {
+        "id": "D1-T6",
+        "category": "afternoon_case",
+        "title": "下午案例实战：官方经典图书借阅管理系统 DFD 深度剖析（CASE-DFD-01）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "DFD"
+      },
+      {
+        "id": "D1-T7",
+        "category": "afternoon_case",
+        "title": "下午案例实战：智慧医疗门诊处方与药品调配系统 DFD（CASE-DFD-02）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "DFD"
+      },
+      {
+        "id": "D1-T8",
+        "category": "afternoon_case",
+        "title": "下午案例实战：合集《软件设计师模考.pdf》慕课在线作业批改系统 DFD（CASE-DFD-04）与保税仓储（CASE-DFD-03）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "DFD"
+      }
+    ]
+  },
+  {
+    "day": 2,
+    "title": "Day 2：数据资产与数据库系统规范化攻坚",
+    "focusMorning": "结合《软件设计师知识锦囊.pdf》第3章、《软设知识点100条.pdf》(第23~34条)与《易混淆知识点.pdf》(辨析19分布式透明)：攻克三级模式两级映像(聚簇索引属内模式/物理设计)、关系代数与SELECT等价转换、入度为0图解法求候选键、Armstrong公理伪传递律、1NF->2NF->3NF->BCNF阶梯、模式分解无损联接【表格法】(打勾还原行)与保持函数依赖独立性判定、并发三大问题与S/X封锁协议",
+    "focusAfternoon": "结合《软件设计师模考.pdf》试题二(物流公司货物托运系统E-R)、《2019下半年真题详解》试题二(企业员工培训与课程讲授E-R)与《2018上半年下午真题.docx》试题二(海外代购系统)：攻克弱实体(双矩形)、特殊化(双线矩形+线圈，如经理/业务员/培训师)、聚集、三元联系连通数判定及1:1/1:n/m:n转关系模式主外键归并规则",
+    "targetScore": "上午冲刺：数据库6分全拿（合集考纲8%）| 下午冲刺：数据库大题 13~14 分（满分15分）",
+    "strategy": "依据合集《软件设计师高频考点.pdf》第3章问答：聚簇索引改变物理存储顺序属于内模式/物理设计阶段；联系类型若题干与日常经验冲突一律以题干为准；求候选键先找从未在箭头右侧出现的入度为0属性集；判断无损分解与保持函数依赖是两个独立维度，用【表格法】找相交属性还原整行全勾即为无损！",
+    "tasks": [
+      {
+        "id": "D2-T1",
+        "category": "reading",
+        "title": "合集速记：《软设知识点100条》第23~34条 +《易混淆知识点》辨析19（分布式分片/复制/位置/逻辑透明）",
+        "points": 10,
+        "recommendedMinutes": 30,
+        "relatedDomain": "数据库系统"
+      },
+      {
+        "id": "D2-T2",
+        "category": "reading",
+        "title": "合集速记：《高频考点》第3章问答——入度为0求候选键、1NF~BCNF判定与无损分解【表格法】",
+        "points": 10,
+        "recommendedMinutes": 35,
+        "relatedDomain": "数据库系统"
+      },
+      {
+        "id": "D2-T3",
+        "category": "morning_quiz",
+        "title": "合集真题：《2021年5月真题》(HUAWEI Mate40关系代数/候选码AC) +《模考卷》数据库 19 题特训",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedDomain": "数据库系统"
+      },
+      {
+        "id": "D2-T4",
+        "category": "reading",
+        "title": "下午突破：E-R 实体联系判定、关系模式外键补齐与范式降解解题模板",
+        "points": 10,
+        "recommendedMinutes": 25,
+        "relatedCaseType": "DATABASE"
+      },
+      {
+        "id": "D2-T5",
+        "category": "afternoon_case",
+        "title": "下午案例实战：图书馆流通与读者借阅关系数据库设计（CASE-DB-01）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "DATABASE"
+      },
+      {
+        "id": "D2-T6",
+        "category": "afternoon_case",
+        "title": "下午案例实战：新能源汽车租赁与维保结算系统数据库设计（CASE-DB-02）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "DATABASE"
+      },
+      {
+        "id": "D2-T7",
+        "category": "afternoon_case",
+        "title": "下午案例实战：合集《软件设计师模考.pdf》物流公司货物托运系统 E-R（CASE-DB-04）与供应链设计（CASE-DB-03）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "DATABASE"
+      }
+    ]
+  },
+  {
+    "day": 3,
+    "title": "Day 3：软件工程全生命周期与UML建模专项",
+    "focusMorning": "结合《软件设计师考前必备.pdf》(软件工程占13分/17.33%全卷第一)、《软设知识点100条.pdf》(第48~67条)与《易混淆知识点.pdf》(辨析13~17)：攻克瀑布/螺旋(风险分析)/RUP统一过程4阶段(构思/细化/构建/移交)、敏捷方法(XP四大价值观/水晶法/并列争球Scrum 30天冲刺/ASD猜测合作学习)、CMMI阶段式与连续式(CL0~CL5)、7种内聚(顺序vs过程内聚)与7种耦合、白盒测试覆盖与McCabe环路复杂度 V(G)=m-n+2、4种维护(更正/适应/完善/预防)、ISO/IEC 9126六大质量特性与依从性、PERT关键路径与沟通路径(主程序员n-1 vs 无主程序员n(n-1)/2)",
+    "focusAfternoon": "结合《软件设计师模考.pdf》试题三(国家公园小木屋与营地预定系统UML)、《2019下半年真题详解》试题三(牙科诊所管理UML)与《2018上半年下午真题.docx》试题三(ETC不停车收费系统)：攻克用例图包含<<include>>、扩展<<extend>>与泛化区别，类图6大关系(大雁与翅膀组合vs大雁与雁群聚合)与多重度，顺序图生命线、状态图entry/do/exit与组件图供接口/需接口",
+    "targetScore": "上午冲刺：软工13分拿11+（合集考纲17.33%最高权重）| 下午冲刺：UML建模 13~15 分",
+    "strategy": "依据合集《易混淆知识点.pdf》辨析14~17：概要设计对应集成测试，详细设计对应单元测试；顺序内聚强调前一步输出是后一步输入(一条直线)，过程内聚仅强调特定次序；模块作用域必须在控制域之内；Theo Mandel界面设计黄金三原则(置用户于控制之下/减少记忆负担/保持界面一致)；UML包含是必选公共抽取，扩展是特定条件触发！",
+    "tasks": [
+      {
+        "id": "D3-T1",
+        "category": "reading",
+        "title": "合集速记：《软设知识点100条》第48~62条（螺旋/RUP/敏捷Scrum/CMMI连续式CL0-CL5/质量特性）",
+        "points": 10,
+        "recommendedMinutes": 30,
+        "relatedDomain": "系统开发与软件工程"
+      },
+      {
+        "id": "D3-T2",
+        "category": "reading",
+        "title": "合集速记：《易混淆知识点》辨析13~16（概要vs详细设计、顺序vs过程内聚、McCabe、沟通路径）",
+        "points": 10,
+        "recommendedMinutes": 35,
+        "relatedDomain": "系统开发与软件工程"
+      },
+      {
+        "id": "D3-T3",
+        "category": "morning_quiz",
+        "title": "合集真题：《2021年5月真题》+《2018/2019真题》软件工程与项目管理 19 题极速特训",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedDomain": "系统开发与软件工程"
+      },
+      {
+        "id": "D3-T4",
+        "category": "reading",
+        "title": "下午突破：UML 建模图元语义（用例包含/扩展、类图多重度、时序与状态）速答模板",
+        "points": 10,
+        "recommendedMinutes": 25,
+        "relatedCaseType": "UML"
+      },
+      {
+        "id": "D3-T5",
+        "category": "afternoon_case",
+        "title": "下午案例实战：在线学术会议审稿系统 ORS UML 建模全真案例（CASE-UML-01）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "UML"
+      },
+      {
+        "id": "D3-T6",
+        "category": "afternoon_case",
+        "title": "下午案例实战：全屋智能家居物联网能耗监测与控制 UML 建模（CASE-UML-02）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "UML"
+      },
+      {
+        "id": "D3-T7",
+        "category": "afternoon_case",
+        "title": "下午案例实战：合集《软件设计师模考.pdf》国家公园小木屋预定系统 UML（CASE-UML-04）与网约车（CASE-UML-03）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "UML"
+      }
+    ]
+  },
+  {
+    "day": 4,
+    "title": "Day 4：数据结构高频考点与C语言算法保底突破",
+    "focusMorning": "结合《软件设计师考前必备四页纸.pdf》(26条背记精要)、《易混淆知识点.pdf》(辨析5~12)与《软设知识点100条.pdf》(第77~94条)：攻克上/下三角稀疏矩阵一维下标代入验证法、顺序表与链表时空对比、空串与空格串/子串与子序列、广义表head/tail运算、二叉树性质n0=n2+1推导、大顶堆构建、哈夫曼编码与压缩比、图邻接矩阵/邻接表/拓扑排序、8大排序时空复杂度与情景选型、四大算法特征(分治/动规/贪心/回溯，分支限界对应广度优先)、编译程序阶段(类型检查在语义分析)、正规式与有限自动机、传值与传址引用调用",
+    "focusAfternoon": "结合《软件设计师模考.pdf》试题四(RNA二级结构最大配对数动态规划C代码)、《软件设计师模考2.pdf》试题四(集装箱FirstFit与BestFit贪心装箱C代码)、《2018上半年下午真题.docx》试题四(钢条切割Bottom_Up_Cut_Rod动态规划)与《2019上/下半年真题详解》(N皇后回溯法/递归0-1背包)：稳拿算法策略名称、时间复杂度及C语言边界填空保底分！",
+    "targetScore": "上午冲刺：数据结构与算法9分+语言6分（合集考纲20%）| 下午冲刺：C算法题保底 8~11 分",
+    "strategy": "依据合集《软件设计师知识锦囊.pdf》第7章问答与《易混淆知识点》辨析9~12：特殊矩阵下标公式无需死背，代入前2~3个特殊元素(如a[1,1]、a[2,1])直接验证选项秒杀；n较大且关键字位数少用基数排序，随机分布平均最快用快速排序，要求稳定且n大用归并排序，辅助空间O(1)且n大用堆排序；C语言算法题先拿策略与复杂度4分，再盯紧递归式与循环边界条件！",
+    "tasks": [
+      {
+        "id": "D4-T1",
+        "category": "reading",
+        "title": "合集速记：《考前必备四页纸》第1~25条 +《易混淆知识点》辨析5~10（串/树/图/大顶堆/排序情景选型）",
+        "points": 10,
+        "recommendedMinutes": 30,
+        "relatedDomain": "数据结构与算法"
+      },
+      {
+        "id": "D4-T2",
+        "category": "reading",
+        "title": "合集速记：《软设知识点100条》第90~94条 +《易混淆知识点》辨析11~12（编译vs解释、正规式、传值vs传址）",
+        "points": 10,
+        "recommendedMinutes": 30,
+        "relatedDomain": "程序设计语言"
+      },
+      {
+        "id": "D4-T3",
+        "category": "morning_quiz",
+        "title": "合集真题：《2021年5月真题》(大顶堆/最大子段和/栈队序列) +《模考卷》数据结构与算法 19 题特训",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedDomain": "数据结构与算法"
+      },
+      {
+        "id": "D4-T4",
+        "category": "morning_quiz",
+        "title": "合集真题：《2021年5月真题》(后缀式/语义分析/Java特征) +《模考卷》程序设计语言 18 题特训",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedDomain": "程序设计语言"
+      },
+      {
+        "id": "D4-T5",
+        "category": "reading",
+        "title": "下午突破：四大算法（分治/动规/贪心/回溯）标志特征、复杂度速推与保底答题秘籍",
+        "points": 10,
+        "recommendedMinutes": 25,
+        "relatedCaseType": "ALGORITHM"
+      },
+      {
+        "id": "D4-T6",
+        "category": "afternoon_case",
+        "title": "下午案例实战：动态规划法——0-1背包问题与空间优化 C 语言实现（CASE-ALG-01）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "ALGORITHM"
+      },
+      {
+        "id": "D4-T7",
+        "category": "afternoon_case",
+        "title": "下午案例实战：动态规划法——最长公共子序列 LCS 算法实现（CASE-ALG-02）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "ALGORITHM"
+      },
+      {
+        "id": "D4-T8",
+        "category": "afternoon_case",
+        "title": "下午案例实战：合集《软件设计师模考.pdf》RNA二级结构最优配对动态规划算法（CASE-ALG-04）与区间贪心（CASE-ALG-03）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "ALGORITHM"
+      }
+    ]
+  },
+  {
+    "day": 5,
+    "title": "Day 5：面向对象设计模式、网络安全法纪与全真冲刺",
+    "focusMorning": "结合《软件设计师思维导图.pdf》、《软件设计师整理/软件设计师.xmind》(含23种GoF模式+8种J2EE模式)、《软设知识点100条.pdf》(第35~47、68~76、95~100条)与《易混淆知识点.pdf》(辨析18、20)：攻克面向对象7大原则与包的6大原则(共同封闭CCP/共同重用CRP/无环依赖等)、过载/参数/包含/强制多态、23种设计模式速记关键字表(有无下划线区分对象/类模式)、TCP/IP协议栈与端口号、特殊IP地址(169.254.X.X与0.0.0.0)、DNS查询顺序与ipconfig /flushdns、对称/非对称加密与CA数字证书、网络安全协议分层、知识产权归属(职务作品/委托/合作/商标抽签/专利同日协商)",
+    "focusAfternoon": "结合《软件设计师模考.pdf》试题五/六(DutchAddressAdapter荷兰语地址接口转换适配器模式C++/Java)、《软件设计师模考2.pdf》试题五/六(WorkResume求职简历Cloneable原型模式C++/Java)与《2019上/下半年真题详解》试题五(DocExplorer观察者模式/BrakeBehavior策略模式)：吃透interface/implements/extends/abstract/super/this与多态委派模板！",
+    "targetScore": "上午冲刺：面向对象11分+网安10分+知产3分（合集考纲32%）| 下午冲刺：设计模式代码题 12~15 分",
+    "strategy": "依据合集《软设知识点100条.pdf》第73~76条设计模式速记关键字表：工厂方法(动态生产对象)、抽象工厂(生产成系列对象)、构建器(复杂对象构造)、原型(克隆对象)、单例(单实例)、适配器(转换接口)、桥接(继承树拆分)、组合(树形目录结构)、装饰(动态附加职责)、外观(对外统一接口)、享元(汉字编码)、代理(快捷方式)、职责链(传递职责)、命令(日志记录/可撤销)、解释器(虚拟机机制)、迭代器(数据集)、中介者(不直接引用)、备忘录(游戏存档)、观察者(联动)、状态(状态变成类)、策略(多方案切换)、模板方法(框架)、访问者(数据与操作分离)！",
+    "tasks": [
+      {
+        "id": "D5-T1",
+        "category": "reading",
+        "title": "合集速记：《软设知识点100条》第68~76条 +《软件设计师.xmind》（23种GoF模式速记词表 + 8种J2EE模式 + 包设计原则）",
+        "points": 10,
+        "recommendedMinutes": 30,
+        "relatedDomain": "面向对象与UML"
+      },
+      {
+        "id": "D5-T2",
+        "category": "reading",
+        "title": "合集速记：《软设知识点100条》第35~47条 +《易混淆知识点》辨析18（OSI/TCP端口、特殊IP、CA证书、安全协议分层）",
+        "points": 10,
+        "recommendedMinutes": 30,
+        "relatedDomain": "计算机网络与信息安全"
+      },
+      {
+        "id": "D5-T3",
+        "category": "reading",
+        "title": "合集速记：《软设知识点100条》第95~100条 +《易混淆知识点》辨析20（职务作品、委托/合作、商标抽签、官方译文）",
+        "points": 10,
+        "recommendedMinutes": 25,
+        "relatedDomain": "知识产权与标准化"
+      },
+      {
+        "id": "D5-T4",
+        "category": "morning_quiz",
+        "title": "合集真题：《2021年5月真题》(股票Broker命令模式/状态图) +《模考卷》面向对象 19 题特训",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedDomain": "面向对象与UML"
+      },
+      {
+        "id": "D5-T5",
+        "category": "morning_quiz",
+        "title": "合集真题：《2021年5月真题》(SSH/IPSec/SQL注入/flushdns) +《模考卷》网络与信息安全 17 题特训",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedDomain": "计算机网络与信息安全"
+      },
+      {
+        "id": "D5-T6",
+        "category": "morning_quiz",
+        "title": "合集真题：《2021年5月真题》+《2018/2019真题》知识产权与标准化 16 题极速特训",
+        "points": 15,
+        "recommendedMinutes": 25,
+        "relatedDomain": "知识产权与标准化"
+      },
+      {
+        "id": "D5-T7",
+        "category": "reading",
+        "title": "下午突破：设计模式 Java/C++ 代码填空五大固定语法套路与多态结构套利",
+        "points": 10,
+        "recommendedMinutes": 25,
+        "relatedCaseType": "DESIGN_PATTERN"
+      },
+      {
+        "id": "D5-T8",
+        "category": "afternoon_case",
+        "title": "下午案例实战：策略模式（Strategy Pattern）——电商多种促销打折算法（CASE-DP-01）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "DESIGN_PATTERN"
+      },
+      {
+        "id": "D5-T9",
+        "category": "afternoon_case",
+        "title": "下午案例实战：观察者模式（Observer Pattern）——实时气象站数据订阅推送（CASE-DP-02）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "DESIGN_PATTERN"
+      },
+      {
+        "id": "D5-T10",
+        "category": "afternoon_case",
+        "title": "下午案例实战：合集《软件设计师模考.pdf》DutchAddress 荷兰语地址接口适配器模式（CASE-DP-04）与装饰器（CASE-DP-03）",
+        "points": 15,
+        "recommendedMinutes": 30,
+        "relatedCaseType": "DESIGN_PATTERN"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1451 @@
+{
+  "regular8Weeks": [
+    {
+      "week": 1,
+      "title": "第 1 周：计算机底层体系、数据表示与系统性能",
+      "phase": "基础通读",
+      "goals": [
+        "掌握原反补移码及浮点运算",
+        "精通流水线周期、吞吐率与加速比",
+        "掌握Cache命中率与主存芯片编址",
+        "通读考前四页纸 Sheet 1"
+      ],
+      "dailyTasks": [
+        {
+          "day": 1,
+          "dayInWeek": 1,
+          "task": "第 1 周核心理论精读与考点背诵 (Day 1)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 2,
+          "dayInWeek": 2,
+          "task": "第 1 周核心理论精读与考点背诵 (Day 2)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 3,
+          "dayInWeek": 3,
+          "task": "第 1 周核心理论精读与考点背诵 (Day 3)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 4,
+          "dayInWeek": 4,
+          "task": "第 1 周核心理论精读与考点背诵 (Day 4)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 5,
+          "dayInWeek": 5,
+          "task": "第 1 周上午典型真题强化训练 25 题",
+          "type": "上午刷题",
+          "estimatedMinutes": 45,
+          "completed": false
+        },
+        {
+          "day": 6,
+          "dayInWeek": 6,
+          "task": "第 1 周下午案例专题深度突破 (15分大题)",
+          "type": "下午案例",
+          "estimatedMinutes": 75,
+          "completed": false
+        },
+        {
+          "day": 7,
+          "dayInWeek": 7,
+          "task": "第 1 周阶段复盘、错题归集与速记卡抽测",
+          "type": "周总结复盘",
+          "estimatedMinutes": 50,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "title": "第 2 周：操作系统基础与进程资源并发管理",
+      "phase": "基础通读",
+      "goals": [
+        "掌握进程状态转换与前趋图PV操作",
+        "掌握死锁产生条件与银行家算法",
+        "掌握分页分段虚拟存储地址变换",
+        "掌握磁盘单双缓冲区与调度算法"
+      ],
+      "dailyTasks": [
+        {
+          "day": 8,
+          "dayInWeek": 1,
+          "task": "第 2 周核心理论精读与考点背诵 (Day 1)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 9,
+          "dayInWeek": 2,
+          "task": "第 2 周核心理论精读与考点背诵 (Day 2)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 10,
+          "dayInWeek": 3,
+          "task": "第 2 周核心理论精读与考点背诵 (Day 3)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 11,
+          "dayInWeek": 4,
+          "task": "第 2 周核心理论精读与考点背诵 (Day 4)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 12,
+          "dayInWeek": 5,
+          "task": "第 2 周上午典型真题强化训练 25 题",
+          "type": "上午刷题",
+          "estimatedMinutes": 45,
+          "completed": false
+        },
+        {
+          "day": 13,
+          "dayInWeek": 6,
+          "task": "第 2 周下午案例专题深度突破 (15分大题)",
+          "type": "下午案例",
+          "estimatedMinutes": 75,
+          "completed": false
+        },
+        {
+          "day": 14,
+          "dayInWeek": 7,
+          "task": "第 2 周阶段复盘、错题归集与速记卡抽测",
+          "type": "周总结复盘",
+          "estimatedMinutes": 50,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "title": "第 3 周：数据库系统原理、关系代数与规范化设计",
+      "phase": "基础通读",
+      "goals": [
+        "掌握三级模式两级映射体系",
+        "熟练进行关系代数投影/选择/连接运算",
+        "精通1NF/2NF/3NF/BCNF范式判定与分解",
+        "掌握事务ACID与两段锁协议"
+      ],
+      "dailyTasks": [
+        {
+          "day": 15,
+          "dayInWeek": 1,
+          "task": "第 3 周核心理论精读与考点背诵 (Day 1)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 16,
+          "dayInWeek": 2,
+          "task": "第 3 周核心理论精读与考点背诵 (Day 2)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 17,
+          "dayInWeek": 3,
+          "task": "第 3 周核心理论精读与考点背诵 (Day 3)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 18,
+          "dayInWeek": 4,
+          "task": "第 3 周核心理论精读与考点背诵 (Day 4)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 19,
+          "dayInWeek": 5,
+          "task": "第 3 周上午典型真题强化训练 25 题",
+          "type": "上午刷题",
+          "estimatedMinutes": 45,
+          "completed": false
+        },
+        {
+          "day": 20,
+          "dayInWeek": 6,
+          "task": "第 3 周下午案例专题深度突破 (15分大题)",
+          "type": "下午案例",
+          "estimatedMinutes": 75,
+          "completed": false
+        },
+        {
+          "day": 21,
+          "dayInWeek": 7,
+          "task": "第 3 周阶段复盘、错题归集与速记卡抽测",
+          "type": "周总结复盘",
+          "estimatedMinutes": 50,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "title": "第 4 周：软件工程过程模型与数据流图 (DFD) 专项",
+      "phase": "基础通读",
+      "goals": [
+        "掌握瀑布/原型/增量/螺旋/敏捷开发模型",
+        "深入理解高内聚低耦合7级强弱阶梯",
+        "掌握软件维护4类工作量比例与白盒McCabe度量",
+        "完成试题一数据流图 (DFD) 解题套路通读"
+      ],
+      "dailyTasks": [
+        {
+          "day": 22,
+          "dayInWeek": 1,
+          "task": "第 4 周核心理论精读与考点背诵 (Day 1)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 23,
+          "dayInWeek": 2,
+          "task": "第 4 周核心理论精读与考点背诵 (Day 2)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 24,
+          "dayInWeek": 3,
+          "task": "第 4 周核心理论精读与考点背诵 (Day 3)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 25,
+          "dayInWeek": 4,
+          "task": "第 4 周核心理论精读与考点背诵 (Day 4)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 26,
+          "dayInWeek": 5,
+          "task": "第 4 周上午典型真题强化训练 25 题",
+          "type": "上午刷题",
+          "estimatedMinutes": 45,
+          "completed": false
+        },
+        {
+          "day": 27,
+          "dayInWeek": 6,
+          "task": "第 4 周下午案例专题深度突破 (15分大题)",
+          "type": "下午案例",
+          "estimatedMinutes": 75,
+          "completed": false
+        },
+        {
+          "day": 28,
+          "dayInWeek": 7,
+          "task": "第 4 周阶段复盘、错题归集与速记卡抽测",
+          "type": "周总结复盘",
+          "estimatedMinutes": 50,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "title": "第 5 周：面向对象设计、UML 建模与 23 种设计模式",
+      "phase": "专题突破",
+      "goals": [
+        "掌握面向对象SOLID六大设计原则",
+        "掌握UML用例图(包含/扩展)与类图(关联/聚合/组合)",
+        "精通23种设计模式分类与核心意图",
+        "突破试题三 UML 与试题五设计模式代码填空"
+      ],
+      "dailyTasks": [
+        {
+          "day": 29,
+          "dayInWeek": 1,
+          "task": "第 5 周核心理论精读与考点背诵 (Day 1)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 30,
+          "dayInWeek": 2,
+          "task": "第 5 周核心理论精读与考点背诵 (Day 2)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 31,
+          "dayInWeek": 3,
+          "task": "第 5 周核心理论精读与考点背诵 (Day 3)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 32,
+          "dayInWeek": 4,
+          "task": "第 5 周核心理论精读与考点背诵 (Day 4)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 33,
+          "dayInWeek": 5,
+          "task": "第 5 周上午典型真题强化训练 25 题",
+          "type": "上午刷题",
+          "estimatedMinutes": 45,
+          "completed": false
+        },
+        {
+          "day": 34,
+          "dayInWeek": 6,
+          "task": "第 5 周下午案例专题深度突破 (15分大题)",
+          "type": "下午案例",
+          "estimatedMinutes": 75,
+          "completed": false
+        },
+        {
+          "day": 35,
+          "dayInWeek": 7,
+          "task": "第 5 周阶段复盘、错题归集与速记卡抽测",
+          "type": "周总结复盘",
+          "estimatedMinutes": 50,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "title": "第 6 周：常用数据结构、经典算法分析与 C 语言实现",
+      "phase": "专题突破",
+      "goals": [
+        "掌握二叉树性质5大定理与哈夫曼树WPL",
+        "掌握图的存储、遍历与拓扑排序/关键路径",
+        "熟练掌握十大排序时空复杂度与稳定性",
+        "突破试题四算法分析 (分治/动态规划/贪心/回溯)"
+      ],
+      "dailyTasks": [
+        {
+          "day": 36,
+          "dayInWeek": 1,
+          "task": "第 6 周核心理论精读与考点背诵 (Day 1)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 37,
+          "dayInWeek": 2,
+          "task": "第 6 周核心理论精读与考点背诵 (Day 2)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 38,
+          "dayInWeek": 3,
+          "task": "第 6 周核心理论精读与考点背诵 (Day 3)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 39,
+          "dayInWeek": 4,
+          "task": "第 6 周核心理论精读与考点背诵 (Day 4)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 40,
+          "dayInWeek": 5,
+          "task": "第 6 周上午典型真题强化训练 25 题",
+          "type": "上午刷题",
+          "estimatedMinutes": 45,
+          "completed": false
+        },
+        {
+          "day": 41,
+          "dayInWeek": 6,
+          "task": "第 6 周下午案例专题深度突破 (15分大题)",
+          "type": "下午案例",
+          "estimatedMinutes": 75,
+          "completed": false
+        },
+        {
+          "day": 42,
+          "dayInWeek": 7,
+          "task": "第 6 周阶段复盘、错题归集与速记卡抽测",
+          "type": "周总结复盘",
+          "estimatedMinutes": 50,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "title": "第 7 周：计算机网络、信息安全与软件知识产权法规",
+      "phase": "专题突破",
+      "goals": [
+        "掌握OSI/TCP四层模型与熟知端口号",
+        "精通IP子网掩码计算与CIDR",
+        "掌握对称/非对称加密与数字签名验签流程",
+        "掌握著作权保护期、职务作品归属与侵权判定"
+      ],
+      "dailyTasks": [
+        {
+          "day": 43,
+          "dayInWeek": 1,
+          "task": "第 7 周核心理论精读与考点背诵 (Day 1)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 44,
+          "dayInWeek": 2,
+          "task": "第 7 周核心理论精读与考点背诵 (Day 2)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 45,
+          "dayInWeek": 3,
+          "task": "第 7 周核心理论精读与考点背诵 (Day 3)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 46,
+          "dayInWeek": 4,
+          "task": "第 7 周核心理论精读与考点背诵 (Day 4)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 47,
+          "dayInWeek": 5,
+          "task": "第 7 周上午典型真题强化训练 25 题",
+          "type": "上午刷题",
+          "estimatedMinutes": 45,
+          "completed": false
+        },
+        {
+          "day": 48,
+          "dayInWeek": 6,
+          "task": "第 7 周下午案例专题深度突破 (15分大题)",
+          "type": "下午案例",
+          "estimatedMinutes": 75,
+          "completed": false
+        },
+        {
+          "day": 49,
+          "dayInWeek": 7,
+          "task": "第 7 周阶段复盘、错题归集与速记卡抽测",
+          "type": "周总结复盘",
+          "estimatedMinutes": 50,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "title": "第 8 周：全真历年真题模拟、错题靶向二刷与及格线冲刺",
+      "phase": "模考冲刺",
+      "goals": [
+        "完成 2021-2023 年全套全真上/下午历年真题模考",
+        "错题本错题清零与高频考点靶向突破",
+        "四页纸考前精要与 100 条必背盲背过关",
+        "确立 45/75 及格安全线（目标上午 52+，下午 55+）"
+      ],
+      "dailyTasks": [
+        {
+          "day": 50,
+          "dayInWeek": 1,
+          "task": "第 8 周核心理论精读与考点背诵 (Day 1)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 51,
+          "dayInWeek": 2,
+          "task": "第 8 周核心理论精读与考点背诵 (Day 2)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 52,
+          "dayInWeek": 3,
+          "task": "第 8 周核心理论精读与考点背诵 (Day 3)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 53,
+          "dayInWeek": 4,
+          "task": "第 8 周核心理论精读与考点背诵 (Day 4)",
+          "type": "理论精读",
+          "estimatedMinutes": 60,
+          "completed": false
+        },
+        {
+          "day": 54,
+          "dayInWeek": 5,
+          "task": "第 8 周上午典型真题强化训练 25 题",
+          "type": "上午刷题",
+          "estimatedMinutes": 45,
+          "completed": false
+        },
+        {
+          "day": 55,
+          "dayInWeek": 6,
+          "task": "第 8 周下午案例专题深度突破 (15分大题)",
+          "type": "下午案例",
+          "estimatedMinutes": 75,
+          "completed": false
+        },
+        {
+          "day": 56,
+          "dayInWeek": 7,
+          "task": "第 8 周阶段复盘、错题归集与速记卡抽测",
+          "type": "周总结复盘",
+          "estimatedMinutes": 50,
+          "completed": false
+        }
+      ]
+    }
+  ],
+  "crashSprintPlans": {
+    "5": [
+      {
+        "day": 1,
+        "title": "Day 1：底层核心体系与数据流图建模突破",
+        "focus": "上午重点: 结合《软件设计师知识锦囊.pdf》第1-2章、《软设知识点100条.pdf》(第1~22条)与《易混淆知识点.pdf》(辨析1~4)：攻克原/反/补/移码人为定义(-128)、五种寻址方式、流水线理论与实践公式、单缓冲区(2阶段)与双缓冲区(3阶段)磁盘流水线、MTTF/MTTR/MTBF可靠性与可维护性1/(1+MTTR)、前趋图PV操作(箭线起点V终点P)、死锁最小资源数 m*(w-1)+1<=n、页表淘汰原则(先访问位0再修改位0)与三级索引文件寻址 | 下午攻坚: 结合《软件设计师模考.pdf》试题一(慕课在线作业批改系统DFD)、《2018上半年下午试题及解析.docx》试题一(Web医疗护理管理系统DFD)与《2019下半年真题详解》：掌握外部实体(人物/组织/外部系统)、数据存储(**表/**库/**文件)、加工(动词+名词)及父子图平衡/黑洞/奇迹/灰洞排查",
+        "focusMorning": "结合《软件设计师知识锦囊.pdf》第1-2章、《软设知识点100条.pdf》(第1~22条)与《易混淆知识点.pdf》(辨析1~4)：攻克原/反/补/移码人为定义(-128)、五种寻址方式、流水线理论与实践公式、单缓冲区(2阶段)与双缓冲区(3阶段)磁盘流水线、MTTF/MTTR/MTBF可靠性与可维护性1/(1+MTTR)、前趋图PV操作(箭线起点V终点P)、死锁最小资源数 m*(w-1)+1<=n、页表淘汰原则(先访问位0再修改位0)与三级索引文件寻址",
+        "focusAfternoon": "结合《软件设计师模考.pdf》试题一(慕课在线作业批改系统DFD)、《2018上半年下午试题及解析.docx》试题一(Web医疗护理管理系统DFD)与《2019下半年真题详解》：掌握外部实体(人物/组织/外部系统)、数据存储(**表/**库/**文件)、加工(动词+名词)及父子图平衡/黑洞/奇迹/灰洞排查",
+        "strategy": "依据合集《软件设计师高频考点.pdf》章节问答：流水线计算默认先用理论公式，无答案再用实践公式；PSW状态条件寄存器归属有争议做题放最后考虑；Cache地址映射由硬件直接完成；磁盘单缓冲区读入与送用户区合并为1阶段，双缓冲区拆为3阶段并行流水线；下午DFD依靠顶层图与0层图输入输出守恒+逐句划掉题干法稳拿13分以上！",
+        "radarTarget": {
+          "morningScore": 47,
+          "afternoonScore": 48
+        },
+        "highYieldTasks": [
+          {
+            "id": "D1-T1",
+            "title": "合集速记：《软设知识点100条》第1~13条 +《易混淆知识点》辨析1~4（码制/寻址/DMA/可维护性公式）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 30,
+            "relatedDomain": "计算机系统与体系结构",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D1-T2",
+            "title": "合集速记：《知识锦囊》第2章 + 章节问答（前趋图箭线起点V终点P、单/双缓冲区流水线、三级索引）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 35,
+            "relatedDomain": "操作系统",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D1-T3",
+            "title": "合集真题：《2021年5月真题》+《模考卷一/二》计算机组成与体系结构 19 题极速特训",
+            "category": "morning_quiz",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "计算机系统与体系结构",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D1-T4",
+            "title": "合集真题：《2021年5月真题》+《2018/2019真题》操作系统核心调度与资源管理 19 题极速特训",
+            "category": "morning_quiz",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "操作系统",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D1-T5",
+            "title": "下午突破：DFD 数据流图解题套路、父子平衡检查与三大经典陷阱（黑洞/奇迹/灰洞）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 25,
+            "relatedDomain": "",
+            "relatedCaseType": "DFD",
+            "completed": false
+          },
+          {
+            "id": "D1-T6",
+            "title": "下午案例实战：官方经典图书借阅管理系统 DFD 深度剖析（CASE-DFD-01）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "DFD",
+            "completed": false
+          },
+          {
+            "id": "D1-T7",
+            "title": "下午案例实战：智慧医疗门诊处方与药品调配系统 DFD（CASE-DFD-02）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "DFD",
+            "completed": false
+          },
+          {
+            "id": "D1-T8",
+            "title": "下午案例实战：合集《软件设计师模考.pdf》慕课在线作业批改系统 DFD（CASE-DFD-04）与保税仓储（CASE-DFD-03）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "DFD",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "title": "Day 2：数据资产与数据库系统规范化攻坚",
+        "focus": "上午重点: 结合《软件设计师知识锦囊.pdf》第3章、《软设知识点100条.pdf》(第23~34条)与《易混淆知识点.pdf》(辨析19分布式透明)：攻克三级模式两级映像(聚簇索引属内模式/物理设计)、关系代数与SELECT等价转换、入度为0图解法求候选键、Armstrong公理伪传递律、1NF->2NF->3NF->BCNF阶梯、模式分解无损联接【表格法】(打勾还原行)与保持函数依赖独立性判定、并发三大问题与S/X封锁协议 | 下午攻坚: 结合《软件设计师模考.pdf》试题二(物流公司货物托运系统E-R)、《2019下半年真题详解》试题二(企业员工培训与课程讲授E-R)与《2018上半年下午真题.docx》试题二(海外代购系统)：攻克弱实体(双矩形)、特殊化(双线矩形+线圈，如经理/业务员/培训师)、聚集、三元联系连通数判定及1:1/1:n/m:n转关系模式主外键归并规则",
+        "focusMorning": "结合《软件设计师知识锦囊.pdf》第3章、《软设知识点100条.pdf》(第23~34条)与《易混淆知识点.pdf》(辨析19分布式透明)：攻克三级模式两级映像(聚簇索引属内模式/物理设计)、关系代数与SELECT等价转换、入度为0图解法求候选键、Armstrong公理伪传递律、1NF->2NF->3NF->BCNF阶梯、模式分解无损联接【表格法】(打勾还原行)与保持函数依赖独立性判定、并发三大问题与S/X封锁协议",
+        "focusAfternoon": "结合《软件设计师模考.pdf》试题二(物流公司货物托运系统E-R)、《2019下半年真题详解》试题二(企业员工培训与课程讲授E-R)与《2018上半年下午真题.docx》试题二(海外代购系统)：攻克弱实体(双矩形)、特殊化(双线矩形+线圈，如经理/业务员/培训师)、聚集、三元联系连通数判定及1:1/1:n/m:n转关系模式主外键归并规则",
+        "strategy": "依据合集《软件设计师高频考点.pdf》第3章问答：聚簇索引改变物理存储顺序属于内模式/物理设计阶段；联系类型若题干与日常经验冲突一律以题干为准；求候选键先找从未在箭头右侧出现的入度为0属性集；判断无损分解与保持函数依赖是两个独立维度，用【表格法】找相交属性还原整行全勾即为无损！",
+        "radarTarget": {
+          "morningScore": 49,
+          "afternoonScore": 50
+        },
+        "highYieldTasks": [
+          {
+            "id": "D2-T1",
+            "title": "合集速记：《软设知识点100条》第23~34条 +《易混淆知识点》辨析19（分布式分片/复制/位置/逻辑透明）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 30,
+            "relatedDomain": "数据库系统",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D2-T2",
+            "title": "合集速记：《高频考点》第3章问答——入度为0求候选键、1NF~BCNF判定与无损分解【表格法】",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 35,
+            "relatedDomain": "数据库系统",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D2-T3",
+            "title": "合集真题：《2021年5月真题》(HUAWEI Mate40关系代数/候选码AC) +《模考卷》数据库 19 题特训",
+            "category": "morning_quiz",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "数据库系统",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D2-T4",
+            "title": "下午突破：E-R 实体联系判定、关系模式外键补齐与范式降解解题模板",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 25,
+            "relatedDomain": "",
+            "relatedCaseType": "DATABASE",
+            "completed": false
+          },
+          {
+            "id": "D2-T5",
+            "title": "下午案例实战：图书馆流通与读者借阅关系数据库设计（CASE-DB-01）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "DATABASE",
+            "completed": false
+          },
+          {
+            "id": "D2-T6",
+            "title": "下午案例实战：新能源汽车租赁与维保结算系统数据库设计（CASE-DB-02）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "DATABASE",
+            "completed": false
+          },
+          {
+            "id": "D2-T7",
+            "title": "下午案例实战：合集《软件设计师模考.pdf》物流公司货物托运系统 E-R（CASE-DB-04）与供应链设计（CASE-DB-03）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "DATABASE",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "title": "Day 3：软件工程全生命周期与UML建模专项",
+        "focus": "上午重点: 结合《软件设计师考前必备.pdf》(软件工程占13分/17.33%全卷第一)、《软设知识点100条.pdf》(第48~67条)与《易混淆知识点.pdf》(辨析13~17)：攻克瀑布/螺旋(风险分析)/RUP统一过程4阶段(构思/细化/构建/移交)、敏捷方法(XP四大价值观/水晶法/并列争球Scrum 30天冲刺/ASD猜测合作学习)、CMMI阶段式与连续式(CL0~CL5)、7种内聚(顺序vs过程内聚)与7种耦合、白盒测试覆盖与McCabe环路复杂度 V(G)=m-n+2、4种维护(更正/适应/完善/预防)、ISO/IEC 9126六大质量特性与依从性、PERT关键路径与沟通路径(主程序员n-1 vs 无主程序员n(n-1)/2) | 下午攻坚: 结合《软件设计师模考.pdf》试题三(国家公园小木屋与营地预定系统UML)、《2019下半年真题详解》试题三(牙科诊所管理UML)与《2018上半年下午真题.docx》试题三(ETC不停车收费系统)：攻克用例图包含<<include>>、扩展<<extend>>与泛化区别，类图6大关系(大雁与翅膀组合vs大雁与雁群聚合)与多重度，顺序图生命线、状态图entry/do/exit与组件图供接口/需接口",
+        "focusMorning": "结合《软件设计师考前必备.pdf》(软件工程占13分/17.33%全卷第一)、《软设知识点100条.pdf》(第48~67条)与《易混淆知识点.pdf》(辨析13~17)：攻克瀑布/螺旋(风险分析)/RUP统一过程4阶段(构思/细化/构建/移交)、敏捷方法(XP四大价值观/水晶法/并列争球Scrum 30天冲刺/ASD猜测合作学习)、CMMI阶段式与连续式(CL0~CL5)、7种内聚(顺序vs过程内聚)与7种耦合、白盒测试覆盖与McCabe环路复杂度 V(G)=m-n+2、4种维护(更正/适应/完善/预防)、ISO/IEC 9126六大质量特性与依从性、PERT关键路径与沟通路径(主程序员n-1 vs 无主程序员n(n-1)/2)",
+        "focusAfternoon": "结合《软件设计师模考.pdf》试题三(国家公园小木屋与营地预定系统UML)、《2019下半年真题详解》试题三(牙科诊所管理UML)与《2018上半年下午真题.docx》试题三(ETC不停车收费系统)：攻克用例图包含<<include>>、扩展<<extend>>与泛化区别，类图6大关系(大雁与翅膀组合vs大雁与雁群聚合)与多重度，顺序图生命线、状态图entry/do/exit与组件图供接口/需接口",
+        "strategy": "依据合集《易混淆知识点.pdf》辨析14~17：概要设计对应集成测试，详细设计对应单元测试；顺序内聚强调前一步输出是后一步输入(一条直线)，过程内聚仅强调特定次序；模块作用域必须在控制域之内；Theo Mandel界面设计黄金三原则(置用户于控制之下/减少记忆负担/保持界面一致)；UML包含是必选公共抽取，扩展是特定条件触发！",
+        "radarTarget": {
+          "morningScore": 51,
+          "afternoonScore": 52
+        },
+        "highYieldTasks": [
+          {
+            "id": "D3-T1",
+            "title": "合集速记：《软设知识点100条》第48~62条（螺旋/RUP/敏捷Scrum/CMMI连续式CL0-CL5/质量特性）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 30,
+            "relatedDomain": "系统开发与软件工程",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D3-T2",
+            "title": "合集速记：《易混淆知识点》辨析13~16（概要vs详细设计、顺序vs过程内聚、McCabe、沟通路径）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 35,
+            "relatedDomain": "系统开发与软件工程",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D3-T3",
+            "title": "合集真题：《2021年5月真题》+《2018/2019真题》软件工程与项目管理 19 题极速特训",
+            "category": "morning_quiz",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "系统开发与软件工程",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D3-T4",
+            "title": "下午突破：UML 建模图元语义（用例包含/扩展、类图多重度、时序与状态）速答模板",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 25,
+            "relatedDomain": "",
+            "relatedCaseType": "UML",
+            "completed": false
+          },
+          {
+            "id": "D3-T5",
+            "title": "下午案例实战：在线学术会议审稿系统 ORS UML 建模全真案例（CASE-UML-01）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "UML",
+            "completed": false
+          },
+          {
+            "id": "D3-T6",
+            "title": "下午案例实战：全屋智能家居物联网能耗监测与控制 UML 建模（CASE-UML-02）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "UML",
+            "completed": false
+          },
+          {
+            "id": "D3-T7",
+            "title": "下午案例实战：合集《软件设计师模考.pdf》国家公园小木屋预定系统 UML（CASE-UML-04）与网约车（CASE-UML-03）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "UML",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "title": "Day 4：数据结构高频考点与C语言算法保底突破",
+        "focus": "上午重点: 结合《软件设计师考前必备四页纸.pdf》(26条背记精要)、《易混淆知识点.pdf》(辨析5~12)与《软设知识点100条.pdf》(第77~94条)：攻克上/下三角稀疏矩阵一维下标代入验证法、顺序表与链表时空对比、空串与空格串/子串与子序列、广义表head/tail运算、二叉树性质n0=n2+1推导、大顶堆构建、哈夫曼编码与压缩比、图邻接矩阵/邻接表/拓扑排序、8大排序时空复杂度与情景选型、四大算法特征(分治/动规/贪心/回溯，分支限界对应广度优先)、编译程序阶段(类型检查在语义分析)、正规式与有限自动机、传值与传址引用调用 | 下午攻坚: 结合《软件设计师模考.pdf》试题四(RNA二级结构最大配对数动态规划C代码)、《软件设计师模考2.pdf》试题四(集装箱FirstFit与BestFit贪心装箱C代码)、《2018上半年下午真题.docx》试题四(钢条切割Bottom_Up_Cut_Rod动态规划)与《2019上/下半年真题详解》(N皇后回溯法/递归0-1背包)：稳拿算法策略名称、时间复杂度及C语言边界填空保底分！",
+        "focusMorning": "结合《软件设计师考前必备四页纸.pdf》(26条背记精要)、《易混淆知识点.pdf》(辨析5~12)与《软设知识点100条.pdf》(第77~94条)：攻克上/下三角稀疏矩阵一维下标代入验证法、顺序表与链表时空对比、空串与空格串/子串与子序列、广义表head/tail运算、二叉树性质n0=n2+1推导、大顶堆构建、哈夫曼编码与压缩比、图邻接矩阵/邻接表/拓扑排序、8大排序时空复杂度与情景选型、四大算法特征(分治/动规/贪心/回溯，分支限界对应广度优先)、编译程序阶段(类型检查在语义分析)、正规式与有限自动机、传值与传址引用调用",
+        "focusAfternoon": "结合《软件设计师模考.pdf》试题四(RNA二级结构最大配对数动态规划C代码)、《软件设计师模考2.pdf》试题四(集装箱FirstFit与BestFit贪心装箱C代码)、《2018上半年下午真题.docx》试题四(钢条切割Bottom_Up_Cut_Rod动态规划)与《2019上/下半年真题详解》(N皇后回溯法/递归0-1背包)：稳拿算法策略名称、时间复杂度及C语言边界填空保底分！",
+        "strategy": "依据合集《软件设计师知识锦囊.pdf》第7章问答与《易混淆知识点》辨析9~12：特殊矩阵下标公式无需死背，代入前2~3个特殊元素(如a[1,1]、a[2,1])直接验证选项秒杀；n较大且关键字位数少用基数排序，随机分布平均最快用快速排序，要求稳定且n大用归并排序，辅助空间O(1)且n大用堆排序；C语言算法题先拿策略与复杂度4分，再盯紧递归式与循环边界条件！",
+        "radarTarget": {
+          "morningScore": 53,
+          "afternoonScore": 54
+        },
+        "highYieldTasks": [
+          {
+            "id": "D4-T1",
+            "title": "合集速记：《考前必备四页纸》第1~25条 +《易混淆知识点》辨析5~10（串/树/图/大顶堆/排序情景选型）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 30,
+            "relatedDomain": "数据结构与算法",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D4-T2",
+            "title": "合集速记：《软设知识点100条》第90~94条 +《易混淆知识点》辨析11~12（编译vs解释、正规式、传值vs传址）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 30,
+            "relatedDomain": "程序设计语言",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D4-T3",
+            "title": "合集真题：《2021年5月真题》(大顶堆/最大子段和/栈队序列) +《模考卷》数据结构与算法 19 题特训",
+            "category": "morning_quiz",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "数据结构与算法",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D4-T4",
+            "title": "合集真题：《2021年5月真题》(后缀式/语义分析/Java特征) +《模考卷》程序设计语言 18 题特训",
+            "category": "morning_quiz",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "程序设计语言",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D4-T5",
+            "title": "下午突破：四大算法（分治/动规/贪心/回溯）标志特征、复杂度速推与保底答题秘籍",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 25,
+            "relatedDomain": "",
+            "relatedCaseType": "ALGORITHM",
+            "completed": false
+          },
+          {
+            "id": "D4-T6",
+            "title": "下午案例实战：动态规划法——0-1背包问题与空间优化 C 语言实现（CASE-ALG-01）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "ALGORITHM",
+            "completed": false
+          },
+          {
+            "id": "D4-T7",
+            "title": "下午案例实战：动态规划法——最长公共子序列 LCS 算法实现（CASE-ALG-02）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "ALGORITHM",
+            "completed": false
+          },
+          {
+            "id": "D4-T8",
+            "title": "下午案例实战：合集《软件设计师模考.pdf》RNA二级结构最优配对动态规划算法（CASE-ALG-04）与区间贪心（CASE-ALG-03）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "ALGORITHM",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "title": "Day 5：面向对象设计模式、网络安全法纪与全真冲刺",
+        "focus": "上午重点: 结合《软件设计师思维导图.pdf》、《软件设计师整理/软件设计师.xmind》(含23种GoF模式+8种J2EE模式)、《软设知识点100条.pdf》(第35~47、68~76、95~100条)与《易混淆知识点.pdf》(辨析18、20)：攻克面向对象7大原则与包的6大原则(共同封闭CCP/共同重用CRP/无环依赖等)、过载/参数/包含/强制多态、23种设计模式速记关键字表(有无下划线区分对象/类模式)、TCP/IP协议栈与端口号、特殊IP地址(169.254.X.X与0.0.0.0)、DNS查询顺序与ipconfig /flushdns、对称/非对称加密与CA数字证书、网络安全协议分层、知识产权归属(职务作品/委托/合作/商标抽签/专利同日协商) | 下午攻坚: 结合《软件设计师模考.pdf》试题五/六(DutchAddressAdapter荷兰语地址接口转换适配器模式C++/Java)、《软件设计师模考2.pdf》试题五/六(WorkResume求职简历Cloneable原型模式C++/Java)与《2019上/下半年真题详解》试题五(DocExplorer观察者模式/BrakeBehavior策略模式)：吃透interface/implements/extends/abstract/super/this与多态委派模板！",
+        "focusMorning": "结合《软件设计师思维导图.pdf》、《软件设计师整理/软件设计师.xmind》(含23种GoF模式+8种J2EE模式)、《软设知识点100条.pdf》(第35~47、68~76、95~100条)与《易混淆知识点.pdf》(辨析18、20)：攻克面向对象7大原则与包的6大原则(共同封闭CCP/共同重用CRP/无环依赖等)、过载/参数/包含/强制多态、23种设计模式速记关键字表(有无下划线区分对象/类模式)、TCP/IP协议栈与端口号、特殊IP地址(169.254.X.X与0.0.0.0)、DNS查询顺序与ipconfig /flushdns、对称/非对称加密与CA数字证书、网络安全协议分层、知识产权归属(职务作品/委托/合作/商标抽签/专利同日协商)",
+        "focusAfternoon": "结合《软件设计师模考.pdf》试题五/六(DutchAddressAdapter荷兰语地址接口转换适配器模式C++/Java)、《软件设计师模考2.pdf》试题五/六(WorkResume求职简历Cloneable原型模式C++/Java)与《2019上/下半年真题详解》试题五(DocExplorer观察者模式/BrakeBehavior策略模式)：吃透interface/implements/extends/abstract/super/this与多态委派模板！",
+        "strategy": "依据合集《软设知识点100条.pdf》第73~76条设计模式速记关键字表：工厂方法(动态生产对象)、抽象工厂(生产成系列对象)、构建器(复杂对象构造)、原型(克隆对象)、单例(单实例)、适配器(转换接口)、桥接(继承树拆分)、组合(树形目录结构)、装饰(动态附加职责)、外观(对外统一接口)、享元(汉字编码)、代理(快捷方式)、职责链(传递职责)、命令(日志记录/可撤销)、解释器(虚拟机机制)、迭代器(数据集)、中介者(不直接引用)、备忘录(游戏存档)、观察者(联动)、状态(状态变成类)、策略(多方案切换)、模板方法(框架)、访问者(数据与操作分离)！",
+        "radarTarget": {
+          "morningScore": 55,
+          "afternoonScore": 56
+        },
+        "highYieldTasks": [
+          {
+            "id": "D5-T1",
+            "title": "合集速记：《软设知识点100条》第68~76条 +《软件设计师.xmind》（23种GoF模式速记词表 + 8种J2EE模式 + 包设计原则）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 30,
+            "relatedDomain": "面向对象与UML",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D5-T2",
+            "title": "合集速记：《软设知识点100条》第35~47条 +《易混淆知识点》辨析18（OSI/TCP端口、特殊IP、CA证书、安全协议分层）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 30,
+            "relatedDomain": "计算机网络与信息安全",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D5-T3",
+            "title": "合集速记：《软设知识点100条》第95~100条 +《易混淆知识点》辨析20（职务作品、委托/合作、商标抽签、官方译文）",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 25,
+            "relatedDomain": "知识产权与标准化",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D5-T4",
+            "title": "合集真题：《2021年5月真题》(股票Broker命令模式/状态图) +《模考卷》面向对象 19 题特训",
+            "category": "morning_quiz",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "面向对象与UML",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D5-T5",
+            "title": "合集真题：《2021年5月真题》(SSH/IPSec/SQL注入/flushdns) +《模考卷》网络与信息安全 17 题特训",
+            "category": "morning_quiz",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "计算机网络与信息安全",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D5-T6",
+            "title": "合集真题：《2021年5月真题》+《2018/2019真题》知识产权与标准化 16 题极速特训",
+            "category": "morning_quiz",
+            "targetScore": 15,
+            "estimatedMinutes": 25,
+            "relatedDomain": "知识产权与标准化",
+            "relatedCaseType": "",
+            "completed": false
+          },
+          {
+            "id": "D5-T7",
+            "title": "下午突破：设计模式 Java/C++ 代码填空五大固定语法套路与多态结构套利",
+            "category": "reading",
+            "targetScore": 10,
+            "estimatedMinutes": 25,
+            "relatedDomain": "",
+            "relatedCaseType": "DESIGN_PATTERN",
+            "completed": false
+          },
+          {
+            "id": "D5-T8",
+            "title": "下午案例实战：策略模式（Strategy Pattern）——电商多种促销打折算法（CASE-DP-01）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "DESIGN_PATTERN",
+            "completed": false
+          },
+          {
+            "id": "D5-T9",
+            "title": "下午案例实战：观察者模式（Observer Pattern）——实时气象站数据订阅推送（CASE-DP-02）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "DESIGN_PATTERN",
+            "completed": false
+          },
+          {
+            "id": "D5-T10",
+            "title": "下午案例实战：合集《软件设计师模考.pdf》DutchAddress 荷兰语地址接口适配器模式（CASE-DP-04）与装饰器（CASE-DP-03）",
+            "category": "afternoon_case",
+            "targetScore": 15,
+            "estimatedMinutes": 30,
+            "relatedDomain": "",
+            "relatedCaseType": "DESIGN_PATTERN",
+            "completed": false
+          }
+        ]
+      }
+    ],
+    "3": [
+      {
+        "day": 1,
+        "title": "Day 1 极限冲刺：计算机体系、操作系统与 DFD 必杀突破",
+        "focus": "上午抢分: 体系结构公式与PV死锁 | 下午保底: 试题一 DFD 外部实体/存储/缺失数据流",
+        "focusMorning": "流水线计算、Cache命中率、主存编址、海明码、PV操作与死锁",
+        "focusAfternoon": "下午试题一数据流图 (DFD) 满分训练 (实体/数据存储/平衡校验)",
+        "strategy": "抓大放小，利用公式与口诀锁定上午 15 分硬核计算题，下午死守试题一 13+ 分保底。",
+        "radarTarget": {
+          "morningScore": 46,
+          "afternoonScore": 48
+        },
+        "highYieldTasks": [
+          {
+            "id": "S3-D1-T1",
+            "title": "【必背】四页纸 Sheet 1 底层公式与 100 条前 22 条",
+            "category": "reading",
+            "targetScore": 6,
+            "estimatedMinutes": 45,
+            "completed": false
+          },
+          {
+            "id": "S3-D1-T2",
+            "title": "【特训】流水线、Cache 与主存编址 15 题极速刷",
+            "category": "morning_quiz",
+            "targetScore": 5,
+            "estimatedMinutes": 30,
+            "completed": false
+          },
+          {
+            "id": "S3-D1-T3",
+            "title": "【特训】PV 操作信号量与前趋图 10 题靶向攻坚",
+            "category": "morning_quiz",
+            "targetScore": 4,
+            "estimatedMinutes": 30,
+            "completed": false
+          },
+          {
+            "id": "S3-D1-T4",
+            "title": "【大题】试题一 DFD 官方真题 3 套通关 (外部实体/数据存储/缺失流)",
+            "category": "afternoon_case",
+            "targetScore": 13,
+            "estimatedMinutes": 90,
+            "relatedCaseType": "DFD",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "title": "Day 2 极限冲刺：数据库、软件工程与下午数据库/UML 突破",
+        "focus": "上午抢分: 关系规范化与软工内聚耦合 | 下午保底: 试题二数据库设计 + 试题三 UML 建模",
+        "focusMorning": "关系代数、1-3NF范式、事务ACID、内聚耦合阶梯、设计模式分类",
+        "focusAfternoon": "下午试题二数据库 E-R 模式补全与试题三 UML 用例包含扩展",
+        "strategy": "数据库大题与 UML 大题合计 30 分，按照主外键映射套路与用例关系口诀，必须拿下 25+ 分。",
+        "radarTarget": {
+          "morningScore": 48,
+          "afternoonScore": 50
+        },
+        "highYieldTasks": [
+          {
+            "id": "S3-D2-T1",
+            "title": "【必背】四页纸 Sheet 2 数据底座与 100 条数据库/软工必背",
+            "category": "reading",
+            "targetScore": 6,
+            "estimatedMinutes": 45,
+            "completed": false
+          },
+          {
+            "id": "S3-D2-T2",
+            "title": "【特训】关系代数投影选择与范式判断 15 题",
+            "category": "morning_quiz",
+            "targetScore": 5,
+            "estimatedMinutes": 30,
+            "completed": false
+          },
+          {
+            "id": "S3-D2-T3",
+            "title": "【大题】试题二 数据库设计 E-R 模式补全真题 2 套",
+            "category": "afternoon_case",
+            "targetScore": 13,
+            "estimatedMinutes": 60,
+            "relatedCaseType": "DATABASE",
+            "completed": false
+          },
+          {
+            "id": "S3-D2-T4",
+            "title": "【大题】试题三 UML 建模类图与用例图真题 2 套",
+            "category": "afternoon_case",
+            "targetScore": 13,
+            "estimatedMinutes": 60,
+            "relatedCaseType": "UML",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "title": "Day 3 极限冲刺：数据结构排序、设计模式代码与及格线锁分",
+        "focus": "上午抢分: 排序算法时空复杂度与网络安全端口 | 下午保底: 试题四算法填空 + 试题五设计模式代码",
+        "focusMorning": "二叉树五大定理、十大排序稳定性、常用端口、数字签名公私钥、著作权法",
+        "focusAfternoon": "下午试题四算法时间复杂度与动态规划、试题五设计模式类图与接口实现",
+        "strategy": "下午五大题型形成合力：前三题保底 35 分，后两题保底 15 分，下午稳过 50 分；上午全真模考查漏补缺确保 48+ 分通关。",
+        "radarTarget": {
+          "morningScore": 50,
+          "afternoonScore": 52
+        },
+        "highYieldTasks": [
+          {
+            "id": "S3-D3-T1",
+            "title": "【必背】四页纸 Sheet 3-4 排序算法全矩阵与四大算法策略",
+            "category": "reading",
+            "targetScore": 6,
+            "estimatedMinutes": 45,
+            "completed": false
+          },
+          {
+            "id": "S3-D3-T2",
+            "title": "【特训】十大排序算法性能对比与二叉树性质 15 题",
+            "category": "morning_quiz",
+            "targetScore": 5,
+            "estimatedMinutes": 30,
+            "completed": false
+          },
+          {
+            "id": "S3-D3-T3",
+            "title": "【大题】试题四 算法分析 C 代码填空真题 2 套",
+            "category": "afternoon_case",
+            "targetScore": 8,
+            "estimatedMinutes": 60,
+            "relatedCaseType": "ALGORITHM",
+            "completed": false
+          },
+          {
+            "id": "S3-D3-T4",
+            "title": "【大题】试题五 设计模式面向对象代码填空真题 2 套",
+            "category": "afternoon_case",
+            "targetScore": 10,
+            "estimatedMinutes": 60,
+            "relatedCaseType": "DESIGN_PATTERN",
+            "completed": false
+          },
+          {
+            "id": "S3-D3-T5",
+            "title": "【冲刺】错题本高频易错题靶向二刷与考前避坑心法",
+            "category": "reading",
+            "targetScore": 5,
+            "estimatedMinutes": 40,
+            "completed": false
+          }
+        ]
+      }
+    ],
+    "7": [
+      {
+        "day": 1,
+        "title": "Day 1 冲刺：计算机系统与底层计算公式突破",
+        "focus": "第 1 天高权重考点专项训练",
+        "focusMorning": "对应领域高频考点速记与 20 道精选真题",
+        "focusAfternoon": "对应下午案例分析题型精炼",
+        "strategy": "7天紧凑冲刺，每天一个主攻方向，上午计算题+下午案例大题交叉结合，稳步达成 45/75 及格安全线。",
+        "radarTarget": {
+          "morningScore": 47,
+          "afternoonScore": 47
+        },
+        "highYieldTasks": [
+          {
+            "id": "S7-D1-T1",
+            "title": "【速背】第 1 天核心考点与公式背诵",
+            "category": "reading",
+            "targetScore": 5,
+            "estimatedMinutes": 40,
+            "completed": false
+          },
+          {
+            "id": "S7-D1-T2",
+            "title": "【刷题】第 1 领域精选真题 20 道",
+            "category": "morning_quiz",
+            "targetScore": 6,
+            "estimatedMinutes": 35,
+            "completed": false
+          },
+          {
+            "id": "S7-D1-T3",
+            "title": "【大题】下午对应案例专项攻坚 15 分",
+            "category": "afternoon_case",
+            "targetScore": 12,
+            "estimatedMinutes": 60,
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "title": "Day 2 冲刺：操作系统进程管理与试题一 DFD 攻坚",
+        "focus": "第 2 天高权重考点专项训练",
+        "focusMorning": "对应领域高频考点速记与 20 道精选真题",
+        "focusAfternoon": "对应下午案例分析题型精炼",
+        "strategy": "7天紧凑冲刺，每天一个主攻方向，上午计算题+下午案例大题交叉结合，稳步达成 45/75 及格安全线。",
+        "radarTarget": {
+          "morningScore": 48,
+          "afternoonScore": 48
+        },
+        "highYieldTasks": [
+          {
+            "id": "S7-D2-T1",
+            "title": "【速背】第 2 天核心考点与公式背诵",
+            "category": "reading",
+            "targetScore": 5,
+            "estimatedMinutes": 40,
+            "completed": false
+          },
+          {
+            "id": "S7-D2-T2",
+            "title": "【刷题】第 2 领域精选真题 20 道",
+            "category": "morning_quiz",
+            "targetScore": 6,
+            "estimatedMinutes": 35,
+            "completed": false
+          },
+          {
+            "id": "S7-D2-T3",
+            "title": "【大题】下午对应案例专项攻坚 15 分",
+            "category": "afternoon_case",
+            "targetScore": 12,
+            "estimatedMinutes": 60,
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "title": "Day 3 冲刺：数据库关系代数、范式与试题二数据库大题",
+        "focus": "第 3 天高权重考点专项训练",
+        "focusMorning": "对应领域高频考点速记与 20 道精选真题",
+        "focusAfternoon": "对应下午案例分析题型精炼",
+        "strategy": "7天紧凑冲刺，每天一个主攻方向，上午计算题+下午案例大题交叉结合，稳步达成 45/75 及格安全线。",
+        "radarTarget": {
+          "morningScore": 49,
+          "afternoonScore": 49
+        },
+        "highYieldTasks": [
+          {
+            "id": "S7-D3-T1",
+            "title": "【速背】第 3 天核心考点与公式背诵",
+            "category": "reading",
+            "targetScore": 5,
+            "estimatedMinutes": 40,
+            "completed": false
+          },
+          {
+            "id": "S7-D3-T2",
+            "title": "【刷题】第 3 领域精选真题 20 道",
+            "category": "morning_quiz",
+            "targetScore": 6,
+            "estimatedMinutes": 35,
+            "completed": false
+          },
+          {
+            "id": "S7-D3-T3",
+            "title": "【大题】下午对应案例专项攻坚 15 分",
+            "category": "afternoon_case",
+            "targetScore": 12,
+            "estimatedMinutes": 60,
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "title": "Day 4 冲刺：软件工程开发模型、质量度量与试题三 UML",
+        "focus": "第 4 天高权重考点专项训练",
+        "focusMorning": "对应领域高频考点速记与 20 道精选真题",
+        "focusAfternoon": "对应下午案例分析题型精炼",
+        "strategy": "7天紧凑冲刺，每天一个主攻方向，上午计算题+下午案例大题交叉结合，稳步达成 45/75 及格安全线。",
+        "radarTarget": {
+          "morningScore": 50,
+          "afternoonScore": 50
+        },
+        "highYieldTasks": [
+          {
+            "id": "S7-D4-T1",
+            "title": "【速背】第 4 天核心考点与公式背诵",
+            "category": "reading",
+            "targetScore": 5,
+            "estimatedMinutes": 40,
+            "completed": false
+          },
+          {
+            "id": "S7-D4-T2",
+            "title": "【刷题】第 4 领域精选真题 20 道",
+            "category": "morning_quiz",
+            "targetScore": 6,
+            "estimatedMinutes": 35,
+            "completed": false
+          },
+          {
+            "id": "S7-D4-T3",
+            "title": "【大题】下午对应案例专项攻坚 15 分",
+            "category": "afternoon_case",
+            "targetScore": 12,
+            "estimatedMinutes": 60,
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "title": "Day 5 冲刺：面向对象技术、设计模式与试题五模式代码",
+        "focus": "第 5 天高权重考点专项训练",
+        "focusMorning": "对应领域高频考点速记与 20 道精选真题",
+        "focusAfternoon": "对应下午案例分析题型精炼",
+        "strategy": "7天紧凑冲刺，每天一个主攻方向，上午计算题+下午案例大题交叉结合，稳步达成 45/75 及格安全线。",
+        "radarTarget": {
+          "morningScore": 51,
+          "afternoonScore": 51
+        },
+        "highYieldTasks": [
+          {
+            "id": "S7-D5-T1",
+            "title": "【速背】第 5 天核心考点与公式背诵",
+            "category": "reading",
+            "targetScore": 5,
+            "estimatedMinutes": 40,
+            "completed": false
+          },
+          {
+            "id": "S7-D5-T2",
+            "title": "【刷题】第 5 领域精选真题 20 道",
+            "category": "morning_quiz",
+            "targetScore": 6,
+            "estimatedMinutes": 35,
+            "completed": false
+          },
+          {
+            "id": "S7-D5-T3",
+            "title": "【大题】下午对应案例专项攻坚 15 分",
+            "category": "afternoon_case",
+            "targetScore": 12,
+            "estimatedMinutes": 60,
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 6,
+        "title": "Day 6 冲刺：数据结构与试题四算法动态规划突破",
+        "focus": "第 6 天高权重考点专项训练",
+        "focusMorning": "对应领域高频考点速记与 20 道精选真题",
+        "focusAfternoon": "对应下午案例分析题型精炼",
+        "strategy": "7天紧凑冲刺，每天一个主攻方向，上午计算题+下午案例大题交叉结合，稳步达成 45/75 及格安全线。",
+        "radarTarget": {
+          "morningScore": 52,
+          "afternoonScore": 52
+        },
+        "highYieldTasks": [
+          {
+            "id": "S7-D6-T1",
+            "title": "【速背】第 6 天核心考点与公式背诵",
+            "category": "reading",
+            "targetScore": 5,
+            "estimatedMinutes": 40,
+            "completed": false
+          },
+          {
+            "id": "S7-D6-T2",
+            "title": "【刷题】第 6 领域精选真题 20 道",
+            "category": "morning_quiz",
+            "targetScore": 6,
+            "estimatedMinutes": 35,
+            "completed": false
+          },
+          {
+            "id": "S7-D6-T3",
+            "title": "【大题】下午对应案例专项攻坚 15 分",
+            "category": "afternoon_case",
+            "targetScore": 12,
+            "estimatedMinutes": 60,
+            "completed": false
+          }
+        ]
+      },
+      {
+        "day": 7,
+        "title": "Day 7 冲刺：网络信息安全、知识产权与全真及格线模考",
+        "focus": "第 7 天高权重考点专项训练",
+        "focusMorning": "对应领域高频考点速记与 20 道精选真题",
+        "focusAfternoon": "对应下午案例分析题型精炼",
+        "strategy": "7天紧凑冲刺，每天一个主攻方向，上午计算题+下午案例大题交叉结合，稳步达成 45/75 及格安全线。",
+        "radarTarget": {
+          "morningScore": 53,
+          "afternoonScore": 53
+        },
+        "highYieldTasks": [
+          {
+            "id": "S7-D7-T1",
+            "title": "【速背】第 7 天核心考点与公式背诵",
+            "category": "reading",
+            "targetScore": 5,
+            "estimatedMinutes": 40,
+            "completed": false
+          },
+          {
+            "id": "S7-D7-T2",
+            "title": "【刷题】第 7 领域精选真题 20 道",
+            "category": "morning_quiz",
+            "targetScore": 6,
+            "estimatedMinutes": 35,
+            "completed": false
+          },
+          {
+            "id": "S7-D7-T3",
+            "title": "【大题】下午对应案例专项攻坚 15 分",
+            "category": "afternoon_case",
+            "targetScore": 12,
+            "estimatedMinutes": 60,
+            "completed": false
+          }
+        ]
+      }
+    ]
+  }
+}

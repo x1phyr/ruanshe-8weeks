@@ -1,0 +1,3922 @@
+[
+  {
+    "chapterId": "CH-01",
+    "chapterNumber": 1,
+    "chapterTitle": "第1章 计算机系统与体系结构",
+    "totalNodes": 3,
+    "nodes": [
+      {
+        "id": "49raf4ed85ajm6bqd1ftcpmd02",
+        "label": "计算机系统基础",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7befkhqs5rbon188agvj25ib1n",
+            "label": "计算机系统基本硬件组成",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "7pnpo0ss3keemhtehbb8jao1pc",
+                "label": "运算器",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "56bl6624a9sthr99lo23og56ig",
+                "label": "控制器",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3lmgbc4qmvcpam139o3cj3s8mp",
+                "label": "存储器",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "74b3gciv9iqpss665pqmntlmt5",
+                "label": "输入设备",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3e0kqanphn2hphc8vbc6j2vt9v",
+                "label": "输出设备",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "0l4420crmri2dapi01p6o5d160",
+            "label": "中央处理单元",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "7u4lgb2e29p9bqlov08bks8p8s",
+                "label": "CPU的功能",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "02rt6sqbcbppio9or9spn26rli",
+                    "label": "程序控制",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "02a1ksh9f2cf190sp4q76j6fg9",
+                    "label": "操作控制",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "2jfg6f23ns4s9eu8p6bup6jqtn",
+                    "label": "时间控制",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "1mttp2qrt8r9l3i2mlgnk51m52",
+                    "label": "数据处理",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "1lv4hsseg39kf5r2iofgas33im",
+                "label": "CPU的组成",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "32utk8hp9fiqhdddg2lec7p6qp",
+                    "label": "运算器",
+                    "level": 5,
+                    "mastered": false,
+                    "children": [
+                      {
+                        "id": "3bhn10kkgah9hq2ifejf5erv5p",
+                        "label": "算术逻辑单元",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "6dfkin247fs3lt5uh01ej7cqmq",
+                        "label": "累加器寄存器",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "6v7ihk2psukabu0tqg0b84ce17",
+                        "label": "数据缓冲寄存器",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "401ki2srco8aufsj7mb1o548hm",
+                        "label": "状态条件寄存器",
+                        "level": 6,
+                        "mastered": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": "0kvnok1fo2t54s8ql9n00p3arp",
+                    "label": "控制器",
+                    "level": 5,
+                    "mastered": false,
+                    "children": [
+                      {
+                        "id": "6d3ckp4rdleuqgtomnadkdacer",
+                        "label": "指令寄存器",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "1bemu40dl3jo429ug57h497nm2",
+                        "label": "程序计数器",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "65hipudt0gqad1k1b61ua2ajne",
+                        "label": "地址寄存器",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "29ccub0mag50m7l5neqhimkj5i",
+                        "label": "指令译码器",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "608tl4pmvh9eshu02bf06sh7la",
+                        "label": "寄存器组",
+                        "level": 6,
+                        "mastered": false
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "0ki9vimbf8vomcrp6snnnflmt5",
+                "label": "多核CPU",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "6prfrisrp5r0rnp55u3m0evuj2",
+                    "label": "Intel\"双芯\"",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "2192mhqph9417i7phabt16t37g",
+                    "label": "AMD\"双核\"",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "5k7smhf9f3s130knl9ob1klqhs",
+            "label": "数据表示",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "3602u356svnb8fhujg1ajid3lu",
+                "label": "原码",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2dsfrm5csstl84ojbsg9ccb5ct",
+                "label": "反码",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2dq95ihone9bs2kc8g32ceuprc",
+                "label": "补码",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5p4k1ubbcgajolp50oatqgk4dq",
+                "label": "移码",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "3avd6edcj68tvovfn4edfvha89",
+            "label": "校验码",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "40rbcgv7nku76ka0tr5dqft8sg",
+                "label": "奇偶效验码",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5fqurv8v1ma5ig2l2t47kmq0q6",
+                "label": "海明码",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "1ph2e4tetb1n1cknu96647plr6",
+                "label": "循环冗余效验码",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "2fnn3rmmnoo14p0bjqmau3qkil",
+        "label": "计算机体系结构",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "022v6bk4cd98u097n3gto5ls0b",
+            "label": "计算机体系结构分类",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "0or058bbio5mocg3ud3j11f82a",
+                "label": "宏观",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "6sbu6l8inhdfe7ddbeaitk9o4r",
+                    "label": "单处理系统",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "6r76fu1pjf0inisoiaj52pf9t8",
+                    "label": "并行处理与多处理系统",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "51d6133ld70482m3vnpme6959d",
+                    "label": "分布式处理系统",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "0d3gdvuh12aorsmikdjhh4c59r",
+                "label": "微观",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "1l3g3g8rq5d3lqmq0j5f3s5or5",
+                    "label": "Flynn分类法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "0c75shi6ma7l9preu2iok242i2",
+                    "label": "冯泽云分类法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "32muv41iua9ojrl8c2b8il59a8",
+                    "label": "Handler分类法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "60a1hr1f3u759pq395i7ert3pf",
+                    "label": "Kuck分类法",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "5minm5m8p19at0fuecmlaklf2v",
+            "label": "指令系统",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "7jj8l6729kjnd56uul96k1n9a5",
+                "label": "指令集体系结构的分类",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "5o8su8esof40dltp3imbq0hc2h",
+                    "label": "操作数在CPU中的存储方式",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "1l91rlrge94rq86t6ldnnj9u5o",
+                    "label": "显示操作数的数量",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "5sl6o072c8gofi6j0mg3ojgs36",
+                    "label": "操作数的位置",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "1a1v42668vnkrain0lf5tkng65",
+                    "label": "指令的操作",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "3d2mlkearjc6jafiiahm5m3i93",
+                    "label": "操作数的类型与大小",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "3p006dp61tt96lupojqah489jm",
+                "label": "CISC和RISC指令系统",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6ib5nj4etp59266kqhhtka20jd",
+                "label": "指令的流水处理",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "15o8vj92ufmbnhodq6vlrlhs2s",
+                    "label": "流水(Pipelining)技术",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "28babaejqs13e7g9dva17p0mqb",
+            "label": "存储系统",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "0hqfuelrdg6d34urbfjdtk4dfd",
+                "label": "存储器的层次结构",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "03hg71l2ba6tlvokoknrfdil38",
+                "label": "存储器分类",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3b6rnm9a2d84i76i1puochfjft",
+                "label": "相联储存器",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "7jnmrh406g8vkv12mvnnmnvkb4",
+                    "label": "按内容访问",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "6khkmbfqdej99v2jfjgi8trahj",
+                "label": "高速缓存",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7bukfdd9rif5all997gknf4ltb",
+                "label": "虚拟存储器",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "1m8m2rmo6uk7scatp8e52nejcr",
+                "label": "外存储器",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7kea84q54vm83ci6e5dqvdtl8i",
+                "label": "磁盘阵列技术",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "60jn2vv2g50ud5b7rigit8ve10",
+                "label": "存储域网络",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "79t5amjm4vl661uu6bhicg615b",
+            "label": "输入输出技术",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "3hlpdovs0v8tnj040810ecv753",
+                "label": "微型计算机中最常用的内存与接口的编制方法",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "621nm2j050psld2etmr07jj7hk",
+                    "label": "内存与接口地址独立编址方法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "18tgn2v0oedca272vf496l12k5",
+                    "label": "内存与接口地址统一编址方法",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "5q397hu4oghmejp2i8118qtnlg",
+                "label": "直接程序控制",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "440ov3r0u882msrrbie3bngucj",
+                    "label": "无条件传送",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "4i58pn1fcamhm1uas0pn46pesd",
+                    "label": "程序查询方式",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "5m0s5crfjfgq8npfspr371mknm",
+                "label": "中断方式",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "48aggkcgr0ju0cq2fc7klevrp7",
+                "label": "直接存储器存取方式",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "5el6n4hh4590v896hiqb2060ds",
+                    "label": "直接内存存取DMA",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "0v16lfl6thschpqgu2hnftui3r",
+                "label": "输入/输出处理机",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "0n7jqeb20bdimgf3r10t69e12b",
+            "label": "总线结构",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "22js9o4ujcerstrg21namvj7gd",
+                "label": "总线的分类",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "46tte9scn5soki2n29vnq53a0e",
+                    "label": "数据总线",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "35t0jd0jviggmbpejasngj9pkl",
+                    "label": "地址总线",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "0hmovif46h7fjin1i1k95tts9a",
+                    "label": "控制总线",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "3s8m6aam7irboq3jut6kh719bd",
+                "label": "常见总线",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "6m5caj9q908ll2qbcq372b595o",
+                    "label": "ISA总线",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "2j09udjkdgh8iho1akce70cge6",
+                    "label": "EISA总线",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "1h7a2cd8qqavg9naqiieq5lckb",
+                    "label": "PCI总线",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "7pli33tqm0ec1a2dmgb1ajrq73",
+                    "label": "PCI Express总线",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "04dlbl2mugkno0mb71pj4lhksb",
+                    "label": "前端总线",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "20jacqsibf79qgerl6vsuv4e5v",
+                    "label": "RS-232C",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "1k7vqnen9g6rerc2c7vi13q9tc",
+                    "label": "SCSI总线",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "21f9fgp1fsq5egrj758kgpkeht",
+                    "label": "SATA",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "1aevig4b78oerfng5006p0qk85",
+                    "label": "USB",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "6lvhn67b574f8t0077qdmouikj",
+                    "label": "IEEE-1394",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "2iifqhe02nnk1tqrujgs0vii97",
+                    "label": "IEEE-488总线",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0c9tbkv85gu6n9s2odl8eqvket",
+        "label": "安全性、可靠性与系统性能评测",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "312bcsrcdt3f6jp6iri40mk1a2",
+            "label": "加密技术与认证技术",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "4v8r748gugohao1phpsllm0p35",
+                "label": "加密技术",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "7qublg4bprlia0gft8sndktqrh",
+                    "label": "对称加密技术",
+                    "level": 5,
+                    "mastered": false,
+                    "children": [
+                      {
+                        "id": "050k6364rebu6auhvjjmvioefk",
+                        "label": "数据加密标准",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "4ldmpheqaofpl2v4jjistmob9r",
+                        "label": "三重DES",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "7ujsmerh5jnfn5iedlk4gnau9e",
+                        "label": "RC-5",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "6pa4c9qi62f2m7sc6kr614ksi8",
+                        "label": "国际数据加密算法",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "06ufhn6mo0nbch19a3ha47bnhq",
+                        "label": "高级加密标准",
+                        "level": 6,
+                        "mastered": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2eri8t5n6j4rp1slk2hdl3ra6t",
+                    "label": "非对称加密技术",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "62f34otatp95hp146hhhc2dnfl",
+                "label": "认证技术",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "0s9j1jtlu9nh34up9datrju26l",
+                    "label": "PKI",
+                    "level": 5,
+                    "mastered": false,
+                    "children": [
+                      {
+                        "id": "567f06mj410tjaoio2pmqooe5t",
+                        "label": "认证机构",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "0lu0dltmpp8703psrgqaoomlp5",
+                        "label": "数字证书库",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "67ncjsibadqqfrmnclg3c13og5",
+                        "label": "密钥备份及恢复系统",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "2c47bpvt7iguh2qcobbupne203",
+                        "label": "证书作废系统",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "18nr7r8oiepu8kbd10gdsqald7",
+                        "label": "应用接口",
+                        "level": 6,
+                        "mastered": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": "6mjl3bjniubuvgnrqrlvlt9o9r",
+                    "label": "Hash函数与信息摘要",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "0e74ompte711mrg68c49gho3um",
+                    "label": "数字签名",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "2akno6d3l4vk1u8durr0fhe6rc",
+                    "label": "SSL协议",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "46n00s4oepk9ie4rfi6vm3tchq",
+                    "label": "数字时间戳技术",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "1c0eh4c607povtv20togit856p",
+            "label": "计算机系统的性能评价",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "63hst9dr8uglt2sp5j0subd26f",
+                "label": "系统评测的常用方法",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "2ib7u8a4figjni1i7evdvfkf0p",
+                    "label": "时钟频率",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "60h9u38c1j7k1qi5m2p08tson5",
+                    "label": "指令执行速度",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "3566a4hrjdoibq5bha0u5pc0bt",
+                    "label": "等效指令速度法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "4359oso1vncrd4isd6ee5bpgmt",
+                    "label": "数据处理速率",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "1d7j010a6hsc2rdtn2fjunumjk",
+                "label": "基准测试程序",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "62aqh46c2trr87pn1jkk8l5pn7",
+                    "label": "整数测试程序",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "18k9jrgf2e0t77n2kt8ra6vab6",
+                    "label": "浮点测试程序",
+                    "level": 5,
+                    "mastered": false,
+                    "children": [
+                      {
+                        "id": "7rj702n24kaej0okeoi7v3n81p",
+                        "label": "理论峰值浮点速度",
+                        "level": 6,
+                        "mastered": false
+                      },
+                      {
+                        "id": "4s723sunrbm9soia9dtc5nm5gs",
+                        "label": "Linpack基准测试程序",
+                        "level": 6,
+                        "mastered": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": "5irhgm50rck6jgujaodj1u1ssh",
+                    "label": "SPEC基准程序",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "3l2dlat1orrifj8fqnd1smorc1",
+                    "label": "TPC基准程序",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "626vbfgqf5ggoadme1ravbjo6u",
+            "label": "计算机可靠性",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "chapterId": "CH-02",
+    "chapterNumber": 2,
+    "chapterTitle": "第2章 程序设计语言基础",
+    "totalNodes": 2,
+    "nodes": [
+      {
+        "id": "72l1u3hefaeu83q4piak40heg4",
+        "label": "程序设计语言概括",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "24au2v8ae1t8pkae0ncfkfhg4d",
+            "label": "程序设计语言基本概念",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "42786j3p8fg5l612407pd4sjhf",
+            "label": "程序设计语言的基本成分",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "119visklj4oi3pvmrlgtd7h5uu",
+        "label": "语言处理程序基础",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "5b3snuf7susnm7ij0j59rus1eo",
+            "label": "汇编语言基本原理",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3unceh78qut45r947aa74424dv",
+            "label": "编译程序基本原理",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "32o5oh7q5e67pbb2ge1lqlsnmp",
+                "label": "编译过程概述",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "21u1qiub7kga800qvdene7e9f3",
+                "label": "文法和语言的形式描述",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "527i76a98ovofsu79j4fm02s32",
+                "label": "语法分析",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "0pikfe6aodjhl8m171ouqcb7or",
+                    "label": "正规式",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "245dpo2dp23d6sgmeiqmpiv372",
+                    "label": "有限自动机",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "4rrq6echv0iq2nghgdt1gqdf7b",
+                "label": "正规式与有限自动机之间的转换",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2avof5hl2p6lfq5sr92j9n8vnc",
+                "label": "解释程序的基本原理",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "chapterId": "CH-03",
+    "chapterNumber": 3,
+    "chapterTitle": "第3章 操作系统知识",
+    "totalNodes": 6,
+    "nodes": [
+      {
+        "id": "6bn84ofkfehtvq0a1ba1jtdd98",
+        "label": "操作系统概述",
+        "level": 2,
+        "mastered": false
+      },
+      {
+        "id": "2liu8v3fl36li29ja20snk242n",
+        "label": "进程管理",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "1iiugfmpld8no456jjit4h20n2",
+            "label": "进程的组成",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2sndkosknlchqbip8dmnvq696h",
+            "label": "进程的状态",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4ndve095riqgkb8oqp8kvajpnv",
+            "label": "前趋图和进程管理图",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "7v7v6qnt13c444vb6td2t8mu8t",
+            "label": "进程间的同步和互斥",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "1ajnc98hhvg1ptvic1mfep8j3m",
+            "label": "信号量(pv)操作",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3s490n4k4ri8n6lmfof0pfcl2p",
+            "label": "进程调度",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5pdktsvfjh9q95jfm8o438b0l6",
+            "label": "死锁",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "7d2gemht6eaka06e3p62h40477",
+        "label": "存储管理",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "74dn3s2l9070h1jj2h9mrjro81",
+            "label": "分区存储管理",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "41g1j1a4k6hfh6e4tro1kqb0h2",
+            "label": "页式存储管理",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3v2duln8hdugn92gs4gar61q9t",
+            "label": "快表",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3svbtssufqviimdje7k4kcl25d",
+            "label": "段式存储管理",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "0l2lvla5gcemibk6lo7ko2sgef",
+            "label": "段页式存储管理",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5vglkggg4e4lhlckumfc1dv51o",
+            "label": "页面置换算法",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "04si357bhih9m4gfnk469qamfl",
+        "label": "设备管理",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7mhq1u2e1o26idnqp12r6lvnur",
+            "label": "I/O软件",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4a87se5ud2ncu40co2vqa2m896",
+            "label": "虚设备和SPOOLING技术",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "52q1cb2u4avdnos4aqcl3hve7d",
+            "label": "磁盘调度",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "082cujrdr02eums15c18b9e6g3",
+            "label": "DMA技术",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "0jldbp67krlc8h47muojd2pkqh",
+        "label": "文件管理",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "5vragaeee31mff3q9enp29akve",
+            "label": "文件的结构和组织",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3m4fid31b3e17a60ekpilblt9j",
+            "label": "存取方法和存储空间的管理",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "1go661ernv2is354at651kgm9m",
+            "label": "空闲存储空间的管理",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "2r1etpngq5mq7qg398ml8ohoic",
+        "label": "作业管理",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "68dkae4ru6goumpph983e0729l",
+            "label": "作业状态与作业管理",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5c8sr50jjqqbda17mr3k36720v",
+            "label": "作业调度算法",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "chapterId": "CH-04",
+    "chapterNumber": 4,
+    "chapterTitle": "第4章 系统开发与软件工程",
+    "totalNodes": 16,
+    "nodes": [
+      {
+        "id": "78it542j9in3plsiu5icev5osn",
+        "label": "软件工程概述",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "1c9pmvqq55pdlg6a2k7tpbfn80",
+            "label": "软件工程基本原理",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "006fveuc0toakok7a3na44c7lu",
+                "label": "用分析段的生命周期计划严格管理",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "4tkfn5ha4807k7at39vjn8pt3e",
+                "label": "坚持进行阶段评审",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2mtchjf4n4br1ohl4vudrji4a7",
+                "label": "严格实现的产品控制",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "62u87shk4eatdpi1m8ulv2hm16",
+                "label": "采用现代程序设计技术",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5e10jaij0e8pbalq0culpkglda",
+                "label": "结果应清楚地审查",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2koof5q5vl80b3k3p5ueas5v5a",
+                "label": "开发小组地人员应少而精",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "4nhk7vqpsq3gfj78u9peduda22",
+            "label": "软件工程的基本要素",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "138l1rbke8911idodsrn9h7cgp",
+                "label": "方法",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6r4d2u91buc07tbatap9fvgk1c",
+                "label": "工具",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "1cfa4lpam6jv6gjanv3m0iioov",
+                "label": "过程",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "6216ep6lut9u0vgs7oo7lc5s54",
+            "label": "软件生存周期",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "38h5g9r21d70jgjms0n0kvo5sl",
+                "label": "可行性分析与项目开发计划",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5etfgc93duosscd9n977se9k8s",
+                "label": "需求分析",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5g1pbb69s92m3cn535bnspotvi",
+                "label": "概要设计",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3gi3fbkn35rl86puk289ump4h7",
+                "label": "详细设计",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6447o66lkkpa0c4jvr481jmkca",
+                "label": "编码",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "4hii2it2s4opq0c2t57rvmi03g",
+                "label": "测试",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "1p35hhk79k5mb22nan0ndhfnim",
+                "label": "维护",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "1l7cid8lbq1eff0f9h8ij97dou",
+            "label": "软件过程",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "13no0tuvcujrgvv0a2oj4bno90",
+                "label": "能力成熟度模型(CMM)",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3vuev6qd140mlontlcqdockj1h",
+                "label": "能力成熟度模型集成(CMMI)",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "72k3umenpd1010birmeg8jvac1",
+        "label": "软件过程模型",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "6nj0p8j6aqic2biephscg46l4t",
+            "label": "瀑布模型",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "66ap6f33c2n5eevcd8jg8e3tsi",
+                "label": "瀑布模型",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7f3nku43bd23f98lnluvfgd3lc",
+                "label": "V模型",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "23nal43eptquptfpd2ivq9bqbq",
+            "label": "增量模型",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3ci8polagdkq5k47k3laptvk98",
+            "label": "演化模型",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "29ord0ulngb2em9ad7t89pjfiq",
+                "label": "原型模型",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5pftogmmvvaboa4041boft5kh6",
+                "label": "旋转模型",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "3c5cmj9huv0i3rjll4d9dlkhma",
+            "label": "喷泉模型",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2t8nbhgv31p3hcarlo5ek001sk",
+            "label": "基于构建的开发模型",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "379d014b1sgchbm56hhcgt8lfo",
+            "label": "形式化方法模型",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "6h539gr8vinb7a0vkll2pe2hg7",
+            "label": "统一过程(UP)模型",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "226fab2r3v3ffqtp9ojlpemej6",
+            "label": "敏捷方法",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "1nbkterh89cgsapu6pton71qem",
+                "label": "极限编程(XP）",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7rfs9l4ft67qvmqppla8alqf99",
+                "label": "水晶法",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6fceo5csuekr7csm9qthq3htvh",
+                "label": "并列争求法",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "650hkbq44kehko8rg20pb9ad5p",
+                "label": "自适应软件开发",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7701nvd2p2q6p2omsqeq95fc42",
+                "label": "敏捷统一过程",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "10img7kfb756cscf2i4dn03cft",
+        "label": "软件开发方法",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "760cpbvd60kn0kl96du40ijkmt",
+            "label": "结构化方法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "0ug9fbr7dblq5irj389iip0qri",
+            "label": "jackson方法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3mrletojfs96kpf9oj24cskqv9",
+            "label": "原型方法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "6fjh9nt14ok2rhtg78svv1ok67",
+            "label": "面型对象方法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "27f4og4scujaicbcq3h2l4946l",
+            "label": "敏捷开发",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "407kernof4pqlpt1it4m0vihqh",
+        "label": "需求分析",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "5hckl6ii9r6vobro80s52v73iu",
+            "label": "软件需求",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "60ljorsr04qqqvoplbv4ndd140",
+                "label": "功能需求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6e3cg0q0qktaio31vdojpe6uul",
+                "label": "性能需求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5t2m4vrr8sr6jfm7nc7ggkdhlf",
+                "label": "用户或个人因素",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3kra5k676absk11piab6kt93s0",
+                "label": "黄金需求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "0h6m2pd2lgmac95lujl62q4hn4",
+                "label": "界面需求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "0sm2868m01it6sv89vau4rcd2v",
+                "label": "文档需求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7ub2m8gehq4vt2gm8335fgptmc",
+                "label": "数据需求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5joq82o4doocpu0ftebb622nsq",
+                "label": "资源使用需求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5uatrcbmafkvu3ddtrd0s99q0f",
+                "label": "安全保密要求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2trcdi3h8hm9fr9bba1pm95u50",
+                "label": "可靠性要求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7u37pfp9sqf96si7jd0me2daoq",
+                "label": "软件成本消耗与软件进度需求",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7hu299f5cnr0o9atqn7ak9ohl7",
+                "label": "其他非功能性要求",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "2f0lvqoqilrre9r31stgtma4rs",
+            "label": "需求分析原则",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5rbh7mg3r08plia4471bm6e70n",
+            "label": "需求工程",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "05000rj4oe5v7da7ekokmqgl1h",
+                "label": "需求获取",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "0cb1sohn5jg0tn1n6nbopqsg0m",
+                "label": "需求分析与协商",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6bc47hd8e7s8tgir2t2p6ij4qb",
+                "label": "系统建模",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "0ih6tiu1tth6sdj8fi2cim2v0i",
+                "label": "需求规约",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3ov9eg73gvn5k54bbj8p3ffa4c",
+                "label": "需求验证",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "4fk31psbgqa19n6ujojffbpb2p",
+                "label": "需求管理",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0kr4hnqv49ep52301hg8bj3c2u",
+        "label": "系统设计",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "1gri63kjpoeculekr370bjpfic",
+            "label": "系统设计方法",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "7sik5mukpvcd6pn39vnir9095e",
+                "label": "面向数据流的结构化设计方法",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "433k8jjpvkokl0adtdkfdnnvba",
+                "label": "面向对象的分析方法",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "60qvq6cfp0au9rlhq3olvidmg4",
+            "label": "概要设计",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5otlphd6kb68t7s16ndqqn8j20",
+            "label": "详细设计",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "3sj0v6t32nd97vft76j2j14qag",
+        "label": "系统测试",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "6t1ukmp9440eofjtqf2hh4du7c",
+            "label": "系统测试与调试",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "0v1c7p93bfrngmr4952qb1hf9o",
+            "label": "传统软件的测试策略",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "6r09l1v2d4taomgtprmadqg11s",
+                "label": "单元测试",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3gcbr2hli3shrntp8i9eh13cda",
+                "label": "集成测试",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "0iqie23ve5ch6jec9v1efa0725",
+                "label": "确认测试",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6ta1nd8lucjgl4maj98dno5q5f",
+                "label": "系统测试",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "1cpiq3ttdr4td27pm7h8srsd9d",
+            "label": "测试面向对象软件",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "5ch4b148csnov7tmijcl371tue",
+                "label": "单元测试",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "1mc5ede60hqrhoinn7ede3jbb4",
+                "label": "集成测试",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "326f72vgp059ppnucipf40g2it",
+            "label": "测试Web应用",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "1r1l3pvoh338rr8jlvlfer05ak",
+            "label": "测试方法",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "60elnecvsr4nq54soibm8qlb9h",
+                "label": "黑盒测试",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "638act44kkgm4lar5samte7gpf",
+                "label": "白盒测试",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "38gac8mbs25mmr5inl93dgjcum",
+            "label": "调试",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "254pao6anqblugmljo6refe1tq",
+                "label": "调试过程",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "362497uh5eh3ckl9vl7etv7eq3",
+                "label": "调试方法",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "71mkppbvh479ub5sip5sl1se3l",
+                    "label": "试探法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "40nssomb9evabrk6moivgnve05",
+                    "label": "回溯法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "389f3kk98c0mvfhuoheip1k3de",
+                    "label": "对分查找法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "383g0g6vpjrf5ouaq78vmjh3ff",
+                    "label": "归纳法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "4l82l5u6u3koduba0cv83cvpdl",
+                    "label": "演绎法",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "2lscq3gi8hfee8dlihu7hm00sc",
+        "label": "运行和维护知识",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "6nb8safsoab8io5f04rcg8t2et",
+            "label": "系统转换",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "591vss2hvhlj16od72itsktdrh",
+            "label": "系统维护概述",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "6u0dn3loncs48ir08hhbki3ot7",
+            "label": "系统评价",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "2pvef8c3t279o1u17r5ip4mn0c",
+        "label": "软件项目管理",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "5gd9lfkfnoatmiopeq19qhq778",
+            "label": "软件项目管理涉及的范围",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "6tf2k5c5jbfppvctibilcusors",
+                "label": "人员",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5ttto6lo99hsh75t7040m7upun",
+                "label": "产品",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "4mon3or7697l75i5f9gt14mena",
+                "label": "过程",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "1fft5bnj5b9qoe945mkp8g9q9a",
+                "label": "项目",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "3m9cps08ce1535omp0d6spanpe",
+            "label": "软件项目估算",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "4pgs7f818o8dg6iuf8onft9lms",
+                "label": "成本估计方法",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "1ljf0r90skoa04dlm41l3tcpi6",
+                    "label": "自顶向下估算方法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "5hck32i894anmcqtrechggp87s",
+                    "label": "自底向上估算方法",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "4e5q8a93gdop87uag8uq0shvgr",
+                    "label": "差值估算方法",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "3ccmut68kdunr00vfhd60b0i4q",
+                "label": "COCOMO估算模型",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "70faiu87svvhkgptrckeflp8f3",
+                "label": "COCOMOII模型",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "4bubl38eda9gsaoivu32i6vc0e",
+                "label": "Putnam估算模型",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "34adumb6urlqc2u5dbhrbd582u",
+            "label": "进度管理",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "1jmsfnj81lc80eq6f7n06bdo1n",
+                "label": "Gantt图",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "30sudf40h79dcho74b7d2mt23c",
+                "label": "PERT图",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "56k42a48j9q430dajq7nc4mumt",
+            "label": "软件项目的组织",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "3umke4gan4c3ibk9k4p71a2ep7",
+                "label": "组织结构模式",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7pqptlujnb6cpvt2ih8q12bgjp",
+                "label": "程序设计小组的组织方式",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "5mnss2slpha9hlk4njbd058c5u",
+            "label": "软件配置管理",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "1vlrc67d5n25g97hbps4noprbm",
+                "label": "基线",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5j0gkbqj78rkqodtphc3g07k89",
+                "label": "软件配置项",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "26onv0n816dm8pdp059j8ho1tt",
+                "label": "版本控制",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2e2hur5bancfajigannke11b29",
+                "label": "变更控制",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "22k2q7hpc4bvperu34o4dl5krb",
+            "label": "风险管理",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "626nbr42e8jd3u0k6n7osjmsqr",
+                "label": "商业风险",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "4gc5qk9hl160ejal5c78u50bh1",
+                "label": "风险识别",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6nidpn8k2ko4rdd7ncivoud88c",
+                "label": "风险预测",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "62nbngst4ia8uaectkpecteq7a",
+                "label": "风险评估",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2oc0bj0ig0kv482l4k3oruq2ks",
+                "label": "风险控制",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5vr4hcig7im40hqjvhbtoo8e1e",
+        "label": "软件质量",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "3h1288ginpq1rgbr9f7hhi8ln5",
+            "label": "软件质量特性",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "0ro713i1o1h6dkn5fjp9f29jai",
+            "label": "软件质量保证",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "13qvaf1pinadanm9rnjmp8jopd",
+            "label": "软件评审",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "72mmp8seghlt54vc5r91ffkegi",
+            "label": "软件容错技术",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "64eg6nhc7mc342fbgr2k53jhfs",
+        "label": "软件度量",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "66c6oir66q6iisjadkeiir449k",
+            "label": "软件度量分类",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5dm1iptj422ijkl8ftjmgcon29",
+            "label": "软件复杂性度量",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "6att9sj4ssgntgrabniggi5vje",
+                "label": "McCabe度量法",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "05vvvi0povb31aavi12la2lmi9",
+        "label": "软件工具与软件开发环境",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "4epk8scrrojuefrfe3c58sqm8h",
+            "label": "软件工具",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "38nu2i6podsls0lq86mv60gb1t",
+            "label": "软件开发环境",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "0g91gnf9bemeon1qegras49n15",
+        "label": "系统分析与设计",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "0a8ntka7ulpvhruc4vq28k8ggi",
+            "label": "系统分析概述",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "6oi5i6s42v05d59ip12jdthl1p",
+            "label": "系统设计的基本原理",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "0m4t1qlk88ppjedsrknb5r259i",
+            "label": "系统总体结构设计",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "1q2dhe0shd1l1nlf8hqmq4nkea",
+            "label": "系统文档",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "1n28me89js06ocgniqrgbpv7j4",
+        "label": "结构化分析方法",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "76nbcqd6v297eng77k7llp2p73",
+            "label": "结构化分析方法概述",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "38eoo1nld3qfck91vu33q2frm7",
+            "label": "数据流图",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "1im6dmb6v53ot7vo0obpq8canp",
+            "label": "数据字典",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "58e7mf19n801f8kndj1flg66lq",
+        "label": "结构化设计方法",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7vnl9mmphi4f9nrukfnnmbeqqq",
+            "label": "结构化设计的步骤",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "6ammas8hc4u8d36mqstik5bjvv",
+            "label": "数据流图到软件体系结构的映射",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "5qh15gp9g5oe9q5u91j2lmhc8c",
+        "label": "WebApp分析与设计",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "2vir3vrn210fguh3l49jk7buap",
+            "label": "WebApp的特性",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "1e6qjlvbs7lpc2osg5br0m0fds",
+            "label": "WebApp需求模型",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3145a1n821efe0j9u04t2iv8jj",
+            "label": "WebApp设计",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "496mldos5ltbgbtl8l09qfeeql",
+        "label": "用户页面设计",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "3l0qg827rpkj4hcdr5f0377kmf",
+            "label": "用户界面设计的黄金原则",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3rfhfj8u1k12h1fvg15462fqo6",
+            "label": "用户界面的分析与设计",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "0r25e6sik4ufjnlhp4t59a528e",
+            "label": "用户界面设计问题",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "chapterId": "CH-05",
+    "chapterNumber": 5,
+    "chapterTitle": "第5章 数据库系统技术",
+    "totalNodes": 6,
+    "nodes": [
+      {
+        "id": "1modk1pt2ao1ogdt8rq80gu85i",
+        "label": "基本概念",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "37jjotivtkb85fpodrnb6lmmvq",
+            "label": "三级模式-两级映射",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "0oefe4sc7u5l81qeuaphfcd34g",
+            "label": "大数据",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "2upthpomp38e1npji8bg1kkebi",
+        "label": "数据模型",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "625l59359uon7b3dbt1lnfl0o4",
+            "label": "E-R模型",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "42r0lpi5re3ce761glr6g7utmq",
+            "label": "数据模型",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2td4uf0f8j3vrahhdq46nk3954",
+            "label": "关系模型",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "1etrh7mpvn26ejbkcoc6obu5mj",
+        "label": "关系代数",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "2je6940bl089p4rm5h266h7d8a",
+            "label": "并",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5e99ppgst4eojove22hj7s1i20",
+            "label": "差",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4qb3t4m06ntpso0kag5d3l2b2v",
+            "label": "广义笛卡尔积",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "7q5cubmt1sjtb0eoliobp65bal",
+            "label": "投影",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3ok6r6b7vddp3hf6uu24abtbjh",
+            "label": "选择",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "6u9he4eha2u8e25ra8lugofboq",
+            "label": "交",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "54omdc28b4aqvt1e3mkbfraa58",
+            "label": "连接",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "69l2g60b4e8idepli7p54anegb",
+            "label": "除",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "50akee92f0k81oop9rfcjtjq0l",
+        "label": "关系数据库SQL语言",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "3v3kha0d6eg65dve37harpvsc7",
+            "label": "SQL的基本组成",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4s9ouded35rgq2gp4oa53pl8um",
+            "label": "SQL数据查询",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "5qr3s92mlu97esnols0rkqsask",
+        "label": "关系数据库的规范化",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7u999etauqridnji0ulsgj1sit",
+            "label": "函数依赖",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5vrfdjscka2bd8ttj22mheb7bv",
+            "label": "规范化",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3jskrsv0soetcdsda1f4ofeg4s",
+            "label": "价值与用途",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "16ke6415ocit2dqhivu1qfgq0e",
+        "label": "数据库的控制功能",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "2b0vph5q1rekqbmhjm4q1h5op0",
+            "label": "并发控制",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "08r5feak36b28uenpm60o4do54",
+            "label": "事务管理",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4broi3ukrj5b9kdnjm1t8oi54l",
+            "label": "封锁协议",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "57k3e7cspib2qdbevmbhi9iha5",
+            "label": "数据故障与备份",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "chapterId": "CH-06",
+    "chapterNumber": 6,
+    "chapterTitle": "第6章 网络与信息安全基础",
+    "totalNodes": 6,
+    "nodes": [
+      {
+        "id": "01j8jp4qslntb4ed8q9ood4dib",
+        "label": "网络概括",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "4b22j863rc38nlragj1pquav1n",
+            "label": "计算机网络分类",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5r44j6q4a1qamtd95gs7q905q2",
+            "label": "网络的拓扑结构",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "63lgcsv2enla32fsmlj3nrucdc",
+            "label": "ISO/OSI网络体系",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "7jen5ctt43arhlis97t27nrghg",
+        "label": "网络互连硬件",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "3davojoksh1blso2u97k0r67fo",
+            "label": "网络的设备互联",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5i9s70e3jja6g502m1k311f190",
+            "label": "网络的传输介质",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2fj7d7o994anb04fr6hpm35h9q",
+            "label": "组建网络",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "3vt85cc04r6unq0ht0j1n7v15m",
+        "label": "网络的协议与标准",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7cr4qo1e8ue3bnaqdaqgjfrfr6",
+            "label": "网络标准",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "416a38b27dvvat0n4o4bdtqa21",
+            "label": "局域网协议",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "11c1s4v21kmku6u3rus8689js2",
+            "label": "广域网协议",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "1hchtf89li3agvh46vbsrdojcb",
+            "label": "TCP/IP协议族",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "4rdp14g5kk2tb9t6g33f0s1bbu",
+        "label": "Internet及应用",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "6gkfj5cssup4po9e8nhugkrvmv",
+            "label": "域名",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5uthng9grfgqv4v35nb10j5mdg",
+            "label": "IP地址",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "61n627jfhptoirrlj3megtrrp2",
+            "label": "NAT技术",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "496vv29seu0ht6kk0upuu31rd8",
+            "label": "域名服务",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "7p7gsbonno7s8a6qsualfpcm4s",
+            "label": "文件传输服务",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "43fa4d9ffa1g4rp1m3dlo9bcqt",
+        "label": "信息安全基础知识",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7m6idgbhusoc7lr1c4js8acple",
+            "label": "信息安全存储安全",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "41a7t3aaqoqd16j83rskm92tmd",
+            "label": "数据加密",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "07bgsip46n0hdu87uvc17rs5jc",
+            "label": "计算机信息系统安全",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "699qp2vu4noe27vkbkeptsqmjs",
+        "label": "网络安全概述",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7nmo7ck0odn3av6d6ttrrjcb8v",
+            "label": "防火墙安全",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4lcjluhnafefeb1sr56dlsn1hj",
+            "label": "入侵检测与防御",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "chapterId": "CH-07",
+    "chapterNumber": 7,
+    "chapterTitle": "第7章 数据结构与算法基础",
+    "totalNodes": 11,
+    "nodes": [
+      {
+        "id": "6hia9iq3vln4ts3bi4vmkacjjb",
+        "label": "线性结构",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7hh44ld1e19ip0amut4p03t7ge",
+            "label": "线性表",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4u4r2q5r7f20k4rmck7nqdmjv8",
+            "label": "栈和队列",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "18cmkhlgvnk5so773lbciuja6f",
+            "label": "串",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "5r0rpbbpbnane55ktp77a8qco1",
+        "label": "数组、矩阵和广义表",
+        "level": 2,
+        "mastered": false
+      },
+      {
+        "id": "28n7rk5nrv0apde0sqo3u0sa3h",
+        "label": "树",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7189t59ml7edmuflqndc7mj093",
+            "label": "树和二叉树的定义",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "75k1qu20j62p0kdrgo0hserqas",
+            "label": "二叉树的性质与存储结构",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4r1gpket40srjm1h54r42gekkg",
+            "label": "二叉树的遍历",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "26c2bj7gu9iv7ga4mb0h3lmuhm",
+            "label": "线索二叉树",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "08k4daqnqfkss75csstn9jjkcv",
+            "label": "最优二叉树(哈夫曼树)",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2f158k3so415gucuk96t2t1nuj",
+            "label": "树和森林",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "1cgtkmpvn5qdn5afqaamqbb4go",
+        "label": "图",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "07oinrvckprq1stcj604qq0nf2",
+            "label": "图的定义和存储",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "029pmsq4h4ploqm9qf7er0dccg",
+            "label": "图的遍历",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "6ailm52g2shh9nfbadrcg9nnjq",
+                "label": "深度优先搜索",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "4p4qjflqonihikq7evengl26qs",
+                "label": "广度优先搜索",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "2ag48s5gjejatbgs73qjb4h4cj",
+            "label": "生成树和最小生成树",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2i1e5g4nlg37fd2iu2tf4oir4e",
+            "label": "拓扑结构和关键路径",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "1dpmui3jh3j9aglonljaa62vnc",
+        "label": "查找",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7lg2ae567lmc0enh5am4iri3o0",
+            "label": "查找基本概念",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "317bnpscajp05nq2s3u9n9hj7q",
+            "label": "静态查找表的查找方法",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "139e79umpsbn26igapbi8b7s56",
+                "label": "顺序查找",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "43gialjq21vrsrcvou29c2nc42",
+                "label": "折半查找",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7vv3gv1cas3qd9fho3dei0j4e1",
+                "label": "分块查找",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "40i088felvvfrbhkrmo4itl4b3",
+            "label": "动态查找表",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "6d5fep14p8tjgtmaga19iom6jf",
+                "label": "二叉排序树",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "241e6d602iec4q6hpjuk6doatm",
+                "label": "平衡二叉树",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "66djrahn3cfdur1q9249fdhgfb",
+                "label": "子主题 3",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "7jijnc8ee344nunot8003ip8ka",
+            "label": "哈希表",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "1t9ghqhrr75gna3uea45ftho07",
+        "label": "排序",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "5kghbh15oiig0vkojsookbqlsk",
+            "label": "排序基本概念",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "35c4anc7q1omstop0vu51var0j",
+            "label": "简单排序",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "0vf73ikpkseiadvaa2osk4tgdu",
+            "label": "希尔排序",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "59rsucooav7em2j89up4p18699",
+            "label": "快速排序",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4r40he1hfr64tm3tl7rp47do8k",
+            "label": "堆排序",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "0gkmmiva8vktg82k3ubscjtugv",
+            "label": "归并排序",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "4q830fsq7hhpgv1ac7c6kkgb2f",
+            "label": "基数排序",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3m356mvj559tvcv5c0606o6s2q",
+            "label": "外部排序",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "01h7ok8qpva3u0q4buj838p3m5",
+        "label": "算法设计与分析的基本概念",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "38h4jnsh1eenod6qaaclhncvb4",
+            "label": "算法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "56048infrqqjjm4bblfh58gq15",
+            "label": "算法设计",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5bh1eflcfuem3q008haort6jtd",
+            "label": "算法分析",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "6olqh3fjthenogorbg2fg903lk",
+            "label": "算法的表示",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "5j4h2hukv6e3p1t1et97k31rrj",
+                "label": "自然语言",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6oq6u3dn26am257o06edhm7v7b",
+                "label": "流程图",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "1dssuo54iegvmoi5c1n6dcfuc4",
+                "label": "程序设计语言",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2pc17493cv6ltoon0gh85k6sjk",
+                "label": "伪代码",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "3htk0p6osjfbie6okgp85jr3cd",
+        "label": "算法分析基础",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "202atpuqj81eq6d6qsf6hjsljc",
+            "label": "时间复杂度",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "7bv5bmh310tb99ecqfrjmvaq4b",
+            "label": "渐近符号",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "36jii8t3o945qsufts8qtdog11",
+            "label": "递归式",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "71n6bobvchjecg50lr7utp8pne",
+        "label": "算法设计策略",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "2tmili0a6d3ub11ta0uf2r803d",
+            "label": "分治法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3p4pvo91u81u1hjscf48423l7v",
+            "label": "贪心法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3k8qkuq7ut479fapmkoi25fv0n",
+            "label": "动态规划法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "136lv14462h8p067d12dp7thts",
+            "label": "回溯法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "50uc5rco816kr2b9bnn1jf1sem",
+            "label": "分支限界法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2icaeaqnbhmdlqrse2d0i149gp",
+            "label": "概率算法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "05jvb41ptb2mj1pga73cj74pm0",
+            "label": "近似算法",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "478osu7r3ttpkvbtcrlr6tv6v8",
+        "label": "数据挖掘算法",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "072e0g3nbhca96akhtmspao9bg",
+            "label": "分类",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3lje17p883qnlb1i2pj3tn5vj0",
+            "label": "频繁模式和关联规则挖掘",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "7fe8s69nblpmcr4q098pmt5l4k",
+            "label": "聚类",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "3trel159p7k88b02v5ekumvc7v",
+        "label": "智能优化算法",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "1hhft21tlltvm3k6ors78pik61",
+            "label": "概述",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "10seqjmeh8hbg51o1r2c2ob09l",
+            "label": "人工神经网络",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "1vcp7tai04c5gd1vdu7pvgip2k",
+            "label": "遗传算法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "37ps89jc4jl1kjq0t2o696utoo",
+            "label": "模拟退火算法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "5ngbqe1lhm28lctdlc3bobnhbn",
+            "label": "禁忌搜索算法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "68ia02c6qklarsqfvq8hnirgjm",
+            "label": "蚁群算法",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "15ckodifclgds228hq0k7l6qtj",
+            "label": "粒子群优化算法",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "chapterId": "CH-08",
+    "chapterNumber": 8,
+    "chapterTitle": "第8章 面向对象技术与设计模式",
+    "totalNodes": 10,
+    "nodes": [
+      {
+        "id": "64gh0c8me7lb14710akriossot",
+        "label": "面向对象基础",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "08lld4llvgchqnt42nueks87tf",
+            "label": "面向对象的基本概念",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "393va8u5v0sgpl8hr6dbp90r15",
+            "label": "面向对象分析",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "58hfn41vegqmvha7rni82i8daa",
+            "label": "面向对象设计",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "48c0vg9vk6er9fbblvfjabamq4",
+            "label": "面向对象程序设计",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3t5j6uhkv9rjobik0g5r80g0uk",
+            "label": "面向对象测试",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "64vl09mhikisao90rq1l5dps6t",
+        "label": "UML",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "1nsdkq4v4tb2qmcsgi1q5emrgn",
+            "label": "事物",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "27ei8rv4pertju1gujm76c0u7n",
+            "label": "关系",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3vd3psp24m3113ljtd46er0e3i",
+            "label": "UML中的图",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "713fe88s6vi6c32ic9vvtn7j03",
+        "label": "设计模式",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "0tpm7oei7onpe539has3olgsus",
+            "label": "设计模式的要素",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "0b8op2iij2vbu47c1d9lo5uji4",
+                "label": "模式名称",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "11sfe6ovpour0rgi3s8ba9bv66",
+                "label": "问题",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2f3gi4fs34l7sh7rbq5fvsd501",
+                "label": "解决方案",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2q2hid0vpdt16r43v9g8gdcfdo",
+                "label": "效果",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "26m0ja7gmm92sbh2ac186lsmi4",
+            "label": "设计模式的原则",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "1ajj313vhfupue8ht9h9iqmcte",
+                "label": "开闭原则",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "2d2k8g2g8l0fgojmemprp75s55",
+                "label": "里氏替换原则",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "62b466orvqbc1ip57fc2q1rpv3",
+                "label": "依赖倒转原则",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7go6kogql7hhsa2ihmj14fgrni",
+                "label": "接口隔离原则",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "1reptr7v0jg5vavu4q8ugvrq95",
+                "label": "最少知道原则(迪米特法则)",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "48185kg21npqv3hd6jvhgtmeb8",
+                "label": "合成复用原则",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "0gsmtl58l2ko8dpdt5uc3k8jqq",
+            "label": "创建型设计模式",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "7i6hlq0c4ogilmt2f1u9j1shlk",
+                "label": "工厂模式（Factory Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "4re74498ibgbqeb0ct722e1pie",
+                    "label": "子类决定实例化",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "0hu57o4onnje3trld7tc3efsks",
+                "label": "抽象工厂模式（Abstract Factory Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "5g4pnktqmej1g6sohpp1a8s79v",
+                    "label": "抽象接口",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "28lo369la3f312a97p1tsl84tm",
+                "label": "单例模式（Singleton Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "1hcg9k6bbjj2p6a1qgo80tb6q7",
+                    "label": "唯一实例",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "0f04jnh6munt6gkugfhmd474ru",
+                "label": "构造器模式（Builder Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "1j1lq15rqas2mepiuf9vo4kk64",
+                    "label": "类和构造分离",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "1ve2a25rje43seucir48j37k7g",
+                "label": "原型模式（Prototype Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "2fbb2tlctecu60g18qgf6jhijk",
+                    "label": "原型实例，拷贝",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "4evgufl38366sk4opbj7soufto",
+            "label": "结构型设计模式",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "4mmdenp6jpis174srjdo7mtiop",
+                "label": "适配器模式（Adapter Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "28n5jte2a25r6ml2cbr7t435vb",
+                    "label": "转换，兼容接口",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "6bhg1q3rm2pkrev8fpdrvmrui5",
+                "label": "桥接模式（Bridge Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "62aqk13p6lbmiohebm8g3ajukv",
+                    "label": "抽象和实现分离",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "5hc2e85kl5d6vdbitkvrd5eago",
+                "label": "组合模式（Composite Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "1s5s06tsl9g97hdahi8jt1i9sc",
+                    "label": "整体-部分，树形结构",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "5l2n90rtddo8dq2vmashu5ct7a",
+                "label": "装饰器模式（Decorator Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "1vlme6cch4o9jnc0db926u5cj1",
+                    "label": "附加职责",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "76g86o643cmg4bp3jl05idph92",
+                "label": "外观模式（Facade Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "0eb9h4jotef897a25ivvh8cufs",
+                    "label": "对外统一接口",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "6f4un0qaan7l2okj3m50k8cvuh",
+                "label": "享元模式（Flyweight Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "4ulhv3gdjl0q5ffej4mhj2umjm",
+                    "label": "细粒度，共享",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "47d6n4dj8akdjt6vp41uqglldb",
+                "label": "代理模式（Proxy Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "758ics0h5nk3jt7fhcrve9u3ke",
+                    "label": "代理控制",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "6g3m8nqrpb1vir7ps615kautua",
+                "label": "过滤器模式/标准模式（Filter、Criteria Pattern）",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "33r820kcj4r3rn3d0od2r4q6s8",
+            "label": "行为设计模式",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "1m0krngp1p07u77745scrq32sm",
+                "label": "责任链模式（Chain of Responsibility Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "4k2j4abf8gkgrj1n75ts76urvb",
+                    "label": "传递请求、职责、链接",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "55ajdldkm2q2k8dn516mi66s97",
+                "label": "命令模式（Command Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "2hov7hnfr8l65ffi24c7jo2945",
+                    "label": "参数化、日志记录",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "4o1ntj3p83dh899ak7h0m29i5d",
+                "label": "解释器模式（Interpreter Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "4ehbdvpqvimlrbm87ma9v7mrcn",
+                    "label": "文法、解释",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "6alkrlq14e75kaong62q90muts",
+                "label": "迭代器模式（Iterator Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "77grs70ue5ua31lh1tm00bgh8a",
+                    "label": "顺序访问",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "6mbm9f349d3iglaaffh4j49rvd",
+                "label": "中介者模式（Mediator Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "39pgvfteqchs5soeqc04cj48kg",
+                    "label": "不直接引用",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "7qqod00nmm11jvdu2aj9c7qfif",
+                "label": "备忘录模式（Memento Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "2gmljfseglnj6086gfgtefk7u6",
+                    "label": "保存，恢复",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "0tc6070o33la67hk9u1i6p8ncv",
+                "label": "观察者模式（Observer Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "30bjsf9aif79qit1v5u9lpb033",
+                    "label": "通知、自动更新",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "0i5mj1n88taka2iunb1sqnfh39",
+                "label": "状态模式（State Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "65so6t91bmjitnh7p0t2upvgn3",
+                    "label": "状态变成类",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "5nrnqci0n1q8g6puc11c0m4d47",
+                "label": "策略模式（Strategy Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "62mepq9ceg6p25a25ep1d933u5",
+                    "label": "算法替换",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "4ev2ur7ggmk4e2156a4hivibuf",
+                "label": "模板模式（Template Pattern）",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6fnd9j7a8jgkqsrvnplmi8vvum",
+                "label": "访问者模式（Visitor Pattern）",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "6mgtludjt2qvvsr7l486u5uepe",
+                    "label": "新操作",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "0uhumboupu6u2u79fv78ep5q9v",
+                "label": "空对象模式（Null Object Pattern）",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "2bu6k5ocbgh46ohkr0n1u2vja7",
+            "label": "J2EE模式",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "2s4pnsb44nf2no2ji9c3llgs02",
+                "label": "MVC 模式（MVC Pattern）",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "0dp5r2h3j2kqroqv8acqch5ngo",
+                "label": "业务代表模式（Business Delegate Pattern）",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "11t827qls9kf9lt01k08ppsaor",
+                "label": "组合实体模式（Composite Entity Pattern）",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "1tf4s1ukg0tnlluv5d07favg61",
+                "label": "数据访问对象模式（Data Access Object Pattern）",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "79eoh6qhkorhqrr6352rqk0rsq",
+                "label": "前端控制器模式（Front Controller Pattern）",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "6v6bc5el4p1rtkkc616scqdb9k",
+                "label": "拦截过滤器模式（Intercepting Filter Pattern）",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "45l9q1k9spi7cqbfap066744tn",
+                "label": "服务定位器模式（Service Locator Pattern）",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "5mpfp7qq80g729hpcusuvros23",
+                "label": "传输对象模式（Transfer Object Pattern）",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5gj2fti3s268qfl5p9phhj8034",
+        "label": "标准化基础知识",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "10ah50m6vs5oj03t5usihai4j2",
+            "label": "标准的分类",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2s15biq5vqst06ag7l70afpc9h",
+            "label": "信息技术标准化",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "17v35e0kt9ag0k9hl4qgshopf7",
+                "label": "信息编码标准化",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7v07v6sbgf8e9u2juvqdj7j0pj",
+                "label": "汉字编码标准化",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3q7jjadvl84r9fuasrdafk12g0",
+                "label": "软件工程标准化",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "721kcjk34flq999bm5rgsu33jg",
+            "label": "标准化组织",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "07vvk0hoq3dgerp21gk30reghp",
+            "label": "ISO 9000标准简介",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "5rguu95554q4i87s13mr625non",
+        "label": "知识产权",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "5nd30pbjevba7i0rnigleubrji",
+            "label": "基本概念",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2ombhnpms6rian5gdd8fubj7ch",
+            "label": "计算机软件著作权",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2te6bn0d2h93q1q5ie8ihokc74",
+            "label": "计算机软件的商业秘密权利",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "38ug4d4t918sb034bp3t5fdlu1",
+            "label": "专利权概括",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "4050bg391kng9qist4qpf0dv9m",
+        "label": "结构化分析与设计",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "2ukne2dd6p9ts68f6eohcr14kj",
+            "label": "用户界面设计三大原则",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "24evb880gqh1spg7cbjk7gkp26",
+                "label": "至于用户控制之下",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "10m6cm2m0ftjv3ua98p07974h8",
+                "label": "减少用户记忆负担",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "3uh1geebctmh3mcovkasdrh5s2",
+                "label": "保持界面的一致性",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "1qmmfhinc9pjv4qhidu2bqmkgu",
+            "label": "数据流图DFD",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "6133nrmra53b86bo333nmg6qvr",
+        "label": "数据库分析与设计",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "0h8482qaemtgth5bi058jnjbb8",
+            "label": "数据库设计策略与步骤",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "3k7j77r0hoipoauitlj6biu3cc",
+                "label": "数据库设计策略",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "4vdjmup1he6mjidktiantk9000",
+                    "label": "自顶向下",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "7a8ph7mijqi99vkm22tcbpib28",
+                    "label": "自顶向上",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              },
+              {
+                "id": "2vpkn4fmg4h8eu34ning0blc1a",
+                "label": "数据库设计的步骤",
+                "level": 4,
+                "mastered": false,
+                "children": [
+                  {
+                    "id": "4b42kbcvbd3obbdrsi7414ugm7",
+                    "label": "用户需求分析",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "4prahcafe9jutr9ejjer2cr3bd",
+                    "label": "概念设计",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "4sgugot9am03ke3fd8eeldruf6",
+                    "label": "逻辑设计",
+                    "level": 5,
+                    "mastered": false
+                  },
+                  {
+                    "id": "1bps0m1j19r8ace5tf6pt0qcv7",
+                    "label": "物理设计",
+                    "level": 5,
+                    "mastered": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "5im97t5u98qitsm0vj1mratfvq",
+            "label": "需求分析",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3m2ss80ilo0gl1qe074e2qognt",
+            "label": "概念结构设计",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "67peme4peak8s0q4k8bhakagsa",
+            "label": "逻辑结构设计",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "7mqhn0922njgt6qm55ua6jsq5a",
+            "label": "数据库的物理设计",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "3idnr256mmof235q9uc0be66h6",
+            "label": "数据库的实施与维护",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "0519gplaskllo64mco0cn41c7s",
+        "label": "面向对象分析与设计",
+        "level": 2,
+        "mastered": false,
+        "children": [
+          {
+            "id": "7mdn3biiftem9m7uladnfo5hdi",
+            "label": "面向对象分析与设计步骤",
+            "level": 3,
+            "mastered": false,
+            "children": [
+              {
+                "id": "1omq5db8at5013rhblpn0966kg",
+                "label": "建模系统功能",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "189rgec9s7cqb80td0qct0l6dj",
+                "label": "定义领域模型",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "268ephg1pl96rhmcl3s4fec7he",
+                "label": "定义交互、行为和状态",
+                "level": 4,
+                "mastered": false
+              },
+              {
+                "id": "7heuu9orni46b9nqu1mnb7i3r7",
+                "label": "定语设计类图",
+                "level": 4,
+                "mastered": false
+              }
+            ]
+          },
+          {
+            "id": "6fpj64umsv9dk7lg9f5k2asmf0",
+            "label": "需求说明",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "1dmf6tgnn88u84tjdlj8bf4t66",
+            "label": "建模用例",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "2kgha5nbkcdrnhism3gctaumeb",
+            "label": "建模活动",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "6at1onlsjctljjl3hiiqtio6cs",
+            "label": "设计类图",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "56bbmrob94f5s2d8c0o6a94pia",
+            "label": "建模对象状态",
+            "level": 3,
+            "mastered": false
+          },
+          {
+            "id": "354knelvbcpb85e0euddb1kun3",
+            "label": "建模交互",
+            "level": 3,
+            "mastered": false
+          }
+        ]
+      },
+      {
+        "id": "5mdnviorst7buasmu4v8j1tpfd",
+        "label": "算法分析与设计",
+        "level": 2,
+        "mastered": false
+      },
+      {
+        "id": "314buvt6d043i7r54g0t7oo6p8",
+        "label": "面向对象的程序设计与实现",
+        "level": 2,
+        "mastered": false
+      }
+    ]
+  }
+]
