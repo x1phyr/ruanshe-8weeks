@@ -5,8 +5,6 @@ import {
   GitCompare,
   AlertTriangle,
   Lightbulb,
-  Search,
-  CheckCircle2,
 } from "lucide-react";
 import confusionPairsData from "@/src/data/confusionPairs.json";
 

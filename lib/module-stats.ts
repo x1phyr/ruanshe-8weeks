@@ -31,11 +31,11 @@ export function moduleAccuracyFromAnswers(
 ): ModuleAccuracy[] {
   const buckets = new Map<string, { attempts: number; correct: number }>();
   for (const answer of answers) {
-    const module = resolveModule(answer);
-    const cur = buckets.get(module) ?? { attempts: 0, correct: 0 };
+    const moduleName = resolveModule(answer);
+    const cur = buckets.get(moduleName) ?? { attempts: 0, correct: 0 };
     cur.attempts += 1;
     if (answer.correct) cur.correct += 1;
-    buckets.set(module, cur);
+    buckets.set(moduleName, cur);
   }
   return [...buckets.entries()]
     .map(([module, { attempts, correct }]) => ({

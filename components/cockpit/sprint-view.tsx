@@ -13,7 +13,7 @@ import {
   CheckSquare,
   ArrowRight,
   Clock,
-  Compass,
+  type LucideIcon,
 } from "lucide-react";
 import { useTrainerStore } from "@/lib/store";
 import sprintPlanData from "@/src/data/sprintPlan.json";
@@ -22,7 +22,6 @@ export function SprintView() {
   const [activeDay, setActiveDay] = useState(1);
   const checklist = useTrainerStore((s) => s.checklist);
   const toggleTask = useTrainerStore((s) => s.toggleTask);
-  const remainingDays = useTrainerStore((s) => s.remainingDays);
 
   // Filter category
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
@@ -32,7 +31,7 @@ export function SprintView() {
 
   const categoryConfig: Record<
     string,
-    { label: string; badge: string; icon: any; href: string; actionText: string }
+    { label: string; badge: string; icon: LucideIcon; href: string; actionText: string }
   > = {
     reading: {
       label: "核心速记",

@@ -3,11 +3,8 @@
 import React, { useState, useMemo } from "react";
 import {
   CheckCircle2,
-  Bookmark,
   Zap,
   Star,
-  Search,
-  Filter,
 } from "lucide-react";
 import { useTrainerStore } from "@/lib/store";
 import knowledgePointsData from "@/src/data/knowledgePoints.json";

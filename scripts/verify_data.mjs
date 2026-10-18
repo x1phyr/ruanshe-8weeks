@@ -23,11 +23,9 @@ const BANNED_PATTERNS = [
   /待补充/
 ];
 
-let totalChecks = 0;
 let passedChecks = 0;
 
 function assertCheck(condition, message) {
-  totalChecks++;
   if (!condition) {
     console.error(`\x1b[31m[FAIL]\x1b[0m ${message}`);
     process.exit(1);

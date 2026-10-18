@@ -46,7 +46,6 @@ function loadQuestionsFromFile(relPath) {
 
 function evalArray(arraySrc, label) {
   try {
-    // eslint-disable-next-line no-new-func
     const fn = new Function(`return (${arraySrc});`);
     const arr = fn();
     if (!Array.isArray(arr)) throw new Error("not an array");

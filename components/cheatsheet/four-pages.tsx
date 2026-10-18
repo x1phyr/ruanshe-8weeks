@@ -2,13 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import {
-  FileText,
   Calculator,
-  Layers,
-  Sparkles,
-  ChevronRight,
-  BookOpen,
-  Search,
 } from "lucide-react";
 import cheatsheetData from "@/src/data/cheatsheet.json";
 
