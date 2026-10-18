@@ -70,6 +70,7 @@ export function PracticeView() {
 
   useEffect(() => {
     const fromUrl = readModuleFromUrl(modules);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- URL is client-only; a lazy initializer would cause a static-export hydration mismatch
     if (fromUrl) setModule(fromUrl);
   }, [modules]);
 

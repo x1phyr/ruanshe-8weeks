@@ -2,18 +2,10 @@
 
 import React, { useState, useMemo } from "react";
 import {
-  BookOpen,
   PlayCircle,
   Trash2,
-  Search,
   CheckCircle2,
-  XCircle,
-  Filter,
   Sparkles,
-  Zap,
-  ArrowRight,
-  Calculator,
-  AlertTriangle,
 } from "lucide-react";
 import { QuizzerView, QuestionData } from "./quizzer-view";
 import { useTrainerStore } from "@/lib/store";
@@ -21,7 +13,7 @@ import questionsData from "@/src/data/questions.json";
 
 export function MistakeView() {
   const [selectedDomain, setSelectedDomain] = useState("ALL");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery] = useState("");
   const [isDrillMode, setIsDrillMode] = useState(false);
 
   const mistakeQuestionIds = useTrainerStore((s) => s.mistakeQuestionIds);

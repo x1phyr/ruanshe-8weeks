@@ -9,7 +9,6 @@ import {
   GitBranch,
   Cpu,
   Layers,
-  CheckCircle,
 } from "lucide-react";
 import { CaseStudy } from "@/lib/scoringHelper";
 

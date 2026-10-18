@@ -6,8 +6,6 @@ import {
   ShieldCheck,
   ShieldAlert,
   Sparkles,
-  Target,
-  CheckCircle2,
 } from "lucide-react";
 import { RadarMetrics } from "@/lib/store";
 
@@ -16,7 +14,7 @@ interface ScoreRadarProps {
   mode: "regular" | "sprint";
 }
 
-export function ScoreRadar({ metrics, mode }: ScoreRadarProps) {
+export function ScoreRadar({ metrics }: ScoreRadarProps) {
   const {
     taskCompletionRate,
     completedTasks,
@@ -30,8 +28,6 @@ export function ScoreRadar({ metrics, mode }: ScoreRadarProps) {
     statusLabel,
   } = metrics;
 
-  // Passing threshold constant: 45 / 75 = 60%
-  const PASSING_THRESHOLD = 45;
   const morningPct = Math.round((morningScore / 75) * 100);
   const afternoonPct = Math.round((afternoonScore / 75) * 100);
   const thresholdPct = 60; // 45 / 75

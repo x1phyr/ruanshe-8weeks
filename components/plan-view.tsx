@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Lock, Check, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { KindPill, PageFrame, PageHeader, Surface } from "@/components/ui-bits";
@@ -31,7 +31,6 @@ import { examCountdown, formatDateShort, pad2, todayISO, weekdayLabel } from "@/
 import { dayPracticeModule, practiceModuleHref } from "@/lib/practice";
 import { firstIncompleteUnlocked, isCompleted, isUnlocked } from "@/lib/progress";
 import { useTrainerStore } from "@/lib/store";
-import type { StudyDay } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export function PlanView() {
@@ -72,7 +71,7 @@ export function PlanView() {
     return () => window.clearTimeout(timer);
   }, [flashId]);
 
-  const locateToday = useCallback(() => {
+  const locateToday = () => {
     if (phase === "not-started") {
       setJumpTip("未开课");
       return;
@@ -96,7 +95,7 @@ export function PlanView() {
       setJumpTip("今日已完成");
       return;
     }
-  }, [phase, todayDay, planHideDone, progress]);
+  };
 
   return (
     <PageFrame className="plan-print-root">

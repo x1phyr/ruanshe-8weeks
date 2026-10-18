@@ -2,16 +2,10 @@
 
 import React, { useState, useMemo, useCallback } from "react";
 import {
-  FileCode2,
-  CheckCircle2,
-  XCircle,
   Lightbulb,
   RotateCcw,
   BookOpen,
   Award,
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
 } from "lucide-react";
 import { CaseNav } from "./case-nav";
 import { BlankInput } from "./blank-input";

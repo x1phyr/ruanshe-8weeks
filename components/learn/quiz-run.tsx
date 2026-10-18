@@ -142,6 +142,7 @@ export function QuizRun({
   const answeredCount = Object.keys(answers).length;
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- flags live in localStorage (client-only) and must reload when navKey changes
     setFlagged(loadFlags(navKey));
     setFlagsReady(true);
   }, [navKey]);
@@ -175,6 +176,7 @@ export function QuizRun({
 
   useEffect(() => {
     if (!timed || scorecard || remain > 0) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- auto-submit when the countdown reaches 0; moving this into the interval would change timing semantics
     forceFinish(true);
   }, [timed, scorecard, remain, forceFinish]);
 

@@ -1,13 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import {
-  Network,
   ChevronRight,
   ChevronDown,
-  FolderOpen,
-  Folder,
-  CheckCircle2,
   Maximize2,
   Minimize2,
 } from "lucide-react";

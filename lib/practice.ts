@@ -34,9 +34,9 @@ export function practiceModuleHref(module: string): string {
 export function dayPracticeModule(day: StudyDay): string | null {
   if (day.kind === "paper" || day.status === "paper") return null;
   if (day.status === "stub") return null;
-  const module = day.module?.trim();
-  if (!module || module === "真题卷") return null;
-  return module;
+  const moduleName = day.module?.trim();
+  if (!moduleName || moduleName === "真题卷") return null;
+  return moduleName;
 }
 
 /** Deep link to mistakes book with a module chip preselected. */

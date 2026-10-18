@@ -4,13 +4,9 @@ import React, { useState, useMemo, useCallback, useEffect } from "react";
 import {
   ChevronLeft,
   ChevronRight,
-  RotateCcw,
   Shuffle,
   Search,
-  Filter,
-  CheckCircle2,
   X,
-  Sparkles,
 } from "lucide-react";
 import { FlashcardItem } from "./flashcard-item";
 import { useTrainerStore } from "@/lib/store";
@@ -95,6 +91,7 @@ export function FlashcardsView() {
   // Index clamp
   useEffect(() => {
     if (currentIndex >= filteredCards.length) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- clamp index after filter shrinks; render-phase reset would loop when the list is empty
       setCurrentIndex(0);
       setIsFlipped(false);
     }

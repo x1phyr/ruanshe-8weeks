@@ -5,16 +5,12 @@ import {
   ArrowLeft,
   CheckCircle2,
   XCircle,
-  HelpCircle,
   BookOpen,
-  Filter,
   Calculator,
   ChevronLeft,
   ChevronRight,
-  RotateCcw,
   Sparkles,
   Target,
-  Zap,
   AlertTriangle,
   Flame,
   Search,
@@ -70,7 +66,6 @@ export function QuizzerView({
 
   const mistakeQuestionIds = useTrainerStore((s) => s.mistakeQuestionIds);
   const addMistakeQuestion = useTrainerStore((s) => s.addMistakeQuestion);
-  const removeMistakeQuestion = useTrainerStore((s) => s.removeMistakeQuestion);
 
   const mistakeSet = useMemo(
     () => new Set(mistakeQuestionIds),
@@ -112,6 +107,7 @@ export function QuizzerView({
   // Clamp index
   useEffect(() => {
     if (currentIndex >= filteredQuestions.length) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- clamp index after filter shrinks; render-phase reset would loop when the list is empty
       setCurrentIndex(0);
       setSelectedOption(null);
       setIsSubmitted(false);

@@ -13,6 +13,7 @@ import {
   Zap,
   FileCode2,
   ArrowRight,
+  type LucideIcon,
 } from "lucide-react";
 import { useTrainerStore } from "@/lib/store";
 import studyPlansData from "@/src/data/studyPlans.json";
@@ -44,7 +45,7 @@ export function RegularView() {
   const currentPhase =
     phaseConfig[currentWeek.phase] || phaseConfig["基础通读"];
 
-  const typeConfig: Record<string, { badge: string; icon: any; href: string }> = {
+  const typeConfig: Record<string, { badge: string; icon: LucideIcon; href: string }> = {
     理论精读: {
       badge: "bg-blue-500/15 text-blue-300 border-blue-500/30",
       icon: BookOpen,

@@ -8,7 +8,6 @@ import {
   Network,
   Search,
   X,
-  Sparkles,
 } from "lucide-react";
 import { FourPages } from "./four-pages";
 import { HundredPoints } from "./hundred-points";
